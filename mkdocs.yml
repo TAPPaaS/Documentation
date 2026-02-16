@@ -1,0 +1,161 @@
+# TAPPaaS Documentation Site Configuration
+# https://www.mkdocs.org/user-guide/configuration/
+
+site_name: TAPPaaS
+site_url: https://tappaas.org
+site_description: Open Source Platform as a Service - Documentation and Resources
+site_author: TAPPaaS Community
+
+# Repository
+repo_name: TAPPaaS/Documentation
+repo_url: https://github.com/TAPPaaS/Documentation
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2026 TAPPaaS Contributors | Licensed under MPL 2.0
+
+# Theme Configuration
+theme:
+  name: material
+  language: en
+
+  # Color palette
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Features
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - content.action.view
+
+  # Custom assets
+  icon:
+    repo: fontawesome/brands/github
+
+  # Logo and favicon (uncomment when you have these files)
+  # logo: assets/logo.png
+  # favicon: assets/favicon.ico
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: TAPPaaS
+      repo: Documentation
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Extra CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Extra JavaScript
+extra_javascript:
+  - javascripts/extra.js
+
+# Social links and extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/TAPPaaS
+      name: TAPPaaS on GitHub
+    # Add more social links as needed:
+    # - icon: fontawesome/brands/twitter
+    #   link: https://twitter.com/tappaas
+    # - icon: fontawesome/brands/discord
+    #   link: https://discord.gg/tappaas
+
+  # Analytics (uncomment and configure when ready)
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX
+
+  generator: false
+
+# Navigation structure
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Overview: getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
+  - Documentation:
+    - Overview: docs/index.md
+  - Community:
+    - Contributing: community/contributing.md
+    - Code of Conduct: community/code-of-conduct.md
+  - About:
+    - About TAPPaaS: about/index.md
+    - License: about/license.md
