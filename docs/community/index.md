@@ -31,15 +31,15 @@ Welcome to the TAPPaaS community! Whether you're looking to contribute, get help
 
     Set up your development environment and start contributing code to TAPPaaS.
 
-    [:octicons-arrow-right-24: Development Guide](development.md)
+    [:octicons-arrow-right-24: Contributing Guide](contributing.md)
 
--   :material-file-document-edit:{ .lg .middle } **Documentation**
+-   :material-frequently-asked-questions:{ .lg .middle } **FAQ**
 
     ---
 
-    Help improve our documentation - every contribution matters.
+    Find answers to common questions about TAPPaaS.
 
-    [:octicons-arrow-right-24: Documentation Guide](documentation.md)
+    [:octicons-arrow-right-24: FAQ](faq.md)
 
 </div>
 
@@ -51,8 +51,8 @@ There are many ways to contribute to TAPPaaS:
 
 | Contribution Type | Description | Get Started |
 |------------------|-------------|-------------|
-| **Code** | Fix bugs, add features, improve performance | [Development Guide](development.md) |
-| **Documentation** | Improve guides, fix typos, add examples | [Documentation Guide](documentation.md) |
+| **Code** | Fix bugs, add features, improve performance | [Contributing Guide](contributing.md) |
+| **Documentation** | Improve guides, fix typos, add examples | [Contributing Guide](contributing.md) |
 | **Issues** | Report bugs, suggest features | [GitHub Issues](https://github.com/TAPPaaS/TAPPaaS/issues) |
 | **Support** | Help others in discussions | [GitHub Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions) |
 | **Spread the Word** | Blog posts, talks, social media | Share your experience! |
@@ -101,8 +101,6 @@ We value every contribution to TAPPaaS. Contributors are recognized in:
 - :material-book-open-variant: [Contributing Guide](contributing.md)
 - :material-scale-balance: [Code of Conduct](code-of-conduct.md)
 - :material-frequently-asked-questions: [FAQ](faq.md)
-- :material-hammer-wrench: [Development Guide](development.md)
-- :material-file-document-multiple: [Documentation Guide](documentation.md)
 - :material-lifebuoy: [Support](support.md)
 
 </div>

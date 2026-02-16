@@ -28,7 +28,7 @@ TAPPaaS differentiates itself by:
 - **Self-Hosted**: Run on your own infrastructure with full control
 - **Extensible**: Plugin system for custom integrations
 
-See our [Comparisons](../intro/comparisons.md) page for detailed comparisons.
+See our [Architecture Overview](../intro/architecture.md) for more details.
 
 ### What Kubernetes versions are supported?
 
@@ -75,7 +75,7 @@ helm repo update
 helm upgrade tappaas tappaas/tappaas -n tappaas-system
 ```
 
-See the [Upgrade Tutorial](../tutorials/operations/upgrade.md) for detailed steps.
+Check the official documentation for upgrade procedures.
 
 ---
 
@@ -162,7 +162,7 @@ env:
 
 3. TLS certificates are automatically provisioned via Let's Encrypt
 
-See [Custom Domains Tutorial](../tutorials/integration/custom-domains.md) for details.
+See the documentation for custom domain configuration details.
 
 ### How do I configure autoscaling?
 
@@ -209,7 +209,7 @@ TAPPaaS stores application configuration in Kubernetes. Back up using:
 2. **GitOps**: Store configuration in Git
 3. **Export**: `tappaas export my-app > my-app.yaml`
 
-See [Backup & Recovery Tutorial](../tutorials/operations/backup-recovery.md).
+See the operations documentation for backup and recovery procedures.
 
 ### How do I monitor TAPPaaS?
 
@@ -219,7 +219,7 @@ TAPPaaS exposes Prometheus metrics. Integrate with:
 - **Grafana** for visualization
 - **Alertmanager** for alerting
 
-See [Monitoring & Observability](../docs/operations/monitoring.md).
+See the operations documentation for monitoring setup.
 
 ---
 
@@ -234,7 +234,7 @@ Check these common issues:
 3. **Image pull errors**: Verify registry credentials
 4. **Health check failures**: Check application health endpoints
 
-See [Troubleshooting Guide](../docs/operations/troubleshooting.md).
+See the [Support](support.md) page for troubleshooting help.
 
 ### Pods are stuck in Pending
 

@@ -431,7 +431,7 @@ Security is integrated throughout TAPPaaS:
 - **Compliance** - Support for compliance frameworks
 
 !!!warning "Security Best Practices"
-    For detailed security configuration and best practices, see the [Security Model Reference](../docs/architecture/security.md).
+    For detailed security configuration and best practices, see the [Security Model Reference](../docs/architecture/overview.md).
 
 ---
 
@@ -551,7 +551,7 @@ Now that you understand TAPPaaS architecture:
 
     Get TAPPaaS running on your infrastructure.
 
-    [:octicons-arrow-right-24: Installation Guide](../getting-started/installation.md)
+    [:octicons-arrow-right-24: Installation Guide](../tutorials/get-started/install.md)
 
 -   :material-file-document:{ .lg .middle } **Detailed Architecture**
 
@@ -567,7 +567,7 @@ Now that you understand TAPPaaS architecture:
 
     Learn about configuration options.
 
-    [:octicons-arrow-right-24: Configuration Reference](../docs/configuration/index.md)
+    [:octicons-arrow-right-24: Configuration Reference](../docs/index.md)
 
 -   :material-rocket-launch:{ .lg .middle } **Quick Start**
 
@@ -575,7 +575,7 @@ Now that you understand TAPPaaS architecture:
 
     Deploy your first application.
 
-    [:octicons-arrow-right-24: Quick Start Guide](../getting-started/quickstart.md)
+    [:octicons-arrow-right-24: Quick Start Guide](../tutorials/get-started/deploy-first-app.md)
 
 </div>
 
@@ -586,4 +586,4 @@ Now that you understand TAPPaaS architecture:
 - [Vision & Problem Statement](vision.md) - Why TAPPaaS exists
 - [Introduction](index.md) - Getting started with TAPPaaS concepts
 - [Core Components Reference](../docs/architecture/components.md) - Detailed component documentation
-- [Security Model](../docs/architecture/security.md) - Security architecture and practices
+- [Security Model](../docs/architecture/overview.md) - Security architecture and practices

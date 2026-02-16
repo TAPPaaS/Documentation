@@ -16,7 +16,7 @@ Many questions are already answered in our documentation:
 1. **Search the Docs** - Use the search bar at the top of any page
 2. **Check the FAQ** - Common questions are answered in our [FAQ](faq.md)
 3. **Read Tutorials** - Step-by-step guides for common tasks in [Tutorials](../tutorials/index.md)
-4. **Review Troubleshooting** - Common issues and solutions in [Troubleshooting](../docs/operations/troubleshooting.md)
+4. **Review FAQ** - Common issues and solutions in [FAQ](faq.md)
 
 ---
 
@@ -74,7 +74,7 @@ Have an idea for improving TAPPaaS?
 Before submitting:
 
 - Search existing issues to avoid duplicates
-- Check the [Roadmap](../about/roadmap.md) for planned features
+- Check the [About page](../about/index.md) for project information
 - Describe the problem you're trying to solve
 - Explain why this would benefit other users
 
@@ -85,7 +85,7 @@ Before submitting:
 !!! warning "Security Vulnerabilities"
     **Do not** report security vulnerabilities through public GitHub issues.
 
-    Please review our [Security Policy](../about/security.md) for instructions on responsible disclosure.
+    Please email security concerns to the maintainers for responsible disclosure.
 
 ---
 
@@ -122,5 +122,4 @@ Want to give back? Help answer questions in GitHub Discussions!
 ## Related Resources
 
 - [Contributing Guide](contributing.md) - How to contribute to TAPPaaS
-- [FAQ](faq.md) - Frequently asked questions
-- [Troubleshooting](../docs/operations/troubleshooting.md) - Common issues and solutions
+- [FAQ](faq.md) - Frequently asked questions and common solutions
