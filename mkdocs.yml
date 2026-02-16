@@ -144,18 +144,72 @@ extra:
 
   generator: false
 
-# Navigation structure
+# Navigation structure (Terraform-style)
 nav:
   - Home: index.md
-  - Getting Started:
-    - Overview: getting-started/index.md
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quickstart.md
+
+  - Intro:
+    - Overview: intro/index.md
+    - Vision & Problem: intro/vision.md
+    - Architecture Overview: intro/architecture.md
+    # - Use Cases: intro/use-cases.md
+    # - Comparisons: intro/comparisons.md
+    # - Glossary: intro/glossary.md
+
+  - Tutorials:
+    - Overview: tutorials/index.md
+    - Get Started:
+      - Overview: tutorials/get-started/index.md
+      - Install TAPPaaS: tutorials/get-started/install.md
+      - Deploy Your First App: tutorials/get-started/deploy-first-app.md
+      # - Configure Application: tutorials/get-started/configure-app.md
+      # - Scale Your Application: tutorials/get-started/scale-app.md
+      # - Monitor and Debug: tutorials/get-started/monitor-debug.md
+    # - Deployment:
+    #   - Node.js: tutorials/deployment/nodejs.md
+    #   - Python/Django: tutorials/deployment/python-django.md
+    #   - Docker: tutorials/deployment/docker.md
+    # - Integration:
+    #   - Database: tutorials/integration/database.md
+    #   - CI/CD: tutorials/integration/cicd.md
+    #   - Custom Domains: tutorials/integration/custom-domains.md
+    # - Operations:
+    #   - Backup & Recovery: tutorials/operations/backup-recovery.md
+    #   - Upgrade: tutorials/operations/upgrade.md
+
   - Documentation:
     - Overview: docs/index.md
+    - Architecture:
+      - Specification: docs/architecture/overview.md
+      - Components: docs/architecture/components.md
+      # - Deployment Models: docs/architecture/deployment-models.md
+      # - Security Model: docs/architecture/security.md
+    # - Configuration:
+    #   - Overview: docs/configuration/index.md
+    #   - Platform: docs/configuration/platform.md
+    #   - Application: docs/configuration/application.md
+    # - CLI Reference:
+    #   - Overview: docs/cli/index.md
+    #   - Commands: docs/cli/commands.md
+    # - API Reference:
+    #   - Overview: docs/api/index.md
+    #   - REST API: docs/api/rest.md
+    # - Operations:
+    #   - Overview: docs/operations/index.md
+    #   - Monitoring: docs/operations/monitoring.md
+    #   - Troubleshooting: docs/operations/troubleshooting.md
+
   - Community:
+    - Overview: community/index.md
     - Contributing: community/contributing.md
     - Code of Conduct: community/code-of-conduct.md
+    - FAQ: community/faq.md
+    - Support: community/support.md
+    # - Development Guide: community/development.md
+    # - Documentation Guide: community/documentation.md
+
   - About:
     - About TAPPaaS: about/index.md
     - License: about/license.md
+    # - Security Policy: about/security.md
+    # - Roadmap: about/roadmap.md
