@@ -27,20 +27,24 @@ Understanding these key concepts will help you get the most out of TAPPaaS:
 
 ### Applications
 
-Applications are the primary unit of deployment in TAPPaaS. Each application represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
+Applications are the primary unit of deployment in TAPPaaS. This is also called a "Module". Each Module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
 
 ### Platform as a Service
 
-TAPPaaS provides a PaaS layer on top of Kubernetes, abstracting away infrastructure complexity while maintaining access to powerful cloud-native capabilities when needed.
+TAPPaaS provides a PaaS layer on top of physical hardware, abstracting away infrastructure complexity and maintaining all the modern complexity of backup, firewall, identity management, high availability, reverse proxy, ...
+
+The hardware can be hosted in your own data center or in a local hosting provider
+
+TAPPaaS scale from a medium sized single server system over a 3 node redundant cluster up to 10's of servers in a single platform cluster
 
 ### Cloud-Native Architecture
 
-Built from the ground up for containers and Kubernetes, TAPPaaS leverages modern cloud-native patterns including:
+Built from the ground up for simplicity of deploying application, TAPPaaS leverages modern cloud-native patterns including:
 
-- Container-based deployments
 - Declarative configuration
 - Automated scaling and self-healing
 - Service discovery and load balancing
+- DevOps deployment pattern for autonomous updates
 
 ### Developer Experience
 
@@ -61,19 +65,18 @@ TAPPaaS operates through a simple, powerful workflow:
 
 Define your application using simple configuration files that specify:
 
-- Application source code location
-- Build requirements and dependencies
+- Application code location
+- Deployment dependencies
 - Runtime environment settings
 - Resource requirements
 
 ### 2. Deploy to Platform
 
-Use the TAPPaaS CLI or API to deploy your application. TAPPaaS handles:
+Use the TAPPaaS CLI to deploy your application. TAPPaaS handles:
 
-- Building container images
-- Creating Kubernetes resources
+- Building Virtual machines for module
 - Configuring networking and ingress
-- Setting up monitoring and logging
+- Setting up backup, monitoring and logging
 
 ### 3. Manage and Scale
 
@@ -106,9 +109,6 @@ TAPPaaS is ideal for:
 
 !!! example "Platform Engineers"
     Organizations building internal developer platforms to standardize application deployment.
-
-!!! example "Kubernetes Users"
-    Teams using Kubernetes who want a simpler application deployment experience.
 
 !!! example "Multi-Tenant Environments"
     Organizations needing to support multiple teams or projects on shared infrastructure.
