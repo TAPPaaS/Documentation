@@ -57,7 +57,6 @@ Found a bug? Please report it on GitHub Issues.
 
 !!! info "Bug Report Checklist"
     - [ ] TAPPaaS version (`tappaas version`)
-    - [ ] Kubernetes version (`kubectl version`)
     - [ ] Steps to reproduce the issue
     - [ ] Expected vs actual behavior
     - [ ] Error messages and logs

@@ -59,14 +59,6 @@ Deploy and run your applications in a self-hosted cloud, with all the enterprise
 
     [:octicons-arrow-right-24: License](about/license.md)
 
--   :material-cloud-outline:{ .lg .middle } **Cloud Native**
-
-    ---
-
-    Built from the ground up for containers, Kubernetes, and modern microservices architectures.
-
-    [:octicons-arrow-right-24: Documentation](docs/index.md)
-
 -   :material-account-group:{ .lg .middle } **Community Driven**
 
     ---
