@@ -551,7 +551,7 @@ Now that you understand TAPPaaS architecture:
 
     Get TAPPaaS running on your infrastructure.
 
-    [:octicons-arrow-right-24: Installation Guide](../tutorials/get-started/install.md)
+    [:octicons-arrow-right-24: Installation Guide](../installation/index.md)
 
 -   :material-file-document:{ .lg .middle } **Detailed Architecture**
 
@@ -575,7 +575,7 @@ Now that you understand TAPPaaS architecture:
 
     Deploy your first application.
 
-    [:octicons-arrow-right-24: Quick Start Guide](../tutorials/get-started/deploy-first-app.md)
+    [:octicons-arrow-right-24: Quick Start Guide](../installation/index.md)
 
 </div>
 

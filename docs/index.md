@@ -20,7 +20,7 @@ hide:
 
 Build, deploy, and scale your applications with confidence using a platform designed for modern cloud-native development.
 
-[Get Started](tutorials/get-started/index.md){ .md-button .md-button--primary }
+[Install TAPPaaS](installation/index.md){ .md-button .md-button--primary }
 [View on GitHub](https://github.com/TAPPaaS){ .md-button }
 
 </div>
@@ -35,7 +35,7 @@ Build, deploy, and scale your applications with confidence using a platform desi
 
     Get your applications running in minutes with streamlined deployment workflows and automated infrastructure management.
 
-    [:octicons-arrow-right-24: Quick Start](tutorials/get-started/index.md)
+    [:octicons-arrow-right-24: Installation Guide](installation/index.md)
 
 -   :material-scale-balance:{ .lg .middle } **Open Source**
 

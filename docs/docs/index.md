@@ -10,8 +10,8 @@ Welcome to the TAPPaaS reference documentation. This section provides comprehens
 ## How to Use This Documentation
 
 - **Architecture**: Understand how TAPPaaS is designed and how components work together
-- **Tutorials**: Step-by-step guides are available in the [Tutorials](../tutorials/index.md) section
-- **Getting Started**: New to TAPPaaS? Start with [Install TAPPaaS](../tutorials/get-started/install.md)
+- **Tutorials**: Step-by-step guides are available in the [Tutorials](../installation/index.md) section
+- **Getting Started**: New to TAPPaaS? Start with [Install TAPPaaS](../installation/index.md)
 
 ---
 
@@ -57,7 +57,7 @@ The following documentation sections are planned for future releases:
 
 <div class="grid cards" markdown>
 
-- :material-school: **[Tutorials](../tutorials/index.md)**
+- :material-school: **[Tutorials](../installation/index.md)**
 
     ---
 
@@ -88,6 +88,6 @@ The following documentation sections are planned for future releases:
 ## Need Help?
 
 - **Search**: Use the search box above to find specific topics
-- **Tutorials**: Check our [step-by-step tutorials](../tutorials/index.md) for practical guidance
+- **Tutorials**: Check our [step-by-step tutorials](../installation/index.md) for practical guidance
 - **Community**: Ask questions in [GitHub Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions)
 - **Issues**: Report documentation problems on [GitHub Issues](https://github.com/TAPPaaS/Documentation/issues)

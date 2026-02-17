@@ -300,7 +300,7 @@ We break the technical challenge into components:
 - **Practical examples** demonstrate real-world application
 
 !!!tip "Getting Started is Simple"
-    You don't need to understand everything to get value from TAPPaaS. All you need is an older computer or server and a few hours to follow our [installation guide](../tutorials/get-started/install.md).
+    You don't need to understand everything to get value from TAPPaaS. All you need is an older computer or server and a few hours to follow our [installation guide](../installation/index.md).
 
 ---
 
@@ -345,7 +345,7 @@ TAPPaaS is more than software—it's a movement to make cloud-native infrastruct
 
     Install TAPPaaS and deploy your first application.
 
-    [:octicons-arrow-right-24: Installation Guide](../tutorials/get-started/install.md)
+    [:octicons-arrow-right-24: Installation Guide](../installation/index.md)
 
 -   :material-code-braces:{ .lg .middle } **Contribute**
 
@@ -390,5 +390,5 @@ Now that you understand the vision and problem TAPPaaS addresses:
 
 - [Architecture Overview](architecture.md) - Learn how we've built the solution
 - [Introduction](index.md) - Return to the main introduction
-- [Getting Started](../tutorials/get-started/index.md) - Start using TAPPaaS
+- [Getting Started](../installation/index.md) - Start using TAPPaaS
 - [FAQ](../community/faq.md) - Find answers to common questions

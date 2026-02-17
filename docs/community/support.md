@@ -15,7 +15,7 @@ Many questions are already answered in our documentation:
 
 1. **Search the Docs** - Use the search bar at the top of any page
 2. **Check the FAQ** - Common questions are answered in our [FAQ](faq.md)
-3. **Read Tutorials** - Step-by-step guides for common tasks in [Tutorials](../tutorials/index.md)
+3. **Read Tutorials** - Step-by-step guides for common tasks in [Tutorials](../installation/index.md)
 4. **Review FAQ** - Common issues and solutions in [FAQ](faq.md)
 
 ---

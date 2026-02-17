@@ -64,7 +64,7 @@ Yes! You can use local Kubernetes distributions like:
 - **Docker Desktop** with Kubernetes enabled
 - **k3s** / **k3d**
 
-See the [Installation Guide](../tutorials/get-started/install.md) for details.
+See the [Installation Guide](../installation/index.md) for details.
 
 ### How do I upgrade TAPPaaS?
 

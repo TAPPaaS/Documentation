@@ -195,7 +195,7 @@ Step-by-step, hands-on learning content following Terraform's tutorial pattern.
 
 #### 8. Tutorials Overview
 - **Path:** `/tutorials`
-- **File:** `docs/tutorials/index.md`
+- **File:** `do../installation/index.md`
 - **Content Type:** Navigation Hub
 - **Priority:** P0
 - **Purpose:** Gateway to all tutorial content with learning paths
@@ -211,7 +211,7 @@ Step-by-step, hands-on learning content following Terraform's tutorial pattern.
 
 ##### 9. Install TAPPaaS
 - **Path:** `/tutorials/get-started/install`
-- **File:** `docs/tutorials/get-started/install.md`
+- **File:** `do../installation/index.md`
 - **Content Type:** Procedural Tutorial
 - **Priority:** P0
 - **Purpose:** Step-by-step installation on various platforms
@@ -227,7 +227,7 @@ Step-by-step, hands-on learning content following Terraform's tutorial pattern.
 
 ##### 10. Deploy Your First Application
 - **Path:** `/tutorials/get-started/deploy-first-app`
-- **File:** `docs/tutorials/get-started/deploy-first-app.md`
+- **File:** `do../installation/index.md`
 - **Content Type:** Procedural Tutorial
 - **Priority:** P0
 - **Purpose:** First "Hello World" experience with TAPPaaS
@@ -1234,9 +1234,9 @@ nav:
 2. Intro overview (`/intro/index.md`)
 3. Vision & Problem (`/intro/vision.md`) - migrate from tappaas.org
 4. Architecture overview (`/intro/architecture.md`) - adapt from tappaas.org
-5. Tutorials hub (`/tutorials/index.md`)
-6. Install TAPPaaS tutorial (`/tutorials/get-started/install.md`)
-7. Deploy first app tutorial (`/tutorials/get-started/deploy-first-app.md`)
+5. Tutorials hub ../installation/index.md`)
+6. Install TAPPaaS tutorial ../installation/index.md`)
+7. Deploy first app tutorial ../installation/index.md`)
 8. Docs hub (`/docs/index.md`)
 9. Architecture specification (`/docs/architecture/overview.md`) - migrate from tappaas.org
 10. Core components (`/docs/architecture/components.md`)

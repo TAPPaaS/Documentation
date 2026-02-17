@@ -17,7 +17,7 @@ TAPPaaS bridges the gap between complex Kubernetes infrastructure and developer 
 - **Operational Simplicity** - Reduce the operational burden of managing cloud-native applications
 
 !!!tip "Quick Start"
-    Ready to try TAPPaaS? Start with our [Installation Guide](../tutorials/get-started/install.md) to get up and running in minutes.
+    Ready to try TAPPaaS? Start with our [Installation Guide](../installation/index.md) to get up and running in minutes.
 
 ---
 
@@ -169,7 +169,7 @@ Ready to start using TAPPaaS? Here's your path forward:
 
     Get TAPPaaS running on your infrastructure.
 
-    [:octicons-arrow-right-24: Installation Guide](../tutorials/get-started/install.md)
+    [:octicons-arrow-right-24: Installation Guide](../installation/index.md)
 
 -   :material-rocket-launch:{ .lg .middle } **Deploy Your First App**
 
@@ -177,7 +177,7 @@ Ready to start using TAPPaaS? Here's your path forward:
 
     Follow our quickstart to deploy your first application.
 
-    [:octicons-arrow-right-24: Quick Start](../tutorials/get-started/deploy-first-app.md)
+    [:octicons-arrow-right-24: Quick Start](../installation/index.md)
 
 </div>
 
@@ -190,14 +190,14 @@ Choose your path based on your role and goals:
 ### For Developers
 
 1. Read the [Vision](vision.md) to understand TAPPaaS's approach
-2. Follow the [Quick Start](../tutorials/get-started/deploy-first-app.md) to deploy your first app
+2. Follow the [Quick Start](../installation/index.md) to deploy your first app
 3. Explore language-specific deployment examples
 4. Learn about configuration and scaling options
 
 ### For Platform Engineers
 
 1. Review the [Architecture Overview](architecture.md) to understand system design
-2. Complete the [Installation Guide](../tutorials/get-started/install.md)
+2. Complete the [Installation Guide](../installation/index.md)
 3. Study operational best practices and monitoring
 4. Configure multi-tenant environments and access controls
 
@@ -227,5 +227,5 @@ Now that you understand what TAPPaaS is, explore these topics:
 
 - [Vision & Problem Statement](vision.md) - Understand why TAPPaaS exists
 - [Architecture Overview](architecture.md) - Learn how TAPPaaS is built
-- [Getting Started](../tutorials/get-started/index.md) - Install and deploy your first application
+- [Getting Started](../installation/index.md) - Install and deploy your first application
 - [About TAPPaaS](../about/index.md) - Learn about the project history and governance
