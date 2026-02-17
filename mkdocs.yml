@@ -2,7 +2,7 @@
 # https://www.mkdocs.org/user-guide/configuration/
 
 site_name: TAPPaaS
-site_url: https://tappaas.org
+site_url: https://tappaas.github.io/Documentation/
 site_description: Open Source Platform as a Service - Documentation and Resources
 site_author: TAPPaaS Community
 
