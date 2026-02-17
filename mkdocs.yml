@@ -157,26 +157,31 @@ nav:
     # - Comparisons: intro/comparisons.md
     # - Glossary: intro/glossary.md
 
-  - Tutorials:
-    - Overview: tutorials/index.md
-    - Get Started:
-      - Overview: tutorials/get-started/index.md
-      - Install TAPPaaS: tutorials/get-started/install.md
-      - Deploy Your First App: tutorials/get-started/deploy-first-app.md
-      # - Configure Application: tutorials/get-started/configure-app.md
-      # - Scale Your Application: tutorials/get-started/scale-app.md
-      # - Monitor and Debug: tutorials/get-started/monitor-debug.md
-    # - Deployment:
-    #   - Node.js: tutorials/deployment/nodejs.md
-    #   - Python/Django: tutorials/deployment/python-django.md
-    #   - Docker: tutorials/deployment/docker.md
-    # - Integration:
-    #   - Database: tutorials/integration/database.md
-    #   - CI/CD: tutorials/integration/cicd.md
-    #   - Custom Domains: tutorials/integration/custom-domains.md
-    # - Operations:
-    #   - Backup & Recovery: tutorials/operations/backup-recovery.md
-    #   - Upgrade: tutorials/operations/upgrade.md
+  - Installation:
+    - Overview: installation/index.md
+    - Hardware Selection: installation/hardware-selection.md
+    - Preparation: installation/preparation.md
+    - Foundation:
+      - Overview: installation/foundation/index.md
+      - Proxmox Node: installation/foundation/proxmox-node.md
+      - Firewall: installation/foundation/firewall.md
+      - Additional Nodes: installation/foundation/additional-nodes.md
+      - NixOS Template: installation/foundation/nixos-template.md
+      - CICD Mothership: installation/foundation/cicd.md
+      - Backup: installation/foundation/backup.md
+      - Identity: installation/foundation/identity.md
+      - Security: installation/foundation/security.md
+    - AI Stack:
+      - Overview: installation/ai-stack/index.md
+      - OpenWebUI: installation/ai-stack/openwebui.md
+      - LiteLLM: installation/ai-stack/litellm.md
+      - Ollama: installation/ai-stack/ollama.md
+    - Productivity Stack:
+      - Overview: installation/productivity-stack/index.md
+      - n8n: installation/productivity-stack/n8n.md
+    - Home Stack:
+      - Overview: installation/home-stack/index.md
+      - Home Assistant: installation/home-stack/home-assistant.md
 
   - Documentation:
     - Overview: docs/index.md
