@@ -30,9 +30,9 @@ Under Construction
 
 # **TAPPaaS**
 
-### Trusted Automated Private Platform as a (selfhosted) Service
+### Trusted Automated Private Platform as a (self-hosted) Service
 
-Build, deploy, and scale your applications with confidence using a platform designed for modern cloud-native development.
+Deploy and run your applications in a self-hosted cloud, with all the enterprise class capabilities of modern cloud infrastructure, but without having to care about the complexity. TAPPaaS give you freedom, and resiliency of your Digital life whether you are a small business, a government organization, an NGO or a community of homes
 
 [Install TAPPaaS](installation/index.md){ .md-button .md-button--primary }
 [View on GitHub](https://github.com/TAPPaaS){ .md-button }
