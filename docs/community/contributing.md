@@ -24,29 +24,19 @@ git clone https://github.com/YOUR-USERNAME/tappaas.git
 cd tappaas
 ```
 
-### 2. Set Up Development Environment
-
-```bash
-# Install dependencies
-make setup
-
-# Run tests
-make test
-```
-
-### 3. Create a Branch
+### 2. Create a Branch
 
 ```bash
 git checkout -b feature/your-feature-name
 ```
 
-### 4. Make Your Changes
+### 3. Make Your Changes
 
 - Follow the existing code style
 - Add tests for new functionality
 - Update documentation as needed
 
-### 5. Submit a Pull Request
+### 4. Submit a Pull Request
 
 - Push your branch to your fork
 - Open a PR against the `main` branch
