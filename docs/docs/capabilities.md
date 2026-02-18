@@ -36,51 +36,22 @@ Foundation provides the base infrastructure that Security and Services layers de
 
 ## Services
 
-Services constitute the central value proposition. All the other parts like Foundation, Management and Security exist to ensure that you can get the IT you need working in a stable, scalable, integrated, secure, private and maintainable way.
+Services is what this is all about: Providing IT functions to the users of TAPPaaS. all the other parts like Foundation, Management and Security is just there to ensure that you can get the IT you need working in a stable, scalable, integrated, secure, private and maintainable way.
 
-Configuration varies by deployment type, with initial design targeting small businesses and home users.
+What services are essential to each deployment of TAPPaaS will differ, but we define a set of services that TAPPaaS should support based on the typical deployment. You can configure what is relevant for you deployment.
 
-### Home Deployment Services
+These examples of deployments are just examples, where we try and highlight the essential functionality that you need for that kind of deployment. 
 
-**Physical Property Functions:**
+```mermaid
+classDiagram
+  A Home ..> TAPPaaS
+  Small Community ..> TAPPaaS
+  Small Business Owner ..> TAPPaaS
+  Small SW Development Organization ..> TAPPaaS
+  Small Utility Company ..> TAPPaaS
+  NGO ..> TAPPaaS
+  
+```
 
-- Smart lighting, heating, and irrigation systems
-- Weather monitoring and intelligent home management
+Note we are using the word "small" a lot. Make no mistake, TAPPaaS as a core architecture can scale up, but our initial design criteria is to cater for the SMB/Home out of the box.
 
-**Household Member Functions:**
-
-- Email and contact management with personal ownership
-- Calendar and note-taking with sharing capabilities
-- Photo, music, video, and podcast libraries
-- Document storage with privacy controls
-- Personal AI assistance and e-book collection
-
-### Extended Deployment Models
-
-**Small Communities** add:
-
-- Internet resource pooling
-- Local information repositories (offline Wikipedia access)
-- Social platforms
-- Video conferencing
-
-**Small Businesses** require:
-
-- Corporate communications
-- Office productivity suites with Microsoft compatibility
-- Web presence
-- Enterprise resource planning
-- Dedicated networking infrastructure
-
-**Development Organizations** need:
-
-- Version control
-- Continuous integration systems
-- Application hosting platforms
-
-**Specialized Deployments** (utilities, NGOs) emphasize:
-
-- Firewall robustness
-- Network segmentation
-- Privacy protection
-- Offline functionality
