@@ -206,14 +206,7 @@ nav:
     #   - Monitoring: docs/operations/monitoring.md
     #   - Troubleshooting: docs/operations/troubleshooting.md
 
-  - Community:
-    - Overview: community/index.md
-    - Contributing: community/contributing.md
-    - Code of Conduct: community/code-of-conduct.md
-    - FAQ: community/faq.md
-    - Support: community/support.md
-    # - Development Guide: community/development.md
-    # - Documentation Guide: community/documentation.md
+  - Roadmap: roadmap/index.md
 
   - About:
     - About TAPPaaS: about/index.md

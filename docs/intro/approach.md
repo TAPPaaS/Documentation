@@ -48,39 +48,6 @@ Systems must work even when internet connectivity is limited or unavailable. Loc
 
 ---
 
-## Development Roadmap
-
-The team follows a phased approach:
-
-### Spring 2025
-
-- Framework establishment
-- CI/CD pipeline creation
-- Core architecture decisions
-
-### Summer 2025
-
-- Minimum viable product
-- Manual installation process
-- Focus on home use cases
-
-### Fall 2025
-
-- Automation of installation
-- Expansion of home-use capabilities
-- Documentation and guides
-
-### 2026 and Beyond
-
-- Small business support
-- Broader platform expansion
-- Community growth
-
-!!!info "Current Status"
-    The project has advanced beyond the framing phase and is actively developing the MVP.
-
----
-
 ## Assembly Over Creation
 
 Rather than reinventing the wheel, TAPPaaS focuses on:
@@ -93,26 +60,3 @@ Rather than reinventing the wheel, TAPPaaS focuses on:
 | **Documentation** | Making the platform accessible to non-experts |
 
 This approach lets us move faster and build on the collective work of the open source community.
-
----
-
-## License
-
-TAPPaaS is licensed under the **Mozilla Public License 2.0** (MPL-2.0).
-
-This license:
-
-- Allows commercial use
-- Requires sharing modifications to MPL-licensed files
-- Permits combining with proprietary code
-- Protects contributor patents
-
-See the [License page](../about/license.md) for full details.
-
----
-
-## Next Steps
-
-- [Vision & Problem](vision.md) - Understand what problems we're solving
-- [Architecture Overview](architecture.md) - See how the platform is structured
-- [Installation Guide](../installation/index.md) - Get started with TAPPaaS
