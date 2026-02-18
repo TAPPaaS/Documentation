@@ -44,7 +44,7 @@ General setup is:
 
 ## Network Segmentation
 
-See [Network Design](high-level-design.md) for details on network segmentation.
+See [Network Design](network.md) for details on network segmentation.
 
 ---
 
