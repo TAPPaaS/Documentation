@@ -9,7 +9,7 @@ The TAPPaaS team follows a phased approach to building the platform.
 
 ---
 
-## Spring 2025
+## Summer 2025
 
 - Framework establishment
 - CI/CD pipeline creation
@@ -17,7 +17,7 @@ The TAPPaaS team follows a phased approach to building the platform.
 
 ---
 
-## Summer 2025
+## Fall 2025
 
 - Minimum viable product
 - Manual installation process
@@ -25,21 +25,25 @@ The TAPPaaS team follows a phased approach to building the platform.
 
 ---
 
-## Fall 2025
+## 2026 Q1
 
 - Automation of installation
 - Expansion of home-use capabilities
+- Small business support
 - Documentation and guides
+- Release Version 1.0
+- 3 TAPPaaS systems in production
 
 ---
 
-## 2026 and Beyond
+## 2026 Q2 and Beyond
 
-- Small business support
-- Broader platform expansion
-- Community growth
+- Grow user base
+- Improve automation
+- Grow modules
+- harden security and update automation
 
 ---
 
 !!!info "Current Status"
-    The project has advanced beyond the framing phase and is actively developing the MVP.
+    The project has advanced beyond the framing phase and is actively developing the MVP. We are on track for Version 1.0 by end of Q1.
