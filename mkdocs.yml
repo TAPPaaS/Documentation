@@ -199,6 +199,5 @@ nav:
 
   - About:
     - People: about/people.md
+    - Inspiration: about/inspiration.md
     - License: about/license.md
-    # - Security Policy: about/security.md
-    # - Roadmap: about/roadmap.md
