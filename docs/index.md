@@ -125,8 +125,4 @@ TAPPaaS provides a complete platform for building and running cloud-native appli
 
 ---
 
-<div style="text-align: center;" markdown>
-
 **TAPPaaS is open source software licensed under the [Mozilla Public License 2.0](about/license.md)**
-
-</div>
