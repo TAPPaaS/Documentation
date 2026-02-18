@@ -15,6 +15,16 @@ TAPPaaS represents a comprehensive IT solution designed through both top-down an
 
 The system organizes around four interdependent domains:
 
+```mermaid
+classDiagram
+    TAPPaaS *-- Security
+    TAPPaaS *-- Services
+    TAPPaaS *-- Management
+    Security ..> Foundation
+    Services ..> Foundation
+    Management ..> Foundation
+```
+
 - **Security** - Protecting the platform and user data
 - **Services** - The applications and functionality users interact with
 - **Management** - Administration and maintenance capabilities
