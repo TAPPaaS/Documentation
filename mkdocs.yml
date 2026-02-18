@@ -209,7 +209,7 @@ nav:
   - Roadmap: roadmap/index.md
 
   - About:
-    - About TAPPaaS: about/index.md
+    - People: about/people.md
     - License: about/license.md
     # - Security Policy: about/security.md
     # - Roadmap: about/roadmap.md
