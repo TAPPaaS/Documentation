@@ -1,5 +1,10 @@
 /* TAPPaaS Custom Styles */
 
+/* Hide table of contents on all pages */
+.md-sidebar--secondary {
+  display: none;
+}
+
 /* Hero Section */
 .hero {
   text-align: left;
