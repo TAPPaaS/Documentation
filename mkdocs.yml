@@ -184,6 +184,7 @@ nav:
   - Architecture:
     - Overview: docs/index.md
     - Capabilities: docs/capabilities.md
+    - Meta Model: docs/meta-model.md
     - Solution Design:
       - Overview: docs/solution-design/index.md
       - High Level Design: docs/solution-design/high-level-design.md
