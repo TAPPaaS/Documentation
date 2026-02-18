@@ -183,25 +183,16 @@ nav:
 
   - Architecture:
     - Overview: docs/index.md
-    - Details:
-      - Specification: docs/architecture/overview.md
-      - Components: docs/architecture/components.md
-      # - Deployment Models: docs/architecture/deployment-models.md
-      # - Security Model: docs/architecture/security.md
-    # - Configuration:
-    #   - Overview: docs/configuration/index.md
-    #   - Platform: docs/configuration/platform.md
-    #   - Application: docs/configuration/application.md
-    # - CLI Reference:
-    #   - Overview: docs/cli/index.md
-    #   - Commands: docs/cli/commands.md
-    # - API Reference:
-    #   - Overview: docs/api/index.md
-    #   - REST API: docs/api/rest.md
-    # - Operations:
-    #   - Overview: docs/operations/index.md
-    #   - Monitoring: docs/operations/monitoring.md
-    #   - Troubleshooting: docs/operations/troubleshooting.md
+    - Capabilities: docs/capabilities.md
+    - Solution Design:
+      - Overview: docs/solution-design/index.md
+      - High Level Design: docs/solution-design/high-level-design.md
+      - Security: docs/solution-design/security.md
+      - Storage: docs/solution-design/storage.md
+      - Single Sign-On: docs/solution-design/single-signon.md
+      - Backup: docs/solution-design/backup.md
+      - AI: docs/solution-design/ai.md
+    - Module Designs: docs/module-designs.md
 
   - Roadmap: roadmap/index.md
 
