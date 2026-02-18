@@ -151,12 +151,9 @@ nav:
 
   - Intro:
     - Overview: intro/index.md
-    - Vision & Problem: intro/vision.md
+    - Vision: intro/vision.md
+    - Problem: intro/problem.md
     - Approach: intro/approach.md
-    - Architecture Overview: intro/architecture.md
-    # - Use Cases: intro/use-cases.md
-    # - Comparisons: intro/comparisons.md
-    # - Glossary: intro/glossary.md
 
   - Installation:
     - Overview: installation/index.md
