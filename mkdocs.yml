@@ -184,9 +184,9 @@ nav:
       - Overview: installation/home-stack/index.md
       - Home Assistant: installation/home-stack/home-assistant.md
 
-  - Documentation:
+  - Architecture:
     - Overview: docs/index.md
-    - Architecture:
+    - Details:
       - Specification: docs/architecture/overview.md
       - Components: docs/architecture/components.md
       # - Deployment Models: docs/architecture/deployment-models.md
