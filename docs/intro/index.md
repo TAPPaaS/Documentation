@@ -25,9 +25,9 @@ TAPPaaS bridges the gap between complex Kubernetes infrastructure and developer 
 
 Understanding these key concepts will help you get the most out of TAPPaaS:
 
-### Applications
+### Module / Applications
 
-Applications are the primary unit of deployment in TAPPaaS. This is also called a "Module". Each Module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
+A module is the primary unit of deployment in TAPPaaS. Often a module will have a single primary Applicaiont at the center of the module. Each Module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
 
 ### Platform as a Service
 
@@ -36,24 +36,6 @@ TAPPaaS provides a PaaS layer on top of physical hardware, abstracting away infr
 The hardware can be hosted in your own data center or in a local hosting provider
 
 TAPPaaS scale from a medium sized single server system over a 3 node redundant cluster up to 10's of servers in a single platform cluster
-
-### Cloud-Native Architecture
-
-Built from the ground up for simplicity of deploying application, TAPPaaS leverages modern cloud-native patterns including:
-
-- Declarative configuration
-- Automated scaling and self-healing
-- Service discovery and load balancing
-- DevOps deployment pattern for autonomous updates
-
-### Developer Experience
-
-TAPPaaS prioritizes developer productivity through:
-
-- Intuitive CLI and API interfaces
-- Convention over configuration
-- Built-in best practices
-- Fast feedback loops
 
 ---
 
@@ -95,49 +77,6 @@ TAPPaaS manages the operational complexity:
 - Rolling updates and rollbacks
 - Resource optimization
 - Security best practices
-
----
-
-## When to Use TAPPaaS
-
-TAPPaaS is ideal for:
-
-<div class="grid" markdown>
-
-!!! example "Development Teams"
-    Teams that want to focus on building applications rather than managing infrastructure.
-
-!!! example "Platform Engineers"
-    Organizations building internal developer platforms to standardize application deployment.
-
-!!! example "Multi-Tenant Environments"
-    Organizations needing to support multiple teams or projects on shared infrastructure.
-
-</div>
-
----
-
-## Key Features
-
-### Simple Deployment Model
-
-Deploy applications with minimal configuration using familiar tools and workflows.
-
-### Multi-Language Support
-
-TAPPaaS supports applications written in any language including Node.js, Python, Java, Go, Ruby, and more.
-
-### Built-in Best Practices
-
-TAPPaaS incorporates cloud-native best practices including 12-factor app principles, secure defaults, and production-ready configurations.
-
-### Extensible Architecture
-
-While TAPPaaS provides sensible defaults, it remains flexible and extensible for advanced use cases.
-
-### Open Source
-
-Fully open source under the Mozilla Public License 2.0, with an active community and transparent development process.
 
 ---
 
@@ -183,49 +122,3 @@ Ready to start using TAPPaaS? Here's your path forward:
 
 ---
 
-## Learning Paths
-
-Choose your path based on your role and goals:
-
-### For Developers
-
-1. Read the [Vision](vision.md) to understand TAPPaaS's approach
-2. Follow the [Quick Start](../installation/index.md) to deploy your first app
-3. Explore language-specific deployment examples
-4. Learn about configuration and scaling options
-
-### For Platform Engineers
-
-1. Review the [Architecture Overview](architecture.md) to understand system design
-2. Complete the [Installation Guide](../installation/index.md)
-3. Study operational best practices and monitoring
-4. Configure multi-tenant environments and access controls
-
-### For Decision Makers
-
-1. Read the [Vision & Problem Statement](vision.md)
-2. Review the [Architecture Overview](architecture.md)
-3. Understand the [open source license](../about/license.md)
-4. Explore deployment scenarios and success stories
-
----
-
-## Community and Support
-
-TAPPaaS is a community-driven project. Get involved:
-
-- **Contribute** - Help improve TAPPaaS through [code contributions](../community/contributing.md)
-- **Report Issues** - Found a bug? [Open an issue](https://github.com/TAPPaaS/Documentation/issues)
-- **Ask Questions** - Get help from the community
-- **Share Feedback** - Tell us about your experience with TAPPaaS
-
----
-
-## Next Steps
-
-Now that you understand what TAPPaaS is, explore these topics:
-
-- [Vision & Problem Statement](vision.md) - Understand why TAPPaaS exists
-- [Architecture Overview](architecture.md) - Learn how TAPPaaS is built
-- [Getting Started](../installation/index.md) - Install and deploy your first application
-- [About TAPPaaS](../about/index.md) - Learn about the project history and governance
