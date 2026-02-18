@@ -7,9 +7,9 @@ site_description: Open Source Platform as a Service - Documentation and Resource
 site_author: TAPPaaS Community
 
 # Repository
-repo_name: TAPPaaS/Documentation
-repo_url: https://github.com/TAPPaaS/Documentation
-edit_uri: edit/main/docs/
+repo_name: TAPPaaS/TAPPaaS
+repo_url: https://github.com/TAPPaaS/TAPPaaS
+edit_uri: ""
 
 # Copyright
 copyright: Copyright &copy; 2026 TAPPaaS Contributors | Licensed under MPL 2.0
