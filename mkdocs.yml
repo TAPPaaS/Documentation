@@ -177,6 +177,8 @@ nav:
     - Productivity Stack:
       - Overview: installation/productivity-stack/index.md
       - n8n: installation/productivity-stack/n8n.md
+      - Nextcloud: installation/productivity-stack/nextcloud.md
+      - Karakeep: installation/productivity-stack/karakeep.md
     - Home Stack:
       - Overview: installation/home-stack/index.md
       - Home Assistant: installation/home-stack/home-assistant.md
