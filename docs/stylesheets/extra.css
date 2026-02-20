@@ -5,10 +5,15 @@
   display: none;
 }
 
+/* Hide "Home" link text on home page */
+.md-nav__item--active > .md-nav__link--active {
+  display: none;
+}
+
 /* Hero Section */
 .hero {
   text-align: left;
-  padding: 3rem 1rem;
+  padding: 1rem 1rem 2rem;
   margin-bottom: 2rem;
 }
 
