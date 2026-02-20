@@ -12,22 +12,12 @@
   margin-bottom: 2rem;
 }
 
-.hero h1 {
-  font-size: 6rem;
-  font-weight: 700;
+/* Hero logo styling */
+.hero-logo {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
   margin-bottom: 1rem;
-  line-height: 1.1;
-  background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-[data-md-color-scheme="slate"] .hero h1 {
-  background: linear-gradient(135deg, #7986cb 0%, #9fa8da 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .hero h3 {

@@ -14,7 +14,7 @@ hide:
 
 <div class="hero" markdown>
 
-# **TAPPaaS**
+![TAPPaaS](tappaas-logo.png){ .hero-logo }
 
 ### Trusted Automated Private Platform as a (self-hosted) Service
 
