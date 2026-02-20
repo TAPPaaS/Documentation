@@ -4,10 +4,15 @@ description: Build, deploy, and scale applications with TAPPaaS - the open sourc
 hide:
   - navigation
   - toc
+  - title
 ---
 
 <style>
 .md-content__button {
+  display: none;
+}
+/* Hide the auto-generated page title */
+.md-content__inner > h1:first-child {
   display: none;
 }
 </style>
