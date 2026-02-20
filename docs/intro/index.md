@@ -100,7 +100,7 @@ Ready to start using TAPPaaS? Here's your path forward:
 
     Understand how TAPPaaS is built and how components interact.
 
-    [:octicons-arrow-right-24: Architecture Overview](architecture.md)
+    [:octicons-arrow-right-24: Architecture Overview](../docs/index.md)
 
 -   :material-download:{ .lg .middle } **Install TAPPaaS**
 
