@@ -10,21 +10,7 @@ hide:
 .md-content__button {
   display: none;
 }
-.under-construction {
-  background-color: #d32f2f;
-  color: white;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-}
 </style>
-
-<div class="under-construction">
-Under Construction
-</div>
 
 <div class="hero" markdown>
 
