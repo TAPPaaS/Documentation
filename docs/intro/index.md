@@ -1,23 +1,23 @@
 ---
 title: Introduction to TAPPaaS
-description: Learn what TAPPaaS is, its core concepts, and how it simplifies application deployment and management
+description: Learn what TAPPaaS is, its core concepts, and how it simplifies self-hosted infrastructure
 ---
 
 # Introduction to TAPPaaS
 
-TAPPaaS (The Application Platform as a Service) is an open-source platform that simplifies deploying, managing, and scaling applications on Kubernetes. It provides a streamlined developer experience while maintaining the power and flexibility of cloud-native infrastructure.
+TAPPaaS (Trusted Automated Private Platform as a Service) is an open-source platform that simplifies deploying, managing, and maintaining self-hosted applications on Proxmox virtualization. It provides enterprise-class capabilities without the complexity.
 
 ## What is TAPPaaS?
 
-TAPPaaS bridges the gap between complex Kubernetes infrastructure and developer productivity. It provides:
+TAPPaaS bridges the gap between complex IT infrastructure and practical usability. It provides:
 
-- **Simple Application Deployment** - Deploy applications without writing complex Kubernetes manifests
-- **Developer Self-Service** - Empower developers to manage their own applications
-- **Platform Flexibility** - Support any language, any framework, any deployment pattern
-- **Operational Simplicity** - Reduce the operational burden of managing cloud-native applications
+- **Simple Deployment** - Deploy applications without deep infrastructure expertise
+- **Integrated Security** - Firewall, identity management, and network segmentation built-in
+- **Automated Backup** - 3-2-1 backup strategy with disaster recovery
+- **Operational Simplicity** - Reduce the operational burden of managing self-hosted infrastructure
 
 !!!tip "Quick Start"
-    Ready to try TAPPaaS? Start with our [Installation Guide](../installation/index.md) to get up and running in minutes.
+    Ready to try TAPPaaS? Start with our [Installation Guide](../installation/index.md) to get up and running.
 
 ---
 
@@ -27,15 +27,15 @@ Understanding these key concepts will help you get the most out of TAPPaaS:
 
 ### Module / Applications
 
-A module is the primary unit of deployment in TAPPaaS. Often a module will have a single primary Applicaiont at the center of the module. Each Module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
+A module is the primary unit of deployment in TAPPaaS. Often a module will have a single primary application at the center of the module. Each module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
 
 ### Platform as a Service
 
-TAPPaaS provides a PaaS layer on top of physical hardware, abstracting away infrastructure complexity and maintaining all the modern complexity of backup, firewall, identity management, high availability, reverse proxy, ...
+TAPPaaS provides a PaaS layer on top of physical hardware, abstracting away infrastructure complexity and maintaining all the modern complexity of backup, firewall, identity management, high availability, reverse proxy, and more.
 
-The hardware can be hosted in your own data center or in a local hosting provider
+The hardware can be hosted in your own data center or in a local hosting provider.
 
-TAPPaaS scale from a medium sized single server system over a 3 node redundant cluster up to 10's of servers in a single platform cluster
+TAPPaaS scales from a medium sized single server system over a 3 node redundant cluster up to 10's of servers in a single platform cluster.
 
 ---
 
@@ -54,9 +54,9 @@ Define your application using simple configuration files that specify:
 
 ### 2. Deploy to Platform
 
-Use the TAPPaaS CLI to deploy your application. TAPPaaS handles:
+Use the TAPPaaS CI/CD system to deploy your application. TAPPaaS handles:
 
-- Building Virtual machines for module
+- Building Virtual machines for each module
 - Configuring networking and ingress
 - Setting up backup, monitoring and logging
 
@@ -65,9 +65,9 @@ Use the TAPPaaS CLI to deploy your application. TAPPaaS handles:
 Once deployed, TAPPaaS provides tools to:
 
 - Monitor application health and performance
-- Scale applications manually or automatically
+- Scale applications across nodes
 - View logs and debug issues
-- Update applications with zero-downtime deployments
+- Update applications with managed deployments
 
 ### 4. Operate with Confidence
 
@@ -121,4 +121,3 @@ Ready to start using TAPPaaS? Here's your path forward:
 </div>
 
 ---
-

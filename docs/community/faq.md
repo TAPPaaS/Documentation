@@ -13,7 +13,7 @@ Find answers to common questions about TAPPaaS.
 
 ### What is TAPPaaS?
 
-TAPPaaS (The Application Platform as a Service) is an open-source platform designed to simplify deploying and managing applications on Kubernetes. It provides a developer-friendly interface while leveraging the power and flexibility of Kubernetes underneath.
+TAPPaaS (Trusted Automated Private Platform as a Service) is an open-source platform designed to simplify deploying and managing self-hosted applications on Proxmox virtualization. It provides enterprise-class capabilities with automated setup, security, backup, and identity management.
 
 ### Is TAPPaaS free to use?
 
@@ -24,15 +24,19 @@ Yes! TAPPaaS is open source software licensed under the [Mozilla Public License 
 TAPPaaS differentiates itself by:
 
 - **Open Source**: Full transparency and community-driven development
-- **Kubernetes Native**: Builds on Kubernetes rather than abstracting it away
-- **Self-Hosted**: Run on your own infrastructure with full control
-- **Extensible**: Plugin system for custom integrations
+- **Self-Hosted**: Run on your own hardware with full control and privacy
+- **Integrated**: Security, backup, identity management built-in
+- **Automated**: Reduces weeks of manual setup to hours
 
 See our [Architecture Overview](../docs/index.md) for more details.
 
-### What Kubernetes versions are supported?
+### Who is TAPPaaS for?
 
-TAPPaaS supports Kubernetes 1.26 and later. We recommend using a recent stable version for the best experience.
+TAPPaaS serves:
+
+- **Families and Communities** - Data privacy and independence from big tech
+- **Small-to-Medium Businesses** - Reliable infrastructure without a dedicated IT team
+- **Organizations** - Government, NGOs, and critical infrastructure needing local resilience
 
 ---
 
@@ -40,220 +44,81 @@ TAPPaaS supports Kubernetes 1.26 and later. We recommend using a recent stable v
 
 ### What are the system requirements?
 
-**Minimum requirements:**
+**Minimum (single node):**
 
-- Kubernetes cluster v1.26+
-- 2 CPU cores available for TAPPaaS
-- 4GB RAM available for TAPPaaS
-- `kubectl` configured with cluster access
-- Helm 3.x
+- x86_64 server or PC
+- 4 CPU cores
+- 16GB RAM
+- 256GB SSD storage
+- Network interface
 
-**Recommended for production:**
+**Recommended (3-node cluster):**
 
-- High-availability Kubernetes cluster
-- 4+ CPU cores for TAPPaaS
-- 8GB+ RAM for TAPPaaS
-- Persistent storage for state
+- 3 x servers with 8+ CPU cores each
+- 32GB+ RAM per node
+- Mirrored SSDs for redundancy
+- Dedicated network switch
 
-### Can I install TAPPaaS on my local machine?
+See the [Hardware Selection Guide](../installation/hardware-selection.md) for details.
 
-Yes! You can use local Kubernetes distributions like:
+### Can I run TAPPaaS on my existing hardware?
 
-- **minikube**
-- **kind** (Kubernetes in Docker)
-- **Docker Desktop** with Kubernetes enabled
-- **k3s** / **k3d**
-
-See the [Installation Guide](../installation/index.md) for details.
+Yes! TAPPaaS runs on standard x86_64 hardware. You can repurpose existing servers, use mini PCs, or purchase new hardware. See our [Installation Guide](../installation/index.md).
 
 ### How do I upgrade TAPPaaS?
 
-Use Helm to upgrade:
-
-```bash
-helm repo update
-helm upgrade tappaas tappaas/tappaas -n tappaas-system
-```
-
-Check the official documentation for upgrade procedures.
+TAPPaaS modules are updated through the CI/CD system. Updates are typically automated on a weekly basis with security patches applied automatically.
 
 ---
 
-## Deployment
+## Architecture
 
-### What programming languages are supported?
+### What virtualization does TAPPaaS use?
 
-TAPPaaS supports any language that can run in a container:
+TAPPaaS is built on **Proxmox VE**, an open-source virtualization platform. Each TAPPaaS module runs in its own virtual machine for isolation and security.
 
-- **Built-in buildpacks**: Node.js, Python, Go, Java, Ruby, PHP
-- **Custom Dockerfiles**: Any language or runtime
-- **Pre-built images**: Any OCI-compatible container image
+### What about high availability?
 
-### How do I deploy a private Git repository?
+TAPPaaS supports:
 
-Configure Git credentials as a Kubernetes secret:
+- **Disk redundancy**: ZFS mirroring and RAIDz configurations
+- **Node clustering**: 3+ node Proxmox clusters with failover
+- **Backup**: Automated backups with Proxmox Backup Server
 
-```bash
-kubectl create secret generic git-credentials \
-  --from-literal=username=your-username \
-  --from-literal=password=your-token \
-  -n tappaas-system
-```
+See the [Backup Design](../docs/solution-design/backup.md) for details.
 
-Then reference the secret in your application configuration.
+### How does networking work?
 
-### Can I deploy multiple applications?
+TAPPaaS uses VLAN segmentation to isolate different parts of the platform:
 
-Yes! TAPPaaS is designed for multi-application environments. Each application is isolated with its own:
+- Management network
+- DMZ for external access
+- Service networks
+- IoT networks
 
-- Configuration
-- Resources
-- Networking
-- Scaling settings
-
-### How do I rollback a deployment?
-
-```bash
-# List deployment history
-tappaas releases list my-app
-
-# Rollback to a specific version
-tappaas rollback my-app --revision 3
-```
-
----
-
-## Configuration
-
-### How do I set environment variables?
-
-There are several ways:
-
-**CLI:**
-```bash
-tappaas config set my-app ENV_VAR=value
-```
-
-**Application manifest:**
-```yaml
-env:
-  - name: DATABASE_URL
-    value: postgres://...
-```
-
-**From secrets:**
-```yaml
-env:
-  - name: API_KEY
-    valueFrom:
-      secretKeyRef:
-        name: my-secrets
-        key: api-key
-```
-
-### How do I configure custom domains?
-
-1. Add the domain to your application:
-   ```bash
-   tappaas domains add my-app example.com
-   ```
-
-2. Configure DNS to point to your TAPPaaS ingress
-
-3. TLS certificates are automatically provisioned via Let's Encrypt
-
-See the documentation for custom domain configuration details.
-
-### How do I configure autoscaling?
-
-```yaml
-# In your application manifest
-scaling:
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-    - type: cpu
-      target: 70
-    - type: memory
-      target: 80
-```
+See the [Network Design](../docs/solution-design/network.md) for details.
 
 ---
 
 ## Operations
 
-### How do I view application logs?
+### How do I view logs?
 
-```bash
-# Stream logs
-tappaas logs my-app -f
+Logs are available through the Proxmox web interface and within each module's VM. Centralized logging can be configured for easier management.
 
-# Show last 100 lines
-tappaas logs my-app --tail 100
+### How do I backup my data?
 
-# Show logs from a specific time
-tappaas logs my-app --since 1h
-```
+TAPPaaS follows the 3-2-1 backup principle:
 
-### How do I access my application's shell?
+- **3 copies** of data
+- **2 different formats**
+- **1 remote location**
 
-```bash
-tappaas exec my-app -- /bin/sh
-```
+Proxmox Backup Server handles automated daily backups. See [Backup Design](../docs/solution-design/backup.md).
 
-### How do I backup my applications?
+### How do I access services remotely?
 
-TAPPaaS stores application configuration in Kubernetes. Back up using:
-
-1. **Kubernetes backups**: Use Velero or similar tools
-2. **GitOps**: Store configuration in Git
-3. **Export**: `tappaas export my-app > my-app.yaml`
-
-See the operations documentation for backup and recovery procedures.
-
-### How do I monitor TAPPaaS?
-
-TAPPaaS exposes Prometheus metrics. Integrate with:
-
-- **Prometheus** for metrics collection
-- **Grafana** for visualization
-- **Alertmanager** for alerting
-
-See the operations documentation for monitoring setup.
-
----
-
-## Troubleshooting
-
-### My application won't deploy
-
-Check these common issues:
-
-1. **Build errors**: Check build logs with `tappaas logs my-app --build`
-2. **Resource limits**: Ensure enough CPU/memory is available
-3. **Image pull errors**: Verify registry credentials
-4. **Health check failures**: Check application health endpoints
-
-See the [Support](support.md) page for troubleshooting help.
-
-### Pods are stuck in Pending
-
-Usually indicates resource constraints:
-
-```bash
-kubectl describe pod <pod-name> -n <namespace>
-```
-
-Look for events explaining why scheduling failed.
-
-### I'm getting 502/503 errors
-
-Common causes:
-
-- Application isn't ready (check health probes)
-- Application crashed (check logs)
-- Resource exhaustion (check metrics)
-- Ingress misconfiguration
+TAPPaaS uses a reverse proxy in the DMZ for secure external access. Services are exposed through the proxy with authentication via the Single Sign-On system.
 
 ---
 
@@ -275,10 +140,6 @@ We welcome contributions! See our [Contributing Guide](contributing.md) for:
 - **GitHub Issues**: [Report bugs](https://github.com/TAPPaaS/TAPPaaS/issues)
 
 See [Support](support.md) for more options.
-
-### Is there commercial support?
-
-TAPPaaS is a community project. For commercial support options, see the [Support page](support.md).
 
 ---
 
