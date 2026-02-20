@@ -49,14 +49,16 @@ TAPPaaS serves:
 - x86_64 server or PC
 - 4 CPU cores
 - 16GB RAM
-- 256GB SSD storage
+- 2 disks: 256GB boot + 500GB tanka1 (data)
 - Network interface
 
-**Recommended (3-node cluster):**
+**Recommended (single node):**
 
-- 3 x servers with 8+ CPU cores each
-- 32GB+ RAM per node
-- Mirrored SSDs for redundancy
+- 8+ CPU cores
+- 32GB+ RAM
+- 1x 512GB SSD (boot)
+- 2x 2TB mirrored (tanka - data with redundancy)
+- 1x 12TB (tankb - backup)
 - Dedicated network switch
 
 See the [Hardware Selection Guide](../installation/hardware-selection.md) for details.

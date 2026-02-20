@@ -25,8 +25,21 @@ For a basic TAPPaaS installation:
 |-----------|---------|-------------|
 | CPU | 4 cores | 8+ cores |
 | RAM | 16 GB | 32+ GB |
-| Storage | 256 GB SSD | 512 GB+ NVMe |
+| Boot disk | 256 GB | 512 GB SSD |
+| tanka (data) | 500 GB | 2x 2 TB mirrored |
+| tankb (backup) | - | 12 TB |
 | Network | 1 Gbps | 2.5 Gbps+ |
+
+**Minimum disk layout:**
+
+- 1x 256 GB boot disk
+- 1x 500 GB tanka1 (primary data pool)
+
+**Recommended disk layout:**
+
+- 1x 512 GB SSD (boot)
+- 2x 2 TB mirrored (tanka - redundant data pool)
+- 1x 12 TB (tankb - backup pool)
 
 ### Multi-Node Cluster
 
