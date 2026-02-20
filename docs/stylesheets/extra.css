@@ -13,9 +13,10 @@
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 6rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.1;
   background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -119,7 +120,7 @@ hr {
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .hero h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
   }
 
   .hero h3 {
@@ -144,6 +145,35 @@ a:not(.md-button):hover {
 /* Navigation improvements */
 .md-nav__link {
   transition: color 0.2s ease;
+}
+
+/* Nested navigation hierarchy styling */
+.md-nav--primary .md-nav__item--nested > .md-nav > .md-nav__list {
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--md-primary-fg-color--light);
+  margin-left: 0.5rem;
+}
+
+/* Second level nesting */
+.md-nav--primary .md-nav__item--nested .md-nav__item--nested > .md-nav > .md-nav__list {
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--md-default-fg-color--lighter);
+  margin-left: 0.5rem;
+}
+
+/* Style parent items differently */
+.md-nav--primary .md-nav__item--nested > .md-nav__link {
+  font-weight: 600;
+}
+
+/* Sub-submenu items smaller and lighter */
+.md-nav--primary .md-nav__item--nested .md-nav__item--nested .md-nav__link {
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-nav--primary .md-nav__item--nested .md-nav__item--nested .md-nav__link:hover {
+  color: var(--md-primary-fg-color);
 }
 
 /* Search improvements */
