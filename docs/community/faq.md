@@ -28,7 +28,7 @@ TAPPaaS differentiates itself by:
 - **Self-Hosted**: Run on your own infrastructure with full control
 - **Extensible**: Plugin system for custom integrations
 
-See our [Architecture Overview](../intro/architecture.md) for more details.
+See our [Architecture Overview](../docs/index.md) for more details.
 
 ### What Kubernetes versions are supported?
 
