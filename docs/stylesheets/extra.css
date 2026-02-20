@@ -147,42 +147,40 @@ a:not(.md-button):hover {
   transition: color 0.2s ease;
 }
 
-/* Level 1 navigation items (top-level menu items) */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > label {
-  font-weight: 700;
-  font-size: 0.8rem;
+/* Level 1: Top-level menu items (Home, Intro, Installation, etc.) */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item > label.md-nav__link {
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--md-default-fg-color);
 }
 
-/* Level 2 navigation items - indented with tab distance */
-.md-sidebar--primary .md-nav--primary .md-nav .md-nav__list {
-  padding-left: 1.2rem;
-  margin-left: 0;
-  border-left: 2px solid var(--md-primary-fg-color--light);
+/* Level 2: Items inside expanded top-level sections */
+nav.md-nav[data-md-level="1"] .md-nav__list {
+  padding-left: 1.5rem !important;
+  margin-left: 0.5rem;
+  border-left: 3px solid var(--md-primary-fg-color);
 }
 
-/* Level 2 links styling */
-.md-sidebar--primary .md-nav--primary .md-nav .md-nav__link {
+nav.md-nav[data-md-level="1"] .md-nav__link {
+  font-size: 0.8rem !important;
   font-weight: 400;
-  font-size: 0.75rem;
 }
 
-/* Level 3 navigation items - further indented */
-.md-sidebar--primary .md-nav--primary .md-nav .md-nav .md-nav__list {
-  padding-left: 1rem;
-  border-left: 1px solid var(--md-default-fg-color--lighter);
+/* Level 3: Items inside nested subsections */
+nav.md-nav[data-md-level="2"] .md-nav__list {
+  padding-left: 1.2rem !important;
+  margin-left: 0.3rem;
+  border-left: 2px solid var(--md-default-fg-color--lighter);
 }
 
-/* Level 3 links styling */
-.md-sidebar--primary .md-nav--primary .md-nav .md-nav .md-nav__link {
-  font-size: 0.7rem;
+nav.md-nav[data-md-level="2"] .md-nav__link {
+  font-size: 0.75rem !important;
   color: var(--md-default-fg-color--light);
 }
 
-.md-sidebar--primary .md-nav--primary .md-nav .md-nav .md-nav__link:hover {
+nav.md-nav[data-md-level="2"] .md-nav__link:hover {
   color: var(--md-primary-fg-color);
 }
 
