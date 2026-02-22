@@ -13,7 +13,7 @@ Before beginning the TAPPaaS installation, complete these preparation steps to e
 - [ ] Network connectivity established
 - [ ] Domain name registered
 - [ ] DNS access configured
-- [ ] Credentials prepared
+- [ ] Admin email account prepared
 
 ## Network Preparation
 
@@ -40,51 +40,17 @@ tappaas.yourdomain.com    → Your public IP
 *.tappaas.yourdomain.com  → Your public IP (wildcard)
 ```
 
-### Internal Network Design
+## Email Account Preparation
 
-Plan your internal network:
+Prepare a dedicated email account for system administration notifications. This email will be used for:
 
-| Network | VLAN | Subnet | Purpose |
-|---------|------|--------|---------|
-| Management | 1 | 10.0.0.0/24 | Infrastructure management |
-| Services | 100 | 10.1.0.0/24 | Application services |
-| IoT | 200 | 10.2.0.0/24 | Home automation devices |
+- Let's Encrypt certificate notifications
+- System alerts and monitoring
+- Backup status reports
+- Security notifications
 
-## Credential Preparation
-
-### Root Password
-
-Create a strong root password that will be used for:
-
-- Proxmox hypervisor
-- OPNsense firewall
-- Initial VM access
-
-!!! warning "Password Requirements"
-    Use a complex password with:
-
-    - Minimum 16 characters
-    - Mix of upper/lowercase letters
-    - Numbers and special characters
-    - No dictionary words
-
-### SSH Keys
-
-Generate an SSH key pair for secure access:
-
-```bash
-ssh-keygen -t ed25519 -C "tappaas-admin"
-```
-
-Store the private key securely and have the public key ready for installation.
-
-### Service Accounts
-
-Plan credentials for:
-
-- Email address for Let's Encrypt certificates
-- API keys for external services (if needed)
-- Admin accounts for web interfaces
+!!! tip "Recommendation"
+    Use a dedicated admin email address (e.g., `admin@yourdomain.com`) rather than a personal email to ensure notifications are not missed and can be monitored by multiple team members if needed.
 
 ## Software Preparation
 
@@ -118,13 +84,6 @@ Configure your hardware:
 - Set boot order to USB first
 - Disable Secure Boot (optional, for compatibility)
 
-### Storage Preparation
-
-If reusing drives:
-
-- Back up any important data
-- Note drive identifiers for ZFS pool creation
-
 ## Documentation
 
 Keep records of:
@@ -135,24 +94,6 @@ Keep records of:
 | Domain name | |
 | Root password | |
 | Admin email | |
-| Network subnets | |
-| Hardware specs | |
-
-## Configuration File
-
-TAPPaaS uses a central configuration file. Prepare values for:
-
-```json
-{
-  "domain": "yourdomain.com",
-  "email": "admin@yourdomain.com",
-  "timezone": "Europe/London",
-  "network": {
-    "management": "10.0.0.0/24",
-    "services": "10.1.0.0/24"
-  }
-}
-```
 
 ## Next Steps
 
