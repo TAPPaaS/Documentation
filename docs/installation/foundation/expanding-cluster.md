@@ -14,7 +14,7 @@ This guide covers expanding your Proxmox cluster beyond the initial node for inc
 - [ ] Additional hardware prepared
 - [ ] Network connectivity to existing cluster
 
-## Node Naming Convention
+## Node Naming Convention and IP allocation
 
 | Node | Hostname | IP Address |
 |------|----------|------------|
@@ -36,29 +36,28 @@ Use the same USB installation media as the initial node:
 
 ### Run Post-Installation Script
 
+On the pc connected to the 10.0.0.1/24 network, connect to the new node under its IP port 8006, example 10.0.0.11:8006
+
+In the gui go to the shell on the node and run the post installation script:
+
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
 BRANCH="main"
-curl -fsSL ${REPO}${BRANCH}/src/foundation/05-ProxmoxNode/install.sh | bash
+curl -fsSL ${REPO}${BRANCH}/src/foundation/cluster/install.sh >install.sh
+chmod +x install.sh
+./install.sh $REPO $BRANCH
+rm install.sh
 ```
 
 ## DNS Registration
 
-Register the new node in OPNsense DNS:
-
-1. Access OPNsense web interface
-2. Navigate to **Services** → **Unbound DNS** → **Host Overrides**
-3. Add the new node:
-
-| Host | Domain | IP |
-|------|--------|-----|
-| tappaas2 | mgmt.internal | 10.0.0.11 |
+THis should already have taken place during firewall installation. please verify that tappaas2,... are registered in DNS
 
 ## Network Bridge Configuration
 
 The network bridge must be renamed for consistency.
 
-### Edit Network Configuration
+Edit Network Configuration
 
 ```bash
 nano /etc/network/interfaces
@@ -76,7 +75,7 @@ iface lan inet static
     bridge-fd 0
 ```
 
-### Reboot
+Reboot:
 
 ```bash
 reboot
@@ -128,19 +127,7 @@ This enables high-availability firewall failover.
 
 ### Create ZFS Pool
 
-Create a storage pool matching your setup:
-
-```bash
-# Mirror (2 disks)
-zpool create tanka1 mirror /dev/sdb /dev/sdc
-
-# Or RAIDZ1 (3+ disks)
-zpool create tanka1 raidz /dev/sdb /dev/sdc /dev/sdd
-```
-
-### Add to Proxmox Storage
-
-The ZFS pool should automatically appear in Proxmox storage configuration.
+configure tanka1 and tankb1, etc using the same commands as for the first node
 
 ## Verification
 

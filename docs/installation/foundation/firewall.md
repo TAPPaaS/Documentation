@@ -85,7 +85,7 @@ graph LR;
 
 ### Deploy OPNsense VM
 
-Enow create the OPNSense VM: from the command prompt/console of tappaas1: (Note if you are not using the main branch then replace "main" with branch name in the command below)
+**Create the OPNSense VM**: from the command prompt/console of tappaas1: (Note if you are not using the main branch then replace "main" with branch name in the command below)
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
@@ -125,9 +125,9 @@ connect a pc to the LAN port of the proxmox box (can be via a switch)
 
 From: [OPNsense DHCP with DNS](https://docs.opnsense.org/manual/dnsmasq.html#dhcpv4-with-dns-registration)
 
-Log into OPNsense on 10.0.0.10 (from the pc connected to the lan port)
+Log into OPNsense on 10.0.0.1 (from the pc connected to the lan port)
 
-Abort the configuration wizard
+Abort the configuration wizard if it starts up.
 
 - Enable services -> Unbound DNS -> General and ensure it listen to port 53
 - Enable services -> dnsmask DNS -> General
@@ -140,7 +140,7 @@ Abort the configuration wizard
     - DHCP default domain: internal
   - Click Apply
 - Service -> Unbound DNS -> Query Forwarding
-  - register "internal" to query 127.0.0.1 port 53053
+  - register (presse the "plus") "internal" to query 127.0.0.1 port 53053
   - register "10.in-addr.arpa" to query 127.0.0.1 port 53053
   - press apply
 - go to Services -> Dnsmasq & DHCP -> DHCP ranges
@@ -151,7 +151,7 @@ Make untagged LAN trafic belong to domain mgmt.internal
 
 - Enable services -> dnsmask DNS -> DHCP ranges
   - Edit Interface: LAN
-  - add doamin: mgmt.internal
+  - add domain: mgmt.internal
   - press Save and then Apply
 
 Register the static hosts on the internal network: firewall and tappaas1
@@ -167,16 +167,18 @@ Register the static hosts on the internal network: firewall and tappaas1
     - ip: 10.0.0.10
   - press apply
 
+If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ... (incrementing the ip by one for each)
+
 Check that you can lookup you your tappaas1 and firewall hosts using .mgmt.internal domain
 
 ## Swap cables Step
 
 First we switch tappaas1 node to be working **only** on the Lan port:
 
+- Note that you should connect to tappaas1 proxmox node via 10.0.0.10:8006
 - in the Proxmox console for tappaas1 edit the network bridge "Wan": remove the IP assignment.
-  - Note that you should connect to tappaas1 proxmox node via 10.0.0.10:8006
-  - first remove the ip and gateway assignment by editing the "wan" bridge under network for tappaas1
-  - then add 10.0.01 as gateway for the "lan" bridge
+  - first remove both the IP and gateway assignment by editing the "wan" bridge under network for tappaas1
+  - then add 10.0.0.1 as gateway for the "lan" bridge
   - press apply
 - in the console fo the tappaas1 node (via the proxmox gui): edit the following files:
   - /etc/hosts: edit the host IP is the new 10.0.0.10
@@ -198,7 +200,7 @@ graph LR;
 
 (where OPNsense is a VM on the tappaas1 node)
 
-reboot proxmox and see that you have access to the internet from both the pc connected to the LAN switch and from the proxmox console. ensure you have access to the OPNsense GUI at 10.0.0.1
+reboot tappaas1 node and see that you have access to the internet from both the pc connected to the LAN switch and from the proxmox console. ensure you have access to the OPNsense GUI at 10.0.0.1
 
 ## Firewall Switchover Options
 

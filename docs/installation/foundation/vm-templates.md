@@ -5,7 +5,7 @@ description: Create VM templates for TAPPaaS services
 
 # VM Templates
 
-This guide covers creating a NixOS virtual machine template on Proxmox that serves as the base for all TAPPaaS service VMs.
+This guide covers creating a NixOS virtual machine template on Proxmox that serves as the base for many TAPPaaS service VMs.
 
 ## Overview
 
@@ -23,38 +23,42 @@ The setup involves three phases:
 
 ## Create Base VM
 
-### Run Installation Script
+### Run NixOS Installation
 
 From the Proxmox console as root:
 
 ```bash
-REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
 BRANCH="main"
-curl -fsSL ${REPO}${BRANCH}/src/foundation/20-tappaas-nixos/install.sh | bash
+REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
+curl -fsSL  ${REPO}${BRANCH}/src/foundation/20-tappaas-nixos/tappaas-nixos.json >~/tappaas/tappaas-nixos.json
+~/tappaas/Create-TAPPaaS-VM.sh tappaas-nixos
 ```
 
 This creates VM 8080 for the template installation.
-
-### Install NixOS
 
 Access the VM console and follow the NixOS installer:
 
 1. **Username**: `tappaas`
 2. **Password**: Use a strong password
 3. **Desktop Environment**: None (server installation)
-4. **Proprietary Software**: Allow if needed
+4. **Unfree Software**: Allow
 5. **Disk Configuration**: Erase disk, no encryption, no swap
 
 !!! note "Installation Timing"
-    The installation may appear to stall at times. This is normal - wait for it to complete.
+    The installation may appear to stall at times.
+    it may appear to be stalled at 46% for minutes - be patient!
+    toggle log to see detailed progress
 
-### Post-Installation
 
 When installation completes:
 
 1. **Do not restart immediately**
-2. Shut down the VM properly
-3. Detach the installation media in Proxmox
+2. keep 'Restart now' UNchecked
+3. select Done at lower right bottom to finish installation without reboot
+4. Shut down the VM 8080 properly form the proxmox GUI
+5. Detach the installation media in Proxmox: In PVE console, select Hardware -> CD/DVD Drive (IDE3)
+  - Edit --> select 'Do not use any media' to detach the iso
+
 
 ## System Configuration
 
@@ -71,7 +75,7 @@ sudo -i
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
 BRANCH="main"
-curl -fsSL ${REPO}${BRANCH}/src/foundation/20-tappaas-nixos/configuration.nix \
+curl -fsSL ${REPO}${BRANCH}/src/foundation/templates/tappaas-nixos.nix \
   -o /etc/nixos/configuration.nix
 ```
 
@@ -120,45 +124,15 @@ poweroff
 
 ## Convert to Template
 
-### Via Proxmox GUI
+***Via Proxmox GUI***
 
 1. Right-click the VM in Proxmox
 2. Select **Convert to Template**
 
-### Via CLI
+***Via CLI***
 
 ```bash
 qm template 8080
-```
-
-## Template Usage
-
-When creating new VMs from this template:
-
-```bash
-# Clone template to new VM
-qm clone 8080 <new-vmid> --name <vm-name> --full
-
-# Start the new VM
-qm start <new-vmid>
-```
-
-The cloned VM will:
-
-- Generate new SSH host keys
-- Get a new machine ID
-- Be ready for service-specific configuration
-
-## Verification
-
-Verify the template is ready:
-
-```bash
-# List templates
-qm list | grep template
-
-# Check template configuration
-qm config 8080
 ```
 
 ## Troubleshooting
