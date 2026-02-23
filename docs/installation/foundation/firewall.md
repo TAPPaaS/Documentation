@@ -11,7 +11,7 @@ This guide covers installing OPNsense as the firewall for your TAPPaaS environme
 
 Before starting:
 
-- [ ] [Proxmox Node](proxmox-node.md) installed and accessible
+- [ ] [Cluster](cluster.md) installed and accessible
 - [ ] Registered domain name
 - [ ] Public IP address
 - [ ] DNS management access
@@ -180,4 +180,4 @@ nslookup tappaas1.mgmt.internal
 
 ## Next Steps
 
-With the firewall configured, proceed to [Additional Nodes](additional-nodes.md) if expanding your cluster, or continue to [NixOS Template](nixos-template.md).
+With the firewall configured, proceed to [Expanding Cluster](expanding-cluster.md) if expanding your cluster, or continue to [VM Templates](vm-templates.md).

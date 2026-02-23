@@ -1,9 +1,9 @@
 ---
-title: Proxmox Node
-description: Install and configure the initial Proxmox VE hypervisor node
+title: Cluster
+description: Install and configure the initial Proxmox VE cluster
 ---
 
-# Proxmox Node Setup
+# Cluster Setup
 
 This guide covers installing Proxmox Virtual Environment (PVE) on your first TAPPaaS node, referred to as "tappaas1".
 

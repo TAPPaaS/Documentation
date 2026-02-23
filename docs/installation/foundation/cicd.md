@@ -17,7 +17,7 @@ The implementation involves three phases:
 
 ## Prerequisites
 
-- [ ] [NixOS Template](nixos-template.md) created
+- [ ] [VM Templates](vm-templates.md) created
 - [ ] [Firewall](firewall.md) accessible
 - [ ] Git repository access configured
 

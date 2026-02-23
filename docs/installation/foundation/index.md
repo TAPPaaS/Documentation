@@ -16,10 +16,10 @@ The TAPPaaS Foundation consists of essential modules that must be installed sequ
 
 | Order | Module | Description |
 |-------|--------|-------------|
-| 1 | [Proxmox Node](proxmox-node.md) | Initial hypervisor installation |
+| 1 | [Cluster](cluster.md) | Initial hypervisor installation |
 | 2 | [Firewall](firewall.md) | OPNsense firewall deployment |
-| 3 | [Additional Nodes](additional-nodes.md) | Expand cluster with more nodes |
-| 4 | [NixOS Template](nixos-template.md) | VM template creation |
+| 3 | [Expanding Cluster](expanding-cluster.md) | Expand cluster with more nodes |
+| 4 | [VM Templates](vm-templates.md) | VM template creation |
 | 5 | [CICD Mothership](cicd.md) | Central management VM |
 | 6 | [Backup](backup.md) | Proxmox Backup Server |
 | 7 | [Identity](identity.md) | Secrets and authentication |
@@ -58,7 +58,7 @@ The repository includes a template (`configuration.json.orig`) that should be co
 
 ## Quick Start
 
-1. Start with [Proxmox Node](proxmox-node.md) installation on your first server
+1. Start with [Cluster](cluster.md) installation on your first server
 2. Complete [Firewall](firewall.md) setup before adding more nodes
 3. Follow remaining modules in order
 
@@ -79,4 +79,4 @@ The repository includes a template (`configuration.json.orig`) that should be co
 
 ## Next Steps
 
-Begin with [Proxmox Node](proxmox-node.md) installation.
+Begin with [Cluster](cluster.md) installation.

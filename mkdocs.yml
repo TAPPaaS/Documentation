@@ -161,10 +161,10 @@ nav:
     - Preparation: installation/preparation.md
     - Foundation:
       - Overview: installation/foundation/index.md
-      - Proxmox Node: installation/foundation/proxmox-node.md
+      - Cluster: installation/foundation/cluster.md
       - Firewall: installation/foundation/firewall.md
-      - Additional Nodes: installation/foundation/additional-nodes.md
-      - NixOS Template: installation/foundation/nixos-template.md
+      - Expanding Cluster: installation/foundation/expanding-cluster.md
+      - VM Templates: installation/foundation/vm-templates.md
       - CICD Mothership: installation/foundation/cicd.md
       - Backup: installation/foundation/backup.md
       - Identity: installation/foundation/identity.md

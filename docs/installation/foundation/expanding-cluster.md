@@ -1,15 +1,15 @@
 ---
-title: Additional Nodes
+title: Expanding Cluster
 description: Expand your TAPPaaS cluster with additional Proxmox nodes
 ---
 
-# Additional PVE Nodes
+# Expanding Cluster
 
 This guide covers expanding your Proxmox cluster beyond the initial node for increased capacity and redundancy.
 
 ## Prerequisites
 
-- [ ] [Proxmox Node](proxmox-node.md) (tappaas1) installed
+- [ ] [Cluster](cluster.md) (tappaas1) installed
 - [ ] [Firewall](firewall.md) configured
 - [ ] Additional hardware prepared
 - [ ] Network connectivity to existing cluster
@@ -172,4 +172,4 @@ Follow this procedure for each additional node you want to add to the cluster.
 
 ## Next Steps
 
-Continue to [NixOS Template](nixos-template.md) creation.
+Continue to [VM Templates](vm-templates.md) creation.

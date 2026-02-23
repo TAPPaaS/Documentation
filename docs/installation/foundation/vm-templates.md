@@ -1,9 +1,9 @@
 ---
-title: NixOS Template
-description: Create the NixOS VM template for TAPPaaS services
+title: VM Templates
+description: Create VM templates for TAPPaaS services
 ---
 
-# NixOS VM Template
+# VM Templates
 
 This guide covers creating a NixOS virtual machine template on Proxmox that serves as the base for all TAPPaaS service VMs.
 

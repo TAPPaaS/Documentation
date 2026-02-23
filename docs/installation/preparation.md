@@ -100,4 +100,4 @@ Keep records of:
 Once preparation is complete:
 
 1. Begin with [Foundation Installation](foundation/index.md)
-2. Start with the [Proxmox Node](foundation/proxmox-node.md) setup
+2. Start with the [Cluster](foundation/cluster.md) setup
