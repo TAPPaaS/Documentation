@@ -28,21 +28,23 @@ The setup involves three phases:
 From the Proxmox console as root:
 
 ```bash
-BRANCH="main"
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-curl -fsSL  ${REPO}${BRANCH}/src/foundation/20-tappaas-nixos/tappaas-nixos.json >~/tappaas/tappaas-nixos.json
+BRANCH="main"
+curl -fsSL  ${REPO}${BRANCH}/src/foundation/templates/tappaas-nixos.json >~/tappaas/tappaas-nixos.json
 ~/tappaas/Create-TAPPaaS-VM.sh tappaas-nixos
 ```
 
 This creates VM 8080 for the template installation.
 
-Access the VM console and follow the NixOS installer:
+Access the VM in the console tab in the Proxmox GUI. Follow the NixOS installer:
+(ou might want to maximize the install window to see the bottom line of the installer)
 
 1. **Username**: `tappaas`
 2. **Password**: Use a strong password
-3. **Desktop Environment**: None (server installation)
-4. **Unfree Software**: Allow
-5. **Disk Configuration**: Erase disk, no encryption, no swap
+3. let root have same password
+4. **Desktop Environment**: None (server installation)
+5. **Unfree Software**: Allow
+6. **Disk Configuration**: Erase disk, no encryption, no swap
 
 !!! note "Installation Timing"
     The installation may appear to stall at times.
@@ -64,11 +66,8 @@ When installation completes:
 
 ### Boot and Configure
 
-Start the VM and login as `tappaas`, then switch to root:
-
-```bash
-sudo -i
-```
+Start the VM and login as root:
+(and sorry, NixOS do not support cut/paste and ssh out of the box, so some typing is required, at this stage)
 
 ### Download TAPPaaS Configuration
 
@@ -89,6 +88,7 @@ reboot
 ## Pre-Template Cleanup
 
 Before converting to a template, clean the system to minimize size and ensure unique identifiers on clones.
+(after the rebuild and reboot the cut/paste and ssh function should work)
 
 ### Run Cleanup Commands
 
