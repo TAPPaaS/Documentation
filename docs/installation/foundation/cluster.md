@@ -27,13 +27,13 @@ Before starting:
 
 ### Configuration During Install
 
-Configure the following during installation:
+Configure the following during installation : 
 
 | Setting | Value |
 |---------|-------|
 | Hostname (FQDN) | `tappaas1.mgmt.internal` |
-| IP Address | `10.0.0.10` |
-| Netmask | `255.255.255.0` |
+| IP Address | `tmp-local-ip` |
+| Netmask | `255.255.255.0` or what ever the size id of your subdomain |
 | Gateway | Your router IP |
 | DNS | Your router IP or `1.1.1.1` |
 
@@ -54,7 +54,7 @@ Configure the following during installation:
 After reboot, access the Proxmox web interface:
 
 ```
-https://10.0.0.10:8006
+https://"tmp-local-ip":8006
 ```
 
 Login with:
@@ -62,14 +62,19 @@ Login with:
 - Password: Your configured password
 - Realm: `Linux PAM standard authentication`
 
+It will display a "license nagging" popup first time, do a refesh page to get rid of it
+
 ### Run TAPPaaS Setup Script
 
-Execute the post-installation script from the Proxmox shell:
+Execute the post-installation script from the Proxmox shell (in the gui, navigate to tappaas1, and the shell menu)
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
 BRANCH="main"
-curl -fsSL ${REPO}${BRANCH}/src/foundation/05-ProxmoxNode/install.sh | bash
+curl -fsSL ${REPO}${BRANCH}/src/foundation/cluster/install.sh >install.sh
+chmod -x install.sh
+./install.sh $REPO $BRANCH
+rm install.sh
 ```
 
 This script configures foundational settings for TAPPaaS.
@@ -77,6 +82,15 @@ This script configures foundational settings for TAPPaaS.
 ## Cluster Creation
 
 On the first node only, create the cluster:
+
+** via GUI: **
+
+1. navigate to Datacenter -> cluster
+2. click create cluster
+3. name it TAPPaaS
+4. click Create, wait for task to finish and refresh webpage
+
+** via CLI on the tappaas1 root shell **
 
 ```bash
 pvecm create TAPPaaS

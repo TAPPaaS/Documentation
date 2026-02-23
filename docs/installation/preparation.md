@@ -40,6 +40,16 @@ tappaas.yourdomain.com    → Your public IP
 *.tappaas.yourdomain.com  → Your public IP (wildcard)
 ```
 
+## Bootstrap IP
+
+for the bootstrap of the first node of the TAPPaaS cluster we have to give it a local IP address.
+
+It is assumed that your public IP is hitting a NAT router so you would have say a 192.168.0.0/24 or /16 network available. For instance 192.168.1.234
+
+note down a free IP number from this range, you will need it in the bootstrap phase. We call it tmp-local-ip
+
+also note down you gateway ip number. Likely 192.168.0.1 and a dns server. you can use 1.1.1.1. it will only be used during bootstrap
+
 ## Email Account Preparation
 
 Prepare a dedicated email account for system administration notifications. This email will be used for:
