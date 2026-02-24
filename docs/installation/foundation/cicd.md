@@ -167,7 +167,7 @@ Move OPNsense web interface off port 443:
 
 1. Navigate to **System** → **Settings** → **Administration**
 2. Change "TCP Port" to `8443`
-3. Save and apply
+3. press Save to apply
 4. Reconnect to OPNsense at firewall.mgmt.internal:8443
 
 ### Configure Caddy
@@ -182,19 +182,15 @@ Access OPNsense and configure Caddy:
 
 Configure reverse proxy for your services in Caddy's domain configuration.
 
+(information to be provided eventually)
+
 ## Verification
 
 Verify the CICD system is operational:
 
 ```bash
-# Check services
-systemctl status
-
-# Verify git repository
-cd ~/TAPPaaS && git status
-
-# Test automation
-./test-automation.sh
+# Test VM automation
+./test.sh
 ```
 
 ## Next Steps

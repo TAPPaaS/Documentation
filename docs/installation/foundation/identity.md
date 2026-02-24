@@ -5,14 +5,17 @@ description: Deploy identity and secrets management for TAPPaaS
 
 # Identity Management
 
-This guide covers deploying identity and secrets management using Authentik and VaultWarden.
+This guide covers deploying identity and secrets management using Authentik
+
+***TODO: Not tested***
 
 ## Components
 
 | Service | Purpose |
 |---------|---------|
 | **Authentik** | Identity provider, SSO, user management |
-| **VaultWarden** | Password and secrets management |
+
+TODO: central management of API keys are not implemented yet
 
 ## Prerequisites
 
@@ -27,7 +30,6 @@ Register the services with your DNS provider:
 | Record | Type | Value |
 |--------|------|-------|
 | `authentik.yourdomain.com` | A | Your public IP |
-| `vaultwarden.yourdomain.com` | A | Your public IP |
 
 ## Reverse Proxy Setup
 
@@ -56,7 +58,7 @@ vaultwarden.yourdomain.com {
 From the tappaas-cicd VM:
 
 ```bash
-cd ~/TAPPaaS/src/foundation/40-Identity
+cd ~/TAPPaaS/src/foundation/identity
 ./install.sh
 ```
 
@@ -98,29 +100,10 @@ Create users and groups:
 2. Create users as needed
 3. Assign to appropriate groups
 
-## VaultWarden Configuration
-
-### Initial Access
-
-Access VaultWarden at `https://vaultwarden.yourdomain.com`
-
-### Create Admin Account
-
-1. Register a new account
-2. Set a strong master password
-3. Enable admin features if needed
-
-### Organization Setup
-
-For team usage:
-
-1. Create an organization
-2. Invite team members
-3. Set up shared collections
 
 ## Integration
 
-### Authentik + VaultWarden SSO
+### Authentik SSO
 
 Configure VaultWarden to use Authentik for SSO:
 

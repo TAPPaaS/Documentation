@@ -23,17 +23,20 @@ Proxmox Backup Server provides:
 From the tappaas-cicd VM:
 
 ```bash
-cd ~/TAPPaaS/src/foundation/35-backup
+cd ~/TAPPaaS/src/foundation/backup
 ./install.sh
 ```
 
 The script automatically:
 
-- Creates the PBS datastore (`tappaas_backup`)
-- Creates the `tappaas@pbs` user
-- Sets appropriate permissions
-- Configures retention policies
-- Registers DNS entries
+1. Create the PBS datastore (tappaas_backup)
+2. Create the tappaas@pbs user
+3. Set permissions for the user on the datastore
+4. Configure retention policy (4 last, 14 daily, 8 weekly, 12 monthly, 6 yearly)
+5. Get the PBS fingerprint
+6. Add PBS storage to Proxmox datacenter
+7. Create a daily backup job at 21:00 for all VMs
+8. Register DNS entry in OPNsense (backup.mgmt.internal)
 
 ## Available Scripts
 
