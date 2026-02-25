@@ -35,6 +35,27 @@ block-beta
 
 The infrastructure layer providing virtualization, networking, storage, security, backup, and identity management upon which all other stacks depend.
 
+THe foundation delivers the following 5 core capabilities upon which all other Stacks rely:
+
+- HW Virtualisation / Clustering: Abstracting physical resources into logical flexible virtual machines and storage tanks
+- Firewall / Networking: A solid network design with zones, firewall, proxy services, fault tolerant DNS and DHCP
+- Identity: Deliver a secure and solution wide identity management setup
+- CICD: Automated install/update and selfmanagement
+- Backup: automated 3-2-1 backup strategy
+
+```mermaid
+block-beta
+    columns 4
+    block:foundation["Foundation Stack"]:4
+        columns 4
+        fw["Firewall / Networking"]:1
+        id["Identity"]:1
+        cicd["CICD"]:1
+        backup["Backup"]:1
+        hw["HW Virtualisation / Clustering"]:4
+    end
+```
+
 ---
 
 ## AI Stack
