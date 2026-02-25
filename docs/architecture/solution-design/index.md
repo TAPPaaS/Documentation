@@ -11,7 +11,7 @@ This section covers the overall solution design of TAPPaaS.
 
 ## Design Areas
 
-- **[High Level Design](high-level-design.md)** - Overall system architecture
+- **[Software Selection](software-selection.md)** - Overall system architecture
 - **[Network](network.md)** - Network topology and VLAN design
 - **[Storage](storage.md)** - Data storage design
 - **[Security](security.md)** - Security architecture and controls

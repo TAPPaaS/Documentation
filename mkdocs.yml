@@ -188,7 +188,7 @@ nav:
     - Capabilities: architecture/capabilities.md
     - Solution Design:
       - Overview: architecture/solution-design/index.md
-      - High Level Design: architecture/solution-design/high-level-design.md
+      - Software Selection: architecture/solution-design/software-selection.md
       - Network: architecture/solution-design/network.md
       - Storage: architecture/solution-design/storage.md
       - Security: architecture/solution-design/security.md
