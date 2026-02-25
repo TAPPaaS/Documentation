@@ -17,4 +17,3 @@ This section covers the overall solution design of TAPPaaS.
 - **[Security](security.md)** - Security architecture and controls
 - **[Single Sign-On](single-signon.md)** - Identity and authentication
 - **[Backup](backup.md)** - Backup and recovery design
-- **[AI](ai.md)** - AI stack integration
