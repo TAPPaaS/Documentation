@@ -7,7 +7,27 @@ description: TAPPaaS platform capabilities
 
 ## Overview
 
-TAPPaaS represents a comprehensive IT solution designed through both top-down analysis of user needs and bottom-up examination of practical implementations. The framework aims to deliver capabilities described in supporting documentation while remaining grounded in real-world feasibility.
+TAPPaaS represents a comprehensive IT solution designed through both top-down analysis of user needs and bottom-up examination of practical implementations.
+
+At a very high level the TAPPaaS solution delivers the following very high level of capabilities. We call it the **TAPPaaS Capability Stacks**
+
+- Private Cloud Foundation Stack: The foundation upon which the other Stacks can function and integrate
+- AI Stack: a set of capabilities aiming at providing private AI
+- Productivity Stack: Classical capabilities such as file sharing, collaboration tooling, password management, ...
+- Home Stack: Capabilities that a private individual or family needs, such as music and video streaming, picture store
+- DevOps Stack: the capabilities needed in order to develop, test deploy software
+
+More stacks are planned and not all of the above are implemented yet. TAPPaaS also allow any community or privately modules to be deployed
+
+```mermaid
+block-beta
+    columns 4
+    ai["AI Stack"]:1
+    prod["Productivity Stack"]:1
+    home["Home Stack"]:1
+    devops["DevOps Stack"]:1
+    foundation["Private Cloud Foundation Stack"]:4
+```
 
 ---
 
