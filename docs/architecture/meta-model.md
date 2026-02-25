@@ -18,6 +18,9 @@ We use the following concepts from ArchiMate:
 ## How TAPPaaS Uses These Concepts
 
 In TAPPaaS we use **Capabilities** to describe what is being delivered, typically at the level where a single general capability is delivered by one TAPPaaS module.
+We group the Capabilities into **Stacks**, which is basically just a container of related capabilities
+
+A capability is delivered by a **TAPPaaS Module**. A module is the smallest deployable unit in TAPPaaS. In some case a TAPPaaS Module deliers more that a single Capability
 
 A **TAPPaaS module** is modeled as an Application Component. If a module implements more than one open source application, we decompose the application component into sub-components.
 

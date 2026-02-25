@@ -15,44 +15,48 @@ Hardware selection follows these phases:
 2. **Infrastructure Sizing** - Calculate compute and storage requirements
 3. **Hardware Procurement** - Acquire equipment matching your calculations
 
-## Minimum Requirements
+## Quick start
 
-### Single Node Setup
+In order to simplify it we have two standard recommendations that can be used as a starting point
+
+- Minimum config: Good for trying out TAPPaaS, potentially ok for a small home installation
+- Redundant config: a good solid setup with mirrored disks, and High Availability capabilities with 3 compute nodes 
+
+
+### Minimum config: Single Node Setup
 
 For a basic TAPPaaS installation:
 
-| Component | Minimum | Recommended |
+| Component | Minimum |  for production |
 |-----------|---------|-------------|
 | CPU | 4 cores | 8+ cores |
 | RAM | 16 GB | 32+ GB |
 | Boot disk | 256 GB | 512 GB SSD |
-| tanka (data) | 500 GB | 2x 2 TB mirrored |
-| tankb (backup) | - | 12 TB |
-| Network | 1 Gbps | 2.5 Gbps+ |
+| tanka1 (VMs and data) | 500 GB | 2x 2 TB mirrored |
+| tankb1 (non critical data) | none | 4TB |
+| tankc1 (backup) | none | 12 TB |
+| Network | 2x 1 Gbps | 1Gbps + 2.5 Gbps |
 
-**Minimum disk layout:**
+Disk and RAM can be adjusted based on expected data load.
 
-- 1x 256 GB boot disk
-- 1x 500 GB tanka1 (primary data pool)
+If local AI models wil lbe used then add a GPU card to setup.
 
-**Recommended disk layout:**
+### Redundant config: Multi-Node Cluster
 
-- 1x 512 GB SSD (boot)
-- 2x 2 TB mirrored (tanka - redundant data pool)
-- 1x 12 TB (tankb - backup pool)
+For high availability and additional capacity we recommend a 3 node cluster setup
 
-### Multi-Node Cluster
+- Node 1: Primary node running Foundations stack
+- Node 2: HA and AI node: Runs that AI stack and have the GPU card
+- Node 3: Backup node, small machine with a large tankc1 for backup storage
 
-For high availability and additional capacity:
+The individual nodes are designed based on recommendation from "minimum configuration"
 
-| Component | Per Node | Notes |
-|-----------|----------|-------|
-| CPU | 4+ cores | More cores enable more VMs |
-| RAM | 16+ GB | Plan for VM overhead |
-| Storage | 256+ GB | Consider ZFS mirroring |
-| Network | 1+ Gbps | Dedicated management NIC recommended |
+Consider using ECC memoriy for Node 1 and possible node 2.
+If high amount of storage is needed then consider using zfs raidz2 with traditional disk complemented with an SSD for cache
 
 ## Resource Planning
+
+**Work in Progress**
 
 When planning resources, account for:
 
@@ -76,66 +80,6 @@ When planning resources, account for:
 | Productivity (n8n) | 2-4 GB | 20 GB | - |
 | Home (Home Assistant) | 2 GB | 32 GB | - |
 
-## Hardware Recommendations
-
-### Entry Level
-
-Repurpose an old workstation or small server:
-
-- Intel i5/i7 or AMD Ryzen 5/7
-- 32 GB DDR4 RAM
-- 500 GB NVMe SSD
-- Gigabit Ethernet
-
-### Production Ready
-
-For reliable operation:
-
-- Server-grade CPU (Xeon, EPYC)
-- 64+ GB ECC RAM
-- Multiple NVMe drives for ZFS
-- Dual network interfaces
-- UPS power protection
-
-### High Availability
-
-For mission-critical deployments:
-
-- 2-3 identical nodes
-- Shared or replicated storage
-- Redundant networking
-- Remote management (IPMI/iLO/iDRAC)
-
-## Storage Considerations
-
-### ZFS Recommendations
-
-TAPPaaS uses ZFS for storage management:
-
-- **Mirror** - Minimum 2 drives, good redundancy
-- **RAIDZ1** - Minimum 3 drives, single drive fault tolerance
-- **RAIDZ2** - Minimum 4 drives, two drive fault tolerance
-
-### Storage Tiers
-
-Consider separating:
-
-- **Fast tier** - NVMe for VMs and databases
-- **Bulk tier** - HDD for backups and archives
-
-## Network Requirements
-
-### Basic Setup
-
-- Single NIC with VLAN support
-- Managed switch for VLAN trunking
-- Reliable internet connection
-
-### Advanced Setup
-
-- Dedicated management network
-- Separate storage network
-- Multiple uplinks for redundancy
 
 ## Next Steps
 
