@@ -194,7 +194,12 @@ nav:
       - Security: architecture/solution-design/security.md
       - Single Sign-On: architecture/solution-design/single-signon.md
       - Backup: architecture/solution-design/backup.md
-    - CICD Design: architecture/cicd-design.md
+    - CICD Design:
+      - Overview: architecture/cicd-design/index.md
+      - Git Structure: architecture/cicd-design/git-structure.md
+      - Module Structure: architecture/cicd-design/module-structure.md
+      - CICD Script Structure: architecture/cicd-design/script-structure.md
+      - Plans: architecture/cicd-design/plans.md
     - Module Designs:
       - Overview: architecture/module-designs/index.md
       - Foundation Stack: architecture/module-designs/foundation.md
