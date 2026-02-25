@@ -184,19 +184,19 @@ nav:
       - Home Assistant: installation/home-stack/home-assistant.md
 
   - Architecture:
-    - Overview: docs/index.md
-    - Capabilities: docs/capabilities.md
+    - Overview: architecture/index.md
+    - Capabilities: architecture/capabilities.md
     - Solution Design:
-      - Overview: docs/solution-design/index.md
-      - High Level Design: docs/solution-design/high-level-design.md
-      - Network: docs/solution-design/network.md
-      - Storage: docs/solution-design/storage.md
-      - Security: docs/solution-design/security.md
-      - Single Sign-On: docs/solution-design/single-signon.md
-      - Backup: docs/solution-design/backup.md
-      - AI: docs/solution-design/ai.md
-    - Module Designs: docs/module-designs.md
-    - Meta Model: docs/meta-model.md
+      - Overview: architecture/solution-design/index.md
+      - High Level Design: architecture/solution-design/high-level-design.md
+      - Network: architecture/solution-design/network.md
+      - Storage: architecture/solution-design/storage.md
+      - Security: architecture/solution-design/security.md
+      - Single Sign-On: architecture/solution-design/single-signon.md
+      - Backup: architecture/solution-design/backup.md
+      - AI: architecture/solution-design/ai.md
+    - Module Designs: architecture/module-designs.md
+    - Meta Model: architecture/meta-model.md
 
   - Roadmap: roadmap/index.md
 

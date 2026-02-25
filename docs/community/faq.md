@@ -28,7 +28,7 @@ TAPPaaS differentiates itself by:
 - **Integrated**: Security, backup, identity management built-in
 - **Automated**: Reduces weeks of manual setup to hours
 
-See our [Architecture Overview](../docs/index.md) for more details.
+See our [Architecture Overview](../architecture/index.md) for more details.
 
 ### Who is TAPPaaS for?
 
@@ -87,7 +87,7 @@ TAPPaaS supports:
 - **Node clustering**: 3+ node Proxmox clusters with failover
 - **Backup**: Automated backups with Proxmox Backup Server
 
-See the [Backup Design](../docs/solution-design/backup.md) for details.
+See the [Backup Design](../architecture/solution-design/backup.md) for details.
 
 ### How does networking work?
 
@@ -98,7 +98,7 @@ TAPPaaS uses VLAN segmentation to isolate different parts of the platform:
 - Service networks
 - IoT networks
 
-See the [Network Design](../docs/solution-design/network.md) for details.
+See the [Network Design](../architecture/solution-design/network.md) for details.
 
 ---
 
@@ -116,7 +116,7 @@ TAPPaaS follows the 3-2-1 backup principle:
 - **2 different formats**
 - **1 remote location**
 
-Proxmox Backup Server handles automated daily backups. See [Backup Design](../docs/solution-design/backup.md).
+Proxmox Backup Server handles automated daily backups. See [Backup Design](../architecture/solution-design/backup.md).
 
 ### How do I access services remotely?
 
