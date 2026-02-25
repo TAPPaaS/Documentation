@@ -13,6 +13,6 @@ This section documents the architecture and design of TAPPaaS.
 
 - **[Capabilities](capabilities.md)** - What TAPPaaS can do, high level structure
 - **[Solution Design](solution-design/index.md)** - How TAPPaaS is designed
-- **[Module Designs](module-designs.md)** - Individual module specifications
+- **[Module Designs](module-designs/index.md)** - Individual module specifications
 - **[Meta Model](meta-model.md)** - General concepts in the TAPPaaS architecture
  

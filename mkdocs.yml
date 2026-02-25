@@ -194,8 +194,13 @@ nav:
       - Security: architecture/solution-design/security.md
       - Single Sign-On: architecture/solution-design/single-signon.md
       - Backup: architecture/solution-design/backup.md
-      - AI: architecture/solution-design/ai.md
-    - Module Designs: architecture/module-designs.md
+    - Module Designs:
+      - Overview: architecture/module-designs/index.md
+      - Foundation Stack: architecture/module-designs/foundation.md
+      - AI Stack: architecture/module-designs/ai.md
+      - Productivity Stack: architecture/module-designs/productivity.md
+      - Home Stack: architecture/module-designs/home.md
+      - DevOps Stack: architecture/module-designs/devops.md
     - Meta Model: architecture/meta-model.md
 
   - Roadmap: roadmap/index.md
