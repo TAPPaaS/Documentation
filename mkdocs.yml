@@ -194,6 +194,7 @@ nav:
       - Security: architecture/solution-design/security.md
       - Single Sign-On: architecture/solution-design/single-signon.md
       - Backup: architecture/solution-design/backup.md
+    - CICD Design: architecture/cicd-design.md
     - Module Designs:
       - Overview: architecture/module-designs/index.md
       - Foundation Stack: architecture/module-designs/foundation.md
