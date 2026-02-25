@@ -37,10 +37,10 @@ The infrastructure layer providing virtualization, networking, storage, security
 
 THe foundation delivers the following 5 core capabilities upon which all other Stacks rely:
 
-- HW Virtualisation / Clustering: Abstracting physical resources into logical flexible virtual machines and storage tanks
+- HW Virtualization / Clustering: Abstracting physical resources into logical flexible virtual machines and storage tanks
 - Firewall / Networking: A solid network design with zones, firewall, proxy services, fault tolerant DNS and DHCP
 - Identity: Deliver a secure and solution wide identity management setup
-- CICD: Automated install/update and selfmanagement
+- CICD: Automated install/update and self management
 - Backup: automated 3-2-1 backup strategy
 
 ```mermaid
@@ -52,7 +52,7 @@ block-beta
         id["Identity"]:1
         cicd["CICD"]:1
         backup["Backup"]:1
-        hw["HW Virtualisation / Clustering"]:4
+        hw["HW Virtualization / Clustering"]:4
     end
 ```
 
