@@ -14,7 +14,7 @@ An important part of TAPPaaS is a continuous integration and delivery pipeline t
 - **[Git Structure](git-structure.md)** - Repository organization and branching strategy
 - **[Module Structure](module-structure.md)** - Module directory layout and conventions
 - **[CICD Script Structure](script-structure.md)** - Script dependencies and automation flows
-- **[Plans](plans.md)** - Future improvements and roadmap
+- **[Plans](plans.md)** - Future improvements and roadmap for CICD
 
 
 
