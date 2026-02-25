@@ -46,14 +46,11 @@ THe foundation delivers the following 5 core capabilities upon which all other S
 ```mermaid
 block-beta
     columns 4
-    block:foundation["Foundation Stack"]:4
-        columns 4
-        fw["Firewall / Networking"]:1
-        id["Identity"]:1
-        cicd["CICD"]:1
-        backup["Backup"]:1
-        hw["HW Virtualization / Clustering"]:4
-    end
+    fw["Firewall / Networking"]:1
+    id["Identity"]:1
+    cicd["CICD"]:1
+    backup["Backup"]:1
+    hw["HW Virtualization / Clustering"]:4
 ```
 
 ---
