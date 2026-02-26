@@ -36,6 +36,10 @@ flowchart TB
 
 *To be documented.*
 
+### Design details
+
+*To be documented.*
+
 ---
 
 ## Firewall Module
@@ -84,6 +88,50 @@ flowchart TB
 
 *To be documented.*
 
+### Design details
+
+#### Zones
+
+Network segmentation in TAPPaaS is managed through **zones**, which define VLANs, IP ranges, DHCP settings, and firewall rules. The `opnsense-controller` from the CICD module configures OPNsense based on zone definitions.
+
+**Zone Configuration (`zones.json`)**
+
+Each zone is defined with the following key attributes:
+
+| Field | Description |
+|-------|-------------|
+| `type` | Zone classification: Management, Service, Client, IoT, Guest, or DMZ |
+| `state` | Activation state: Active, Mandatory, Inactive, Disabled, or Manual |
+| `typeId` | Numeric identifier for zone type (0=Management, 2=Service, 3=Client, 4=IoT, 5=Guest, 6=DMZ) |
+| `subId` | Unique number (0-99) within the zone type |
+| `vlantag` | VLAN tag computed as `typeId * 100 + subId` (0 = untagged) |
+| `ip` | IP range in CIDR notation, typically `10.typeId.subId.0/24` |
+| `bridge` | Network interface (lan, wan, opt1, opt2) |
+| `access-to` | List of zones this zone can connect to |
+| `DHCP-start/end` | DHCP range offsets within the subnet |
+
+**Standard Zones**
+
+| Zone | Type | VLAN | IP Range | Purpose |
+|------|------|------|----------|---------|
+| mgmt | Management | 0 (untagged) | 10.0.0.0/24 | TAPPaaS nodes and self-management |
+| srv | Service | 210 | 10.2.10.0/24 | TAPPaaS business services |
+| private | Client | 310 | 10.3.10.0/24 | Regular user connections |
+| iot | IoT | 410 | 10.4.10.0/24 | IoT device connections |
+| dmz | DMZ | 610 | 10.6.0.0/24 | Internet-exposed services |
+
+**Module Zone Assignment**
+
+Modules specify their zone placement via fields in their `<module>.json`:
+
+| Field | Description |
+|-------|-------------|
+| `zone0` | Security zone for the VM's first network interface (net0) |
+| `zone1` | Security zone for the VM's second network interface (net1) |
+| `trunks0` | Semicolon-separated list of additional zones to trunk on net0 |
+
+The `zone-manager` component of `opnsense-controller` reads these configurations and automatically provisions VLANs, DHCP ranges, and firewall rules in OPNsense.
+
 ---
 
 ## Identity Module
@@ -123,6 +171,10 @@ flowchart TB
 ```
 
 ### Design considerations
+
+*To be documented.*
+
+### Design details
 
 *To be documented.*
 
@@ -177,6 +229,10 @@ PBS is installed on TAPPaaS PVE nodes in parallel with PVE, rather than as a VM 
 - If a node is only used for backup, PVE adds overhead
 - Resource visibility is split between PVE and PBS
 
+### Design details
+
+*To be documented.*
+
 ---
 
 ## CICD Module
@@ -212,5 +268,9 @@ flowchart TB
 ```
 
 ### Design considerations
+
+*To be documented.*
+
+### Design details
 
 *To be documented.*
