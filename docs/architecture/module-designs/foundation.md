@@ -32,11 +32,9 @@ flowchart TB
     HA -.->|realized by| PVE
 ```
 
-| Attribute | Value |
-|-----------|-------|
-| **Provides** | vm, ha |
-| **Depends On** | _(none)_ |
-| **Consumed By** | firewall, tappaas-cicd, identity, litellm, openwebui, vaultwarden, netbird-client, unifi |
+### Design considerations
+
+*To be documented.*
 
 ---
 
@@ -82,11 +80,9 @@ flowchart TB
     OPNsense -->|depends on| HAService
 ```
 
-| Attribute | Value |
-|-----------|-------|
-| **Provides** | firewall, proxy |
-| **Depends On** | cluster:vm, cluster:ha |
-| **Consumed By** | identity, litellm, openwebui, vaultwarden, netbird-client |
+### Design considerations
+
+*To be documented.*
 
 ---
 
@@ -126,11 +122,9 @@ flowchart TB
     Authentik -->|depends on| ProxyService
 ```
 
-| Attribute | Value |
-|-----------|-------|
-| **Provides** | identity, accessControl |
-| **Depends On** | cluster:vm, cluster:ha, templates:nixos, backup:vm, firewall:proxy |
-| **Consumed By** | litellm, openwebui, vaultwarden, netbird-client |
+### Design considerations
+
+*To be documented.*
 
 ---
 
@@ -153,11 +147,9 @@ flowchart TB
     BackupCap -.->|realized by| PBS
 ```
 
-| Attribute | Value |
-|-----------|-------|
-| **Provides** | vm |
-| **Depends On** | _(none)_ |
-| **Consumed By** | identity, litellm, openwebui, vaultwarden, netbird-client, unifi |
+### Design considerations
+
+*To be documented.*
 
 ---
 
@@ -193,8 +185,6 @@ flowchart TB
     CICDComp -->|depends on| HAService
 ```
 
-| Attribute | Value |
-|-----------|-------|
-| **Provides** | _(none)_ |
-| **Depends On** | cluster:vm, cluster:ha |
-| **Consumed By** | _(orchestrates all modules)_ |
+### Design considerations
+
+*To be documented.*
