@@ -25,7 +25,8 @@ The installation follows five main phases:
 2. OPNsense deployment
 3. Network reconfiguration
 4. Firewall activation
-5. Validation
+5. Optional step: create NetBird Access
+6. Validation
 
 ## Network Architecture
 
@@ -227,6 +228,14 @@ Replace ISP router entirely:
 - Connect OPNsense WAN directly to ISP modem
 - Full control over network configuration
 
+## NetBird configuration
+
+This step is optionnal
+
+If you want to access the TAPPaaS system via VPN then we recommend installing and configuring NetBird
+
+OPNsense has a Netbird package. Follow the install and configuration notes here:
+[NetBird Installation](https://docs.netbird.io/get-started/install/opnsense)
 
 ## Verification
 
