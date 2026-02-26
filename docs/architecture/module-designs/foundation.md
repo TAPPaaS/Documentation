@@ -21,15 +21,15 @@ flowchart TB
     end
 
     subgraph Cluster Module
-        ClusterComp[Cluster Component]
+        PVE[Proxmox Virtual Environment]
         VMService([VM Service])
         HAService([HA Service])
-        VMService -.->|provided by| ClusterComp
-        HAService -.->|provided by| ClusterComp
+        VMService -.->|provided by| PVE
+        HAService -.->|provided by| PVE
     end
 
-    Compute -.->|realized by| ClusterComp
-    HA -.->|realized by| ClusterComp
+    Compute -.->|realized by| PVE
+    HA -.->|realized by| PVE
 ```
 
 | Attribute | Value |
@@ -52,11 +52,23 @@ flowchart TB
     end
 
     subgraph Firewall Module
-        FWComp[Firewall Component]
+        OPNsense[OPNsense]
+        subgraph Sub-Components
+            Rules[Rules]
+            DNS[DNS]
+            DHCP[DHCP]
+            VLANs[VLANs]
+            Caddy[Caddy]
+        end
         FirewallService([Firewall Service])
         ProxyService([Proxy Service])
-        FirewallService -.->|provided by| FWComp
-        ProxyService -.->|provided by| FWComp
+        OPNsense --> Rules
+        OPNsense --> DNS
+        OPNsense --> DHCP
+        OPNsense --> VLANs
+        OPNsense --> Caddy
+        FirewallService -.->|provided by| OPNsense
+        ProxyService -.->|provided by| Caddy
     end
 
     subgraph Cluster Module
@@ -64,10 +76,10 @@ flowchart TB
         HAService([HA Service])
     end
 
-    Network -.->|realized by| FWComp
-    Proxy -.->|realized by| FWComp
-    FWComp -->|depends on| VMService
-    FWComp -->|depends on| HAService
+    Network -.->|realized by| OPNsense
+    Proxy -.->|realized by| Caddy
+    OPNsense -->|depends on| VMService
+    OPNsense -->|depends on| HAService
 ```
 
 | Attribute | Value |
@@ -90,15 +102,11 @@ flowchart TB
     end
 
     subgraph Identity Module
-        IdComp[Identity Component]
-        subgraph Sub-Components
-            Authentik[Authentik App]
-        end
+        Authentik[Authentik]
         IdentityService([Identity Service])
         AccessService([Access Control Service])
-        IdComp --> Authentik
-        IdentityService -.->|provided by| IdComp
-        AccessService -.->|provided by| IdComp
+        IdentityService -.->|provided by| Authentik
+        AccessService -.->|provided by| Authentik
     end
 
     subgraph Dependencies
@@ -109,13 +117,13 @@ flowchart TB
         ProxyService([Proxy Service])
     end
 
-    Auth -.->|realized by| IdComp
-    Access -.->|realized by| IdComp
-    IdComp -->|depends on| VMService
-    IdComp -->|depends on| HAService
-    IdComp -->|depends on| NixOSService
-    IdComp -->|depends on| BackupService
-    IdComp -->|depends on| ProxyService
+    Auth -.->|realized by| Authentik
+    Access -.->|realized by| Authentik
+    Authentik -->|depends on| VMService
+    Authentik -->|depends on| HAService
+    Authentik -->|depends on| NixOSService
+    Authentik -->|depends on| BackupService
+    Authentik -->|depends on| ProxyService
 ```
 
 | Attribute | Value |
@@ -137,16 +145,12 @@ flowchart TB
     end
 
     subgraph Backup Module
-        BackupComp[Backup Component]
-        subgraph Sub-Components
-            PBS[Proxmox Backup Server]
-        end
+        PBS[Proxmox Backup Server]
         BackupService([VM Backup Service])
-        BackupComp --> PBS
-        BackupService -.->|provided by| BackupComp
+        BackupService -.->|provided by| PBS
     end
 
-    BackupCap -.->|realized by| BackupComp
+    BackupCap -.->|realized by| PBS
 ```
 
 | Attribute | Value |
