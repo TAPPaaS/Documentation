@@ -149,7 +149,33 @@ flowchart TB
 
 ### Design considerations
 
-*To be documented.*
+**PBS Deployment Architecture**
+
+Three deployment options were evaluated for Proxmox Backup Server:
+
+**Option A: PBS as VM on PVE Cluster Node**
+
+- Assumes modern hardware with sufficient resources
+- Maintains uniform node configuration
+- PBS can be snapshotted and migrated
+- Standard TAPPaaS node automation applies
+
+**Option B: Bare Metal PBS**
+
+- Dedicated hardware for backup (e.g., repurposed legacy servers)
+- Requires `corosync-qdevice` package on all cluster nodes
+- Adds dependency burden across cluster for minority use case
+
+**Option C: PBS installed alongside PVE (Selected)**
+
+PBS is installed on TAPPaaS PVE nodes in parallel with PVE, rather than as a VM or separate bare metal instance.
+
+*Rationale:* This hybrid approach captures advantages from both options - uniform automation while avoiding VM overhead for backup-dedicated nodes.
+
+*Trade-offs:*
+
+- If a node is only used for backup, PVE adds overhead
+- Resource visibility is split between PVE and PBS
 
 ---
 
