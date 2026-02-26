@@ -51,7 +51,7 @@ flowchart TB
     subgraph Firewall Module
         ProxyService([Proxy Service])
         FW[Firewall Component]
-        FW --> ProxyService
+        ProxyService -.->|provided by| FW
     end
 
     Chat -.->|realized by| OWUI
