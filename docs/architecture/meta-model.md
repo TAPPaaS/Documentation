@@ -49,8 +49,8 @@ flowchart TB
     end
 
     subgraph Firewall Module
-        FW[Firewall Component]
         ProxyService([Proxy Service])
+        FW[Firewall Component]
         FW --> ProxyService
     end
 
