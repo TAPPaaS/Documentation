@@ -168,6 +168,10 @@ Register the static hosts on the internal network: firewall and tappaas1
     - ip: 10.0.0.10
   - press apply
 
+- go to System -> Settings -> Administration
+  - Edit "Alternate Hostname": firewall.mgmt.internal
+  - press Save
+
 If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ... (incrementing the ip by one for each)
 
 Check that you can lookup you your tappaas1 and firewall hosts using .mgmt.internal domain
