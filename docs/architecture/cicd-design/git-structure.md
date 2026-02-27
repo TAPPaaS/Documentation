@@ -44,7 +44,7 @@ flowchart RL
 The next step up is adding the Community Repository to the mix, this expands the actual modules you can install.
 
 ```mermaid
-flowchart LR
+flowchart RL
     subgraph Repos[" "]
         direction TB
         subgraph TAPPaaS[TAPPaaS Repository]
@@ -72,7 +72,7 @@ flowchart LR
 If you manage a set of TAPPaaS Instances you might want to "inject" a staging repository between the open source repositories and your installation. that way you can control what modules are available, and change default values to mach you deployment needs
 
 ```mermaid
-flowchart LR
+flowchart RL
     subgraph Sources[" "]
         direction TB
         subgraph TAPPaaS[TAPPaaS Repository]
@@ -111,7 +111,7 @@ flowchart LR
 Finally you can add you own private repositories to the mix.
 
 ```mermaid
-flowchart LR
+flowchart RL
     subgraph Sources[" "]
         direction TB
         subgraph Downstream[Downstream Repository]
