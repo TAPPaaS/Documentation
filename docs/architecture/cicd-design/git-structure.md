@@ -22,7 +22,7 @@ flowchart LR
         local[tappaas-cicd/TAPPaaS]
     end
 
-    stable --> local
+    local -->|pull| stable
 ```
 
 *To be documented.*
@@ -49,8 +49,8 @@ flowchart LR
         comm_local[tappaas-cicd/Community]
     end
 
-    stable --> local
-    comm_main --> comm_local
+    local -->|pull| stable
+    comm_local -->|pull| comm_main
 ```
 
 *To be documented.*
@@ -86,10 +86,10 @@ flowchart LR
         end
     end
 
-    unstable --> down_main
-    comm_main --> down_main
-    down_main --> localA
-    down_main --> localB
+    down_main -->|pull| unstable
+    down_main -->|pull| comm_main
+    localA -->|pull| down_main
+    localB -->|pull| down_main
 ```
 
 *To be documented.*
@@ -121,9 +121,9 @@ flowchart LR
         end
     end
 
-    down_main --> localA
-    down_main --> localB
-    priv_main --> localB_priv
+    localA -->|pull| down_main
+    localB -->|pull| down_main
+    localB_priv -->|pull| priv_main
 ```
 
 *To be documented.*
