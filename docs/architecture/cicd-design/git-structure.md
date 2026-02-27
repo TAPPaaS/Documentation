@@ -7,9 +7,21 @@ description: TAPPaaS Git repository structure and organization
 
 This page documents the Git repository organization and GitOps workflow for TAPPaaS.
 
+Fundamentaally TAPPaaS uses a GitOps pull setup. on a regular schedule a TAPPaaS solution will pull the latest update from an upstream repository and then performa an update operation on the running TAPPaaS instance based on the new updated TAPPaaS configuration.
+
+This is done by the "tappaas-cicd" module, which as a consequence will maintain a git clone of the TAPPaaS upstream repository
+
+There are several ways this can be set up, but there are 4 basic patterns or use cases, which we are going through below
+The actual setup for your TAPPaaS is configured in config/configuration.json on the tappaas user on the tappaas-cicd module
+there is a command "repository.sh" that will change the configuration.
+
 ---
 
 ## Basic TAPPaaS GitOps
+
+This is the basic setup that you will get if you follow the installation guide. The default upstream TAPPaaS repository is the Open Source REPO references on this documentation page top rigth corner. You can install the standard modules that comes from the TAPPaaS project.
+
+you have to decide if you want to pull form the stable or unstable branch (the latter is really only for testing and staging)
 
 ```mermaid
 flowchart LR
@@ -25,11 +37,11 @@ flowchart LR
     local -->|pull| stable
 ```
 
-*To be documented.*
-
 ---
 
 ## Community Repositories
+
+The next step up is adding the Community Repository to the mix, this expands the actual modules you can install.
 
 ```mermaid
 flowchart LR
@@ -53,11 +65,11 @@ flowchart LR
     comm_local -->|pull| comm_main
 ```
 
-*To be documented.*
-
 ---
 
 ## Downstream Repositories
+
+If you manage a set of TAPPaaS Instances you might want to "inject" a staging repository between the open source repositories and your installation. that way you can control what modules are available, and change default values to mach you deployment needs
 
 ```mermaid
 flowchart LR
@@ -92,11 +104,11 @@ flowchart LR
     localB -->|pull| down_main
 ```
 
-*To be documented.*
-
 ---
 
 ## Private Repositories
+
+Finally you can add you own private repositories to the mix.
 
 ```mermaid
 flowchart LR
@@ -125,7 +137,5 @@ flowchart LR
     localB -->|pull| down_main
     localB_priv -->|pull| priv_main
 ```
-
-*To be documented.*
 
 
