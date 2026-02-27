@@ -98,6 +98,34 @@ flowchart LR
 
 ## Private Repositories
 
+```mermaid
+flowchart LR
+    subgraph Sources[" "]
+        direction TB
+        subgraph Downstream[Downstream Repository]
+            down_main[main]
+        end
+        subgraph Private[Private Repository]
+            priv_main[main]
+        end
+    end
+
+    subgraph Instances[" "]
+        direction TB
+        subgraph InstanceA[TAPPaaS Instance A]
+            localA[tappaas-cicd/Downstream]
+        end
+        subgraph InstanceB[TAPPaaS Instance B]
+            localB[tappaas-cicd/Downstream]
+            localB_priv[tappaas-cicd/Private]
+        end
+    end
+
+    down_main --> localA
+    down_main --> localB
+    priv_main --> localB_priv
+```
+
 *To be documented.*
 
 
