@@ -15,6 +15,8 @@ There are several ways this can be set up, but there are 4 basic patterns or use
 The actual setup for your TAPPaaS is configured in config/configuration.json on the tappaas user on the tappaas-cicd module
 there is a command "repository.sh" that will change the configuration.
 
+Further if you are Developing modules for TAPPaaS or developing applications that are to be deployed as modules then there are further variations which is documented at the end
+
 ---
 
 ## Basic TAPPaaS GitOps
@@ -138,4 +140,44 @@ flowchart RL
     localB_priv -->|pull| priv_main
 ```
 
+## Developing TAPPaaS Modules
+
+So you want to contribute to TAPPaaS. We are honoured, thank you.
+
+Essentially when developing modules you want a test TAPPaaS Instance in parallel with your production instance. If the module you are developing is sufficiently seperate from other modules then you can do module development on a production system. More on that below
+
+What you want is a setup like the one below. The actual running instance of TAPPaaS can be achieved in any of the above scenarios but hte essenst is to have a private branch, likely on a private git system that will be upstream from the development instance of TAPPaaS
+
+```mermaid
+flowchart RL
+    subgraph Sources[" "]
+        direction TB
+        subgraph Upstream[Upstream Repository]
+            up_stable[stable]
+            up_unstable[unstable]
+        end
+        subgraph Development[Development Repository]
+            dev_main[main]
+        end
+    end
+
+    subgraph Instances[" "]
+        direction TB
+        subgraph InstanceProd[TAPPaaS Instance Prod]
+            localProd[tappaas-cicd/Upstream]
+        end
+        subgraph InstanceDev[TAPPaaS Instance Dev]
+            localDev[tappaas-cicd/Upstream]
+            localDev_dev[tappaas-cicd/Development]
+        end
+    end
+
+    localProd -->|pull| up_stable
+    localDev -->|pull| up_unstable
+    localDev_dev -->|pull| dev_main
+```
+
+---
+
+## Developing applications to be deployed on TAPPaaS
 
