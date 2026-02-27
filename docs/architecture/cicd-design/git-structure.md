@@ -7,7 +7,7 @@ description: TAPPaaS Git repository structure and organization
 
 This page documents the Git repository organization and GitOps workflow for TAPPaaS.
 
-Fundamentaally TAPPaaS uses a GitOps pull setup. on a regular schedule a TAPPaaS solution will pull the latest update from an upstream repository and then performa an update operation on the running TAPPaaS instance based on the new updated TAPPaaS configuration.
+Fundamentally TAPPaaS uses a GitOps pull setup. on a regular schedule a TAPPaaS solution will pull the latest update from an upstream repository and then performs an update operation on the running TAPPaaS instance based on the new updated TAPPaaS configuration.
 
 This is done by the "tappaas-cicd" module, which as a consequence will maintain a git clone of the TAPPaaS upstream repository
 
@@ -19,7 +19,7 @@ there is a command "repository.sh" that will change the configuration.
 
 ## Basic TAPPaaS GitOps
 
-This is the basic setup that you will get if you follow the installation guide. The default upstream TAPPaaS repository is the Open Source REPO references on this documentation page top rigth corner. You can install the standard modules that comes from the TAPPaaS project.
+This is the basic setup that you will get if you follow the installation guide. The default upstream TAPPaaS repository is the Open Source REPO references on this documentation page top right corner. You can install the standard modules that comes from the TAPPaaS project.
 
 you have to decide if you want to pull form the stable or unstable branch (the latter is really only for testing and staging)
 
