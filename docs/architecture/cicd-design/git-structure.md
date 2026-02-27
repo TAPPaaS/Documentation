@@ -175,7 +175,20 @@ flowchart RL
     dev_unstable --> |PR| up_unstable
 ```
 
+The module in the development REPO will be tested on the development system and when considered ok it can be submitted to the upstream repository through a Pull request (PR). UPstream can be the the TAPPaaS proper, the TAPPaaS Community repositories, or it can be keep as a private repository
+
+If the module being developed is sufficiently stand alone then it can be developed on a production system. TAPPaaS allows many kinds of isolation to ensure errors on development is not affecting production. The two most important parts of separation are:
+
+- A module will as default get its own VM with a well defined resource envelope
+- a module can also be deployed in a separate zone: a developer can enable a dedicated zone in parallel to "srv" so not traffic of the development module will interfere with production
+
+A question that would be natural to ask: Can the Development repository be hosted on TAPPaaS: certanly. it would require that a Git system is installed. TAPPaaS decided to implement Forgejo (the software behind CodeBerg) as part of the DevOps stack (not available yet)
+
 ---
 
 ## Developing applications to be deployed on TAPPaaS
+
+Developing TAPPaaS modules is about developing the deployment automation for an application. If you are interested in developing an actual application and yes TAPPaaS as either a Continuous Integration system or as a Continuous Deployment solution for the development activities, then that is certainly possible
+
+The intent is to provide a stack of modules/application that delivers a full devops pipeline. The CD aspect of the pipeline will be the system above, but the CI part will have main ForgeJo, pipeline systems, and binary repositories. The outcome of the CI can be pulled by the CD above
 
