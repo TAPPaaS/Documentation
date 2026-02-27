@@ -24,7 +24,7 @@ This is the basic setup that you will get if you follow the installation guide. 
 you have to decide if you want to pull form the stable or unstable branch (the latter is really only for testing and staging)
 
 ```mermaid
-flowchart LR
+flowchart RL
     subgraph TAPPaaS[TAPPaaS Repository]
         stable[stable]
         unstable[unstable]
