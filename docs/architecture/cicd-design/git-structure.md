@@ -156,6 +156,7 @@ flowchart RL
     subgraph Upstream[Upstream Repository]
         up_stable[stable]
         up_unstable[unstable]
+        up_unstable --> |merge| up_stable
     end
 
     subgraph Instances[" "]
