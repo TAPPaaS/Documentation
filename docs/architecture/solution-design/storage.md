@@ -15,6 +15,17 @@ The storage architecture for TAPPaaS prioritizes scalability, data security, and
 
 The framework emphasizes "default setup should cater for 90% of use cases," minimizing complex decision-making for operators.
 
+Second design principle is to use commodity hardware coupled with smart software and smart deployment designs
+
+
+## Design decisions
+
+We decided to go with "zfs" as the storage manager. zfs offer most of the criteria we are seeking for an efficient, scalable, redundant, flexible and trust worthy  storage solution. we combine this with a standard setup that uses snapshot and replication across cluster nodes. 
+
+The decision to use zfs allows us to have an enterprise grade storage solution for TAPPaaS without investing in dedicated costly SAN/NAS solutions. In small to medium sized deployment it can reduce the hardware cost with up to 50%
+
+The one item the solution is NOT providing is cross cluster node synchronous replication. best replication is 5 minutes out of sync. We consider it a readmap iten to provide this as an option using Cepth and Garage S3. 
+
 ### Growth Mechanisms
 
 - Expanding existing ZFS pools with additional disks
@@ -33,7 +44,9 @@ The design remains hardware-agnostic regarding SSD/HDD selection and caching app
 
 ## Pool Architecture
 
-Pools follow a naming convention: `tanka1`, `tankb1`, etc., mounted at `/mnt`.
+zfs groups physican hardware (HDD/SSDs) into storage pools. 
+
+In TAPPaaS the pools follow a naming convention: `tanka1`, `tankb1`, etc., mounted at `/`.
 
 ### tanka Pools ("a" designation)
 
@@ -47,4 +60,9 @@ Pools follow a naming convention: `tanka1`, `tankb1`, etc., mounted at `/mnt`.
 - Accommodate less performant storage
 - Support backup systems, S3 buckets, and logging infrastructure
 
-Additional pools using letters "c," "d," and beyond support specialized storage characteristics as needed.
+### tankc Pools ("c" designation)
+
+- Provide storage for Backup.
+- optimized to be cost efficient and mostly single stream write only
+
+Additional pools using letters "d," "e," and beyond support specialized storage characteristics as needed.

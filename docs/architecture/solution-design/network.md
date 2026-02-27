@@ -28,14 +28,15 @@ Moving to a self-hosted setup introduces a number of security challenges, and to
 
 In the TAPPaaS design we are trying to reach a balance between simplicity and security, but we are leaning towards security more than simplicity.
 
-### Network Segments
+### Network Zones
 
 | Segment | Description |
 |---------|-------------|
-| **HOME** | Where all services for a home reside (Home Assistant, NextCloud, etc.). There can be several "homes" in a TAPPaaS setup. |
-| **IoT** | Where all IoT equipment lives. IoT is generally considered more insecure. Home can access IoT, but not the other way around. |
+| **srv** | Where all services for a business or reside (OpenWebUI, NextCloud, etc.). There can be several "srv" Zones in a TAPPaaS setup. |
+| **IoT** | Where all IoT equipment lives. IoT is generally considered more insecure. "srv" can access IoT, but not the other way around. |
 | **Mgmt** | Management section for self-management of TAPPaaS. Generally the management segment can connect to everything (except Guest). |
 | **DMZ** | Demilitarized Zone - the only place traffic from the internet can enter. It is a reverse tunnel proxy that cannot access anything else in TAPPaaS. |
+| **Client** | Where end users of the system resides. as with srv there can be several separate Client zones (employees, guests, contractors, homeusers)
 
 ---
 
@@ -55,17 +56,21 @@ Each network segment has its own IP sub-range and traffic is tagged with VLAN ta
 | Client | 300 | 10.3.0.0/24 | Unconnected client network |
 | IoT | 400 | 10.4.0.0/24 | Unsecure devices and systems |
 
-### Segment Notes
 
-- **Management** is generally untagged traffic. Dedicated isolated segments use tags in the 2-99 range
-- **Service** is where services live. Sub-segments for multiple homes or dev/test/production use VLAN tags 201-299
-- **Client** can be subdivided for guest networks vs work-from-home devices using tags 301-399
-- **IoT** should be further subdivided (e.g., cameras on a separate network from other IoT devices)
+## DNS and DHCP
 
----
+We generally allocate IP numnbers through DHCP and use maskarading DNS to make all resources in TAPPaaS accesible under: <device/vm name>.<Zone>.internal
+
+## Proxy
+
+TAPPaaS comes with a Proxy service that will ensure https termination using public certificate and do routing to right service based on http header
 
 ## Best Practices
 
 - Place media devices (TVs, set-top boxes, smart speakers) in the IoT VLAN
 - This isolates less-trusted consumer devices from user devices and critical infrastructure
 - Use mDNS/SSDP relays or firewall rules to allow casting and streaming from user VLANs if needed
+
+## TODO
+
+document IPv6 allocaiton
