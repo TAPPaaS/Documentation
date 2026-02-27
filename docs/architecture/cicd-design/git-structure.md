@@ -61,7 +61,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph Repos[" "]
+    subgraph Sources[" "]
         direction TB
         subgraph TAPPaaS[TAPPaaS Repository]
             stable[stable]
@@ -70,20 +70,26 @@ flowchart LR
         subgraph Community[Community Repository]
             comm_main[main]
         end
-        subgraph Downstream[Downstream Repository]
-            down_main[main]
+    end
+
+    subgraph Downstream[Downstream Repository]
+        down_main[main]
+    end
+
+    subgraph Instances[" "]
+        direction TB
+        subgraph InstanceA[TAPPaaS Instance A]
+            localA[tappaas-cicd/Downstream]
+        end
+        subgraph InstanceB[TAPPaaS Instance B]
+            localB[tappaas-cicd/Downstream]
         end
     end
 
-    subgraph Instance[TAPPaaS Instance]
-        local[tappaas-cicd/TAPPaaS]
-        comm_local[tappaas-cicd/Community]
-        down_local[tappaas-cicd/Downstream]
-    end
-
-    stable --> local
-    comm_main --> comm_local
-    down_main --> down_local
+    unstable --> down_main
+    comm_main --> down_main
+    down_main --> localA
+    down_main --> localB
 ```
 
 *To be documented.*
