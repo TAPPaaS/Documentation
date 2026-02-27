@@ -172,7 +172,7 @@ flowchart RL
 
     localProd -->|pull| up_stable
     localDev -->|pull| up_unstable
-    localDev_dev -->|pull| dev_unstable
+    localDev_dev -->|push| dev_unstable
     dev_unstable --> |PR| up_unstable
 ```
 
