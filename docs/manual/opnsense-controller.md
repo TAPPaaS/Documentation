@@ -216,20 +216,3 @@ Handles both dynamic ranges and static reservations with:
 
 Supports interface assignment through an optional custom PHP extension.
 
-## Advanced Features
-
-### Interface Assignment
-
-Requires a custom PHP controller deployed to OPNsense. This enables VLAN assignment to physical interfaces through the API.
-
-### Firewall Features
-
-- Savepoints for rollback capability
-- Policy-based routing through gateway specifications
-- Configurable priority sequencing
-
-## Project Organization
-
-- Uses Nix for reproducible builds and dependency management
-- Python modules organized by domain
-- Separate CLI entry points for specialized tools
