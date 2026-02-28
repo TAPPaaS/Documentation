@@ -84,7 +84,149 @@ Each TAPPaaS module is defined by a `<module>.json` file that specifies its conf
 
 ## Standard Scripts
 
+TAPPaaS provides standard scripts for module lifecycle management. These scripts are located in `/home/tappaas/bin/` on the tappaas-cicd module.
+
+### Install
+
+The `install-module.sh` script installs a module and its dependencies.
+
+**Usage:**
+
+```bash
+install-module.sh <module-name> [--<field> <value>...]
+install-module.sh vaultwarden
+install-module.sh litellm --node tappaas2
+```
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `<module-name>` | Name of the module to install (required) |
+| `--<field> <value>` | Override any JSON configuration field |
+| `-h, --help` | Display help message |
+
+**Scripts Sourced:**
+
+- `copy-update-json.sh` - Copies and validates module JSON configuration
+- `common-install-routines.sh` - Shared installation routines
+
+**Execution Flow:**
+
+```mermaid
+flowchart TB
+    A[install-module.sh] --> B[1. Copy and validate module JSON]
+    B --> C[2. Validate dependencies exist]
+    C --> D[3. Validate service scripts exist]
+    D --> E[4. Execute dependency install-service.sh]
+    E --> F[5. Execute module install.sh]
+```
+
+1. **Copy and validate** - Copies `<module>.json` to config directory, applies field overrides
+2. **Validate dependencies** - Checks each service in `dependsOn` exists and is provided by another module
+3. **Validate service scripts** - Ensures the module has scripts for each service it `provides`
+4. **Execute dependency installers** - Calls `install-service.sh` for each dependency's provider
+5. **Run module installer** - Executes the module's own `install.sh` if present
+
+**Module install.sh:**
+
+Each module may provide an `install.sh` script in its directory. This script receives the module name as its first argument and should handle module-specific installation tasks.
+
+### Update
+
+The `update-module.sh` script updates a module and its dependencies.
+
+**Usage:**
+
+```bash
+update-module.sh <module-name>
+update-module.sh vaultwarden
+```
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `<module-name>` | Name of the module to update (required) |
+| `-h, --help` | Display help message |
+
+**Scripts Sourced:**
+
+- `common-install-routines.sh` - Provides `check_json()` function
+
+**Execution Flow:**
+
+```mermaid
+flowchart TB
+    A[update-module.sh] --> B[1. Validate module JSON config]
+    B --> C[2. Verify dependencies available]
+    C --> D[3. Execute module pre-update.sh]
+    D --> E[4. Execute dependency update-service.sh]
+    E --> F[5. Execute module update.sh]
+```
+
+1. **Configuration validation** - Verifies the module's JSON config is well-formed
+2. **Dependency verification** - Confirms each declared dependency exists and is available
+3. **Pre-update hook** - Executes the module's optional `pre-update.sh` script
+4. **Service dependencies** - Runs each dependency provider's `update-service.sh`
+5. **Module update** - Executes the module's own `update.sh` script
+
+**Module Scripts:**
+
+| Script | Description |
+|--------|-------------|
+| `pre-update.sh` | Optional preparation before update (e.g., stop services, backup) |
+| `update.sh` | Main update logic (e.g., pull latest config, restart services) |
+
+### Delete
+
 *To be documented.*
+
+### Test
+
+The `test.sh` script in `tappaas-cicd/test-vm-creation/` runs the VM creation test suite.
+
+**Usage:**
+
+```bash
+test.sh [test-name] [--skip-install] [--skip-test] [--cleanup]
+```
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `test-name` | Run a single specified test case (optional) |
+| `--skip-install` | Skip VM installation, test existing VMs only |
+| `--skip-test` | Install VMs without running tests |
+| `--cleanup` | Destroy all test VMs after completion |
+
+**Execution Flow:**
+
+```mermaid
+flowchart TB
+    A[test.sh] --> B[Initialize logging]
+    B --> C[Parse arguments]
+    C --> D[For each test case]
+    D --> E[install-module.sh]
+    E --> F[Wait 30 seconds]
+    F --> G[test-vm.sh]
+    G --> H[Log results]
+    H --> D
+    D --> I[Generate summary]
+    I --> J{--cleanup?}
+    J -->|Yes| K[Destroy test VMs]
+    J -->|No| L[Exit]
+    K --> L
+```
+
+**Test Cases:**
+
+The test suite includes test cases for different OS types:
+
+- Debian-based VMs
+- NixOS-based VMs
+- Ubuntu-based VMs
 
 ---
 
