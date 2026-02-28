@@ -166,7 +166,54 @@ flowchart TB
 
 ### Delete
 
-*To be documented.*
+The `delete-module.sh` script removes a module and cleans up its dependencies.
+
+**Usage:**
+
+```bash
+delete-module.sh <module-name>
+delete-module.sh vaultwarden
+```
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `<module-name>` | Name of the module to delete (required) |
+| `-h, --help` | Display help message |
+
+**Scripts Sourced:**
+
+- `common-install-routines.sh` - Provides `check_json()` function
+
+**Execution Flow:**
+
+```mermaid
+flowchart TB
+    A[delete-module.sh] --> B[1. Validate module JSON config]
+    B --> C[2. Execute module delete.sh]
+    C --> D[3. Execute dependency delete-service.sh in reverse order]
+    D --> E[4. Remove module configuration]
+```
+
+1. **Configuration validation** - Verifies the module's JSON config exists
+2. **Module delete** - Executes the module's own `delete.sh` script first
+3. **Service cleanup** - Runs each dependency provider's `delete-service.sh` in **reverse order** of `dependsOn`
+4. **Config removal** - Removes the module's JSON configuration file
+
+**Key Differences from Install/Update:**
+
+| Aspect | Install/Update | Delete |
+|--------|----------------|--------|
+| Module script | Runs last | Runs first |
+| Dependency order | Forward order | Reverse order |
+| Service script | `install-service.sh` / `update-service.sh` | `delete-service.sh` |
+
+**Module Scripts:**
+
+| Script | Description |
+|--------|-------------|
+| `delete.sh` | Cleanup logic (e.g., stop services, remove data) |
 
 ### Test
 
