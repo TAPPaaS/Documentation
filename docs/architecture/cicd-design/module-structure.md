@@ -232,6 +232,124 @@ The test suite includes test cases for different OS types:
 
 ## Service Scripts
 
-*To be documented.*
+Service scripts are provided by modules to handle the services they offer (declared in the `provides` field). These scripts are located in `<module>/services/<service-name>/` and are called by the standard install and update scripts when other modules depend on them.
+
+### Directory Structure
+
+```
+<module>/
+├── <module>.json
+├── install.sh
+├── update.sh
+└── services/
+    └── <service-name>/
+        ├── install-service.sh
+        └── update-service.sh
+```
+
+### install-service.sh
+
+Called by `install-module.sh` when a module depends on this service.
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `<module-name>` | Name of the dependent module requesting the service |
+
+**Responsibilities:**
+
+- Read the dependent module's configuration from `/home/tappaas/config/<module-name>.json`
+- Provision resources required by the dependent module
+- Configure the service to support the new dependent
+
+**Example: cluster/services/vm/install-service.sh**
+
+This script creates a VM for a dependent module:
+
+```mermaid
+flowchart TB
+    A[install-service.sh] --> B[Validate module JSON exists]
+    B --> C[Extract VM settings from config]
+    C --> D[Get target node]
+    D --> E[scp config to target node]
+    E --> F[ssh: Create-TAPPaaS-VM.sh]
+    F --> G[Confirm VM creation]
+```
+
+**Scripts/Commands Used:**
+
+| Script | Purpose |
+|--------|---------|
+| `copy-update-json.sh` | JSON handling utilities |
+| `common-install-routines.sh` | Provides `check_json()`, `get_config_value()` |
+| `Create-TAPPaaS-VM.sh` | Remote script for VM provisioning |
+
+### update-service.sh
+
+Called by `update-module.sh` when updating a module's dependencies.
+
+**Parameters:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `<module-name>` | Name of the dependent module being updated |
+
+**Responsibilities:**
+
+- Read current configuration for the dependent module
+- Apply any configuration changes
+- Update service state as needed
+
+**Example: cluster/services/ha/update-service.sh**
+
+This script manages High Availability configuration:
+
+| HANode Value | Action |
+|--------------|--------|
+| `NONE` | Remove HA resources, rules, and replication jobs |
+| `tappaas[N]` | Configure HA resource, node affinity rules, ZFS replication |
+
+**Configuration Values Used:**
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `vmid` | - | Virtual machine identifier |
+| `node` | tappaas1 | Primary node |
+| `HANode` | NONE | High-availability target node |
+| `replicationSchedule` | */15 | ZFS sync interval (cron format) |
+| `storage` | tanka1 | Storage backend name |
+
+**Proxmox Commands Used:**
+
+| Command | Purpose |
+|---------|---------|
+| `qm status` | Check VM status |
+| `ha-manager` | HA resource/rule operations |
+| `pvesh` | Proxmox API access |
+| `pvesr` | Replication job management |
+
+**Example: templates/services/nixos/update-service.sh**
+
+This script updates the OS on NixOS-based VMs:
+
+```mermaid
+flowchart TB
+    A[update-service.sh] --> B[Get vmname, vmid, node from config]
+    B --> C[Call update-os.sh]
+    C --> D[update-os.sh auto-detects OS type]
+    D --> E[Execute NixOS or Debian update]
+```
+
+### Writing Service Scripts
+
+When creating a new service:
+
+1. Create the directory `<module>/services/<service-name>/`
+2. Add `install-service.sh` for initial provisioning
+3. Add `update-service.sh` for ongoing updates
+4. Source `common-install-routines.sh` for helper functions
+5. Use `get_config_value` to read module configuration with defaults
+6. Use `set -euo pipefail` for strict error handling
 
 
