@@ -35,6 +35,8 @@ timeline
                : Harden security
 ```
 
+for details look at the milestone backlog in git: [TAPPaaS Milestones](https://github.com/TAPPaaS/TAPPaaS/milestones)
+
 ---
 
 !!!info "Current Status"
