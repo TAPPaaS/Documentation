@@ -155,6 +155,38 @@ nav:
     - Problem: intro/problem.md
     - Approach: intro/approach.md
 
+  - Architecture:
+    - Overview: architecture/index.md
+    - Capabilities: architecture/capabilities.md
+    - Solution Design:
+      - Overview: architecture/solution-design/index.md
+      - Software Selection: architecture/solution-design/software-selection.md
+      - Network: architecture/solution-design/network.md
+      - Storage: architecture/solution-design/storage.md
+      - Security: architecture/solution-design/security.md
+      - Single Sign-On: architecture/solution-design/single-signon.md
+      - Backup: architecture/solution-design/backup.md
+    - CICD Design:
+      - Overview: architecture/cicd-design/index.md
+      - Git Structure: architecture/cicd-design/git-structure.md
+      - Module Structure: architecture/cicd-design/module-structure.md
+      - CICD Script Structure: architecture/cicd-design/script-structure.md
+      - Plans: architecture/cicd-design/plans.md
+    - Module Designs:
+      - Overview: architecture/module-designs/index.md
+      - Foundation Stack: architecture/module-designs/foundation.md
+      - AI Stack: architecture/module-designs/ai.md
+      - Productivity Stack: architecture/module-designs/productivity.md
+      - Home Stack: architecture/module-designs/home.md
+      - DevOps Stack: architecture/module-designs/devops.md
+    - Meta Model: architecture/meta-model.md
+
+  - Manual:
+    - Overview: manual/index.md
+    - TAPPaaS Scripts: manual/scripts.md
+    - Update Scheduler: manual/update-tappaas.md
+    - OPNsense Controller: manual/opnsense-controller.md
+
   - Installation:
     - Overview: installation/index.md
     - Hardware Selection: installation/hardware-selection.md
@@ -182,32 +214,6 @@ nav:
     - Home Stack:
       - Overview: installation/home-stack/index.md
       - Home Assistant: installation/home-stack/home-assistant.md
-
-  - Architecture:
-    - Overview: architecture/index.md
-    - Capabilities: architecture/capabilities.md
-    - Solution Design:
-      - Overview: architecture/solution-design/index.md
-      - Software Selection: architecture/solution-design/software-selection.md
-      - Network: architecture/solution-design/network.md
-      - Storage: architecture/solution-design/storage.md
-      - Security: architecture/solution-design/security.md
-      - Single Sign-On: architecture/solution-design/single-signon.md
-      - Backup: architecture/solution-design/backup.md
-    - CICD Design:
-      - Overview: architecture/cicd-design/index.md
-      - Git Structure: architecture/cicd-design/git-structure.md
-      - Module Structure: architecture/cicd-design/module-structure.md
-      - CICD Script Structure: architecture/cicd-design/script-structure.md
-      - Plans: architecture/cicd-design/plans.md
-    - Module Designs:
-      - Overview: architecture/module-designs/index.md
-      - Foundation Stack: architecture/module-designs/foundation.md
-      - AI Stack: architecture/module-designs/ai.md
-      - Productivity Stack: architecture/module-designs/productivity.md
-      - Home Stack: architecture/module-designs/home.md
-      - DevOps Stack: architecture/module-designs/devops.md
-    - Meta Model: architecture/meta-model.md
 
   - Roadmap: roadmap/index.md
 
