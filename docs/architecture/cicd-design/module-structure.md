@@ -15,6 +15,8 @@ Each TAPPaaS module is defined by a `<module>.json` file that specifies its conf
 
 ### Core Fields
 
+Basic module metadata and dependency declarations used by all modules.
+
 | Field | Type | Description | Default |
 |-------|------|-------------|---------|
 | `version` | string | Version of the module (format: `X.Y.Z`) | - |
@@ -22,8 +24,13 @@ Each TAPPaaS module is defined by a `<module>.json` file that specifies its conf
 | `maintainer` | string | Maintainer of the module (typically GitHub username) | "" |
 | `releaseDate` | string | Date version was released (format: `YYYY-MM-DD`) | - |
 | `status` | string | Development stage: `Development`, `Testing`, `Production`, `Deprecated` | Development |
+| `location` | string | Absolute path to module directory (auto-set by copy-update-json.sh) | - |
+| `dependsOn` | array | List of services this module depends on (format: `module:service`) | [] |
+| `provides` | array | Services this module delivers | [] |
 
-### VM Configuration
+### Cluster:VM Service Configuration
+
+Fields used by the `cluster:vm` service to create and configure the module's virtual machine.
 
 | Field | Type | Description | Default |
 |-------|------|-------------|---------|
@@ -33,29 +40,14 @@ Each TAPPaaS module is defined by a `<module>.json` file that specifies its conf
 | `node` | string | Target Proxmox node (pattern: `tappaas[0-9]+`) | tappaas1 |
 | `bios` | string | BIOS type: `ovmf` or `seabios` | ovmf |
 | `ostype` | string | Proxmox VM optimization: `l26`, `l24`, `win10`, `win11`, `other` | l26 |
-
-### Resources
-
-| Field | Type | Description | Default |
-|-------|------|-------------|---------|
 | `cores` | integer | CPU cores allocated (1-128) | 2 |
 | `memory` | integer | RAM in megabytes (min 512) | 4096 |
 | `diskSize` | string | Disk size with unit (e.g., `8G`, `500M`) | 8G |
 | `storage` | string | Storage pool name | tanka1 |
-
-### Image Configuration
-
-| Field | Type | Description | Default |
-|-------|------|-------------|---------|
 | `imageType` | string | Image source: `clone`, `iso`, `img`, `apt` | *required* |
 | `image` | string | Image identifier (interpretation depends on imageType) | *required* |
 | `imageLocation` | string | URL for image file (used with `iso`/`img` types) | - |
 | `cloudInit` | string | Cloud-init support: `"true"` or `"false"` | "true" |
-
-### Network Configuration
-
-| Field | Type | Description | Default |
-|-------|------|-------------|---------|
 | `bridge0` | string | Proxmox bridge for net0 | lan |
 | `mac0` | string | MAC address for net0 (format: `XX:XX:XX:XX:XX:XX`) | - |
 | `zone0` | string | Security zone for net0 (must exist in zones.json) | mgmt |
@@ -65,20 +57,14 @@ Each TAPPaaS module is defined by a `<module>.json` file that specifies its conf
 | `zone1` | string | Security zone for net1 | mgmt |
 | `trunks1` | string | Additional zones for net1 (semicolon-separated) | - |
 
-### High Availability
+### Cluster:HA Service Configuration
+
+Fields used by the `cluster:ha` service to configure high availability and replication.
 
 | Field | Type | Description | Default |
 |-------|------|-------------|---------|
 | `HANode` | string | Secondary node for HA (`NONE` or `tappaas[0-9]+`) | NONE |
 | `replicationSchedule` | string | Cron-style replication interval | */15 |
-
-### Dependencies
-
-| Field | Type | Description | Default |
-|-------|------|-------------|---------|
-| `dependsOn` | array | List of services this module depends on (format: `module:service`) | [] |
-| `provides` | array | Services this module delivers | [] |
-| `location` | string | Absolute path to module directory (auto-set) | - |
 
 ---
 
@@ -184,49 +170,7 @@ flowchart TB
 
 ### Test
 
-The `test.sh` script in `tappaas-cicd/test-vm-creation/` runs the VM creation test suite.
-
-**Usage:**
-
-```bash
-test.sh [test-name] [--skip-install] [--skip-test] [--cleanup]
-```
-
-**Parameters:**
-
-| Parameter | Description |
-|-----------|-------------|
-| `test-name` | Run a single specified test case (optional) |
-| `--skip-install` | Skip VM installation, test existing VMs only |
-| `--skip-test` | Install VMs without running tests |
-| `--cleanup` | Destroy all test VMs after completion |
-
-**Execution Flow:**
-
-```mermaid
-flowchart TB
-    A[test.sh] --> B[Initialize logging]
-    B --> C[Parse arguments]
-    C --> D[For each test case]
-    D --> E[install-module.sh]
-    E --> F[Wait 30 seconds]
-    F --> G[test-vm.sh]
-    G --> H[Log results]
-    H --> D
-    D --> I[Generate summary]
-    I --> J{--cleanup?}
-    J -->|Yes| K[Destroy test VMs]
-    J -->|No| L[Exit]
-    K --> L
-```
-
-**Test Cases:**
-
-The test suite includes test cases for different OS types:
-
-- Debian-based VMs
-- NixOS-based VMs
-- Ubuntu-based VMs
+*To be documented.*
 
 ---
 
