@@ -28,6 +28,12 @@
   height: auto;
 }
 
+/* Hero text container (title + subtitle) */
+.hero-text {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Hero title text */
 .hero-title {
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -36,6 +42,15 @@
   color: var(--md-primary-fg-color);
   letter-spacing: -0.02em;
   line-height: 1;
+}
+
+/* Hero subtitle text */
+.hero-subtitle {
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.3rem;
 }
 
 .hero h3 {
@@ -139,6 +154,10 @@ hr {
 
   .hero-title {
     font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
   }
 
   .hero h3 {

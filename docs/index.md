@@ -17,20 +17,20 @@ hide:
 }
 </style>
 
-<div class="hero" markdown>
-
-<div class="hero-banner">
-  <img src="tappaas-logo.png" alt="TAPPaaS Logo" class="hero-logo">
-  <span class="hero-title">TAPPaaS</span>
-</div>
-
-### Your Digital Foundation
-
-Deploy and run your applications in a self-hosted cloud, with all the enterprise class capabilities of modern cloud infrastructure, but without having to care about the complexity. TAPPaaS give you freedom, and resiliency of your Digital life whether you are a small business, a government organization, an NGO or a community of homes
-
-[Install TAPPaaS](installation/index.md){ .md-button .md-button--primary }
-[View on GitHub](https://github.com/TAPPaaS){ .md-button }
-
+<div class="hero">
+  <div class="hero-banner">
+    <img src="tappaas-logo.png" alt="TAPPaaS Logo" class="hero-logo">
+    <div class="hero-text">
+      <span class="hero-title">TAPPaaS</span>
+      <span class="hero-subtitle">Your Digital Foundation</span>
+    </div>
+  </div>
+  <h3>Trusted Automated Private Platform as a (self-hosted) Service</h3>
+  <p>Deploy and run your applications in a self-hosted cloud, with all the enterprise class capabilities of modern cloud infrastructure, but without having to care about the complexity. TAPPaaS give you freedom, and resiliency of your Digital life whether you are a small business, a government organization, an NGO or a community of homes</p>
+  <p>
+    <a href="installation/index.html" class="md-button md-button--primary">Install TAPPaaS</a>
+    <a href="https://github.com/TAPPaaS" class="md-button">View on GitHub</a>
+  </p>
 </div>
 
 ---
