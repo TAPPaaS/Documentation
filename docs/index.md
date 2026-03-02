@@ -19,9 +19,12 @@ hide:
 
 <div class="hero" markdown>
 
-![TAPPaaS](tappaas-logo.png){ .hero-logo }
+<div class="hero-banner">
+  <img src="tappaas-logo.png" alt="TAPPaaS Logo" class="hero-logo">
+  <span class="hero-title">TAPPaaS</span>
+</div>
 
-### Trusted Automated Private Platform as a (self-hosted) Service
+### Your Digital Foundation
 
 Deploy and run your applications in a self-hosted cloud, with all the enterprise class capabilities of modern cloud infrastructure, but without having to care about the complexity. TAPPaaS give you freedom, and resiliency of your Digital life whether you are a small business, a government organization, an NGO or a community of homes
 

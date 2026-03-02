@@ -13,12 +13,29 @@
   margin-bottom: 2rem;
 }
 
+/* Hero banner with logo and title */
+.hero-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 /* Hero logo styling */
 .hero-logo {
-  max-width: 500px;
+  max-width: 160px;
   width: 100%;
   height: auto;
-  margin-bottom: 1rem;
+}
+
+/* Hero title text */
+.hero-title {
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .hero h3 {
@@ -110,8 +127,18 @@ hr {
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
-  .hero h1 {
-    font-size: 4rem;
+  .hero-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .hero-logo {
+    max-width: 120px;
+  }
+
+  .hero-title {
+    font-size: 3rem;
   }
 
   .hero h3 {
