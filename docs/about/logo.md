@@ -6,7 +6,7 @@ description: The TAPPaaS logo and its meaning
 # Logo
 
 <div style="text-align: center; margin: 2rem 0;">
-  <img src="../tappaas-logo.png" alt="TAPPaaS Logo" style="width: 300px; height: 300px;">
+  <img src="../../tappaas-logo.png" alt="TAPPaaS Logo" style="width: 300px; height: 300px;">
 </div>
 
 ## Turtles All the Way Down
