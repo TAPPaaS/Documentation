@@ -1,3 +1,6 @@
+/* Import Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 /* TAPPaaS Custom Styles */
 
 /* Hide table of contents on all pages */
@@ -36,21 +39,24 @@
 
 /* Hero title text */
 .hero-title {
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   font-size: 5rem;
   font-weight: 700;
   color: var(--md-primary-fg-color);
   letter-spacing: -0.02em;
   line-height: 1;
+  display: block;
 }
 
-/* Hero subtitle text */
+/* Hero subtitle text - sized to match title width */
 .hero-subtitle {
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.35rem;
   font-weight: 400;
   color: var(--md-default-fg-color--light);
   margin-top: 0.3rem;
+  letter-spacing: 0.12em;
+  display: block;
 }
 
 .hero h3 {
@@ -157,7 +163,8 @@ hr {
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
   }
 
   .hero h3 {
