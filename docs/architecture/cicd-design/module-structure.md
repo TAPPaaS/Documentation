@@ -66,6 +66,15 @@ Fields used by the `cluster:ha` service to configure high availability and repli
 | `HANode` | string | Secondary node for HA (`NONE` or `tappaas[0-9]+`) | NONE |
 | `replicationSchedule` | string | Cron-style replication interval | */15 |
 
+### Firewall:proxy Service Configuration
+
+Fields used by the `firewall:proxy` service to configure reverse proxy routing via Caddy on OPNsense.
+
+| Field | Type | Description | Default |
+|-------|------|-------------|---------|
+| `proxyDomain` | string | Public domain name for the reverse proxy | `<vmname>.<tappaas.domain>` |
+| `proxyPort` | integer | Target port on the module VM (1-65535) | 80 |
+
 ---
 
 ## Standard Scripts
