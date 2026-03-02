@@ -229,5 +229,6 @@ nav:
 
   - About:
     - People: about/people.md
+    - Logo: about/logo.md
     - Inspiration: about/inspiration.md
     - License: about/license.md
