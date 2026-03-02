@@ -26,9 +26,9 @@
 
 /* Hero logo styling */
 .hero-logo {
-  max-width: 40px;
-  width: 100%;
-  height: auto;
+  width: 40px !important;
+  max-width: 40px !important;
+  height: auto !important;
 }
 
 /* Hero text container (title + subtitle) */
@@ -155,7 +155,8 @@ hr {
   }
 
   .hero-logo {
-    max-width: 30px;
+    width: 30px !important;
+    max-width: 30px !important;
   }
 
   .hero-title {
