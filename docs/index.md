@@ -19,7 +19,7 @@ hide:
 
 <div class="hero">
   <div class="hero-banner">
-    <img src="tappaas-logo.png?v=2" alt="TAPPaaS Logo" class="hero-logo" style="width: 160px; height: 160px;">
+    <img src="tappaas-logo.png?v=2" alt="TAPPaaS Logo" style="width: 160px; height: 160px;">
     <div class="hero-text">
       <span class="hero-title">TAPPaaS</span>
       <span class="hero-subtitle">Your Digital Foundation</span>
