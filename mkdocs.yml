@@ -56,8 +56,8 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
-  # Logo and favicon (uncomment when you have these files)
-  # logo: assets/logo.png
+  # Logo and favicon
+  logo: tappaas-logo.png
   # favicon: assets/favicon.ico
 
 # Plugins
