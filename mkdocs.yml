@@ -179,6 +179,7 @@ nav:
 
   - Manual:
     - Overview: manual/index.md
+    - TAPPaaS Module: manual/tappaas-module.md
     - TAPPaaS Scripts:
       - Overview: manual/scripts/index.md
       - install-module.sh: manual/scripts/install-module.md
