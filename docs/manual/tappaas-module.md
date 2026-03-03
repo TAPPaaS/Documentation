@@ -12,12 +12,13 @@ A TAPPaaS module is a self-contained unit that defines a service or application 
 ```
 <module-name>/
 ├── <module-name>.json    # Module definition and configuration
-├── install.sh            # Installation script (optional)
-├── update.sh             # Update script (optional)
+├── install.sh            # Module specific installation script
+├── update.sh             # Module specific Update script
+├── pre-update.sh         # Module specific Update script run before service updates
 ├── delete.sh             # Deletion script (optional)
 └── services/             # Services provided by this module
     └── <service-name>/
-        ├── install-service.sh
+        ├── install-service.sh called when a module that depends on this module is installed
         ├── update-service.sh
         └── delete-service.sh
 ```
@@ -31,9 +32,6 @@ The `<module-name>.json` file defines the module's configuration, including:
 - **Provides**: Services this module offers to other modules
 - **VM Configuration**: Resources, networking, and storage settings
 
-## Lifecycle
+---
 
-1. **Install**: Creates the module's VM and configures its services
-2. **Update**: Applies configuration changes and updates the module
-3. **Delete**: Removes the module and cleans up resources
-
+For detailed documentation on module fields and scripts, see [Module Structure](../architecture/cicd-design/module-structure.md).
