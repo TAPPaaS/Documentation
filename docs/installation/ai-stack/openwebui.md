@@ -49,7 +49,7 @@ From tappaas-cicd:
 
 ```bash
 cd ~/TAPPaaS/src/apps/openwebui
-./install.sh
+install-module.sh openwebui
 ```
 
 ### DNS Configuration
@@ -58,17 +58,7 @@ Add DNS record:
 
 | Record | Type | Value |
 |--------|------|-------|
-| `chat.yourdomain.com` | A | Your public IP |
-
-### Reverse Proxy
-
-Configure Caddy in OPNsense:
-
-```
-chat.yourdomain.com {
-    reverse_proxy openwebui.mgmt.internal:8080
-}
-```
+| `openwebui.yourdomain.com` | A | Your public IP |
 
 ## Configuration
 

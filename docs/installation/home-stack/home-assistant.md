@@ -19,7 +19,7 @@ Home Assistant Operating System (HAOS) provides a complete home automation platf
 ## Prerequisites
 
 - [ ] [Foundation](../foundation/index.md) complete
-- [ ] VLAN 200 configured for IoT (recommended)
+- [ ] VLAN 200 configured for srv (recommended)
 - [ ] DNS record (optional)
 
 ## System Requirements
@@ -32,29 +32,9 @@ Home Assistant Operating System (HAOS) provides a complete home automation platf
 
 ## Installation
 
-### Deploy Using Proxmox Helper Scripts
+**TODO create, update and test**
 
-The easiest method uses community-maintained Proxmox scripts:
 
-```bash
-# On Proxmox host
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/vm/haos-vm.sh)"
-```
-
-### Configuration During Install
-
-| Setting | Value |
-|---------|-------|
-| Hostname | `homeassistant` |
-| VLAN | 200 (IoT network) |
-| Start on boot | Yes |
-
-### Get IP Address
-
-After installation, the VM will obtain an IP via DHCP:
-
-- Check DHCP leases in OPNsense
-- Or view the VM console
 
 ## Initial Setup
 
@@ -63,10 +43,9 @@ After installation, the VM will obtain an IP via DHCP:
 Navigate to:
 
 ```
-http://10.2.0.xxx:8123
+http://homeassistant.<mydoamin>
 ```
 
-Replace `xxx` with your assigned IP.
 
 ### Create Account
 
@@ -103,25 +82,6 @@ For command-line access:
 | InfluxDB | Time-series database |
 | Grafana | Dashboards and visualization |
 
-## Remote Access
-
-### Option 1: Reverse Proxy
-
-Configure Caddy in OPNsense:
-
-```
-ha.yourdomain.com {
-    reverse_proxy 10.2.0.xxx:8123
-}
-```
-
-### Option 2: Pangolin/VPN
-
-For secure remote access without exposing to internet:
-
-1. Access Pangolin web UI
-2. Create new site "homeassistant"
-3. Apply configuration in Home Assistant terminal
 
 ## Integrations
 

@@ -44,7 +44,7 @@ LiteLLM provides a unified API gateway for multiple LLM providers, allowing you 
 
 ```bash
 cd ~/TAPPaaS/src/apps/litellm
-./install.sh
+install-module.sh litellm
 ```
 
 ### DNS Configuration
@@ -55,15 +55,6 @@ Add DNS record:
 |--------|------|-------|
 | `llm.yourdomain.com` | A | Your public IP |
 
-### Reverse Proxy
-
-Configure Caddy:
-
-```
-llm.yourdomain.com {
-    reverse_proxy litellm.mgmt.internal:4000
-}
-```
 
 ## Configuration
 

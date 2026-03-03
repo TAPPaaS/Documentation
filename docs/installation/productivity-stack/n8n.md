@@ -44,7 +44,7 @@ n8n is a fair-code workflow automation platform that allows you to connect servi
 
 ```bash
 cd ~/TAPPaaS/src/apps/n8n
-./install.sh
+install-module.sh n8n
 ```
 
 ### DNS Configuration
@@ -55,15 +55,6 @@ Add DNS record:
 |--------|------|-------|
 | `n8n.yourdomain.com` | A | Your public IP |
 
-### Reverse Proxy
-
-Configure Caddy:
-
-```
-n8n.yourdomain.com {
-    reverse_proxy n8n.mgmt.internal:5678
-}
-```
 
 ## Configuration
 

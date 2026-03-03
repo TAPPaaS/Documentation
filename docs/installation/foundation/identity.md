@@ -59,7 +59,7 @@ From the tappaas-cicd VM:
 
 ```bash
 cd ~/TAPPaaS/src/foundation/identity
-./install.sh
+install-module.sh identity
 ```
 
 This creates a VM with both Authentik and VaultWarden pre-configured.
