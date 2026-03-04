@@ -149,6 +149,12 @@ extra:
 nav:
   - Home: index.md
 
+  - Intro:
+    - Overview: intro/index.md
+    - Vision: intro/vision.md
+    - Problem: intro/problem.md
+    - Approach: intro/approach.md
+
   - Installation:
     - Overview: installation/index.md
     - Hardware Selection: installation/hardware-selection.md
@@ -229,6 +235,7 @@ nav:
   - Roadmap: roadmap/index.md
 
   - About:
+    - Digital Sovereignty: about/digital-sovereignty.md
     - People: about/people.md
     - Logo: about/logo.md
     - Inspiration: about/inspiration.md
