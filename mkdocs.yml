@@ -154,6 +154,7 @@ nav:
     - Vision: intro/vision.md
     - Problem: intro/problem.md
     - Approach: intro/approach.md
+    - Digital Sovereignty: intro/digital-sovereignty.md
 
   - Installation:
     - Overview: installation/index.md
@@ -235,7 +236,6 @@ nav:
   - Roadmap: roadmap/index.md
 
   - About:
-    - Digital Sovereignty: about/digital-sovereignty.md
     - People: about/people.md
     - Logo: about/logo.md
     - Inspiration: about/inspiration.md
