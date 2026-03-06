@@ -206,6 +206,7 @@ nav:
       - setup-caddy.sh: manual/scripts/setup-caddy.md
     - Update Scheduler: manual/update-tappaas.md
     - OPNsense Controller: manual/opnsense-controller.md
+    - Backup: manual/backup.md
 
   - Architecture:
     - Overview: architecture/index.md
