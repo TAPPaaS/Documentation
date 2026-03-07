@@ -22,6 +22,12 @@ Utility scripts for TAPPaaS-CICD operations. These scripts are installed to `/ho
 - **[install-vm.sh](install-vm.md)** - VM creation library (sourced by install.sh)
 - **[update-os.sh](update-os.md)** - OS-specific update (NixOS/Debian)
 - **[update-HA.sh](update-ha.md)** - Manage HA and replication for modules
+- **[snapshot-vm.sh](snapshot-vm.md)** - VM snapshot management (create/list/cleanup/restore)
+
+## Cluster Inspection
+
+- **[inspect-cluster.sh](inspect-cluster.md)** - Compare running VMs against module configurations
+- **[inspect-vm.sh](inspect-vm.md)** - 3-column config/git/actual VM comparison
 
 ## Disk Management
 
