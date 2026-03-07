@@ -204,6 +204,9 @@ nav:
       - update-cron.sh: manual/scripts/update-cron.md
       - test-config.sh: manual/scripts/test-config.md
       - setup-caddy.sh: manual/scripts/setup-caddy.md
+      - snapshot-vm.sh: manual/scripts/snapshot-vm.md
+      - inspect-cluster.sh: manual/scripts/inspect-cluster.md
+      - inspect-vm.sh: manual/scripts/inspect-vm.md
     - Update Scheduler: manual/update-tappaas.md
     - OPNsense Controller: manual/opnsense-controller.md
     - Backup: manual/backup.md
