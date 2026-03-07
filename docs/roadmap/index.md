@@ -3,7 +3,9 @@ title: Roadmap
 description: TAPPaaS development roadmap and project timeline
 ---
 
-# Development Roadmap
+# Development Roadmap: Eating the elephant one bite at a time
+
+(disclaimer: no elephants were harmed creating TAPPaaS)
 
 The TAPPaaS team follows a phased approach to building the platform.
 
