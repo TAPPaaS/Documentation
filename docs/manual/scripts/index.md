@@ -23,6 +23,8 @@ Utility scripts for TAPPaaS-CICD operations. These scripts are installed to `/ho
 - **[update-os.sh](update-os.md)** - OS-specific update (NixOS/Debian)
 - **[update-HA.sh](update-ha.md)** - Manage HA and replication for modules
 - **[snapshot-vm.sh](snapshot-vm.md)** - VM snapshot management (create/list/cleanup/restore)
+- **[migrate-vm.sh](migrate-vm.md)** - Migrate VMs between nodes (live or offline)
+- **[migrate-node.sh](migrate-node.md)** - Evacuate or return all VMs on a node
 
 ## Cluster Inspection
 

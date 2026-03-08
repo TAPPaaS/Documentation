@@ -207,6 +207,8 @@ nav:
       - snapshot-vm.sh: manual/scripts/snapshot-vm.md
       - inspect-cluster.sh: manual/scripts/inspect-cluster.md
       - inspect-vm.sh: manual/scripts/inspect-vm.md
+      - migrate-vm.sh: manual/scripts/migrate-vm.md
+      - migrate-node.sh: manual/scripts/migrate-node.md
     - Update Scheduler: manual/update-tappaas.md
     - OPNsense Controller: manual/opnsense-controller.md
     - Backup: manual/backup.md
