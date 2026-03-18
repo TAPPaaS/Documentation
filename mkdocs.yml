@@ -201,7 +201,6 @@ nav:
       - copy-update-json.sh: manual/scripts/copy-update-json.md
       - common-install-routines.sh: manual/scripts/common-install-routines.md
       - update-cron.sh: manual/scripts/update-cron.md
-      - test-config.sh: manual/scripts/test-config.md
       - setup-caddy.sh: manual/scripts/setup-caddy.md
       - snapshot-vm.sh: manual/scripts/snapshot-vm.md
       - inspect-cluster.sh: manual/scripts/inspect-cluster.md

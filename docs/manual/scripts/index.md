@@ -44,7 +44,6 @@ Utility scripts for TAPPaaS-CICD operations. These scripts are installed to `/ho
 ## System Scripts
 
 - **[update-cron.sh](update-cron.md)** - Set up hourly update cron job
-- **[test-config.sh](test-config.md)** - Validate installation
 - **[setup-caddy.sh](setup-caddy.md)** - Install Caddy reverse proxy on firewall
 
 ## Installation
