@@ -103,8 +103,8 @@ change the root password; option 3, followed by answer "y"
 change lan ip; option 2:
 
 - followed by 1 for Lan, and N for not using DHCP
-- use ip 10.0.0.1,
-- range: 24
+- use ip 10.0.0.1
+- Subnet: 24
 - Press enter for LAN
 - no IPv6 config (TODO, enable IPv6)
 - enable DHCP, with a range of 10.0.0.100 - 10.0.0.254
