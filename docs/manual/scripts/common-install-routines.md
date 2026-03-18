@@ -66,4 +66,3 @@ error "Installation failed"
 ## See Also
 
 - [copy-update-json.sh](copy-update-json.md) - Copy and modify module JSON
-- [install-vm.sh](install-vm.md) - VM creation library

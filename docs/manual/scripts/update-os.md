@@ -50,5 +50,4 @@ update-os.sh myvm 610 tappaas1
 
 ## See Also
 
-- [install-vm.sh](install-vm.md) - VM creation library
-- [update-ha.sh](update-ha.md) - HA and replication management
+- [install-module.sh](install-module.md) - Install a module

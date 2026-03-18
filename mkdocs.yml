@@ -193,9 +193,8 @@ nav:
       - update-module.sh: manual/scripts/update-module.md
       - delete-module.sh: manual/scripts/delete-module.md
       - repository.sh: manual/scripts/repository.md
-      - install-vm.sh: manual/scripts/install-vm.md
+      - test-module.sh: manual/scripts/test-module.md
       - update-os.sh: manual/scripts/update-os.md
-      - update-HA.sh: manual/scripts/update-ha.md
       - check-disk-threshold.sh: manual/scripts/check-disk-threshold.md
       - resize-disk.sh: manual/scripts/resize-disk.md
       - create-configuration.sh: manual/scripts/create-configuration.md

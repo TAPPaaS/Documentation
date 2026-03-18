@@ -66,4 +66,3 @@ migrate-vm.sh --node tappaas1
 ## See Also
 
 - [migrate-node.sh](migrate-node.md) - Evacuate or return all VMs on a node
-- [update-HA.sh](update-ha.md) - Manage HA and replication for modules

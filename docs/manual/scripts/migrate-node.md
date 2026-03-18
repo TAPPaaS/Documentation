@@ -65,4 +65,3 @@ migrate-node.sh --return --offline tappaas1
 ## See Also
 
 - [migrate-vm.sh](migrate-vm.md) - Migrate individual VMs between nodes
-- [update-HA.sh](update-ha.md) - Manage HA and replication for modules
