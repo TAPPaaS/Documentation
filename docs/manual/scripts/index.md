@@ -10,7 +10,8 @@ Utility scripts for TAPPaaS-CICD operations. These scripts are installed to `/ho
 ## Module Lifecycle Scripts
 
 - **[install-module.sh](install-module.md)** - Install a module with dependency validation
-- **[update-module.sh](update-module.md)** - Update a module with dependency-aware service wiring
+- **[update-module.sh](update-module.md)** - Update a module with snapshot, testing, and rollback
+- **[test-module.sh](test-module.md)** - Test a module with dependency-recursive service testing
 - **[delete-module.sh](delete-module.md)** - Delete a module with dependency-aware teardown
 
 ## Repository Management
