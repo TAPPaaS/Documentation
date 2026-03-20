@@ -139,6 +139,16 @@ Delete the downloaded key file from your browser pc.
 
 ### Run Main Deployment
 
+There is a simple way, with defaults being used (can change later)
+
+```bash
+cd
+cd TAPPaaS/src/foundation/tappaas-cicd
+./install2.sh --domain "yourdomain.com"
+```
+
+This is the full call if you want to modify defaults
+
 ```bash
 cd
 cd TAPPaaS/src/foundation/tappaas-cicd
