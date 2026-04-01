@@ -110,9 +110,9 @@ For data storage, create a ZFS pool named "tanka1":
 1. Navigate to **Datacenter** → **tappaas1** → **Disks** → **ZFS**
 2. Click **Create: ZFS**
 3. Configure:
-   - Name: `tanka1`
-   - RAID Level: Mirror (minimum 2 disks)
-   - Select available disks
+    - Name: `tanka1`
+    - RAID Level: Mirror (minimum 2 disks)
+    - Select available disks
 
 **Via CLI:**
 
