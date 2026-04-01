@@ -97,13 +97,13 @@ in the console of the VM you can login after boot as root with password opnsense
 
 - change the root password; option 3, followed by answer "y"
 - change lan ip; option 2:
-  - followed by 1 for Lan, and N for not using DHCP
-  - use ip 10.0.0.1
-  - Subnet: 24
-  - Press enter for LAN
-  - no IPv6 config (TODO, enable IPv6)
-  - enable DHCP, with a range of 10.0.0.100 - 10.0.0.254
-  - default "N" answers to the rest
+    - followed by 1 for Lan, and N for not using DHCP
+    - use ip 10.0.0.1
+    - Subnet: 24
+    - Press enter for LAN
+    - no IPv6 config (TODO, enable IPv6)
+    - enable DHCP, with a range of 10.0.0.100 - 10.0.0.254
+    - default "N" answers to the rest
 - now reboot option 6
 
 ### Test
@@ -126,44 +126,44 @@ Abort the configuration wizard if it starts up.
 
 - Enable services -> Unbound DNS -> General and ensure it listen to port 53
 - Enable services -> dnsmask DNS -> General
-  - Interface LAN
-  - Listen port: use port 53053
-  - DNS Query Forwarding
-    - enable: Require domain, Do not forward to system ..., Do not forward private reverse ...
-  - DHCP:
-    - enable: DHCP fqdn, DHCP authoritative, DHCP register firewall rules
-    - DHCP default domain: internal
-  - press Apply
+    - Interface LAN
+    - Listen port: use port 53053
+    - DNS Query Forwarding
+        - enable: Require domain, Do not forward to system ..., Do not forward private reverse ...
+    - DHCP:
+        - enable: DHCP fqdn, DHCP authoritative, DHCP register firewall rules
+        - DHCP default domain: internal
+    - press Apply
 - Service -> Unbound DNS -> Query Forwarding
-  - register (press the "plus") "internal" to query 127.0.0.1 port 53053
-  - register "10.in-addr.arpa" to query 127.0.0.1 port 53053
-  - press apply
+    - register (press the "plus") "internal" to query 127.0.0.1 port 53053
+    - register "10.in-addr.arpa" to query 127.0.0.1 port 53053
+    - press apply
 - go to Services -> Dnsmasq & DHCP -> DHCP ranges
-  - edit LAN interface and change domain to mgmt.internal
-  - press apply
+    - edit LAN interface and change domain to mgmt.internal
+    - press apply
 
 Make untagged LAN trafic belong to domain mgmt.internal
 
 - Enable services -> dnsmask DNS -> DHCP ranges
-  - Edit Interface: LAN
-  - add domain: mgmt.internal
-  - press Save and then Apply
+    - Edit Interface: LAN
+    - add domain: mgmt.internal
+    - press Save and then Apply
 
 Register the static hosts on the internal network: firewall and tappaas1
 
 - go to Service -> Dnsmasq DNS & DHCP -> Hosts
-  - add host:
-    - name firewall
-    - domain: mgmt.internal
-    - IP: 10.0.0.1
-  - add host:
-    - name tappaas1
-    - domain: mgmt.internal
-    - IP: 10.0.0.10
-  - press apply
+    - add host:
+        - name firewall
+        - domain: mgmt.internal
+        - IP: 10.0.0.1
+    - add host:
+        - name tappaas1
+        - domain: mgmt.internal
+        - IP: 10.0.0.10
+    - press apply
 - go to System -> Settings -> Administration
-  - Edit "Alternate Hostname": firewall.mgmt.internal
-  - press Save
+    - Edit "Alternate Hostname": firewall.mgmt.internal
+    - press Save
 
 If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ..., givinh then consecutive static allocated IP numbers
 
@@ -181,13 +181,13 @@ First we switch tappaas1 node to be working **only** on the Lan port:
 
 - Note that you should connect to tappaas1 proxmox node via 10.0.0.10:8006
 - in the Proxmox console for tappaas1 edit the network bridge "Wan": remove the IP assignment.
-  - first remove both the IP and gateway assignment by editing the "wan" bridge under network for tappaas1
-  - then add 10.0.0.1 as gateway for the "lan" bridge
-  - press apply
-- in the console fo the tappaas1 node (via the proxmox gui): edit the following files:
-  - /etc/hosts: edit the host IP is the new 10.0.0.10
-  - /etc/resolv.conf: update the resolver to 10.0.0.1
-  - /etc/pve/corosync.conf: the old IP number to be replaced with 10.0.0.10
+    - first remove both the IP and gateway assignment by editing the "wan" bridge under network for tappaas1
+    - then add 10.0.0.1 as gateway for the "lan" bridge
+    - press apply
+- in the console of the tappaas1 node (via the proxmox gui): edit the following files:
+    - /etc/hosts: edit the host IP is the new 10.0.0.10
+    - /etc/resolv.conf: update the resolver to 10.0.0.1
+    - /etc/pve/corosync.conf: the old IP number to be replaced with 10.0.0.10
 
 You should now have a setup looking like:
 
