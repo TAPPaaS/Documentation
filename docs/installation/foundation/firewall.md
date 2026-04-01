@@ -57,19 +57,18 @@ In the Proxmox GUI do:
     - Bridgeport: the name of the chosen ethernet port
 3. now click create and click "apply configuration"
 
-** Rename the vmbr0 bridge to "wan" **
+**Rename the vmbr0 bridge to "wan"**
 
-1. using the command line/console of tappaas1:
+4. using the command line/console of tappaas1:
+    - edit the /etc/network/interfaces
+    - replace all occurrences of "vmbr0" with the string "wan" (there should be two instances)
+    - save file
 
- -   edit the /etc/network/interfaces
- -   replace all occurrences of "vmbr0" with the string "wan" (there should be two instances)
- -   save file
+5. reboot the tappaas1 node (or PVE will not discover the new wan correctly)
 
-reboot the tappaas1 node (or PVE will not discover the new wan correctly)
+6. attach a new switch to the ethernet port associated with the lan bridge port
 
-attach a new switch to the ethernet port associated with the lan bridge port
-
-you will now have a setup looking like this:
+**You will now have a setup looking like this:**
 
 ```mermaid
 graph LR;
@@ -93,21 +92,18 @@ curl -fsSL  ${REPO}${BRANCH}/src/foundation/firewall/firewall.json > /root/tappa
 ~/tappaas/Create-TAPPaaS-VM.sh firewall
 ```
 
-once the script finish the 110 Firewall VM on tappaas1 will start booting
-in the console of the VM you can login after boot as root with password opnsense
+Once the script finish the 110 Firewall VM on tappaas1 will start booting
+in the console of the VM you can login after boot as root with password opnsense:
 
-change the root password; option 3, followed by answer "y"
-
-change lan ip; option 2:
-
-- followed by 1 for Lan, and N for not using DHCP
-- use ip 10.0.0.1
-- Subnet: 24
-- Press enter for LAN
-- no IPv6 config (TODO, enable IPv6)
-- enable DHCP, with a range of 10.0.0.100 - 10.0.0.254
-- default "N" answers to the rest
-
+- change the root password; option 3, followed by answer "y"
+- change lan ip; option 2:
+  - followed by 1 for Lan, and N for not using DHCP
+  - use ip 10.0.0.1
+  - Subnet: 24
+  - Press enter for LAN
+  - no IPv6 config (TODO, enable IPv6)
+  - enable DHCP, with a range of 10.0.0.100 - 10.0.0.254
+  - default "N" answers to the rest
 - now reboot option 6
 
 ### Test
@@ -137,9 +133,9 @@ Abort the configuration wizard if it starts up.
   - DHCP:
     - enable: DHCP fqdn, DHCP authoritative, DHCP register firewall rules
     - DHCP default domain: internal
-  - Click Apply
+  - press Apply
 - Service -> Unbound DNS -> Query Forwarding
-  - register (presse the "plus") "internal" to query 127.0.0.1 port 53053
+  - register (press the "plus") "internal" to query 127.0.0.1 port 53053
   - register "10.in-addr.arpa" to query 127.0.0.1 port 53053
   - press apply
 - go to Services -> Dnsmasq & DHCP -> DHCP ranges
@@ -165,7 +161,6 @@ Register the static hosts on the internal network: firewall and tappaas1
     - domain: mgmt.internal
     - IP: 10.0.0.10
   - press apply
-
 - go to System -> Settings -> Administration
   - Edit "Alternate Hostname": firewall.mgmt.internal
   - press Save
