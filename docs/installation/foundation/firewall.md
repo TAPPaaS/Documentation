@@ -11,7 +11,7 @@ This guide covers installing OPNsense as the firewall for your TAPPaaS environme
 
 Before starting:
 
-- [ ] [Cluster](cluster.md) installed and accessible
+- [ ] First Proxmox Node [tappaas1](cluster.md) installed and accessible
 - [ ] Registered domain name
 - [ ] Public IP address
 - [ ] DNS management access
@@ -28,18 +28,16 @@ The installation follows five main phases:
 5. Optional step: create NetBird Access
 6. Validation
 
-## Network Architecture
+## Installation
 
-The firewall VM requires two virtual network interfaces:
+### Create Network Bridges
+
+The firewall VM connects to two virtual network interfaces on the tappaas node it is installed on (tappaas1):
 
 | Interface | Bridge | Purpose |
 |-----------|--------|---------|
 | WAN | vmbr0 (later renamed "wan") | Internet connectivity |
 | LAN | vmbr1 (created as "lan") | Internal network |
-
-## Installation
-
-### Create Network Bridges
 
 Before creating the OPNsense VM, set up the network bridges.
 
@@ -48,16 +46,16 @@ Before creating the OPNsense VM, set up the network bridges.
 In the Proxmox GUI do:
 
 1. go to node: tappaas1, select the Network page under system
-    take note of the free ethernet ports, and select the one that will be the new lan port. note down the Name
+    take note of the free ethernet ports, and select the one that will be the new lan port. Note down the name, you will need it later
 2. click "create" select "linux bridge": in the pop up fill in
-   -     Name: lan
-   -     IPv4/CIDR: 10.0.0.10/24
-   -     Gateway:blank (as we have a gateway on the other bridge)
-   -     ipv6 and ipv6 gateway: leave blank
-   -     Autostart is checked
-   -     VLAN aware is checked
-   -     Bridgeport: the name of the chosen ethernet port
-   - now click create and click "apply configuration"
+    - Name: lan
+    - IPv4/CIDR: 10.0.0.10/24
+    - Gateway: blank (as we have a gateway on the other bridge)
+    - ipv6 and ipv6 gateway: leave blank
+    - Autostart is checked
+    - VLAN aware is checked
+    - Bridgeport: the name of the chosen ethernet port
+3. now click create and click "apply configuration"
 
 ** Rename the vmbr0 bridge to "wan" **
 
@@ -161,20 +159,26 @@ Register the static hosts on the internal network: firewall and tappaas1
   - add host:
     - name firewall
     - domain: mgmt.internal
-    - ip: 10.0.0.1
+    - IP: 10.0.0.1
   - add host:
     - name tappaas1
     - domain: mgmt.internal
-    - ip: 10.0.0.10
+    - IP: 10.0.0.10
   - press apply
 
 - go to System -> Settings -> Administration
   - Edit "Alternate Hostname": firewall.mgmt.internal
   - press Save
 
-If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ... (incrementing the ip by one for each)
+If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ..., givinh then consecutive static allocated IP numbers
+
+- tappaas2: 10.0.0.11
+- tappaas3: 10.0.0.12
 
 Check that you can lookup you your tappaas1 and firewall hosts using .mgmt.internal domain
+
+- ping firewall.mgmt.internal
+- ping tappaas1.mgmt.internal
 
 ## Swap cables Step
 
