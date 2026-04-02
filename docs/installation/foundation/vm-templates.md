@@ -29,7 +29,7 @@ From the Proxmox console as root:
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL  ${REPO}${BRANCH}/src/foundation/templates/tappaas-nixos.json >~/tappaas/tappaas-nixos.json
 ~/tappaas/Create-TAPPaaS-VM.sh tappaas-nixos
 ```
@@ -73,7 +73,7 @@ Start the VM and login as root:
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL ${REPO}${BRANCH}/src/foundation/templates/tappaas-nixos.nix \
   -o /etc/nixos/configuration.nix
 ```

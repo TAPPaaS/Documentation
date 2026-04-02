@@ -70,7 +70,7 @@ Execute the post-installation script from the Proxmox shell (in the gui, navigat
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL ${REPO}${BRANCH}/src/foundation/cluster/install.sh >install.sh
 chmod +x install.sh
 ./install.sh $REPO $BRANCH

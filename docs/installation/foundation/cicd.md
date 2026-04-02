@@ -29,7 +29,7 @@ On a Proxmox host:
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL ${REPO}${BRANCH}/src/foundation/tappaas-cicd/tappaas-cicd.json \
   > ~/tappaas/tappaas-cicd.json
 ```
@@ -60,7 +60,7 @@ ssh tappaas@<vm-ip>
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
 REPOTOCLONE="https://github.com/TAPPaaS/TAPPaaS.git"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL "${REPO}${BRANCH}/src/foundation/tappaas-cicd/install1.sh" \
   -o /tmp/install1.sh
 bash /tmp/install1.sh "$REPOTOCLONE" "$BRANCH"
@@ -153,7 +153,7 @@ This is the full call if you want to modify defaults
 cd
 cd TAPPaaS/src/foundation/tappaas-cicd
 UPSTREAMGIT="github.com/TAPPaaS/TAPPaaS"
-BRANCH="main"
+BRANCH="stable"
 DOMAIN="yourdomain.com"
 EMAIL="admin@yourdomain.com"
 SCHEDULE="weekly"

@@ -38,7 +38,7 @@ repository.sh list
 repository.sh modify tappaas-community --branch stable
 
 # Change a repository's URL
-repository.sh modify tappaas-community --url github.com/other/repo --branch main
+repository.sh modify tappaas-community --url github.com/other/repo --branch stable
 
 # Remove a repository
 repository.sh remove tappaas-community
@@ -51,7 +51,7 @@ repository.sh remove tappaas-community --force
 
 1. Validates the repository URL is reachable via `git ls-remote`
 2. Clones the repository to `/home/tappaas/<name>/`
-3. Checks out the specified branch (default: `main`)
+3. Checks out the specified branch (default: `stable`)
 4. Verifies the repo contains `src/modules.json`
 5. Warns on VMID or module name conflicts with existing repos
 6. Updates `configuration.json` with the new repository entry

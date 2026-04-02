@@ -83,11 +83,11 @@ graph LR;
 
 ### Deploy OPNsense VM
 
-**Create the OPNSense VM**: from the command prompt/console of tappaas1: (Note if you are not using the main branch then replace "main" with branch name in the command below)
+**Create the OPNSense VM**: from the command prompt/console of tappaas1: (Note if you are not using the stable branch then replace "stable" with your branch name in the command below)
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL  ${REPO}${BRANCH}/src/foundation/firewall/firewall.json > /root/tappaas/firewall.json
 ~/tappaas/Create-TAPPaaS-VM.sh firewall
 ```

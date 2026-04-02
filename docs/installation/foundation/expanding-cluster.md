@@ -42,7 +42,7 @@ In the gui go to the shell on the node and run the post installation script:
 
 ```bash
 REPO="https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/"
-BRANCH="main"
+BRANCH="stable"
 curl -fsSL ${REPO}${BRANCH}/src/foundation/cluster/install.sh >install.sh
 chmod +x install.sh
 ./install.sh $REPO $BRANCH

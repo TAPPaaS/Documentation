@@ -24,7 +24,7 @@ create-configuration.sh <upstreamGit> <branch> <domain> <email> <schedule> [week
 | Argument | Description | Default |
 |----------|-------------|---------|
 | `--upstream-git` | Git repository URL | `github.com/TAPPaaS/TAPPaaS` |
-| `--branch` | Git branch to track | `main` |
+| `--branch` | Git branch to track | `stable` |
 | `--domain` | Primary domain for TAPPaaS | From Proxmox node FQDN, or existing config |
 | `--email` | Admin email for SSL and notifications | From Proxmox `root@pam` user, or existing config |
 | `--schedule` | Update frequency: `monthly`, `weekly`, `daily`, `none` | `weekly` |
