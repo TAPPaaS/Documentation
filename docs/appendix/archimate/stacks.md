@@ -9,7 +9,7 @@ This page contains architecture diagrams for the various TAPPaaS technology stac
 
 ## Foundation Stack
 
-The foundation stack provides the core infrastructure services that all other modules depend on.
+The foundation stack provides the core infrastructure services that all other modules depend on. The diagram shows the layered architecture from capabilities at the top, through services and applications, down to infrastructure nodes.
 
 ```kroki-plantuml
 @startuml
@@ -17,36 +17,65 @@ The foundation stack provides the core infrastructure services that all other mo
 
 title TAPPaaS Foundation Stack
 
-' Technology Nodes (Physical/Virtual Infrastructure)
+' === STRATEGY LAYER (Capabilities) ===
+Strategy_Capability(capFound, "Foundation Stack")
+Strategy_Capability(capCluster, "Cluster")
+Strategy_Capability(capNetwork, "Firewall/Networking")
+Strategy_Capability(capIdentity, "Identity Management")
+Strategy_Capability(capCICD, "CI/CD")
+Strategy_Capability(capBackup, "Backup Services")
+Strategy_Capability(capProxy, "Web Proxy")
+
+' === APPLICATION LAYER (Services & Components) ===
+' Application Services
+Application_Service(clusterSvc, "Cluster Service")
+Application_Service(networkSvc, "Network Service")
+Application_Service(identitySvc, "Identity Service")
+Application_Service(cicdSvc, "CI/CD Service")
+Application_Service(backupSvc, "Backup Service")
+Application_Service(proxySvc, "Proxy Service")
+
+' Application Components (the actual software)
+Application_Component(proxmox, "Proxmox VE")
+Application_Component(opnsense, "OPNsense")
+Application_Component(authentik, "Authentik")
+Application_Component(cicdApp, "TAPPaaS CICD")
+Application_Component(zfs, "ZFS")
+Application_Component(caddy, "Caddy")
+
+' === TECHNOLOGY LAYER (Infrastructure) ===
 Technology_Node(node1, "tappaas1")
 Technology_Node(node2, "tappaas2")
 Technology_Node(node3, "tappaas3")
 
-' Application Components (VMs running on nodes)
-Application_Component(fw, "Firewall VM")
-Application_Component(cicd, "CICD VM")
+' Capability decomposition
+Rel_Aggregation_Down(capFound, capCluster)
+Rel_Aggregation_Down(capFound, capNetwork)
+Rel_Aggregation_Down(capFound, capIdentity)
+Rel_Aggregation_Down(capFound, capCICD)
+Rel_Aggregation_Down(capFound, capBackup)
+Rel_Aggregation_Down(capFound, capProxy)
 
-' Technology Services
-Technology_Service(cluster, "Proxmox Cluster")
-Technology_Service(ha, "HA Manager")
-Technology_Service(zfs, "ZFS Replication")
+' Capabilities realized by Services
+Rel_Realization_Up(clusterSvc, capCluster)
+Rel_Realization_Up(networkSvc, capNetwork)
+Rel_Realization_Up(identitySvc, capIdentity)
+Rel_Realization_Up(cicdSvc, capCICD)
+Rel_Realization_Up(backupSvc, capBackup)
+Rel_Realization_Up(proxySvc, capProxy)
 
-' Nodes assigned to cluster
-Rel_Assignment(node1, cluster)
-Rel_Assignment(node2, cluster)
-Rel_Assignment(node3, cluster)
+' Services delivered by Components
+Rel_Realization_Up(proxmox, clusterSvc)
+Rel_Realization_Up(opnsense, networkSvc)
+Rel_Realization_Up(authentik, identitySvc)
+Rel_Realization_Up(cicdApp, cicdSvc)
+Rel_Realization_Up(zfs, backupSvc)
+Rel_Realization_Up(caddy, proxySvc)
 
-' VMs deployed on node1
-Rel_Assignment(node1, fw)
-Rel_Assignment(node1, cicd)
-
-' Cluster provides services
-Rel_Aggregation(cluster, ha)
-Rel_Aggregation(cluster, zfs)
-
-' CICD manages cluster, Firewall protects it
-Rel_Access(cicd, cluster, "manages")
-Rel_Serving(fw, cluster, "protects")
+' Components deployed on Infrastructure Nodes
+Rel_Assignment_Up(node1, proxmox)
+Rel_Assignment_Up(node2, proxmox)
+Rel_Assignment_Up(node3, proxmox)
 
 @enduml
 ```
