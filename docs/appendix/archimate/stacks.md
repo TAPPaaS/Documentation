@@ -19,31 +19,31 @@ title TAPPaaS Foundation Stack
 
 ' === STRATEGY LAYER (Capabilities) ===
 Strategy_Capability(capFound, "Foundation Stack")
-Strategy_Capability(capCICD, "CI/CD")
-Strategy_Capability(capIdentity, "Identity Management")
-Strategy_Capability(capProxy, "Web Proxy")
-Strategy_Capability(capFirewall, "Firewall")
-Strategy_Capability(capCluster, "Cluster")
 Strategy_Capability(capBackup, "Backup Services")
+Strategy_Capability(capCluster, "Cluster")
+Strategy_Capability(capFirewall, "Firewall")
+Strategy_Capability(capProxy, "Web Proxy")
+Strategy_Capability(capIdentity, "Identity Management")
+Strategy_Capability(capCICD, "CI/CD")
 
 ' === APPLICATION LAYER (Services & Components) ===
 ' Application Services
-Application_Service(cicdSvc, "CI/CD Service")
-Application_Service(identitySvc, "Identity Service")
-Application_Service(proxySvc, "Proxy Service")
-Application_Service(zoneSvc, "Zone Service")
-Application_Service(firewallSvc, "Firewall Service")
+Application_Service(backupSvc, "Backup Service")
 Application_Service(vmSvc, "VM Service")
 Application_Service(haSvc, "HA Service")
-Application_Service(backupSvc, "Backup Service")
+Application_Service(zoneSvc, "Zone Service")
+Application_Service(firewallSvc, "Firewall Service")
+Application_Service(proxySvc, "Proxy Service")
+Application_Service(identitySvc, "Identity Service")
+Application_Service(cicdSvc, "CI/CD Service")
 
 ' Application Components (the actual software)
-Application_Component(cicdApp, "TAPPaaS CICD")
-Application_Component(authentik, "Authentik")
-Application_Component(caddy, "Caddy")
-Application_Component(opnsense, "OPNsense")
-Application_Component(proxmox, "Proxmox VE")
 Application_Component(pbs, "Proxmox Backup Server")
+Application_Component(proxmox, "Proxmox VE")
+Application_Component(opnsense, "OPNsense")
+Application_Component(caddy, "Caddy")
+Application_Component(authentik, "Authentik")
+Application_Component(cicdApp, "TAPPaaS CICD")
 
 ' === TECHNOLOGY LAYER (Infrastructure) ===
 Technology_Node(node1, "tappaas1")
@@ -51,37 +51,38 @@ Technology_Node(node2, "tappaas2")
 Technology_Node(node3, "tappaas3")
 
 ' Capability decomposition
-Rel_Aggregation_Down(capFound, capCICD)
-Rel_Aggregation_Down(capFound, capIdentity)
-Rel_Aggregation_Down(capFound, capProxy)
-Rel_Aggregation_Down(capFound, capFirewall)
-Rel_Aggregation_Down(capFound, capCluster)
 Rel_Aggregation_Down(capFound, capBackup)
+Rel_Aggregation_Down(capFound, capCluster)
+Rel_Aggregation_Down(capFound, capFirewall)
+Rel_Aggregation_Down(capFound, capProxy)
+Rel_Aggregation_Down(capFound, capIdentity)
+Rel_Aggregation_Down(capFound, capCICD)
 
 ' Capabilities realized by Services
-Rel_Realization_Up(cicdSvc, capCICD)
-Rel_Realization_Up(identitySvc, capIdentity)
-Rel_Realization_Up(proxySvc, capProxy)
-Rel_Realization_Up(zoneSvc, capFirewall)
-Rel_Realization_Up(firewallSvc, capFirewall)
+Rel_Realization_Up(backupSvc, capBackup)
 Rel_Realization_Up(vmSvc, capCluster)
 Rel_Realization_Up(haSvc, capCluster)
-Rel_Realization_Up(backupSvc, capBackup)
+Rel_Realization_Up(zoneSvc, capFirewall)
+Rel_Realization_Up(firewallSvc, capFirewall)
+Rel_Realization_Up(proxySvc, capProxy)
+Rel_Realization_Up(identitySvc, capIdentity)
+Rel_Realization_Up(cicdSvc, capCICD)
 
 ' Services delivered by Components
-Rel_Realization_Up(cicdApp, cicdSvc)
-Rel_Realization_Up(authentik, identitySvc)
-Rel_Realization_Up(caddy, proxySvc)
-Rel_Realization_Up(opnsense, zoneSvc)
-Rel_Realization_Up(opnsense, firewallSvc)
+Rel_Realization_Up(pbs, backupSvc)
 Rel_Realization_Up(proxmox, vmSvc)
 Rel_Realization_Up(proxmox, haSvc)
-Rel_Realization_Up(pbs, backupSvc)
+Rel_Realization_Up(opnsense, zoneSvc)
+Rel_Realization_Up(opnsense, firewallSvc)
+Rel_Realization_Up(caddy, proxySvc)
+Rel_Realization_Up(authentik, identitySvc)
+Rel_Realization_Up(cicdApp, cicdSvc)
 
 ' Components deployed on Infrastructure Nodes
 Rel_Assignment_Up(node1, proxmox)
 Rel_Assignment_Up(node2, proxmox)
 Rel_Assignment_Up(node3, proxmox)
+Rel_Assignment_Up(node3, pbs)
 
 @enduml
 ```
