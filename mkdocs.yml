@@ -66,6 +66,12 @@ plugins:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+  - kroki:
+      ServerURL: https://kroki.io
+      EnableBlockDiag: true
+      HttpMethod: POST
+      FileTypes:
+        - svg
 
 # Extensions
 markdown_extensions:
@@ -244,3 +250,7 @@ nav:
     - Logo: about/logo.md
     - Inspiration: about/inspiration.md
     - License: about/license.md
+
+  - Appendix:
+    - Overview: appendix/index.md
+    - Architecture Diagrams: appendix/architecture-diagrams.md
