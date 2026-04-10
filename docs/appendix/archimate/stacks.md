@@ -51,15 +51,6 @@ Rel_Serving(fw, cluster, "protects")
 @enduml
 ```
 
-### Foundation Components
-
-| Component | Purpose | VM ID Range |
-|-----------|---------|-------------|
-| Firewall | Network security and routing | 110 |
-| CICD | Deployment automation | 120 |
-| Identity | Single sign-on | 130 |
-| Backup | Data protection | 140 |
-
 ## AI Stack
 
 The AI stack provides artificial intelligence capabilities.
