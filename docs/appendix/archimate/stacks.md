@@ -40,7 +40,7 @@ Application_Component(proxmox, "Proxmox VE")
 Application_Component(opnsense, "OPNsense")
 Application_Component(authentik, "Authentik")
 Application_Component(cicdApp, "TAPPaaS CICD")
-Application_Component(zfs, "ZFS")
+Application_Component(pbs, "Proxmox Backup Server")
 Application_Component(caddy, "Caddy")
 
 ' === TECHNOLOGY LAYER (Infrastructure) ===
@@ -69,7 +69,7 @@ Rel_Realization_Up(proxmox, clusterSvc)
 Rel_Realization_Up(opnsense, networkSvc)
 Rel_Realization_Up(authentik, identitySvc)
 Rel_Realization_Up(cicdApp, cicdSvc)
-Rel_Realization_Up(zfs, backupSvc)
+Rel_Realization_Up(pbs, backupSvc)
 Rel_Realization_Up(caddy, proxySvc)
 
 ' Components deployed on Infrastructure Nodes
