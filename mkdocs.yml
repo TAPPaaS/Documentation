@@ -256,7 +256,6 @@ nav:
   - Appendix:
     - Overview: appendix/index.md
     - ArchiMate Diagrams:
-      - Overview: appendix/archimate/index.md
       - Introduction: appendix/archimate/introduction.md
       - TAPPaaS Capabilities: appendix/archimate/capabilities.md
       - TAPPaaS Stacks: appendix/archimate/stacks.md
