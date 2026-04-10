@@ -109,7 +109,7 @@ Business_Actor(user, "Platform User")
 ' Application Components (AI Services)
 Application_Component(webui, "OpenWebUI")
 Application_Component(litellm, "LiteLLM")
-Application_Component(ollama, "Ollama")
+Application_Component(vllm, "vLLM")
 
 ' External Application Services
 Application_Service(openai, "OpenAI API")
@@ -123,7 +123,7 @@ Application_Service(inferenceSvc, "Local Inference")
 ' Components realize services
 Rel_Realization(webui, chatSvc)
 Rel_Realization(litellm, routingSvc)
-Rel_Realization(ollama, inferenceSvc)
+Rel_Realization(vllm, inferenceSvc)
 
 ' User uses chat service
 Rel_Serving(chatSvc, user)
@@ -136,14 +136,6 @@ Rel_Serving(anthropic, litellm)
 
 @enduml
 ```
-
-### AI Components
-
-| Component | Purpose | VM ID Range |
-|-----------|---------|-------------|
-| OpenWebUI | Chat interface | 310 |
-| LiteLLM | Model gateway | 320 |
-| Ollama | Local inference | 330 |
 
 ## Productivity Stack
 
@@ -189,14 +181,6 @@ Rel_Access(n8n, db)
 
 @enduml
 ```
-
-### Productivity Components
-
-| Component | Purpose | VM ID Range |
-|-----------|---------|-------------|
-| Nextcloud | File storage | 610 |
-| n8n | Workflow automation | 620 |
-| Vaultwarden | Password management | 630 |
 
 ## Module Deployment Pattern
 
