@@ -17,34 +17,36 @@ The diagrams on this page are created using [PlantUML with ArchiMate support](ht
 
 ## TAPPaaS Architecture Overview
 
-!!! note "Diagram Rendering"
-    ArchiMate diagrams are rendered using PlantUML via the Kroki service. If diagrams don't render, check your network connection to kroki.io.
+The following diagrams illustrate the TAPPaaS architecture using standard component diagrams. Full ArchiMate notation will be added once the diagram rendering infrastructure is validated.
 
 ```kroki-plantuml
 @startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/Archimate.puml
-
 title TAPPaaS Platform Architecture Overview
 
-Business_Actor(user, "Platform User")
-Business_Actor(admin, "Platform Administrator")
-Business_Service(selfService, "Self-Service Platform")
+package "Users" {
+  actor "Platform User" as user
+  actor "Administrator" as admin
+}
 
-Application_Component(openwebui, "OpenWebUI")
-Application_Component(litellm, "LiteLLM")
-Application_Component(nextcloud, "Nextcloud")
-Application_Component(identity, "Identity Provider")
+package "Application Layer" {
+  [OpenWebUI] as openwebui
+  [LiteLLM] as litellm
+  [Nextcloud] as nextcloud
+  [Identity Provider] as identity
+}
 
-Technology_Node(proxmox, "Proxmox Cluster")
-Technology_Node(firewall, "OPNsense Firewall")
+package "Infrastructure Layer" {
+  [Proxmox Cluster] as proxmox
+  [OPNsense Firewall] as firewall
+}
 
-Rel_Serving(selfService, user, "provides access")
-Rel_Serving(selfService, admin, "provides management")
-Rel_Realization(openwebui, selfService, "realizes")
-Rel_Realization(nextcloud, selfService, "realizes")
-Rel_Access(openwebui, litellm, "uses")
-Rel_Access(openwebui, identity, "authenticates")
-Rel_Association(firewall, proxmox, "protects")
+user --> openwebui : uses
+user --> nextcloud : uses
+admin --> proxmox : manages
+openwebui --> litellm : API calls
+openwebui --> identity : authenticates
+nextcloud --> identity : authenticates
+firewall --> proxmox : protects
 
 @enduml
 ```
@@ -53,29 +55,26 @@ Rel_Association(firewall, proxmox, "protects")
 
 ```kroki-plantuml
 @startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/Archimate.puml
-
 title TAPPaaS Foundation Stack
 
-Technology_Node(node1, "tappaas1")
-Technology_Node(node2, "tappaas2")
-Technology_Node(node3, "tappaas3")
-Technology_Node(cluster, "Proxmox Cluster")
-Technology_SystemSoftware(ha, "HA Manager")
-Technology_Node(fwNode, "Firewall VM")
-Technology_SystemSoftware(opnsense, "OPNsense")
-Technology_Node(cicdNode, "CICD VM")
-Technology_SystemSoftware(cicdSvc, "TAPPaaS CICD")
+node "tappaas1" as node1 {
+  [Firewall VM] as fw
+  [CICD VM] as cicd
+}
 
-Rel_Composition(cluster, node1, "includes")
-Rel_Composition(cluster, node2, "includes")
-Rel_Composition(cluster, node3, "includes")
-Rel_Composition(cluster, ha, "manages")
-Rel_Assignment(node1, fwNode, "hosts")
-Rel_Assignment(node1, cicdNode, "hosts")
-Rel_Composition(fwNode, opnsense, "runs")
-Rel_Composition(cicdNode, cicdSvc, "runs")
-Rel_Triggering(cicdSvc, cluster, "manages")
+node "tappaas2" as node2
+node "tappaas3" as node3
+
+cloud "Proxmox Cluster" as cluster {
+  [HA Manager] as ha
+  [ZFS Replication] as zfs
+}
+
+node1 --> cluster
+node2 --> cluster
+node3 --> cluster
+cicd --> cluster : manages
+fw --> cluster : protects
 
 @enduml
 ```
@@ -84,32 +83,33 @@ Rel_Triggering(cicdSvc, cluster, "manages")
 
 ```kroki-plantuml
 @startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/Archimate.puml
-
 title TAPPaaS Module Deployment Pattern
 
-Application_Component(module, "TAPPaaS Module")
-Application_DataObject(moduleJson, "module.json")
-Application_Function(installScript, "install.sh")
-Application_Function(updateScript, "update.sh")
+package "TAPPaaS Module" {
+  [module.json] as config
+  [install.sh] as install
+  [update.sh] as update
+  [delete.sh] as delete
+}
 
-Technology_Node(vm, "NixOS VM")
-Technology_SystemSoftware(nixConfig, "NixOS Configuration")
-Technology_Artifact(snapshot, "ZFS Snapshot")
+package "Infrastructure Services" {
+  [cluster:vm] as vm_svc
+  [cluster:ha] as ha_svc
+  [firewall:proxy] as proxy_svc
+}
 
-Application_Service(clusterVM, "cluster:vm")
-Application_Service(clusterHA, "cluster:ha")
-Application_Service(fwProxy, "firewall:proxy")
+node "NixOS VM" as vm {
+  [Application] as app
+}
 
-Rel_Composition(module, moduleJson, "defines")
-Rel_Composition(module, installScript, "includes")
-Rel_Composition(module, updateScript, "includes")
-Rel_Realization(vm, module, "realizes")
-Rel_Assignment(vm, nixConfig, "configured by")
-Rel_Access(clusterVM, vm, "provisions")
-Rel_Access(clusterHA, vm, "enables failover")
-Rel_Access(fwProxy, vm, "exposes")
-Rel_Association(snapshot, vm, "protects")
+database "ZFS Snapshot" as snapshot
+
+config --> install : configures
+install --> vm_svc : provisions VM
+vm_svc --> vm : creates
+ha_svc --> vm : enables failover
+proxy_svc --> vm : exposes
+snapshot --> vm : protects
 
 @enduml
 ```
