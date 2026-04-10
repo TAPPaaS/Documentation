@@ -141,12 +141,6 @@ Abort the configuration wizard if it starts up.
     - register "10.in-addr.arpa" to query 127.0.0.1 port 53053
     - press apply
 - go to Services -> Dnsmasq & DHCP -> DHCP ranges
-    - edit LAN interface and change domain to mgmt.internal
-    - press apply
-
-**Make untagged LAN trafic belong to domain mgmt.internal**
-
-- Enable services -> dnsmask DNS -> DHCP ranges
     - Edit Interface: LAN
     - add domain: mgmt.internal
     - press Save and then Apply
@@ -163,14 +157,19 @@ Abort the configuration wizard if it starts up.
         - domain: mgmt.internal
         - IP: 10.0.0.10
     - press apply
+
+If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ... to the DHCP --> Hosts table.
+Give them consecutive static allocated IP numbers
+
+- tappaas2: 10.0.0.11
+- tappaas3: 10.0.0.12
+
+Remember to press Apply
+
 - go to System -> Settings -> Administration
     - Edit "Alternate Hostname": firewall.mgmt.internal
     - press Save
 
-If you plan to add further nodes to the cluster then add tappaas2, tapppaas3, ..., givinh then consecutive static allocated IP numbers
-
-- tappaas2: 10.0.0.11
-- tappaas3: 10.0.0.12
 
 Check that you can lookup you your tappaas1 and firewall hosts using .mgmt.internal domain
 
