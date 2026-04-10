@@ -100,10 +100,18 @@ TAPPaaS follows these core architectural principles:
 
 ### Business Layer
 
-Represents the business actors:
+Represents the business actors and services they consume:
+
+**Actors:**
 
 - **Platform Users** - End users consuming platform services
 - **Administrators** - Operators managing the platform
+
+**Business Services:**
+
+- **Chat Service** - AI-powered conversation interface
+- **File Service** - Document storage and collaboration
+- **Workflow Service** - Process automation
 
 ### Strategy Layer
 
