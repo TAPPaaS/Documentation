@@ -5,7 +5,22 @@ description: Platform capability model for TAPPaaS
 
 # TAPPaaS Capabilities
 
-This page describes the capability model for the TAPPaaS platform.
+This page describes the capability model for the TAPPaaS platform. TAPPaaS delivers capabilities through five primary stacks, with the Foundation Stack providing the infrastructure upon which all other stacks depend.
+
+## TAPPaaS Stacks
+
+TAPPaaS organizes capabilities into the following stacks:
+
+| Stack | Description |
+|-------|-------------|
+| **Foundation Stack** | The infrastructure layer providing virtualization, networking, storage, security, backup, and identity management upon which all other stacks depend |
+| **AI Stack** | Private AI capabilities including local large language models, chat interfaces, and AI-powered automation workflows |
+| **Productivity Stack** | Business and personal productivity tools including file sharing, workflow automation, and collaboration services |
+| **Home Stack** | Home and family-oriented services such as home automation, media streaming, and personal data management |
+| **DevOps Stack** | Software development and operations capabilities including CI/CD pipelines, code repositories, and deployment automation |
+
+!!! note
+    More stacks are planned and not all of the above are fully implemented yet. TAPPaaS also allows any community or private modules to be deployed.
 
 ## Platform Capability Model
 
@@ -14,6 +29,14 @@ This page describes the capability model for the TAPPaaS platform.
 !include <archimate/Archimate>
 
 title TAPPaaS Capability Model
+
+' Foundation Stack Capabilities
+Strategy_Capability(capFound, "Foundation Stack")
+Strategy_Capability(capCluster, "HW Virtualization")
+Strategy_Capability(capNetwork, "Firewall/Networking")
+Strategy_Capability(capIdentity, "Identity Management")
+Strategy_Capability(capCICD, "CI/CD")
+Strategy_Capability(capBackup, "Backup Services")
 
 ' AI Stack Capabilities
 Strategy_Capability(capAI, "AI Stack")
@@ -27,49 +50,63 @@ Strategy_Capability(capFiles, "File Storage")
 Strategy_Capability(capWorkflow, "Workflow Automation")
 Strategy_Capability(capCollab, "Collaboration")
 
-' Foundation Stack Capabilities
-Strategy_Capability(capFound, "Foundation Stack")
-Strategy_Capability(capIdentity, "Identity Management")
-Strategy_Capability(capSecrets, "Secret Management")
-Strategy_Capability(capCerts, "Certificate Management")
+' Home Stack Capabilities
+Strategy_Capability(capHome, "Home Stack")
+Strategy_Capability(capAutomate, "Home Automation")
+Strategy_Capability(capMedia, "Media Streaming")
 
-' Infrastructure Capabilities
-Strategy_Capability(capInfra, "Infrastructure")
-Strategy_Capability(capVM, "VM Provisioning")
-Strategy_Capability(capHA, "High Availability")
-Strategy_Capability(capNetwork, "Network Security")
-Strategy_Capability(capBackup, "Backup & Recovery")
+' DevOps Stack Capabilities
+Strategy_Capability(capDevOps, "DevOps Stack")
+Strategy_Capability(capRepo, "Code Repository")
+Strategy_Capability(capPipeline, "CI/CD Pipelines")
 
-' Stack aggregates modules
+' Foundation Stack aggregates
+Rel_Aggregation_Down(capFound, capCluster)
+Rel_Aggregation_Down(capFound, capNetwork)
+Rel_Aggregation_Down(capFound, capIdentity)
+Rel_Aggregation_Down(capFound, capCICD)
+Rel_Aggregation_Down(capFound, capBackup)
+
+' AI Stack aggregates
 Rel_Aggregation_Down(capAI, capChat)
 Rel_Aggregation_Down(capAI, capGateway)
 Rel_Aggregation_Down(capAI, capInference)
 
+' Productivity Stack aggregates
 Rel_Aggregation_Down(capProd, capFiles)
 Rel_Aggregation_Down(capProd, capWorkflow)
 Rel_Aggregation_Down(capProd, capCollab)
 
-Rel_Aggregation_Down(capFound, capIdentity)
-Rel_Aggregation_Down(capFound, capSecrets)
-Rel_Aggregation_Down(capFound, capCerts)
+' Home Stack aggregates
+Rel_Aggregation_Down(capHome, capAutomate)
+Rel_Aggregation_Down(capHome, capMedia)
 
-Rel_Aggregation_Down(capInfra, capVM)
-Rel_Aggregation_Down(capInfra, capHA)
-Rel_Aggregation_Down(capInfra, capNetwork)
-Rel_Aggregation_Down(capInfra, capBackup)
+' DevOps Stack aggregates
+Rel_Aggregation_Down(capDevOps, capRepo)
+Rel_Aggregation_Down(capDevOps, capPipeline)
 
-' Dependencies
-Rel_Serving_Right(capChat, capGateway)
-Rel_Serving_Right(capGateway, capInference)
-Rel_Serving_Right(capFiles, capIdentity)
-Rel_Serving_Right(capWorkflow, capIdentity)
+' Dependencies on Foundation
+Rel_Serving_Up(capFound, capAI)
+Rel_Serving_Up(capFound, capProd)
+Rel_Serving_Up(capFound, capHome)
+Rel_Serving_Up(capFound, capDevOps)
 
 @enduml
 ```
 
 ## Capability Descriptions
 
-### AI Capabilities
+### Foundation Stack
+
+| Capability | Description | Realized By |
+|------------|-------------|-------------|
+| HW Virtualization | Hardware virtualization and clustering | Proxmox VE |
+| Firewall/Networking | Network security and routing | OPNsense |
+| Identity Management | Single sign-on and user management | Authentik |
+| CI/CD | Deployment automation and updates | TAPPaaS CICD |
+| Backup Services | Data protection and restoration | ZFS Snapshots |
+
+### AI Stack
 
 | Capability | Description | Realized By |
 |------------|-------------|-------------|
@@ -77,7 +114,7 @@ Rel_Serving_Right(capWorkflow, capIdentity)
 | Model Gateway | Unified API for multiple AI providers | LiteLLM |
 | Local Inference | On-premise model execution | Ollama |
 
-### Productivity Capabilities
+### Productivity Stack
 
 | Capability | Description | Realized By |
 |------------|-------------|-------------|
@@ -85,19 +122,16 @@ Rel_Serving_Right(capWorkflow, capIdentity)
 | Workflow Automation | Process automation and integrations | n8n |
 | Collaboration | Team collaboration features | Nextcloud |
 
-### Foundation Capabilities
+### Home Stack
 
 | Capability | Description | Realized By |
 |------------|-------------|-------------|
-| Identity Management | Single sign-on and user management | Authentik/Keycloak |
-| Secret Management | Secure credential storage | Vaultwarden |
-| Certificate Management | TLS certificate automation | Caddy |
+| Home Automation | Smart home control and automation | Home Assistant |
+| Media Streaming | Media server and streaming | Jellyfin |
 
-### Infrastructure Capabilities
+### DevOps Stack
 
 | Capability | Description | Realized By |
 |------------|-------------|-------------|
-| VM Provisioning | Virtual machine lifecycle management | TAPPaaS CICD |
-| High Availability | Failover and redundancy | Proxmox HA + ZFS Replication |
-| Network Security | Firewall and network segmentation | OPNsense |
-| Backup & Recovery | Data protection and restoration | ZFS Snapshots |
+| Code Repository | Source code management | Gitea |
+| CI/CD Pipelines | Build and deployment automation | Woodpecker CI |
