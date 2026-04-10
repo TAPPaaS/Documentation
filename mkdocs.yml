@@ -67,10 +67,10 @@ plugins:
   - minify:
       minify_html: true
   - kroki:
-      ServerURL: https://kroki.io
-      EnableBlockDiag: true
-      HttpMethod: POST
-      FileTypes:
+      server_url: https://kroki.io
+      enable_block_diag: true
+      http_method: POST
+      file_types:
         - svg
 
 # Extensions
