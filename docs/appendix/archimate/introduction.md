@@ -100,18 +100,27 @@ TAPPaaS follows these core architectural principles:
 
 ### Business Layer
 
-Represents the business actors and services:
+Represents the business actors:
 
 - **Platform Users** - End users consuming platform services
 - **Administrators** - Operators managing the platform
 
+### Strategy Layer
+
+The capabilities provided by TAPPaaS, organized into stacks and modules:
+
+- **AI Stack** - Chat Interface, Model Gateway, Local Inference
+- **Productivity Stack** - File Storage, Workflow Automation, Collaboration
+- **Foundation Stack** - Identity Management, Secret Management, Certificate Management
+- **Infrastructure** - VM Provisioning, High Availability, Network Security, Backup & Recovery
+
 ### Application Layer
 
-The software components providing functionality:
+The software components (applications) that realize the capabilities:
 
-- **AI Services** - OpenWebUI, LiteLLM, Ollama
-- **Productivity** - Nextcloud, n8n
-- **Identity** - Single sign-on and authentication
+- **AI Applications** - OpenWebUI, LiteLLM, Ollama
+- **Productivity Applications** - Nextcloud, n8n, Vaultwarden
+- **Identity Applications** - Authentik (realizes Identity Management capability)
 
 ### Technology Layer
 
