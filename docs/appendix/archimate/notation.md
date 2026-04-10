@@ -39,39 +39,102 @@ a --> b : relationship
 
 ## ArchiMate Elements Reference
 
-| Layer | Elements |
-|-------|----------|
-| **Business** | `Business_Actor`, `Business_Role`, `Business_Process`, `Business_Service`, `Business_Object` |
-| **Application** | `Application_Component`, `Application_Service`, `Application_Function`, `Application_DataObject` |
-| **Technology** | `Technology_Node`, `Technology_Device`, `Technology_SystemSoftware`, `Technology_Artifact`, `Technology_Path` |
-| **Strategy** | `Strategy_Resource`, `Strategy_Capability`, `Strategy_Course_Of_Action` |
+All ArchiMate diagrams must include the ArchiMate library:
+
+```plantuml
+!include <archimate/Archimate>
+```
+
+### Strategy Layer Elements
+
+| Element | Syntax | Description |
+|---------|--------|-------------|
+| Capability | `Strategy_Capability(id, "Name")` | An ability that an organization possesses |
+| Resource | `Strategy_Resource(id, "Name")` | An asset owned or controlled |
+| Course of Action | `Strategy_CourseOfAction(id, "Name")` | An approach to achieve goals |
+
+### Business Layer Elements
+
+| Element | Syntax | Description |
+|---------|--------|-------------|
+| Actor | `Business_Actor(id, "Name")` | A person or organization |
+| Role | `Business_Role(id, "Name")` | Responsibility for behavior |
+| Process | `Business_Process(id, "Name")` | A sequence of activities |
+| Service | `Business_Service(id, "Name")` | Externally visible functionality |
+| Object | `Business_Object(id, "Name")` | A business concept or entity |
+
+### Application Layer Elements
+
+| Element | Syntax | Description |
+|---------|--------|-------------|
+| Component | `Application_Component(id, "Name")` | Encapsulated application functionality |
+| Service | `Application_Service(id, "Name")` | Service exposed by components |
+| Function | `Application_Function(id, "Name")` | Internal behavior of a component |
+| Data Object | `Application_DataObject(id, "Name")` | Data structured for processing |
+
+### Technology Layer Elements
+
+| Element | Syntax | Description |
+|---------|--------|-------------|
+| Node | `Technology_Node(id, "Name")` | Computational resource (VM, server) |
+| Device | `Technology_Device(id, "Name")` | Physical hardware |
+| System Software | `Technology_SystemSoftware(id, "Name")` | Software platform (OS, middleware) |
+| Artifact | `Technology_Artifact(id, "Name")` | Physical data (file, script) |
+| Service | `Technology_Service(id, "Name")` | Infrastructure service |
 
 ## ArchiMate Relationships Reference
 
-| Relationship | Syntax |
-|-------------|--------|
-| Composition | `Rel_Composition(from, to, "label")` |
-| Aggregation | `Rel_Aggregation(from, to, "label")` |
-| Assignment | `Rel_Assignment(from, to, "label")` |
-| Realization | `Rel_Realization(from, to, "label")` |
-| Serving | `Rel_Serving(from, to, "label")` |
-| Access | `Rel_Access(from, to, "label")` |
-| Triggering | `Rel_Triggering(from, to, "label")` |
-| Flow | `Rel_Flow(from, to, "label")` |
-| Association | `Rel_Association(from, to, "label")` |
+All relationships follow the pattern: `Rel_Type(from, to)` or `Rel_Type(from, to, "label")`
 
-## PlantUML Alternatives
+### Structural Relationships
 
-Since ArchiMate macros require remote includes that may not work reliably with Kroki, we use standard PlantUML syntax:
+| Relationship | Syntax | Description |
+|-------------|--------|-------------|
+| Composition | `Rel_Composition(parent, child)` | Part is integral to whole |
+| Aggregation | `Rel_Aggregation(parent, child)` | Part groups into whole |
+| Assignment | `Rel_Assignment(from, to)` | Allocation of responsibility |
+| Realization | `Rel_Realization(from, to)` | Implementation of abstraction |
 
-| ArchiMate Concept | PlantUML Alternative |
-|-------------------|---------------------|
-| Business Actor | `actor "Name" as alias` |
-| Application Component | `[Component Name] as alias` |
-| Technology Node | `node "Name" as alias { }` |
-| Technology Artifact | `database "Name" as alias` |
-| Package/Grouping | `package "Name" { }` |
-| Cloud/External | `cloud "Name" as alias { }` |
+### Dependency Relationships
+
+| Relationship | Syntax | Description |
+|-------------|--------|-------------|
+| Serving | `Rel_Serving(provider, consumer)` | Provider supports consumer |
+| Access | `Rel_Access(from, to, "label")` | Ability to perform on data |
+| Association | `Rel_Association(from, to)` | Unspecified relationship |
+
+### Dynamic Relationships
+
+| Relationship | Syntax | Description |
+|-------------|--------|-------------|
+| Triggering | `Rel_Triggering(from, to)` | Temporal/causal dependency |
+| Flow | `Rel_Flow(from, to, "label")` | Transfer of objects |
+
+### Directional Variants
+
+Relationships can include direction for layout control:
+
+- `Rel_Serving_Up(from, to)` - Arrow points up
+- `Rel_Serving_Down(from, to)` - Arrow points down
+- `Rel_Serving_Left(from, to)` - Arrow points left
+- `Rel_Serving_Right(from, to)` - Arrow points right
+
+## Example Diagram
+
+```plantuml
+!include <archimate/Archimate>
+
+title Example: Application realizes Capability
+
+Strategy_Capability(cap, "Chat Interface")
+Application_Component(app, "OpenWebUI")
+Application_Service(svc, "Chat Service")
+Technology_Node(vm, "NixOS VM")
+
+Rel_Realization(app, cap)
+Rel_Realization(app, svc)
+Rel_Assignment(vm, app)
+```
 
 ## Resources
 

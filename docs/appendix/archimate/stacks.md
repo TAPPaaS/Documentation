@@ -13,26 +13,40 @@ The foundation stack provides the core infrastructure services that all other mo
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS Foundation Stack
 
-node "tappaas1" as node1 {
-  [Firewall VM] as fw
-  [CICD VM] as cicd
-}
+' Technology Nodes (Physical/Virtual Infrastructure)
+Technology_Node(node1, "tappaas1")
+Technology_Node(node2, "tappaas2")
+Technology_Node(node3, "tappaas3")
 
-node "tappaas2" as node2
-node "tappaas3" as node3
+' Application Components (VMs running on nodes)
+Application_Component(fw, "Firewall VM")
+Application_Component(cicd, "CICD VM")
 
-cloud "Proxmox Cluster" as cluster {
-  [HA Manager] as ha
-  [ZFS Replication] as zfs
-}
+' Technology Services
+Technology_Service(cluster, "Proxmox Cluster")
+Technology_Service(ha, "HA Manager")
+Technology_Service(zfs, "ZFS Replication")
 
-node1 --> cluster
-node2 --> cluster
-node3 --> cluster
-cicd --> cluster : manages
-fw --> cluster : protects
+' Nodes assigned to cluster
+Rel_Assignment(node1, cluster)
+Rel_Assignment(node2, cluster)
+Rel_Assignment(node3, cluster)
+
+' VMs deployed on node1
+Rel_Assignment(node1, fw)
+Rel_Assignment(node1, cicd)
+
+' Cluster provides services
+Rel_Aggregation(cluster, ha)
+Rel_Aggregation(cluster, zfs)
+
+' CICD manages cluster, Firewall protects it
+Rel_Access(cicd, cluster, "manages")
+Rel_Serving(fw, cluster, "protects")
 
 @enduml
 ```
@@ -52,26 +66,40 @@ The AI stack provides artificial intelligence capabilities.
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS AI Stack
 
-actor User
+' Business Actor
+Business_Actor(user, "Platform User")
 
-package "AI Services" {
-  [OpenWebUI] as webui
-  [LiteLLM] as litellm
-  [Ollama] as ollama
-}
+' Application Components (AI Services)
+Application_Component(webui, "OpenWebUI")
+Application_Component(litellm, "LiteLLM")
+Application_Component(ollama, "Ollama")
 
-cloud "External AI" {
-  [OpenAI API] as openai
-  [Anthropic API] as anthropic
-}
+' External Application Services
+Application_Service(openai, "OpenAI API")
+Application_Service(anthropic, "Anthropic API")
 
-User --> webui : chat
-webui --> litellm : API requests
-litellm --> ollama : local models
-litellm --> openai : cloud models
-litellm --> anthropic : cloud models
+' Application Services exposed by components
+Application_Service(chatSvc, "Chat Service")
+Application_Service(routingSvc, "Model Routing")
+Application_Service(inferenceSvc, "Local Inference")
+
+' Components realize services
+Rel_Realization(webui, chatSvc)
+Rel_Realization(litellm, routingSvc)
+Rel_Realization(ollama, inferenceSvc)
+
+' User uses chat service
+Rel_Serving(chatSvc, user)
+
+' Service dependencies
+Rel_Serving(routingSvc, webui)
+Rel_Serving(inferenceSvc, litellm)
+Rel_Serving(openai, litellm)
+Rel_Serving(anthropic, litellm)
 
 @enduml
 ```
@@ -90,27 +118,41 @@ The productivity stack provides collaboration and automation tools.
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS Productivity Stack
 
-actor User
+' Business Actor
+Business_Actor(user, "Platform User")
 
-package "Productivity Services" {
-  [Nextcloud] as nextcloud
-  [n8n] as n8n
-  [Vaultwarden] as vault
-}
+' Application Components
+Application_Component(nextcloud, "Nextcloud")
+Application_Component(n8n, "n8n")
+Application_Component(vault, "Vaultwarden")
 
-database "Storage" {
-  [Files] as files
-  [Database] as db
-}
+' Application Services
+Application_Service(fileSvc, "File Storage")
+Application_Service(workflowSvc, "Workflow Automation")
+Application_Service(secretSvc, "Secret Management")
 
-User --> nextcloud : files & docs
-User --> n8n : automation
-User --> vault : passwords
-nextcloud --> files
-nextcloud --> db
-n8n --> db
+' Technology Artifacts (Data)
+Technology_Artifact(files, "Files")
+Technology_Artifact(db, "Database")
+
+' Components realize services
+Rel_Realization(nextcloud, fileSvc)
+Rel_Realization(n8n, workflowSvc)
+Rel_Realization(vault, secretSvc)
+
+' User uses services
+Rel_Serving(fileSvc, user)
+Rel_Serving(workflowSvc, user)
+Rel_Serving(secretSvc, user)
+
+' Data access
+Rel_Access(nextcloud, files)
+Rel_Access(nextcloud, db)
+Rel_Access(n8n, db)
 
 @enduml
 ```
@@ -129,33 +171,48 @@ All TAPPaaS modules follow a consistent deployment pattern.
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS Module Deployment Pattern
 
-package "TAPPaaS Module" {
-  [module.json] as config
-  [install.sh] as install
-  [update.sh] as update
-  [delete.sh] as delete
-}
+' Module artifacts
+Technology_Artifact(config, "module.json")
+Technology_Artifact(install, "install.sh")
+Technology_Artifact(update, "update.sh")
+Technology_Artifact(delete, "delete.sh")
 
-package "Infrastructure Services" {
-  [cluster:vm] as vm_svc
-  [cluster:ha] as ha_svc
-  [firewall:proxy] as proxy_svc
-}
+' Infrastructure Technology Services
+Technology_Service(vmSvc, "cluster:vm")
+Technology_Service(haSvc, "cluster:ha")
+Technology_Service(proxySvc, "firewall:proxy")
 
-node "NixOS VM" as vm {
-  [Application] as app
-}
+' Technology Node (VM)
+Technology_Node(vm, "NixOS VM")
 
-database "ZFS Snapshot" as snapshot
+' Application running on VM
+Application_Component(app, "Application")
 
-config --> install : configures
-install --> vm_svc : provisions VM
-vm_svc --> vm : creates
-ha_svc --> vm : enables failover
-proxy_svc --> vm : exposes
-snapshot --> vm : protects
+' Backup
+Technology_Service(snapshot, "ZFS Snapshot")
+
+' Configuration flow
+Rel_Association(config, install, "configures")
+
+' Install uses VM service
+Rel_Access(install, vmSvc, "provisions")
+
+' VM service creates node
+Rel_Realization(vmSvc, vm)
+
+' Application assigned to VM
+Rel_Assignment(vm, app)
+
+' HA and proxy serve VM
+Rel_Serving(haSvc, vm, "failover")
+Rel_Serving(proxySvc, vm, "exposes")
+
+' Snapshot protects VM
+Rel_Serving(snapshot, vm, "protects")
 
 @enduml
 ```

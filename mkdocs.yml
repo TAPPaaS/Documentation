@@ -67,7 +67,9 @@ plugins:
   - minify:
       minify_html: true
   - kroki:
-      server_url: https://kroki.io
+      # Use localhost for CI (self-hosted Kroki service) or kroki.io for fallback
+      # CI sets up Kroki service container on localhost:8000
+      server_url: http://localhost:8000
       enable_block_diag: true
       http_method: POST
       file_types:

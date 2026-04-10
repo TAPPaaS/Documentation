@@ -11,42 +11,58 @@ This page describes the capability model for the TAPPaaS platform.
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS Capability Model
 
-package "Platform Capabilities" {
-  package "AI Capabilities" {
-    [Chat Interface] as chat
-    [Model Gateway] as gateway
-    [Local Inference] as inference
-  }
+' AI Stack Capabilities
+Strategy_Capability(capAI, "AI Stack")
+Strategy_Capability(capChat, "Chat Interface")
+Strategy_Capability(capGateway, "Model Gateway")
+Strategy_Capability(capInference, "Local Inference")
 
-  package "Productivity Capabilities" {
-    [File Storage] as files
-    [Workflow Automation] as workflow
-    [Collaboration] as collab
-  }
+' Productivity Stack Capabilities
+Strategy_Capability(capProd, "Productivity Stack")
+Strategy_Capability(capFiles, "File Storage")
+Strategy_Capability(capWorkflow, "Workflow Automation")
+Strategy_Capability(capCollab, "Collaboration")
 
-  package "Foundation Capabilities" {
-    [Identity Management] as identity
-    [Secret Management] as secrets
-    [Certificate Management] as certs
-  }
-}
+' Foundation Stack Capabilities
+Strategy_Capability(capFound, "Foundation Stack")
+Strategy_Capability(capIdentity, "Identity Management")
+Strategy_Capability(capSecrets, "Secret Management")
+Strategy_Capability(capCerts, "Certificate Management")
 
-package "Infrastructure Capabilities" {
-  [VM Provisioning] as vm
-  [High Availability] as ha
-  [Network Security] as network
-  [Backup & Recovery] as backup
-}
+' Infrastructure Capabilities
+Strategy_Capability(capInfra, "Infrastructure")
+Strategy_Capability(capVM, "VM Provisioning")
+Strategy_Capability(capHA, "High Availability")
+Strategy_Capability(capNetwork, "Network Security")
+Strategy_Capability(capBackup, "Backup & Recovery")
 
-chat --> gateway : uses
-gateway --> inference : routes to
-files --> identity : authenticates
-workflow --> identity : authenticates
-vm --> ha : enables
-network --> vm : protects
-backup --> vm : protects
+' Stack aggregates modules
+Rel_Aggregation_Down(capAI, capChat)
+Rel_Aggregation_Down(capAI, capGateway)
+Rel_Aggregation_Down(capAI, capInference)
+
+Rel_Aggregation_Down(capProd, capFiles)
+Rel_Aggregation_Down(capProd, capWorkflow)
+Rel_Aggregation_Down(capProd, capCollab)
+
+Rel_Aggregation_Down(capFound, capIdentity)
+Rel_Aggregation_Down(capFound, capSecrets)
+Rel_Aggregation_Down(capFound, capCerts)
+
+Rel_Aggregation_Down(capInfra, capVM)
+Rel_Aggregation_Down(capInfra, capHA)
+Rel_Aggregation_Down(capInfra, capNetwork)
+Rel_Aggregation_Down(capInfra, capBackup)
+
+' Dependencies
+Rel_Serving_Right(capChat, capGateway)
+Rel_Serving_Right(capGateway, capInference)
+Rel_Serving_Right(capFiles, capIdentity)
+Rel_Serving_Right(capWorkflow, capIdentity)
 
 @enduml
 ```

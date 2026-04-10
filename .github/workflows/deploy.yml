@@ -23,6 +23,15 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    services:
+      # Self-hosted Kroki for ArchiMate diagram rendering
+      kroki:
+        image: yuzutech/kroki:latest
+        ports:
+          - 8000:8000
+        env:
+          KROKI_SAFE_MODE: safe
+          KROKI_PLANTUML_ALLOW_INCLUDE: "true"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,6 +53,19 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Wait for Kroki to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:8000/health > /dev/null 2>&1; then
+              echo "Kroki is ready"
+              exit 0
+            fi
+            echo "Waiting for Kroki... ($i/30)"
+            sleep 2
+          done
+          echo "Kroki failed to start"
+          exit 1
 
       - name: Build documentation
         run: mkdocs build --strict

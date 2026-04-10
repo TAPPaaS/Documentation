@@ -1,0 +1,36 @@
+# Docker Compose for local documentation development
+# Provides self-hosted Kroki server for ArchiMate diagram rendering
+#
+# Usage:
+#   docker-compose up -d    # Start Kroki server
+#   mkdocs serve            # Run MkDocs development server
+#   docker-compose down     # Stop Kroki server
+
+services:
+  # Kroki diagram rendering service
+  kroki:
+    image: yuzutech/kroki:latest
+    container_name: kroki
+    ports:
+      - "8000:8000"
+    environment:
+      # Enable safe mode with PlantUML includes for ArchiMate stdlib
+      KROKI_SAFE_MODE: safe
+      KROKI_PLANTUML_ALLOW_INCLUDE: "true"
+      # Optional: Connect to companion services if needed
+      # KROKI_MERMAID_HOST: mermaid
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # Optional: Mermaid support (uncomment if needed)
+  # mermaid:
+  #   image: yuzutech/kroki-mermaid:latest
+  #   container_name: kroki-mermaid
+  #   expose:
+  #     - "8002"
+  #   restart: unless-stopped

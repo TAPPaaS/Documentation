@@ -40,32 +40,48 @@ The following diagram illustrates the high-level TAPPaaS architecture, showing t
 
 ```kroki-plantuml
 @startuml
+!include <archimate/Archimate>
+
 title TAPPaaS Platform Architecture Overview
 
-package "Users" {
-  actor "Platform User" as user
-  actor "Administrator" as admin
-}
+' Business Actors
+Business_Actor(user, "Platform User")
+Business_Actor(admin, "Administrator")
 
-package "Application Layer" {
-  [OpenWebUI] as openwebui
-  [LiteLLM] as litellm
-  [Nextcloud] as nextcloud
-  [Identity Provider] as identity
-}
+' Application Components
+Application_Component(openwebui, "OpenWebUI")
+Application_Component(litellm, "LiteLLM")
+Application_Component(nextcloud, "Nextcloud")
+Application_Component(identity, "Identity Provider")
 
-package "Infrastructure Layer" {
-  [Proxmox Cluster] as proxmox
-  [OPNsense Firewall] as firewall
-}
+' Technology Nodes
+Technology_Node(proxmox, "Proxmox Cluster")
+Technology_Node(firewall, "OPNsense Firewall")
 
-user --> openwebui : uses
-user --> nextcloud : uses
-admin --> proxmox : manages
-openwebui --> litellm : API calls
-openwebui --> identity : authenticates
-nextcloud --> identity : authenticates
-firewall --> proxmox : protects
+' Application Services
+Application_Service(chatSvc, "Chat Service")
+Application_Service(fileSvc, "File Service")
+Application_Service(authSvc, "Auth Service")
+
+' Components realize services
+Rel_Realization(openwebui, chatSvc)
+Rel_Realization(nextcloud, fileSvc)
+Rel_Realization(identity, authSvc)
+
+' Users access services
+Rel_Serving(chatSvc, user)
+Rel_Serving(fileSvc, user)
+
+' Admin manages infrastructure
+Rel_Access(admin, proxmox, "manages")
+
+' Application dependencies
+Rel_Serving(litellm, openwebui, "API")
+Rel_Serving(authSvc, openwebui)
+Rel_Serving(authSvc, nextcloud)
+
+' Infrastructure relationships
+Rel_Serving(firewall, proxmox, "protects")
 
 @enduml
 ```
