@@ -9,4 +9,8 @@ This section contains supplementary materials for the TAPPaaS documentation.
 
 ## Contents
 
-- **[Architecture Diagrams](architecture-diagrams.md)** - Enterprise Architecture diagrams using ArchiMate notation
+- **[ArchiMate Diagrams](archimate/index.md)** - Enterprise Architecture diagrams using ArchiMate notation
+    - [Introduction](archimate/introduction.md) - Overview of TAPPaaS architecture
+    - [TAPPaaS Capabilities](archimate/capabilities.md) - Platform capability model
+    - [TAPPaaS Stacks](archimate/stacks.md) - Technology stack diagrams
+    - [ArchiMate Notation](archimate/notation.md) - Reference guide for creating diagrams
