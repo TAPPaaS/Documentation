@@ -17,45 +17,34 @@ The diagrams on this page are created using [PlantUML with ArchiMate support](ht
 
 ## TAPPaaS Architecture Overview
 
+!!! note "Diagram Rendering"
+    ArchiMate diagrams are rendered using PlantUML via the Kroki service. If diagrams don't render, check your network connection to kroki.io.
+
 ```kroki-plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/Archimate.puml
 
 title TAPPaaS Platform Architecture Overview
 
-' Business Layer
 Business_Actor(user, "Platform User")
 Business_Actor(admin, "Platform Administrator")
 Business_Service(selfService, "Self-Service Platform")
 
-' Application Layer
 Application_Component(openwebui, "OpenWebUI")
 Application_Component(litellm, "LiteLLM")
 Application_Component(nextcloud, "Nextcloud")
-Application_Component(n8n, "n8n Automation")
 Application_Component(identity, "Identity Provider")
-Application_Component(cicd, "TAPPaaS CICD")
 
-' Technology Layer
 Technology_Node(proxmox, "Proxmox Cluster")
 Technology_Node(firewall, "OPNsense Firewall")
-Technology_SystemSoftware(nixos, "NixOS VMs")
-Technology_Artifact(zfs, "ZFS Storage")
 
-' Relationships
 Rel_Serving(selfService, user, "provides access")
 Rel_Serving(selfService, admin, "provides management")
 Rel_Realization(openwebui, selfService, "realizes")
 Rel_Realization(nextcloud, selfService, "realizes")
-Rel_Realization(n8n, selfService, "realizes")
 Rel_Access(openwebui, litellm, "uses")
 Rel_Access(openwebui, identity, "authenticates")
-Rel_Access(nextcloud, identity, "authenticates")
-Rel_Access(n8n, identity, "authenticates")
-Rel_Composition(proxmox, nixos, "hosts")
-Rel_Composition(proxmox, zfs, "includes")
 Rel_Association(firewall, proxmox, "protects")
-Rel_Triggering(cicd, nixos, "deploys")
 
 @enduml
 ```
@@ -68,35 +57,25 @@ Rel_Triggering(cicd, nixos, "deploys")
 
 title TAPPaaS Foundation Stack
 
-' Technology Layer - Infrastructure
-Technology_Node(node1, "tappaas1\nProxmox Node")
-Technology_Node(node2, "tappaas2\nProxmox Node")
-Technology_Node(node3, "tappaas3\nProxmox Node")
+Technology_Node(node1, "tappaas1")
+Technology_Node(node2, "tappaas2")
+Technology_Node(node3, "tappaas3")
+Technology_Node(cluster, "Proxmox Cluster")
+Technology_SystemSoftware(ha, "HA Manager")
+Technology_Node(fwNode, "Firewall VM")
+Technology_SystemSoftware(opnsense, "OPNsense")
+Technology_Node(cicdNode, "CICD VM")
+Technology_SystemSoftware(cicdSvc, "TAPPaaS CICD")
 
-Technology_Node(cluster, "Proxmox Cluster") {
-    Technology_SystemSoftware(ha, "HA Manager")
-    Technology_SystemSoftware(ceph, "Ceph/ZFS\nReplication")
-}
-
-Technology_Node(fwNode, "Firewall VM") {
-    Technology_SystemSoftware(opnsense, "OPNsense")
-    Technology_SystemSoftware(caddy, "Caddy Proxy")
-}
-
-Technology_Node(cicdNode, "CICD VM") {
-    Technology_SystemSoftware(cicdSvc, "TAPPaaS CICD")
-    Technology_Artifact(gitRepo, "Git Repository")
-}
-
-' Relationships
 Rel_Composition(cluster, node1, "includes")
 Rel_Composition(cluster, node2, "includes")
 Rel_Composition(cluster, node3, "includes")
+Rel_Composition(cluster, ha, "manages")
 Rel_Assignment(node1, fwNode, "hosts")
 Rel_Assignment(node1, cicdNode, "hosts")
+Rel_Composition(fwNode, opnsense, "runs")
+Rel_Composition(cicdNode, cicdSvc, "runs")
 Rel_Triggering(cicdSvc, cluster, "manages")
-Rel_Access(opnsense, cluster, "protects")
-Rel_Serving(caddy, opnsense, "reverse proxy")
 
 @enduml
 ```
@@ -109,28 +88,22 @@ Rel_Serving(caddy, opnsense, "reverse proxy")
 
 title TAPPaaS Module Deployment Pattern
 
-' Application Layer
 Application_Component(module, "TAPPaaS Module")
-Application_DataObject(moduleJson, "module.json\nConfiguration")
+Application_DataObject(moduleJson, "module.json")
 Application_Function(installScript, "install.sh")
 Application_Function(updateScript, "update.sh")
-Application_Function(deleteScript, "delete.sh")
 
-' Technology Layer
 Technology_Node(vm, "NixOS VM")
 Technology_SystemSoftware(nixConfig, "NixOS Configuration")
 Technology_Artifact(snapshot, "ZFS Snapshot")
 
-' Infrastructure Services
 Application_Service(clusterVM, "cluster:vm")
 Application_Service(clusterHA, "cluster:ha")
 Application_Service(fwProxy, "firewall:proxy")
 
-' Relationships
 Rel_Composition(module, moduleJson, "defines")
 Rel_Composition(module, installScript, "includes")
 Rel_Composition(module, updateScript, "includes")
-Rel_Composition(module, deleteScript, "includes")
 Rel_Realization(vm, module, "realizes")
 Rel_Assignment(vm, nixConfig, "configured by")
 Rel_Access(clusterVM, vm, "provisions")
