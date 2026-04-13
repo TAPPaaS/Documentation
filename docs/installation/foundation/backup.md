@@ -24,7 +24,7 @@ From the tappaas-cicd VM:
 
 ```bash
 cd ~/TAPPaaS/src/foundation/backup
-./install.sh
+install-module.sh backup
 ```
 
 The script automatically:
