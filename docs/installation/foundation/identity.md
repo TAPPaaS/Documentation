@@ -20,36 +20,16 @@ TODO: central management of API keys are not implemented yet
 ## Prerequisites
 
 - [ ] [CICD Mothership](cicd.md) operational
-- [ ] DNS management access
-- [ ] Reverse proxy configured
+- [ ] [Firewall and reverse proxy (Caddy)](firewall.md) operational
 
 ## DNS Configuration
 
 Register the services with your DNS provider:
+(This is DNS provider specific, you are on your own for the details)
 
 | Record | Type | Value |
 |--------|------|-------|
-| `authentik.yourdomain.com` | A | Your public IP |
-
-## Reverse Proxy Setup
-
-Configure Caddy routing in OPNsense:
-
-### Authentik Route
-
-```
-authentik.yourdomain.com {
-    reverse_proxy identity.mgmt.internal:80
-}
-```
-
-### VaultWarden Route
-
-```
-vaultwarden.yourdomain.com {
-    reverse_proxy identity.mgmt.internal:8080
-}
-```
+| `identity.yourdomain.com` | A | Your public IP |
 
 ## Installation
 
@@ -62,18 +42,11 @@ cd ~/TAPPaaS/src/foundation/identity
 install-module.sh identity
 ```
 
-This creates a VM with both Authentik and VaultWarden pre-configured.
-
-## Firewall Rules
-
-Create firewall rules in OPNsense:
-
-| Source | Destination | Port | Protocol | Action |
-|--------|-------------|------|----------|--------|
-| Caddy | identity.mgmt.internal | 80 | TCP | Allow |
-| Caddy | identity.mgmt.internal | 8080 | TCP | Allow |
+This creates a VM with Authentik configured.
 
 ## Authentik Configuration
+
+(To be automated)
 
 ### Initial Setup
 
@@ -103,13 +76,7 @@ Create users and groups:
 
 ## Integration
 
-### Authentik SSO
-
-Configure VaultWarden to use Authentik for SSO:
-
-1. In Authentik, create an OAuth2 provider for VaultWarden
-2. Configure VaultWarden's SSO settings
-3. Test the authentication flow
+(o be automated as a identity:auth service)
 
 ### Service Integration
 
@@ -123,23 +90,6 @@ N8N_AUTH_OAUTH2_AUTHORIZE_URL: "https://authentik.yourdomain.com/application/o/a
 N8N_AUTH_OAUTH2_ACCESS_TOKEN_URL: "https://authentik.yourdomain.com/application/o/token/"
 ```
 
-## Backup
-
-Both services store critical data - ensure backups are configured:
-
-### Authentik Backup
-
-Authentik data is stored in PostgreSQL. The PBS backup includes the VM's database.
-
-### VaultWarden Backup
-
-VaultWarden stores data in SQLite. Additional export is recommended:
-
-```bash
-# Export vault data
-sqlite3 /data/db.sqlite3 ".backup '/backup/vaultwarden.db'"
-```
-
 ## Verification
 
 Test the identity system:
@@ -147,18 +97,6 @@ Test the identity system:
 ```bash
 # Check Authentik health
 curl -f https://authentik.yourdomain.com/-/health/ready/
-
-# Check VaultWarden health
-curl -f https://vaultwarden.yourdomain.com/alive
-```
-
-## Security Recommendations
-
-- Enable MFA for all admin accounts
-- Use strong, unique passwords
-- Regularly audit user access
-- Keep services updated
-- Monitor authentication logs
 
 ## Next Steps
 
