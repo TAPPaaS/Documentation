@@ -1,0 +1,73 @@
+# Woodpecker CI pipeline for the TAPPaaS Documentation site (Codeberg CI).
+#
+# Builds the MkDocs site (Kroki renders the ArchiMate/PlantUML diagrams) and
+# publishes the output to the `pages` branch, which Codeberg Pages serves at
+# https://staging.tappaas.org (custom domain declared in the `.domains` file).
+#
+# Prerequisites (one-time, see repo docs / ADR-001 WS-S):
+#   - Codeberg CI enabled for this repo.
+#   - A Woodpecker secret `codeberg_token`: a Codeberg application token with
+#     write access to this repository (Codeberg → Settings → Applications).
+#   - A `pages` branch (the pipeline creates it on first run if missing).
+#   - DNS: CNAME staging.tappaas.org -> tappaas.codeberg.page. (Cloudflare: DNS-only / grey cloud).
+
+when:
+  - event: push
+    branch: [main, staging]
+  - event: pull_request
+
+steps:
+  build:
+    image: python:3.12-slim
+    commands:
+      - pip install --no-cache-dir -r requirements.txt
+      # Woodpecker services are reached by service name, not localhost — repoint Kroki.
+      - sed -i 's#http://localhost:8000#http://kroki:8000#' mkdocs.yml
+      # Wait for the Kroki (JVM) service to answer before building.
+      - |
+        python - <<'PY'
+        import urllib.request, time, sys
+        for _ in range(30):
+            try:
+                urllib.request.urlopen("http://kroki:8000/health", timeout=2)
+                print("Kroki ready"); sys.exit(0)
+            except Exception:
+                time.sleep(2)
+        sys.exit("Kroki did not become ready in time")
+        PY
+      - mkdocs build --strict
+      # Codeberg Pages custom-domain marker must sit at the served-branch root.
+      - cp .domains site/.domains
+
+  deploy-pages:
+    image: alpine:3.20
+    when:
+      # Publish only on branch pushes (main/staging) — never on pull requests.
+      event: push
+      branch: [main, staging]
+    secrets: [codeberg_token]
+    commands:
+      - apk add --no-cache git rsync
+      - git config --global user.email "ci@tappaas.org"
+      - git config --global user.name "TAPPaaS CI"
+      # Authenticated remote (token is masked in Woodpecker logs).
+      - REPO="https://oauth2:$CODEBERG_TOKEN@codeberg.org/TAPPaaS/Documentation.git"
+      # Clone the pages branch, or create it as an orphan on first run.
+      - |
+        if ! git clone --depth 1 --branch pages "$REPO" pages 2>/dev/null; then
+          git clone --depth 1 "$REPO" pages
+          cd pages && git checkout --orphan pages && git rm -rf . >/dev/null 2>&1 || true; cd ..
+        fi
+      # Replace the published content with the fresh build (keep .git).
+      - rsync -a --delete --exclude='.git' site/ pages/
+      - cd pages
+      - git add -A
+      - git commit -m "Deploy ${CI_COMMIT_SHA} [SKIP CI]" || echo "nothing to publish"
+      - git push "$REPO" pages
+
+services:
+  kroki:
+    image: yuzutech/kroki:latest
+    environment:
+      KROKI_SAFE_MODE: safe
+      KROKI_PLANTUML_ALLOW_INCLUDE: "true"
