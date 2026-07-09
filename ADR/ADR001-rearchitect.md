@@ -73,9 +73,9 @@ is a hard dependency for the messaging workstream (see [Open Decisions](#11-open
    be manually kept current.
 6. **Sovereign toolchain.** A site about digital sovereignty must be built and hosted sovereignly.
    **Decided:** the `Documentation` repo moves to **Codeberg (Forgejo) now** — dev/staging/preview on
-   Codeberg Pages via Forgejo Actions — while **GitHub keeps publishing the live 1.x site** until the
-   2.0 cutover. The **TAPPaaS source code stays on GitHub for now** (synced cross-forge). Every tool
-   we adopt must work in a **Forgejo + open-source** setup — no proprietary SaaS we can't self-host —
+   Codeberg Pages via **Woodpecker (Codeberg CI)** — while **GitHub keeps publishing the live 1.x
+   site** until the 2.0 cutover. The **TAPPaaS source code stays on GitHub for now** (synced
+   cross-forge). Every tool we adopt must be **open-source and self-hostable** — no proprietary SaaS —
    and the site should eventually run **on a TAPPaaS system itself**. Keep build and publish decoupled
    so migration only swaps the publish target.
 
@@ -137,8 +137,8 @@ a bottleneck.
 > spike is the first build action in Phase 0 once this plan is signed off. Whether the decoupled
 > Option B is acceptable operationally (two toolchains) is a judgement to make *from the spike
 > results*, not before. The spike must be built on the **sovereign/portable pipeline** (WS-S): both
-> prototypes have to be buildable under Forgejo Actions and hostable on Codeberg Pages / self-hosted
-> Caddy, so we don't prototype something we can't sovereignly ship.
+> prototypes have to be buildable under Woodpecker (Codeberg CI) and hostable on Codeberg Pages /
+> self-hosted Caddy, so we don't prototype something we can't sovereignly ship.
 
 ### 5.3 Evaluation criteria
 
@@ -515,8 +515,9 @@ is no shared staging URL for reviewers.
 ### 11a.1 Sovereignty constraint (decisive)
 
 The source code will move **off GitHub to Codeberg (Forgejo)**, and eventually the site should be
-**hostable on a TAPPaaS system itself** — so all CI/runners and hosting must work in a **Forgejo +
-open-source** setup. A site *about* digital sovereignty should be built and served sovereignly.
+**hostable on a TAPPaaS system itself** — so all CI/runners and hosting must work in an
+**open-source, self-hostable** setup (Codeberg runs Forgejo; its CI is **Woodpecker**, which we can
+also self-host on TAPPaaS). A site *about* digital sovereignty should be built and served sovereignly.
 
 This **rules out Cloudflare Pages and Netlify** as the destination: they are convenient (Cloudflare
 Pages even has a free tier) but are **US-proprietary SaaS that cannot be self-hosted** and would have
@@ -536,11 +537,11 @@ so each migration hop swaps only the *publish target*, never the content or the 
   `site/` → pluggable publish*. Realise it in three hops:
   1. **Now (GitHub):** keep prod on GitHub Pages; add staging/preview via the portable publish step —
      no proprietary preview SaaS.
-  2. **Bridge (Codeberg):** CI = **Forgejo Actions** (ports the current workflow — checkout, pip,
-     **Kroki service container**, `mkdocs build --strict`); hosting = **Codeberg Pages** for prod +
+  2. **Bridge (Codeberg):** CI = **Woodpecker CI** ("Codeberg CI" — checkout, pip, **Kroki service
+     container**, `mkdocs build --strict`); hosting = **Codeberg Pages** for prod +
      a branch for `staging.tappaas.org`. Fully EU/sovereign, free.
-  3. **End state (TAPPaaS):** static site served by **Caddy on a TAPPaaS module**, built by
-     **Forgejo Actions / Woodpecker** runners, with **self-hosted per-PR previews** at
+  3. **End state (TAPPaaS):** static site served by **Caddy on a TAPPaaS module**, built by a
+     **self-hosted Woodpecker** instance, with **self-hosted per-PR previews** at
      `pr-<n>.staging.tappaas.org` (Caddy + TAPPaaS's existing ACME).
 - **Option B — Jump straight to Codeberg Pages.** Mirror/move the repo to Codeberg now and use
   Codeberg Pages for prod + staging immediately. Fastest route to sovereign hosting; couples the
@@ -550,9 +551,10 @@ so each migration hop swaps only the *publish target*, never the content or the 
 
 **Recommendation:** **Option A** — build the pipeline **host-agnostic today** and migrate the publish
 target GitHub → Codeberg Pages → self-hosted Caddy as the source move and TAPPaaS hosting mature.
-Adopt **Forgejo Actions** as the CI target (closest to the existing workflow; Kroki already runs as a
-self-hosted service container, so there is no proprietary dependency to remove). This gets us
-per-PR/staging previews now *without* buying into anything we'd have to rip out later.
+Adopt **Woodpecker CI** as the CI target: it is **the CI Codeberg actually offers** ("Codeberg CI"),
+it is open-source and self-hostable, and it is **the same engine we run on TAPPaaS at the end state**
+— so the CI system never changes across the migration. Kroki already runs as a self-hosted service
+container (Woodpecker supports `services:`), so there is no proprietary dependency to remove.
 
 > **Decision (open decision #7): Option B — move the Documentation repo to Codeberg now.** Rationale:
 > it gives us a sovereign place to **build, debug and review this major (2.0) upgrade** on Codeberg
@@ -561,7 +563,7 @@ per-PR/staging previews now *without* buying into anything we'd have to rip out 
 >
 > - **Set up the Codeberg `TAPPaaS` org fully** (ready to be the long-term sovereign home).
 > - **Move `TAPPaaS/Documentation` to Codeberg as its primary** and do all upgrade work there, with
->   **Forgejo Actions** building **staging + per-PR previews** on **Codeberg Pages**.
+>   **Woodpecker CI (Codeberg CI)** building **staging + per-PR previews** on **Codeberg Pages**.
 > - **Keep the GitHub `Documentation` repo as the production publisher** of tappaas.org (1.x) during
 >   the transition — the live site does not change until the one-time 2.0 cutover (WS6 §10).
 > - **Do *not* move the TAPPaaS source code yet — it stays on GitHub.** The WS0 sync-runner therefore
@@ -592,15 +594,16 @@ previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before
 > **Publish rule (decided).** [`CLAUDE.md`](../CLAUDE.md) currently says commit straight to `main` and
 > it auto-deploys. Under staging: **small edits may commit straight to the working branch; substantial
 > changes go PR → Codeberg preview → review → merge.** Update `CLAUDE.md` to this once the
-> Codeberg/staging move lands. **CI = Forgejo Actions** (confirmed).
+> Codeberg/staging move lands. **CI = Woodpecker (Codeberg CI)** (confirmed).
 
 ### 11a.4 Tasks
 
 - [ ] **Set up the Codeberg `TAPPaaS` org** (accounts, teams, org settings) as the sovereign home.
 - [ ] **Move `Documentation` to Codeberg as primary** (import repo + history); leave GitHub
       `Documentation` in place as the 1.x production publisher during transition.
-- [ ] Port the build to **Forgejo Actions** on Codeberg (checkout, pip, **Kroki service container**,
-      `mkdocs build --strict`); keep it host-agnostic (build → static `site/` → pluggable publish).
+- [ ] Port the build to a **Woodpecker pipeline** (`.woodpecker.yml`) on Codeberg CI (checkout, pip,
+      **Kroki `services:` container**, `mkdocs build --strict`); keep it host-agnostic (build → static
+      `site/` → pluggable publish).
 - [ ] Enable **Codeberg Pages** for staging + per-PR previews; add `staging.tappaas.org` DNS + TLS.
 - [ ] Wire PR builds to publish a preview and comment the URL on the PR.
 - [ ] Confirm WS0 sync-runner **fetches TAPPaaS source cross-forge from GitHub** (public, pinned ref).
@@ -614,7 +617,7 @@ previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before
 
 Both WS3 and WS4 depend on pulling content from the TAPPaaS repo. Build one reusable pipeline:
 
-- A **CI step** (runs in **Forgejo Actions on Codeberg**) that fetches TAPPaaS **cross-forge from
+- A **CI step** (runs in **Woodpecker / Codeberg CI**) that fetches TAPPaaS **cross-forge from
   GitHub** — the source code stays on GitHub for now (open decision #7), so the runner clones/pulls
   `github.com/TAPPaaS/TAPPaaS` at a **pinned ref** (`stable` for prod content, `main`/next on
   staging) — reads an **allow-list** of files (`INSTALL.md`, `INSTALL-ENVIRONMENT.md`, selected
@@ -635,10 +638,10 @@ chore into a solved problem.
 ## 13. Phasing
 
 **Phase 0 — Enablers (do first)**
-- WS-S: set up Codeberg `TAPPaaS` org; move `Documentation` to Codeberg; Forgejo Actions + Codeberg
-  Pages for staging + per-PR previews (GitHub keeps publishing 1.x production).
+- WS-S: set up Codeberg `TAPPaaS` org; move `Documentation` to Codeberg; Woodpecker (Codeberg CI) +
+  Codeberg Pages for staging + per-PR previews (GitHub keeps publishing 1.x production).
 - WS0 source-sync pipeline (skeleton; fetches TAPPaaS cross-forge from GitHub, pinned to `stable`).
-- WS1 framework spikes (A vs B) and decision — built on the Codeberg/Forgejo pipeline.
+- WS1 framework spikes (A vs B) and decision — built on the Codeberg/Woodpecker pipeline.
 - Import presentation assets from Nextcloud into `docs/assets/` (unblocks WS2).
 
 **Phase 1 — Public face**
@@ -682,12 +685,14 @@ chore into a solved problem.
    Codeberg **staging** tier *is* the `main`/next preview build (pinned to GitHub `main`/next),
    separate from GitHub production (1.x).
 7. ~~**Migration timing:** A / B / C?~~ **Resolved — Option B, scoped to `Documentation` only.** Move
-   the `Documentation` repo to **Codeberg now** (dev/staging/preview on Codeberg Pages via Forgejo
-   Actions) as a safe surface to build & review the 2.0 upgrade, while **GitHub keeps publishing live
-   1.x**. Set up the Codeberg `TAPPaaS` org fully, but **keep the TAPPaaS source code on GitHub** for
-   now (WS0 syncs cross-forge). See WS-S §11a.2 decision box.
-8. ~~**CI target:** Forgejo Actions vs Woodpecker?~~ **Resolved — Forgejo Actions** (ports the current
-   GitHub workflow closely; Kroki stays a service container).
+   the `Documentation` repo to **Codeberg now** (dev/staging/preview on Codeberg Pages via Woodpecker
+   / Codeberg CI) as a safe surface to build & review the 2.0 upgrade, while **GitHub keeps publishing
+   live 1.x**. Set up the Codeberg `TAPPaaS` org fully, but **keep the TAPPaaS source code on GitHub**
+   for now (WS0 syncs cross-forge). See WS-S §11a.2 decision box.
+8. ~~**CI target:** Forgejo Actions vs Woodpecker?~~ **Resolved — Woodpecker CI** (switched from
+   Forgejo Actions): it is **the CI Codeberg actually offers** ("Codeberg CI"), open-source and
+   self-hostable, and the **same engine we run on TAPPaaS at the end state** — so the CI never changes
+   across the migration. Build ported to a `.woodpecker.yml`; Kroki stays a `services:` container.
 9. ~~**Publish policy:** direct-to-main vs PR→preview→review?~~ **Resolved — both, by change size.**
    Small edits may commit straight to the working branch; **substantial changes go PR → Codeberg
    preview → review → merge.** `CLAUDE.md` to be updated to this once the Codeberg/staging move lands.
