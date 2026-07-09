@@ -474,11 +474,38 @@ This is handled entirely by the WS-S environments model:
 - Add a prominent **"stable vs main"** explainer in the install flow: which branch to install from,
   what "2.0 / ADR-007" changes, and how to choose. Written to flip cleanly at cutover.
 
-### 10.1 Tasks
+### 10.1 Cutover runbook — serving `tappaas.org` v2 from Codeberg
+
+The cutover is a **staged, reversible DNS flip**, made safe by the parallel setup (1.x on GitHub,
+v2 on Codeberg staging). The one wrinkle: `tappaas.org` is an **apex domain**, and DNS forbids a
+CNAME at the apex — so the apex uses one of:
+
+- **ALIAS / ANAME / CNAME-flattening → `tappaas.codeberg.page`** (preferred — auto-tracks Codeberg's
+  IP; needs a provider that supports apex flattening, e.g. Cloudflare / Route 53 / deSEC), or
+- **A/AAAA → Codeberg Pages server IPs** (from docs.codeberg.org/codeberg-pages/; works anywhere but
+  must be updated by hand if Codeberg changes IPs).
+
+Steps:
+
+1. **Lower the TTL** on the `tappaas.org` record ~24h ahead (fast propagation + fast rollback).
+2. **Promote v2** to the production Pages content on Codeberg; add `tappaas.org` (+ optional `www`)
+   as the **primary** entry in `.domains`.
+3. **Flip the apex DNS** GitHub Pages → Codeberg (ALIAS/flatten or A/AAAA). Codeberg auto-issues the
+   Let's Encrypt cert for `tappaas.org`.
+4. **Verify**, then **retire GitHub Pages** (drop its workflow/CNAME). Keep the GitHub repo intact a
+   while so **rollback = repoint the apex back** to GitHub.
+
+`staging.tappaas.org` stays as the permanent staging environment. **Trust note:** on Codeberg Pages,
+Codeberg terminates TLS for `tappaas.org` — acceptable for a public static site; the later hop to
+**self-hosted Caddy on TAPPaaS** (A/AAAA to the site's public IP, or via the ADR-010 satellite
+`reverse-proxy`) removes Codeberg from the TLS path and is the *same* repoint operation.
+
+### 10.2 Tasks
 
 - [ ] Public build pins to `stable`; 2.0 content lives on staging until go-live.
 - [ ] Write the "stable vs main / what is 2.0 (ADR-007)" page.
-- [ ] Define the one-time cutover checklist (repoint prod to 2.0; retire 1.x — no archive).
+- [ ] Confirm the DNS provider's apex capability (ALIAS/flatten vs A/AAAA) for `tappaas.org`.
+- [ ] Execute the §10.1 cutover runbook (repoint prod to 2.0; retire 1.x — no archive).
 - [ ] Sequence the ADR-007 content publish to coincide with the `stable` merge (ties to WS4 §8.3).
 
 ---
