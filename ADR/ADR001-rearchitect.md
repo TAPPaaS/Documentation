@@ -478,12 +478,23 @@ This is handled entirely by the WS-S environments model:
 
 The cutover is a **staged, reversible DNS flip**, made safe by the parallel setup (1.x on GitHub,
 v2 on Codeberg staging). The one wrinkle: `tappaas.org` is an **apex domain**, and DNS forbids a
-CNAME at the apex — so the apex uses one of:
+CNAME at the apex — so the apex uses one of, **depending on the DNS provider**:
 
-- **ALIAS / ANAME / CNAME-flattening → `tappaas.codeberg.page`** (preferred — auto-tracks Codeberg's
-  IP; needs a provider that supports apex flattening, e.g. Cloudflare / Route 53 / deSEC), or
+- **CNAME-flattening / ALIAS → `tappaas.codeberg.page`** (preferred — auto-tracks Codeberg's IP).
+  **Cloudflare** (current provider) does this: put a "CNAME" at the apex and it flattens to A records.
+  Route 53 ALIAS likewise. **deSEC does *not*** offer flattening/ALIAS.
 - **A/AAAA → Codeberg Pages server IPs** (from docs.codeberg.org/codeberg-pages/; works anywhere but
-  must be updated by hand if Codeberg changes IPs).
+  must be updated by hand if Codeberg changes IPs). This is the path on **deSEC** (planned future
+  provider).
+
+> **Cloudflare proxy must be OFF (grey cloud / DNS-only)** for both `staging` and the apex — an
+> orange-cloud proxy makes Cloudflare terminate TLS and hides the real `Host`, so Codeberg can't
+> issue its cert or route. Grey cloud also keeps Cloudflare out of the data path.
+>
+> **deSEC synergy:** TAPPaaS already uses **deSEC for DNS-01 ACME**, so `deSEC + self-hosted Caddy on
+> TAPPaaS` is the natural sovereign end state (apex A/AAAA → the site's public IP or the ADR-010
+> satellite; Caddy issues certs via deSEC) — no Cloudflare or Codeberg in the path. Treat the
+> Cloudflare→deSEC move as its own step; don't combine it with the site cutover.
 
 Steps:
 
@@ -631,7 +642,8 @@ previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before
 - [ ] Port the build to a **Woodpecker pipeline** (`.woodpecker.yml`) on Codeberg CI (checkout, pip,
       **Kroki `services:` container**, `mkdocs build --strict`); keep it host-agnostic (build → static
       `site/` → pluggable publish).
-- [ ] Enable **Codeberg Pages** for staging + per-PR previews; add `staging.tappaas.org` DNS + TLS.
+- [ ] Enable **Codeberg Pages** for staging + per-PR previews; add `staging.tappaas.org` DNS + TLS
+      (`CNAME staging → tappaas.codeberg.page.`, Cloudflare **grey cloud / DNS-only**; `.domains` file).
 - [ ] Wire PR builds to publish a preview and comment the URL on the PR.
 - [ ] Confirm WS0 sync-runner **fetches TAPPaaS source cross-forge from GitHub** (public, pinned ref).
 - [ ] Leave GitHub `main` → GitHub Pages publishing **unchanged** for 1.x production.
