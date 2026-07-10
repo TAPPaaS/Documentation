@@ -1,13 +1,13 @@
 ---
 title: Identity
-description: Deploy identity and secrets management for TAPPaaS
+description: The identity provider (Authentik) — installed and bootstrapped automatically
 ---
 
 # Identity Management
 
-This guide covers deploying identity and secrets management using Authentik
-
-***TODO: Not tested***
+TAPPaaS ships **Authentik** as the identity provider (SSO, users, groups, access
+control). On 2.0 its installation and credential bootstrap are **fully automated** —
+there is no manual setup wizard.
 
 ## Components
 
@@ -15,88 +15,38 @@ This guide covers deploying identity and secrets management using Authentik
 |---------|---------|
 | **Authentik** | Identity provider, SSO, user management |
 
-TODO: central management of API keys are not implemented yet
-
 ## Prerequisites
 
 - [ ] [CICD Mothership](cicd.md) operational
 - [ ] [Firewall and reverse proxy (Caddy)](firewall.md) operational
 
-## DNS Configuration
+## Installation — automated
 
-Register the services with your DNS provider:
-(This is DNS provider specific, you are on your own for the details)
+Identity is installed as part of the foundation sequence (`rest-of-foundation.sh`,
+see the synced [INSTALL.md](../../generated/install.md)): backup → **identity** → …
+During that run the platform also **bootstraps your people domain** — your
+organisation and admin are created in Authentik automatically, driven by the
+configuration you provided at bootstrap.
 
-| Record | Type | Value |
-|--------|------|-------|
-| `identity.yourdomain.com` | A | Your public IP |
+The credential handshake is automated and self-healing: the CICD host fetches the
+Authentik bootstrap token from the identity VM on demand, so consuming modules
+(access control, SSO integrations) can install without manual credential steps —
+even after a CICD rebuild.
 
-## Installation
+## Using it
 
-### Deploy Identity VM
-
-From the tappaas-cicd VM:
-
-```bash
-cd ~/TAPPaaS/src/foundation/identity
-install-module.sh identity
-```
-
-This creates a VM with Authentik configured.
-
-## Authentik Configuration
-
-(To be automated)
-
-### Initial Setup
-
-Access Authentik at `https://identity.mgmt.internal/if/flow/initial-setup/`
-
-1. Create the admin account
-2. Set a strong password
-3. Complete the setup wizard
-
-### Configure Applications
-
-For each TAPPaaS service requiring authentication:
-
-1. Navigate to **Applications** → **Applications**
-2. Click **Create**
-3. Configure the application settings
-4. Set up the appropriate provider (OAuth2, SAML, etc.)
-
-### User Management
-
-Create users and groups:
-
-1. Navigate to **Directory** → **Users**
-2. Create users as needed
-3. Assign to appropriate groups
-
-
-## Integration
-
-(o be automated as a identity:auth service)
-
-### Service Integration
-
-Connect other TAPPaaS services to Authentik:
-
-```yaml
-# Example: n8n OAuth configuration
-N8N_AUTH_OAUTH2_CLIENT_ID: "your-client-id"
-N8N_AUTH_OAUTH2_CLIENT_SECRET: "your-client-secret"
-N8N_AUTH_OAUTH2_AUTHORIZE_URL: "https://identity.mgmt.internal/application/o/authorize/"
-N8N_AUTH_OAUTH2_ACCESS_TOKEN_URL: "https://identity.mgmt.internal/application/o/token/"
-```
+- Admin UI: `https://identity.mgmt.internal/` (management zone).
+- Users, groups and organisations are managed through the
+  [People Manager](../../generated/managers/people-manager.md); see also the
+  [Identity Controller](../../generated/controllers/identity-controller.md) for the
+  system-level reference.
 
 ## Verification
 
-Test the identity system:
-
 ```bash
-# Check Authentik health
+# Check Authentik health (from the management zone)
 curl -f https://identity.mgmt.internal/-/health/ready/
+```
 
 ## Next Steps
 
