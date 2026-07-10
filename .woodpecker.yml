@@ -15,11 +15,11 @@
 #     POSTs the payload itself after pushing.
 #   - Serving goes through a ~600 s edge cache; freshly deployed content can
 #     lag up to 10 minutes.
-#   - `.domains` (custom domain staging.tappaas.org) is temporarily NOT
-#     published: the cert never issued under git-pages and a .domains file
-#     makes the direct codeberg.page URL redirect to the broken domain.
-#     Re-enable the cp below when re-attempting staging (the new DNS target
-#     per codeberg.page docs is `documentation.tappaas.codeberg.page`).
+#   - Custom domain staging.tappaas.org: DNS now points at
+#     documentation.tappaas.codeberg.page (fixed 2026-07-10) and `.domains`
+#     is published again. If staging TLS ever breaks, the site stays
+#     reachable at https://tappaas.codeberg.page/Documentation/ (that URL
+#     redirects to the staging canonical while .domains is in place).
 #
 # Prerequisites (one-time, see repo docs / ADR-001 WS-S):
 #   - Codeberg CI enabled for this repo.
@@ -53,11 +53,12 @@ steps:
         sys.exit("Kroki did not become ready in time")
         PY
       - mkdocs build --strict
-      # Temporarily disabled — see header note on .domains / staging TLS.
-      #
-      # case "$CI_COMMIT_BRANCH" in
-      #   main|staging) cp .domains site/.domains ;;
-      # esac
+      # Codeberg Pages custom-domain marker — only on the real `pages` root
+      # (spike/preview builds must not claim domains).
+      - |
+        case "$CI_COMMIT_BRANCH" in
+          main|staging) cp .domains site/.domains ;;
+        esac
 
   deploy-pages:
     image: alpine:3.20

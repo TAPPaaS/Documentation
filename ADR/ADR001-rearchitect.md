@@ -151,12 +151,27 @@ maintenance load.
 - [ ] Assemble a 1-page inspiration board from the reference products (screens + what to steal).
 - [x] Spike A: a redesigned MkDocs landing (custom template + CSS/JS + motion) on a branch.
 - [x] Spike B: a small Astro/Next landing that links into the existing docs.
-- [ ] Side-by-side review; decide A / B / C and record the decision in this file.
+- [x] Side-by-side review; decide A / B / C and record the decision in this file.
+      **Decided (2026-07-10, Lars): Option B** — see the decision box in §5.5.
 - [x] Define the shared design tokens (color, type, spacing) so marketing + docs stay consistent
       *(first cut: identical `--tap-*` token values in both spikes — teal/amber palette, radius,
       type scale; to be extracted into a shared tokens file once A/B is decided).*
 
-### 5.5 Spike status (2026-07-10) — built, awaiting side-by-side review
+> **Decision (2026-07-10, Lars): Option B — decoupled Astro landing + MkDocs docs**, with three
+> design constraints from the review:
+>
+> 1. **Less "black"** — drop the dark cinematic palette for a lighter visual language closer to the
+>    docs theme (light surfaces, teal accents; dark mode follows the visitor's preference).
+> 2. **Smooth the landing → docs transition** — shared palette/typography and a "explore the
+>    documentation" bridge on the landing, so crossing into the docs doesn't feel like a site
+>    change. Lars notes this pull, taken to its end, *implies drifting toward Option C* (one
+>    unified framework); we accept that as a **possible later evolution** (Astro → Starlight is a
+>    natural path) but do **not** migrate the docs corpus now — revisit only if the docs
+>    experience itself becomes the bottleneck (consistent with §5.2).
+> 3. **Clarity over spectacle** — TAPPaaS explains complex information; the front page must make
+>    navigation obvious (clear section nav, explicit paths into Install/Docs), not add confusion.
+
+### 5.5 Spike status (2026-07-10) — reviewed, Option B chosen
 
 Both spikes are live on branch previews, built by the sovereign Woodpecker/Codeberg pipeline
 (per the §5.2 decision box). **Copy is identical** (promo storyline §6.1) so the review compares
@@ -749,9 +764,9 @@ because of LE rate limits. New-server facts (from <https://codeberg.page> + expe
 | Check | Result |
 |-------|--------|
 | Woodpecker pipeline (clone/build/deploy) | ✅ green |
-| Content at `tappaas.codeberg.page/Documentation/` | ✅ 200, serves **directly** (git-pages; no redirect) |
-| DNS `staging.tappaas.org` | ⚠️ CNAME must move to `documentation.tappaas.codeberg.page` (new git-pages format) before staging can work |
-| HTTPS (:443) cert for staging | ⏸ paused — resume via the 3-step plan above (DNS + `.domains` + re-test) |
+| Content at `tappaas.codeberg.page/Documentation/` | ✅ 200 (redirects to the staging canonical once `.domains` is live again) |
+| DNS `staging.tappaas.org` | ✅ CNAME updated to `documentation.tappaas.codeberg.page` (Lars, 2026-07-10) |
+| HTTPS (:443) cert for staging | 🔄 `.domains` re-published after the DNS fix — cert issuance re-testing |
 | Spike previews `…/Documentation/spikes/spike-a/`, `…/spikes/spike-b/` | ✅ build & serve via sub-directory preview pipeline |
 
 > One transient Woodpecker failure observed (pipeline #3, `clone` step died before any repo code
