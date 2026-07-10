@@ -40,13 +40,24 @@ steps:
                 time.sleep(2)
         sys.exit("Kroki did not become ready in time")
         PY
-      - mkdocs build --strict
+      # Spike B: the MkDocs site lives under /docs/, behind the Astro landing.
+      - mkdocs build --strict -d site/docs
       # Codeberg Pages custom-domain marker must sit at the served-branch root —
       # only on the real `pages` branch; preview branches must not claim domains.
       - |
         case "$CI_COMMIT_BRANCH" in
           main|staging) cp .domains site/.domains ;;
         esac
+
+  # Spike B: decoupled marketing landing (Astro) served at the site root.
+  build-landing:
+    image: node:22
+    commands:
+      - cd landing
+      - npm install --no-audit --no-fund --loglevel=error
+      # The preview is served under a sub-path; Astro needs it as `base`.
+      - ASTRO_BASE="/Documentation/@pages-$CI_COMMIT_BRANCH/" npm run build
+      - cp -r dist/. ../site/
 
   deploy-pages:
     image: alpine:3.20
