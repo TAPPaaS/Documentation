@@ -723,21 +723,28 @@ server started answering **400 "new users/orgs are not allowed to use the old pa
 everything. The staging cert never issued because the new server didn't know the site at all, not
 because of LE rate limits. New-server facts (from <https://codeberg.page> + experiment):
 
-1. **Deployment is webhook-driven**: a Forgejo push webhook on the repo targeting
-   `https://<org>.codeberg.page/<Repo>` (branch filter `pages`) tells git-pages to (re)deploy.
-   No webhook → no site. Creating the webhook via API needs a **repo-admin** token — the CI
+1. **Deployment is webhook-driven, one webhook per deploy target (domain)**: a Forgejo push
+   webhook targeting `https://<org>.codeberg.page/<Repo>` deploys the codeberg.page site; a second
+   webhook targeting `https://staging.tappaas.org` deploys the same content to the custom domain.
+   No webhook → no site. Creating webhooks via API needs a **repo-admin** token — the CI
    `codeberg_token` is write-only (`403 user should be an owner or a collaborator with admin write`),
-   so the **deploy step self-notifies**: it POSTs the push payload to the target URL itself
+   so the **deploy step self-notifies**: it POSTs the push payload to each target URL itself
    (unauthenticated; needs `ref: refs/heads/pages` + `repository.clone_url`; answers `created`).
-   Optionally add the real webhook by hand in repo Settings → Webhooks later — either works.
+   Optionally add the real webhooks by hand in repo Settings → Webhooks later — either works.
 2. **Only `refs/heads/pages` deploys** (per-target allowlist); other refs are rejected, and
    `@branch` preview URLs are not supported — hence the `spikes/<branch>/` sub-directory scheme.
 3. **~600 s edge cache** on served content — freshly deployed pages can lag up to 10 minutes.
-4. **Custom-domain DNS changed**: the CNAME target format is now `[[branch.]repo.]org.codeberg.page`,
-   i.e. staging should point at **`documentation.tappaas.codeberg.page`** (the current CNAME to bare
-   `tappaas.codeberg.page` maps to a non-existent org `pages` repo — very likely the *original*
-   staging failure). **To resume staging:** update the Cloudflare CNAME accordingly, re-enable the
-   `cp .domains` step in [`.woodpecker.yml`](../.woodpecker.yml), and re-test TLS.
+4. **Custom domains are authorized in DNS, `.domains` is deprecated** (removed from this repo —
+   with one present, the codeberg.page URL redirects to the "canonical" domain, which caused the
+   earlier 307s). Per [docs.codeberg.org/codeberg-pages/using-custom-domain/](https://docs.codeberg.org/codeberg-pages/using-custom-domain/),
+   staging needs **two** Cloudflare records (both DNS-only / grey cloud):
+   - `CNAME staging.tappaas.org → codeberg.page.` (anything resolving to the pages server works —
+     the current `documentation.tappaas.codeberg.page` target is fine);
+   - **`TXT _git-pages-repository.staging.tappaas.org → "https://codeberg.org/TAPPaaS/Documentation.git"`**
+     — this authorizes the repo to deploy to the domain. *Still missing as of 2026-07-10 — the last
+     blocker for staging.* Once added, the next pipeline run's staging notify goes through.
+   The staging TLS cert was successfully issued 2026-07-10 11:57 UTC (the original "cert issue" is
+   history — the remaining 400 on staging is the domain-authorization gap above).
 
 **Gotchas learned (save future-us the pain):**
 
@@ -764,9 +771,10 @@ because of LE rate limits. New-server facts (from <https://codeberg.page> + expe
 | Check | Result |
 |-------|--------|
 | Woodpecker pipeline (clone/build/deploy) | ✅ green |
-| Content at `tappaas.codeberg.page/Documentation/` | ✅ 200 (redirects to the staging canonical once `.domains` is live again) |
-| DNS `staging.tappaas.org` | ✅ CNAME updated to `documentation.tappaas.codeberg.page` (Lars, 2026-07-10) |
-| HTTPS (:443) cert for staging | 🔄 `.domains` re-published after the DNS fix — cert issuance re-testing |
+| Content at `tappaas.codeberg.page/Documentation/` | ✅ 200, serves directly (`.domains` removed — no more redirect) |
+| DNS `staging.tappaas.org` CNAME | ✅ points at the pages server (Lars, 2026-07-10) |
+| DNS `_git-pages-repository.staging.tappaas.org` TXT | ❌ **missing — the last staging blocker** (value: `https://codeberg.org/TAPPaaS/Documentation.git`) |
+| HTTPS (:443) cert for staging | ✅ issued 2026-07-10 11:57 UTC (Let's Encrypt); TLS handshake works |
 | Spike previews `…/Documentation/spikes/spike-a/`, `…/spikes/spike-b/` | ✅ build & serve via sub-directory preview pipeline |
 
 > One transient Woodpecker failure observed (pipeline #3, `clone` step died before any repo code

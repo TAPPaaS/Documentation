@@ -9,24 +9,25 @@
 #   - Only the `pages` branch deploys (ref allowlist is refs/heads/pages),
 #     so spike/preview builds publish into spikes/<branch>/ sub-directories
 #     of the same branch: .../Documentation/spikes/<branch>/
-#   - Deployment is triggered by a Forgejo push webhook to
-#     https://tappaas.codeberg.page/Documentation — the repo has no such
-#     webhook yet (the CI token cannot manage hooks), so the deploy step
-#     POSTs the payload itself after pushing.
+#   - Deployment is triggered by a Forgejo push webhook per deploy TARGET
+#     (one per domain). The repo has no webhooks (the CI token cannot manage
+#     hooks), so the deploy step POSTs the payload itself to each target.
+#   - Custom domains are authorized purely via DNS (docs.codeberg.org/
+#     codeberg-pages/using-custom-domain/): the `.domains` file is DEPRECATED
+#     and removed from this repo. staging.tappaas.org needs, in Cloudflare
+#     (DNS-only / grey cloud):
+#       CNAME staging.tappaas.org -> codeberg.page. (or any name resolving
+#         to the pages server; documentation.tappaas.codeberg.page works too)
+#       TXT _git-pages-repository.staging.tappaas.org ->
+#         "https://codeberg.org/TAPPaaS/Documentation.git"
 #   - Serving goes through a ~600 s edge cache; freshly deployed content can
 #     lag up to 10 minutes.
-#   - Custom domain staging.tappaas.org: DNS now points at
-#     documentation.tappaas.codeberg.page (fixed 2026-07-10) and `.domains`
-#     is published again. If staging TLS ever breaks, the site stays
-#     reachable at https://tappaas.codeberg.page/Documentation/ (that URL
-#     redirects to the staging canonical while .domains is in place).
 #
 # Prerequisites (one-time, see repo docs / ADR-001 WS-S):
 #   - Codeberg CI enabled for this repo.
 #   - A Woodpecker secret `codeberg_token`: a Codeberg application token with
 #     write access to this repository (Codeberg → Settings → Applications).
-#   - DNS: CNAME staging.tappaas.org -> documentation.tappaas.codeberg.page.
-#     (Cloudflare: DNS-only / grey cloud) — for when staging is re-attempted.
+#   - The DNS records above for the staging custom domain.
 
 when:
   - event: [push, manual]
@@ -53,12 +54,6 @@ steps:
         sys.exit("Kroki did not become ready in time")
         PY
       - mkdocs build --strict
-      # Codeberg Pages custom-domain marker — only on the real `pages` root
-      # (spike/preview builds must not claim domains).
-      - |
-        case "$CI_COMMIT_BRANCH" in
-          main|staging) cp .domains site/.domains ;;
-        esac
 
   deploy-pages:
     image: alpine:3.20
@@ -106,14 +101,21 @@ steps:
           )
         }
         publish || publish || publish
-      # No git-pages webhook exists on the repo (token lacks hook-admin
+      # No git-pages webhooks exist on the repo (token lacks hook-admin
       # rights), so notify the pages server ourselves with the payload a
-      # Forgejo push webhook would send.
+      # Forgejo push webhook would send — once per deploy target. The
+      # staging.tappaas.org target only works once its DNS TXT authorization
+      # record exists; don't fail the build on it while that's pending.
       - |
-        curl -sf -X POST "https://tappaas.codeberg.page/Documentation" \
-          -H "Content-Type: application/json" \
-          -H "X-Forgejo-Event: push" \
-          -d '{"ref":"refs/heads/pages","repository":{"full_name":"TAPPaaS/Documentation","name":"Documentation","private":false,"clone_url":"https://codeberg.org/TAPPaaS/Documentation.git","html_url":"https://codeberg.org/TAPPaaS/Documentation","default_branch":"main","owner":{"login":"TAPPaaS","username":"TAPPaaS"}}}'
+        notify() {
+          curl -s -X POST "$1" \
+            -H "Content-Type: application/json" \
+            -H "X-Forgejo-Event: push" \
+            -d '{"ref":"refs/heads/pages","repository":{"full_name":"TAPPaaS/Documentation","name":"Documentation","private":false,"clone_url":"https://codeberg.org/TAPPaaS/Documentation.git","html_url":"https://codeberg.org/TAPPaaS/Documentation","default_branch":"main","owner":{"login":"TAPPaaS","username":"TAPPaaS"}}}'
+          echo " <- $1"
+        }
+        notify "https://tappaas.codeberg.page/Documentation"
+        notify "https://staging.tappaas.org" || true
 
 services:
   kroki:
