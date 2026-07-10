@@ -10,7 +10,14 @@
   background: transparent;
   overflow: visible;
   margin-right: auto;
+  /* belt & braces: never let theme scroll-behavior styles hide inline tabs */
+  transform: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
+/* the repo button's auto-fetched facts (stars / latest release tag) made the
+   source link two lines — keep it to icon + repo name */
+.md-source__facts { display: none; }
 .md-header .md-tabs .md-tabs__list {
   margin: 0;
   white-space: nowrap;

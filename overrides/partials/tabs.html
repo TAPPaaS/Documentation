@@ -1,0 +1,18 @@
+{#-
+  OVERRIDE of mkdocs-material 9.7.1 partials/tabs.html (single-line header,
+  ADR-001 §5.5 revision): identical to upstream EXCEPT the
+  data-md-component="tabs" attribute is removed — Material's scroll-watcher
+  JS otherwise hides the tabs a moment after page load (it manages them as a
+  standalone bar, but here they live inside the header and must stay put).
+  Re-diff against upstream if mkdocs-material is upgraded.
+-#}
+{% import "partials/tabs-item.html" as item with context %}
+<nav class="md-tabs" aria-label="{{ lang.t('tabs') }}">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      {% for nav_item in nav.items %}
+        {{ item.render(nav_item) }}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
