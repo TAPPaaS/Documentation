@@ -66,20 +66,41 @@ steps:
       CODEBERG_TOKEN:
         from_secret: codeberg_token
     commands:
-      - apk add --no-cache curl jq
+      - apk add --no-cache curl jq git
       - API="https://codeberg.org/api/v1/repos/TAPPaaS/Documentation"
       - PAGES_URL="https://tappaas.codeberg.page/Documentation"
       - |
-        if curl -sf -H "Authorization: token $CODEBERG_TOKEN" "$API/hooks" \
-           | jq -e --arg u "$PAGES_URL" '.[] | select(.config.url == $u)' >/dev/null; then
-          echo "git-pages webhook already present"
-        else
-          curl -sf -X POST \
-            -H "Authorization: token $CODEBERG_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"type\":\"forgejo\",\"active\":true,\"events\":[\"push\"],\"branch_filter\":\"pages*\",\"config\":{\"url\":\"$PAGES_URL\",\"content_type\":\"json\"}}" \
-            "$API/hooks" >/dev/null && echo "git-pages webhook created"
-        fi
+        {
+          echo "== token identity =="
+          curl -s -o /tmp/me.json -w "GET /user -> %{http_code}\n" \
+            -H "Authorization: token $CODEBERG_TOKEN" https://codeberg.org/api/v1/user
+          jq -r '.login // .message // empty' /tmp/me.json 2>/dev/null || head -c 200 /tmp/me.json
+          echo "== existing hooks =="
+          curl -s -o /tmp/hooks.json -w "GET hooks -> %{http_code}\n" \
+            -H "Authorization: token $CODEBERG_TOKEN" "$API/hooks"
+          cat /tmp/hooks.json
+          echo
+          echo "== ensure webhook =="
+          if jq -e --arg u "$PAGES_URL" '.[]? | select(.config.url == $u)' /tmp/hooks.json >/dev/null 2>&1; then
+            echo "git-pages webhook already present"
+          else
+            curl -s -o /tmp/create.json -w "POST hooks -> %{http_code}\n" -X POST \
+              -H "Authorization: token $CODEBERG_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "{\"type\":\"forgejo\",\"active\":true,\"events\":[\"push\"],\"branch_filter\":\"pages*\",\"config\":{\"url\":\"$PAGES_URL\",\"content_type\":\"json\"}}" \
+              "$API/hooks"
+            cat /tmp/create.json
+            echo
+          fi
+        } | tee /tmp/webhook-debug.txt
+      # Woodpecker logs are not publicly readable — publish the diagnostics
+      # (no secrets in them) to a throwaway ci-debug branch instead.
+      - git config --global user.email "ci@tappaas.org"
+      - git config --global user.name "TAPPaaS CI"
+      - REPO="https://oauth2:$CODEBERG_TOKEN@codeberg.org/TAPPaaS/Documentation.git"
+      - rm -rf /tmp/dbg && mkdir /tmp/dbg && cd /tmp/dbg && git init -q -b ci-debug .
+      - cp /tmp/webhook-debug.txt /tmp/dbg/
+      - cd /tmp/dbg && git add -A && git commit -q -m "webhook debug $CI_COMMIT_SHA" && git push -qf "$REPO" ci-debug
 
   deploy-pages:
     image: alpine:3.20
