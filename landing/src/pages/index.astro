@@ -1,7 +1,9 @@
 ---
-// WS1 Spike B — decoupled marketing landing (Astro) in front of the MkDocs docs.
-// Copy follows the promo-video storyline (ADR-001 §6.1) — same content as
-// Spike A so the two prototypes compare framework, not copy.
+// WS1 Option B — decoupled marketing landing (Astro) in front of the MkDocs docs.
+// Design constraints from the spike review (ADR-001 §5.5 decision box):
+// light-first palette close to the docs theme (dark mode follows the visitor),
+// a smooth landing→docs bridge, and clarity-first navigation.
+// Copy follows the promo-video storyline (ADR-001 §6.1).
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : rawBase + "/";
 const docs = base + "docs/";
@@ -21,6 +23,13 @@ const pillars = [
 
 const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLLM",
               "EURO Office", "deCONZ", "Coturn", "Proxmox", "OPNsense", "Caddy"];
+
+const bridge = [
+  { title: "Install", href: docs + "installation/", text: "Choose hardware, bootstrap the foundation, add the stacks you need." },
+  { title: "Manual", href: docs + "manual/", text: "Run a live system day to day: scripts, updates, firewall, backup." },
+  { title: "Architecture", href: docs + "architecture/", text: "How the four building blocks are designed and fit together." },
+  { title: "Roadmap", href: docs + "roadmap/", text: "Where TAPPaaS is heading, milestone by milestone." },
+];
 ---
 
 <html lang="en">
@@ -42,7 +51,7 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         <img src={docs + "tappaas-icon.png"} alt="" width="28" height="28" />
         <span>TAPPaaS</span>
       </a>
-      <nav>
+      <nav aria-label="Landing sections">
         <a href="#why">Why</a>
         <a href="#blocks">Building blocks</a>
         <a href="#examples">Examples</a>
@@ -112,21 +121,23 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
     </section>
 
     <!-- ============ Four building blocks ============ -->
-    <section class="section" id="blocks">
-      <h2 class="reveal">A cloud is four building blocks.<br />Now they’re yours.</h2>
-      <p class="lede reveal">
-        Hyperscalers won by <em>packaging complexity</em>: a site to run on, workloads to run,
-        people to serve, and environments to keep them apart. TAPPaaS packages the same four
-        blocks — pre-integrated and open source — on your side of the wall.
-      </p>
-      <div class="cards">
-        {blocks.map((b) => (
-          <div class="card reveal">
-            <span class="card-n">{b.n}</span>
-            <h3>{b.title}</h3>
-            <p>{b.text}</p>
-          </div>
-        ))}
+    <section class="section section-tint" id="blocks">
+      <div class="section-inner">
+        <h2 class="reveal">A cloud is four building blocks.<br />Now they’re yours.</h2>
+        <p class="lede reveal">
+          Hyperscalers won by <em>packaging complexity</em>: a site to run on, workloads to run,
+          people to serve, and environments to keep them apart. TAPPaaS packages the same four
+          blocks — pre-integrated and open source — on your side of the wall.
+        </p>
+        <div class="cards">
+          {blocks.map((b) => (
+            <div class="card reveal">
+              <span class="card-n">{b.n}</span>
+              <h3>{b.title}</h3>
+              <p>{b.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 
@@ -134,7 +145,7 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
     <section class="section">
       <h2 class="reveal">Trusted. Automated. Private.</h2>
       <div class="pillars">
-        {pillars.map((p, i) => (
+        {pillars.map((p) => (
           <div class="pillar reveal">
             <span class="pillar-letter">{p.title[0]}</span>
             <h3>{p.title}</h3>
@@ -145,9 +156,11 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
     </section>
 
     <!-- ============ Running today ============ -->
-    <section class="section section-wide" id="examples">
-      <h2 class="reveal">Running today. Not a roadmap.</h2>
-      <p class="lede reveal">TAPPaaS systems are live with first adopters, running the tools people actually use:</p>
+    <section class="section section-tint section-wide" id="examples">
+      <div class="section-inner">
+        <h2 class="reveal">Running today. Not a roadmap.</h2>
+        <p class="lede reveal">TAPPaaS systems are live with first adopters, running the tools people actually use:</p>
+      </div>
       <div class="marquee reveal" aria-hidden="true">
         <div class="track">
           {[...apps, ...apps].map((a) => <span class="chip">{a}</span>)}
@@ -158,21 +171,40 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
           {[...apps.slice().reverse(), ...apps.slice().reverse()].map((a) => <span class="chip">{a}</span>)}
         </div>
       </div>
-      <p class="center reveal">
-        <a class="btn btn-ghost" href={docs + "installation/"}>See what you can run</a>
+      <div class="section-inner">
+        <p class="center reveal">
+          <a class="btn btn-ghost" href={docs + "installation/"}>See what you can run</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ Bridge into the docs ============ -->
+    <section class="section" id="explore">
+      <h2 class="reveal">Ready to go deeper?</h2>
+      <p class="lede reveal">
+        The documentation picks up where this page ends — same story, full detail.
+        Start wherever fits you:
       </p>
+      <div class="bridge">
+        {bridge.map((b) => (
+          <a class="bridge-card reveal" href={b.href}>
+            <h3>{b.title} <span aria-hidden="true">→</span></h3>
+            <p>{b.text}</p>
+          </a>
+        ))}
+      </div>
     </section>
 
     <!-- ============ Closing CTA ============ -->
     <section class="cta">
-      <h2 class="reveal">Who is in control? <span class="grad">You are.</span></h2>
+      <h2 class="reveal">Who is in control? <span>You are.</span></h2>
       <p class="signoff reveal">Your data. Your costs. Your access. <strong>Your platform.</strong></p>
-      <p class="reveal"><a class="btn btn-primary btn-big" href={docs + "installation/"}>Install TAPPaaS</a></p>
+      <p class="reveal"><a class="btn btn-invert btn-big" href={docs + "installation/"}>Install TAPPaaS</a></p>
     </section>
 
     <footer class="site-footer">
       <span>© 2026 TAPPaaS Contributors · MPL 2.0</span>
-      <nav>
+      <nav aria-label="Footer">
         <a href={docs}>Documentation</a>
         <a href={docs + "roadmap/"}>Roadmap</a>
         <a href="https://github.com/TAPPaaS/TAPPaaS">GitHub</a>
@@ -238,19 +270,40 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
     </script>
 
     <style>
-      /* ---- Shared design tokens (keep in sync with Spike A / future design system) */
+      /* ---- Shared design tokens (light-first; keep in sync with the docs theme) ---- */
       :root {
-        --ink: #05090b;
-        --panel: #0b161b;
-        --teal: #009485;
-        --teal-bright: #00d0b0;
-        --amber: #ffc46b;
-        --text: #dfe9ec;
-        --text-dim: #8fa4ab;
+        --bg: #f7fbfa;
+        --panel: #ffffff;
+        --tint: #edf5f3;
+        --teal: #009485;          /* matches the docs' Material "teal" primary */
+        --teal-deep: #00695f;
+        --teal-soft: rgba(0, 148, 133, 0.1);
+        --amber: #c77b16;
+        --text: #1d3038;
+        --text-dim: #56707a;
+        --line: rgba(0, 148, 133, 0.22);
+        --header-bg: rgba(255, 255, 255, 0.75);
+        --shadow: 0 14px 40px rgba(9, 63, 60, 0.1);
         --radius: 16px;
         --font:
-          ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
           "Helvetica Neue", Arial, sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0e1a20;
+          --panel: #14232b;
+          --tint: #0b161c;
+          --teal: #00b39b;
+          --teal-deep: #00d0b0;
+          --teal-soft: rgba(0, 208, 176, 0.1);
+          --amber: #ffc46b;
+          --text: #dfe9ec;
+          --text-dim: #93a7ae;
+          --line: rgba(0, 208, 176, 0.22);
+          --header-bg: rgba(14, 26, 32, 0.7);
+          --shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+        }
       }
 
       html {
@@ -258,7 +311,7 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       }
       body {
         margin: 0;
-        background: var(--ink);
+        background: var(--bg);
         color: var(--text);
         font-family: var(--font);
         line-height: 1.6;
@@ -273,13 +326,12 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         inset: 0 0 auto 0;
         height: 2px;
         z-index: 60;
-        background: transparent;
       }
       .progress span {
         display: block;
         height: 100%;
         width: 0;
-        background: linear-gradient(90deg, var(--teal), var(--teal-bright));
+        background: linear-gradient(90deg, var(--teal), var(--teal-deep));
       }
 
       /* ---- Header ---- */
@@ -291,16 +343,16 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         align-items: center;
         gap: 2rem;
         padding: 0.7rem 1.4rem;
-        background: rgba(5, 9, 11, 0.55);
+        background: var(--header-bg);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(0, 208, 176, 0.12);
+        border-bottom: 1px solid var(--line);
       }
       .brand {
         display: flex;
         align-items: center;
         gap: 0.55rem;
-        font-weight: 800;
+        font-weight: 700;
         letter-spacing: 0.04em;
         text-decoration: none;
         font-size: 1.05rem;
@@ -316,7 +368,7 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         color: var(--text-dim);
         transition: color 0.2s ease;
       }
-      .site-header nav a:hover { color: var(--teal-bright); }
+      .site-header nav a:hover { color: var(--teal); }
 
       /* ---- Buttons ---- */
       .btn {
@@ -330,51 +382,59 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       }
       .btn:hover { transform: translateY(-2px); }
       .btn-primary {
-        background: linear-gradient(135deg, var(--teal-bright), var(--teal));
-        color: #04231f;
-        box-shadow: 0 6px 24px rgba(0, 208, 176, 0.35);
+        background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+        color: #ffffff;
+        box-shadow: 0 6px 20px rgba(0, 148, 133, 0.35);
       }
-      .btn-primary:hover { box-shadow: 0 10px 32px rgba(0, 208, 176, 0.5); }
+      .btn-primary:hover { box-shadow: 0 10px 28px rgba(0, 148, 133, 0.45); }
       .btn-ghost {
-        border: 1px solid rgba(223, 233, 236, 0.35);
+        border: 1px solid var(--line);
         color: var(--text);
+        background: var(--panel);
       }
-      .btn-ghost:hover { border-color: var(--teal-bright); color: var(--teal-bright); }
+      .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+      .btn-invert {
+        background: #ffffff;
+        color: var(--teal-deep);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+      }
       .btn-small { padding: 0.45em 1.2em; font-size: 0.82rem; }
       .btn-big { padding: 0.8em 2.4em; font-size: 1.05rem; }
 
       /* ---- Hero ---- */
       .hero {
         position: relative;
-        min-height: 100vh;
+        min-height: 92vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         padding: 7rem 1.4rem 4rem;
+        background: linear-gradient(175deg, var(--bg), var(--tint) 70%, var(--bg));
       }
       .hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
       .orb {
         position: absolute;
         border-radius: 50%;
         filter: blur(70px);
-        opacity: 0.5;
+        opacity: 0.3;
         transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
       }
       .orb-1 { width: 42rem; height: 42rem; left: -14rem; top: -12rem;
-               background: radial-gradient(circle, rgba(0, 208, 176, 0.55), transparent 65%); }
+               background: radial-gradient(circle, rgba(0, 148, 133, 0.5), transparent 65%); }
       .orb-2 { width: 30rem; height: 30rem; right: -10rem; bottom: -8rem;
-               background: radial-gradient(circle, rgba(27, 111, 143, 0.6), transparent 65%); }
+               background: radial-gradient(circle, rgba(27, 111, 143, 0.45), transparent 65%); }
       .orb-3 { width: 18rem; height: 18rem; right: 16%; top: 10%;
-               background: radial-gradient(circle, rgba(255, 196, 107, 0.35), transparent 65%); }
+               background: radial-gradient(circle, rgba(199, 123, 22, 0.3), transparent 65%); }
       .gridlines {
         position: absolute;
         inset: 0;
         background-image:
-          linear-gradient(rgba(0, 208, 176, 0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0, 208, 176, 0.05) 1px, transparent 1px);
+          linear-gradient(var(--teal-soft) 1px, transparent 1px),
+          linear-gradient(90deg, var(--teal-soft) 1px, transparent 1px);
         background-size: 56px 56px;
+        opacity: 0.5;
         mask-image: radial-gradient(60% 55% at 50% 45%, #000 0%, transparent 100%);
         -webkit-mask-image: radial-gradient(60% 55% at 50% 45%, #000 0%, transparent 100%);
       }
@@ -384,19 +444,20 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         letter-spacing: 0.24em;
         text-transform: uppercase;
         font-size: 0.72rem;
-        color: var(--teal-bright);
+        color: var(--teal);
+        font-weight: 700;
         margin: 0 0 1rem;
       }
       h1 {
         position: relative;
-        font-size: clamp(2.4rem, 7vw, 5rem);
-        line-height: 1.04;
+        font-size: clamp(2.4rem, 7vw, 4.6rem);
+        line-height: 1.06;
         font-weight: 800;
         letter-spacing: -0.02em;
         margin: 0 0 1.4rem;
       }
       .grad {
-        background: linear-gradient(100deg, var(--teal-bright) 10%, #7be3d2 45%, var(--amber) 95%);
+        background: linear-gradient(100deg, var(--teal-deep) 10%, var(--teal) 55%, var(--amber) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -404,12 +465,12 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       .triad { position: relative; display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.6rem; }
       .triad span {
         padding: 0.4rem 1.1rem;
-        border: 1px solid rgba(0, 208, 176, 0.4);
+        border: 1px solid var(--line);
         border-radius: 999px;
-        background: rgba(0, 208, 176, 0.07);
+        background: var(--teal-soft);
         font-weight: 700;
         font-size: 0.9rem;
-        color: #cdf5ee;
+        color: var(--teal-deep);
       }
       .lede {
         position: relative;
@@ -437,21 +498,23 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       .section {
         max-width: 62rem;
         margin: 0 auto;
-        padding: 6rem 1.4rem;
+        padding: 5.5rem 1.4rem;
       }
-      .section-wide { max-width: none; padding-left: 0; padding-right: 0; }
-      .section-wide > h2, .section-wide > .lede, .section-wide > .center {
-        max-width: 62rem; margin-left: auto; margin-right: auto;
-        padding-left: 1.4rem; padding-right: 1.4rem;
+      .section-tint {
+        max-width: none;
+        background: var(--tint);
       }
+      .section-inner { max-width: 62rem; margin: 0 auto; }
+      .section-wide { padding-left: 0; padding-right: 0; }
+      .section-wide .section-inner { padding: 0 1.4rem; }
       h2 {
-        font-size: clamp(1.7rem, 4vw, 2.8rem);
+        font-size: clamp(1.7rem, 4vw, 2.6rem);
         line-height: 1.12;
         font-weight: 800;
         letter-spacing: -0.015em;
         margin: 0 0 1rem;
       }
-      .section .lede { margin: 0 0 2.6rem; font-size: 0.98rem; max-width: 46rem; }
+      .section .lede, .section-inner .lede { margin: 0 0 2.6rem; font-size: 0.98rem; max-width: 46rem; }
       .center { text-align: center; margin-top: 2rem; }
 
       .reveal {
@@ -467,25 +530,30 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         grid-template-columns: 1fr auto 1fr;
         border-radius: var(--radius);
         overflow: hidden;
-        border: 1px solid rgba(0, 208, 176, 0.18);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        background: var(--panel);
       }
       .side { display: flex; flex-direction: column; gap: 0.6rem; padding: 2rem 1.8rem; }
-      .theirs { background: linear-gradient(135deg, #1c2830, #131d24); color: #9fb2ba; }
-      .yours { background: linear-gradient(135deg, #043b36, #0a5f52); text-align: right; color: #d8f5ef; }
+      .theirs { background: var(--tint); color: var(--text-dim); }
+      .yours {
+        background: linear-gradient(135deg, var(--teal-deep), var(--teal));
+        text-align: right;
+        color: #eafaf7;
+      }
       .side-label {
         font-size: 0.64rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        opacity: 0.7;
+        opacity: 0.8;
         margin-bottom: 0.4rem;
       }
       .item { font-weight: 700; font-size: 0.98rem; }
-      .item.hot { color: var(--teal-bright); font-size: 1.25rem; }
+      .item.hot { color: #ffffff; font-size: 1.25rem; }
       .wall {
         position: relative;
         width: 3px;
-        background: linear-gradient(180deg, transparent, rgba(0, 208, 176, 0.95), transparent);
+        background: linear-gradient(180deg, transparent, var(--teal), transparent);
         animation: wall 3.5s ease-in-out infinite;
       }
       .wall span {
@@ -497,12 +565,13 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         font-size: 0.62rem;
         letter-spacing: 0.26em;
         text-transform: uppercase;
-        color: var(--teal-bright);
-        text-shadow: 0 0 14px rgba(0, 208, 176, 0.8);
+        font-weight: 700;
+        color: var(--teal);
+        text-shadow: 0 0 14px rgba(0, 148, 133, 0.5);
       }
       @keyframes wall {
-        0%, 100% { box-shadow: 0 0 10px rgba(0, 208, 176, 0.4); }
-        50% { box-shadow: 0 0 30px rgba(0, 208, 176, 1); }
+        0%, 100% { box-shadow: 0 0 10px rgba(0, 148, 133, 0.35); }
+        50% { box-shadow: 0 0 26px rgba(0, 148, 133, 0.8); }
       }
 
       /* ---- Cards (building blocks) ---- */
@@ -514,29 +583,29 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       .card {
         position: relative;
         background: var(--panel);
-        border: 1px solid rgba(0, 208, 176, 0.16);
+        border: 1px solid var(--line);
         border-radius: var(--radius);
         padding: 1.8rem 1.5rem;
         overflow: hidden;
-        transition: transform 0.25s ease, border-color 0.25s ease;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       }
       .card::before {
         content: "";
         position: absolute;
         inset: 0;
         background: radial-gradient(24rem 24rem at var(--mx, 50%) var(--my, 50%),
-                    rgba(0, 208, 176, 0.14), transparent 60%);
+                    var(--teal-soft), transparent 60%);
         opacity: 0;
         transition: opacity 0.3s ease;
         pointer-events: none;
       }
-      .card:hover { transform: translateY(-6px); border-color: rgba(0, 208, 176, 0.5); }
+      .card:hover { transform: translateY(-6px); border-color: var(--teal); box-shadow: var(--shadow); }
       .card:hover::before { opacity: 1; }
       .card-n {
         font-size: 0.7rem;
         font-weight: 800;
         letter-spacing: 0.2em;
-        color: var(--teal-bright);
+        color: var(--teal);
       }
       .card h3 { margin: 0.5rem 0 0.5rem; font-size: 1.15rem; }
       .card p { margin: 0; font-size: 0.85rem; color: var(--text-dim); }
@@ -554,8 +623,9 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         position: relative;
         border-radius: var(--radius);
         padding: 1.8rem 1.5rem 1.6rem;
-        background: linear-gradient(170deg, rgba(0, 148, 133, 0.12), rgba(11, 22, 27, 0.9));
-        border: 1px solid rgba(0, 208, 176, 0.16);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--teal);
       }
       .pillar-letter {
         position: absolute;
@@ -563,11 +633,11 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         top: 0.2rem;
         font-size: 4.4rem;
         font-weight: 800;
-        color: rgba(0, 208, 176, 0.1);
+        color: var(--teal-soft);
         line-height: 1;
         user-select: none;
       }
-      .pillar h3 { margin: 0 0 0.5rem; font-size: 1.15rem; color: var(--teal-bright); }
+      .pillar h3 { margin: 0 0 0.5rem; font-size: 1.15rem; color: var(--teal-deep); }
       .pillar p { margin: 0; font-size: 0.85rem; color: var(--text-dim); }
       .pillars .reveal:nth-child(2) { transition-delay: 0.12s; }
       .pillars .reveal:nth-child(3) { transition-delay: 0.24s; }
@@ -590,7 +660,7 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       .marquee:hover .track { animation-play-state: paused; }
       .chip {
         padding: 0.5rem 1.2rem;
-        border: 1px solid rgba(0, 208, 176, 0.25);
+        border: 1px solid var(--line);
         border-radius: 999px;
         background: var(--panel);
         font-size: 0.85rem;
@@ -601,17 +671,50 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         to { transform: translateX(-50%); }
       }
 
+      /* ---- Bridge into the docs ---- */
+      .bridge {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 1.2rem;
+      }
+      .bridge-card {
+        display: block;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.4rem;
+        text-decoration: none;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      .bridge-card:hover { transform: translateY(-5px); border-color: var(--teal); box-shadow: var(--shadow); }
+      .bridge-card h3 { margin: 0 0 0.45rem; font-size: 1.05rem; color: var(--teal-deep); }
+      .bridge-card h3 span { transition: transform 0.2s ease; display: inline-block; }
+      .bridge-card:hover h3 span { transform: translateX(4px); }
+      .bridge-card p { margin: 0; font-size: 0.83rem; color: var(--text-dim); }
+      .bridge .reveal:nth-child(2) { transition-delay: 0.1s; }
+      .bridge .reveal:nth-child(3) { transition-delay: 0.2s; }
+      .bridge .reveal:nth-child(4) { transition-delay: 0.3s; }
+
       /* ---- CTA & footer ---- */
       .cta {
         text-align: center;
-        padding: 8rem 1.4rem;
+        padding: 6.5rem 1.4rem;
+        color: #ffffff;
         background:
-          radial-gradient(70rem 35rem at 50% 130%, rgba(0, 208, 176, 0.22), transparent 60%),
-          linear-gradient(180deg, var(--ink), #07211f);
+          radial-gradient(70rem 35rem at 50% 130%, rgba(255, 255, 255, 0.14), transparent 60%),
+          linear-gradient(135deg, var(--teal-deep), var(--teal));
       }
-      .cta h2 { font-size: clamp(2rem, 5vw, 3.4rem); margin-bottom: 0.8rem; }
-      .signoff { color: var(--text-dim); font-size: 1.05rem; margin: 0 0 2.2rem; }
-      .signoff strong { color: var(--teal-bright); }
+      @media (prefers-color-scheme: dark) {
+        .cta {
+          background:
+            radial-gradient(70rem 35rem at 50% 130%, rgba(255, 255, 255, 0.08), transparent 60%),
+            linear-gradient(135deg, #00695f, #009485);
+        }
+      }
+      .cta h2 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 0.8rem; }
+      .cta h2 span { color: #ffe9c4; }
+      .signoff { color: rgba(255, 255, 255, 0.85); font-size: 1.05rem; margin: 0 0 2.2rem; }
+      .signoff strong { color: #ffe9c4; }
 
       .site-footer {
         display: flex;
@@ -620,13 +723,13 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
         justify-content: space-between;
         flex-wrap: wrap;
         padding: 1.6rem 1.4rem;
-        border-top: 1px solid rgba(0, 208, 176, 0.12);
+        border-top: 1px solid var(--line);
         font-size: 0.8rem;
         color: var(--text-dim);
       }
       .site-footer nav { display: flex; gap: 1.2rem; }
       .site-footer a { color: var(--text-dim); text-decoration: none; }
-      .site-footer a:hover { color: var(--teal-bright); }
+      .site-footer a:hover { color: var(--teal); }
 
       /* ---- Reduced motion & small screens ---- */
       @media (prefers-reduced-motion: reduce) {
@@ -639,10 +742,10 @@ const apps = ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLL
       }
       @media (max-width: 44rem) {
         .site-header nav { display: none; }
-        .hero { min-height: 92vh; }
+        .hero { min-height: 88vh; }
         .continuum { grid-template-columns: 1fr; }
         .wall { width: 100%; height: 3px;
-          background: linear-gradient(90deg, transparent, rgba(0, 208, 176, 0.95), transparent); }
+          background: linear-gradient(90deg, transparent, var(--teal), transparent); }
         .wall span { transform: translate(-50%, -50%); }
         .yours { text-align: left; }
       }
