@@ -50,7 +50,7 @@ This creates a VM with Authentik configured.
 
 ### Initial Setup
 
-Access Authentik at `https://authentik.yourdomain.com/if/flow/initial-setup/`
+Access Authentik at `https://identity.mgmt.internal/if/flow/initial-setup/`
 
 1. Create the admin account
 2. Set a strong password
@@ -86,8 +86,8 @@ Connect other TAPPaaS services to Authentik:
 # Example: n8n OAuth configuration
 N8N_AUTH_OAUTH2_CLIENT_ID: "your-client-id"
 N8N_AUTH_OAUTH2_CLIENT_SECRET: "your-client-secret"
-N8N_AUTH_OAUTH2_AUTHORIZE_URL: "https://authentik.yourdomain.com/application/o/authorize/"
-N8N_AUTH_OAUTH2_ACCESS_TOKEN_URL: "https://authentik.yourdomain.com/application/o/token/"
+N8N_AUTH_OAUTH2_AUTHORIZE_URL: "https://identity.mgmt.internal/application/o/authorize/"
+N8N_AUTH_OAUTH2_ACCESS_TOKEN_URL: "https://identity.mgmt.internal/application/o/token/"
 ```
 
 ## Verification
@@ -96,7 +96,7 @@ Test the identity system:
 
 ```bash
 # Check Authentik health
-curl -f https://authentik.yourdomain.com/-/health/ready/
+curl -f https://identity.mgmt.internal/-/health/ready/
 
 ## Next Steps
 
