@@ -695,7 +695,8 @@ previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before
 - [ ] Wire PR builds to publish a preview and comment the URL on the PR.
 - [ ] Confirm WS0 sync-runner **fetches TAPPaaS source cross-forge from GitHub** (public, pinned ref).
 - [ ] Leave GitHub `main` → GitHub Pages publishing **unchanged** for 1.x production.
-- [ ] Update `CLAUDE.md` + `README.md`: work happens on Codeberg; production still on GitHub until cutover.
+- [x] Update `CLAUDE.md` + `README.md`: work happens on Codeberg; production still on GitHub until cutover.
+      *(Done 2026-07-10 — environments table, small-edit vs preview-branch publish rule, WS0 note.)*
 - [ ] Define the cutover step (repoint prod to Codeberg Pages / self-hosted Caddy; retire GitHub publish).
 
 ### 11a.5 Codeberg CI / Pages bring-up — as-built checklist
