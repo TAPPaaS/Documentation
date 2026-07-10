@@ -1,0 +1,174 @@
+{#-
+  Custom landing page template (WS1 Spike A — MkDocs Material, enhanced).
+  Injected via the `tabs` block so it renders full-bleed inside .md-container,
+  above the (emptied) main content area. Styles live in stylesheets/landing.css,
+  reveal animations in javascripts/landing.js.
+-#}
+{% extends "main.html" %}
+
+{% block tabs %}
+{{ super() }}
+
+<div class="tap-landing">
+
+  <!-- ============ Hero ============ -->
+  <section class="tap-hero">
+    <div class="tap-hero__bg" aria-hidden="true">
+      <span class="tap-orb tap-orb--1"></span>
+      <span class="tap-orb tap-orb--2"></span>
+      <span class="tap-orb tap-orb--3"></span>
+    </div>
+    <div class="tap-wrap tap-hero__inner">
+      <p class="tap-kicker tap-stagger">Trusted &middot; Automated &middot; Private &middot; Platform as a Service</p>
+      <h1 class="tap-hero__title tap-stagger">Who is in control of<br>your digital life?</h1>
+      <div class="tap-triad tap-stagger">
+        <span>Your data.</span>
+        <span>Your costs.</span>
+        <span>Your access.</span>
+      </div>
+      <p class="tap-hero__lede tap-stagger">
+        TAPPaaS is an open-source, self-hosted platform for digital sovereignty.
+        Enterprise-class cloud capabilities &mdash; identity, updates, backup, security &mdash;
+        pre-integrated on hardware you own, for small businesses, governments, NGOs,
+        communities and capable households.
+      </p>
+      <p class="tap-hero__actions tap-stagger">
+        <a href="{{ 'installation/' | url }}" class="md-button md-button--primary tap-btn">Get started</a>
+        <a href="{{ 'intro/digital-sovereignty/' | url }}" class="md-button tap-btn tap-btn--ghost">Why TAPPaaS</a>
+        <a href="https://github.com/TAPPaaS/TAPPaaS" class="md-button tap-btn tap-btn--ghost">Source code</a>
+      </p>
+    </div>
+    <div class="tap-hero__scrollcue" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ The glass wall ============ -->
+  <section class="tap-section">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Sovereignty is architecture,<br>not a contract.</h2>
+      <p class="tap-lede tap-reveal">
+        Every cloud sits somewhere on a continuum. On the far side of the glass wall your
+        digital life runs on someone else&rsquo;s terms &mdash; their datacenter, their prices,
+        their access policies. TAPPaaS moves you to <em>your</em> side of the wall: the same
+        convenience, but on your architecture. And because it is architecture, it is
+        <strong>resilient</strong> &mdash; your platform keeps running even when the internet doesn&rsquo;t.
+      </p>
+      <div class="tap-continuum tap-reveal" role="img"
+           aria-label="Continuum from public cloud on their terms, across the glass wall, to a TAPPaaS platform on your own hardware">
+        <div class="tap-continuum__side tap-continuum__side--theirs">
+          <span class="tap-continuum__label">Their terms</span>
+          <span class="tap-continuum__item">Public SaaS</span>
+          <span class="tap-continuum__item">Public cloud</span>
+        </div>
+        <div class="tap-continuum__wall" aria-hidden="true"><span>the glass wall</span></div>
+        <div class="tap-continuum__side tap-continuum__side--yours">
+          <span class="tap-continuum__label">Your terms</span>
+          <span class="tap-continuum__item tap-continuum__item--hot">TAPPaaS</span>
+          <span class="tap-continuum__item">Your hardware</span>
+        </div>
+        <span class="tap-continuum__pulse" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Four building blocks ============ -->
+  <section class="tap-section tap-section--alt">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">A cloud is four building blocks.<br>Now they&rsquo;re yours.</h2>
+      <p class="tap-lede tap-reveal">
+        Hyperscalers won by <em>packaging complexity</em>: a site to run on, workloads to run,
+        people to serve, and environments to keep them apart. TAPPaaS packages the same four
+        blocks &mdash; pre-integrated and open source &mdash; on your side of the wall.
+      </p>
+      <div class="tap-blocks">
+        <div class="tap-block tap-reveal">
+          <span class="tap-block__icon">{% include ".icons/material/server-network.svg" %}</span>
+          <h3>Site</h3>
+          <p>Proxmox cluster, storage, network and firewall &mdash; the ground your cloud stands on.</p>
+        </div>
+        <div class="tap-block tap-reveal">
+          <span class="tap-block__icon">{% include ".icons/material/apps.svg" %}</span>
+          <h3>Workloads</h3>
+          <p>Apps and services installed, updated and backed up by the platform &mdash; not by hand.</p>
+        </div>
+        <div class="tap-block tap-reveal">
+          <span class="tap-block__icon">{% include ".icons/material/account-group.svg" %}</span>
+          <h3>People</h3>
+          <p>Identity, single sign-on and access control for households, teams and tenants.</p>
+        </div>
+        <div class="tap-block tap-reveal">
+          <span class="tap-block__icon">{% include ".icons/material/layers-triple.svg" %}</span>
+          <h3>Environments</h3>
+          <p>Clean separation for production, family, tenants and experiments &mdash; blast doors included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ T · A · P ============ -->
+  <section class="tap-section">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Trusted. Automated. Private.</h2>
+      <div class="tap-pillars">
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__icon">{% include ".icons/material/shield-check.svg" %}</span>
+          <h3>Trusted</h3>
+          <p>Open source end to end (MPL&nbsp;2.0). Every component inspectable, every claim
+             checkable. No black boxes between you and your data.</p>
+        </div>
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__icon">{% include ".icons/material/robot.svg" %}</span>
+          <h3>Automated</h3>
+          <p>One CICD mothership installs, updates, monitors and heals the whole platform.
+             Enterprise operations without an ops team.</p>
+        </div>
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__icon">{% include ".icons/material/home-lock.svg" %}</span>
+          <h3>Private</h3>
+          <p>Self-hosted by design. Your data never has to leave your building &mdash; and your
+             AI can run entirely on your own silicon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Running today ============ -->
+  <section class="tap-section tap-section--alt">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Running today. Not a roadmap.</h2>
+      <p class="tap-lede tap-reveal">
+        TAPPaaS systems are live with first adopters, running the tools people actually use:
+      </p>
+    </div>
+    <div class="tap-marquee tap-reveal" aria-hidden="true">
+      <div class="tap-marquee__track">
+        {% for app in ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLLM",
+                       "EURO Office", "deCONZ", "Coturn", "Proxmox", "OPNsense", "Caddy",
+                       "Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLLM",
+                       "EURO Office", "deCONZ", "Coturn", "Proxmox", "OPNsense", "Caddy"] %}
+        <span class="tap-marquee__item">{{ app }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="tap-wrap">
+      <p class="tap-center tap-reveal">
+        <a href="{{ 'installation/' | url }}" class="md-button tap-btn tap-btn--ghost">See what you can run</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ Closing CTA ============ -->
+  <section class="tap-cta">
+    <div class="tap-wrap">
+      <h2 class="tap-cta__title tap-reveal">Who is in control? <span>You are.</span></h2>
+      <p class="tap-cta__signoff tap-reveal">Your data. Your costs. Your access. <strong>Your platform.</strong></p>
+      <p class="tap-reveal">
+        <a href="{{ 'installation/' | url }}" class="md-button md-button--primary tap-btn">Install TAPPaaS</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{#- The landing supplies all content; empty the regular article. -#}
+{% block content %}{% endblock %}

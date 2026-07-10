@@ -18,6 +18,7 @@ copyright: Copyright &copy; 2026 TAPPaaS Contributors | Licensed under MPL 2.0
 theme:
   name: material
   language: en
+  custom_dir: overrides
 
   # Color palette
   palette:
@@ -129,10 +130,12 @@ markdown_extensions:
 # Extra CSS
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/landing.css
 
 # Extra JavaScript
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/landing.js
 
 # Social links and extra configuration
 extra:
