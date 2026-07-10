@@ -12,7 +12,7 @@
 #   - DNS: CNAME staging.tappaas.org -> tappaas.codeberg.page. (Cloudflare: DNS-only / grey cloud).
 
 when:
-  - event: push
+  - event: [push, manual]
     branch: [main, staging]
   - event: pull_request
 
@@ -42,8 +42,8 @@ steps:
   deploy-pages:
     image: alpine:3.20
     when:
-      # Publish only on branch pushes (main/staging) — never on pull requests.
-      event: push
+      # Publish on branch pushes and manual runs of main/staging — never on pull requests.
+      event: [push, manual]
       branch: [main, staging]
     environment:
       # Modern Woodpecker (2.x/3.x) secret syntax; exposes the secret as $CODEBERG_TOKEN.
