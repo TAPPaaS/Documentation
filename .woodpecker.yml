@@ -52,6 +52,35 @@ steps:
       #   main|staging) cp .domains site/.domains ;;
       # esac
 
+  # Codeberg's NEW git-pages server (mandatory for new orgs like TAPPaaS —
+  # the legacy pages server answers 400 "new users/orgs are not allowed")
+  # only deploys when a Forgejo webhook on this repo pings
+  # https://tappaas.codeberg.page/Documentation for pushes to pages* branches.
+  # Ensure that webhook exists before we push the built site.
+  ensure-pages-webhook:
+    image: alpine:3.20
+    when:
+      event: [push, manual]
+      branch: [main, staging, "spike-*"]
+    environment:
+      CODEBERG_TOKEN:
+        from_secret: codeberg_token
+    commands:
+      - apk add --no-cache curl jq
+      - API="https://codeberg.org/api/v1/repos/TAPPaaS/Documentation"
+      - PAGES_URL="https://tappaas.codeberg.page/Documentation"
+      - |
+        if curl -sf -H "Authorization: token $CODEBERG_TOKEN" "$API/hooks" \
+           | jq -e --arg u "$PAGES_URL" '.[] | select(.config.url == $u)' >/dev/null; then
+          echo "git-pages webhook already present"
+        else
+          curl -sf -X POST \
+            -H "Authorization: token $CODEBERG_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"type\":\"forgejo\",\"active\":true,\"events\":[\"push\"],\"branch_filter\":\"pages*\",\"config\":{\"url\":\"$PAGES_URL\",\"content_type\":\"json\"}}" \
+            "$API/hooks" >/dev/null && echo "git-pages webhook created"
+        fi
+
   deploy-pages:
     image: alpine:3.20
     when:
