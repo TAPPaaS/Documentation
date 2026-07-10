@@ -437,14 +437,25 @@ from the `vllm-amd` module via WS0 so they stay current).
       *(Skeleton done 2026-07-10: [`scripts/sync-source.py`](../scripts/sync-source.py) — see §12.
       Upstream reality check: `INSTALL-ENVIRONMENT.md` is now `INSTALL-VARIANT.md`, and `stable`
       has **neither** file yet — so the sync pins to `main` until 2.0 lands on `stable`.)*
-- [ ] Restructure `installation/index.md` around the 7 macro stages with a progress model.
-- [ ] Rewrite `hardware-selection.md` around the two-axis model (size tier × capability options).
-- [ ] Add a "Choose hardware" **decision flow** (the 4 steps above) with per-tier sizing tables.
-- [ ] Add the **GPU/VRAM guidance** table for local AI; sync model/throughput numbers from `vllm-amd`.
-- [ ] Document the **satellite (ADR-010)** as the no-public-IP / no-local-backup path; sync from the
-      satellite `README.md` / `INSTALL.md` via WS0.
-- [ ] Add the multi-tenant/Environments path (`INSTALL-ENVIRONMENT.md`) for Scale-out.
-- [ ] Add stable-vs-main install guidance (WS6) at the top of the install flow.
+- [x] Restructure `installation/index.md` around the 7 macro stages with a progress model.
+      *(2026-07-10: overview table (stage / you'll need / done when) + per-stage sections, each
+      with prerequisites, "done when", and links to the existing pages + synced INSTALL.md.)*
+- [x] Rewrite `hardware-selection.md` around the two-axis model (size tier × capability options).
+- [x] Add a "Choose hardware" **decision flow** (the 4 steps above) with per-tier sizing tables.
+- [x] Add the **GPU/VRAM guidance** table for local AI; sync model/throughput numbers from `vllm-amd`.
+      *(Numbers hand-verified against the `vllm-amd` README 2026-07-10 (50 tok/s 7B FP16, 20 tok/s
+      30B GPTQ, gpt-oss-120B largest tested, no FP8 on gfx1151) with a provenance note on the page;
+      the automated WS0 sync of these figures is still to do.)*
+- [x] Document the **satellite (ADR-010)** as the no-public-IP / no-local-backup path.
+      *(Documented with an explicit "upstream status: design phase" warning — verified 2026-07-10
+      that upstream has only ADR-010 + implementation design, **no module yet**, so there is no
+      README/INSTALL to sync; the page links the upstream docs and tracks readiness.)*
+- [x] Add the multi-tenant/Environments path for Scale-out.
+      *(Via the synced `INSTALL-VARIANT.md` — upstream renamed `INSTALL-ENVIRONMENT.md` — linked
+      from the install overview, the hardware page's Scale-out tier, and Examples.)*
+- [x] Add stable-vs-main install guidance (WS6) at the top of the install flow.
+      *(Warning box atop `installation/index.md`: install 1.x from `stable`; `main` = 2.0/ADR-007
+      preview for evaluators/contributors. The full WS6 explainer page is still open.)*
 
 ---
 
@@ -863,8 +874,10 @@ Python, no git needed — fetches the GitHub tarball):
 - [x] WS2 messaging + front page + Examples *(2026-07-10: Astro landing graduated to staging root;
   Why-TAPPaaS storyline page + Examples gallery live; generic-PaaS copy retired. Open: diagram
   redraw deferred; named-adopter sign-off not yet needed).*
-- [ ] WS3 installation macro-stages + hardware personas (consuming WS0).
-- [ ] WS6 stable-vs-main page.
+- [x] WS3 installation macro-stages + hardware personas (consuming WS0) *(2026-07-10: 7-stage
+  install overview + two-axis hardware page live; open: automated vllm-number sync, satellite
+  module sync once it ships upstream).*
+- [ ] WS6 stable-vs-main page *(interim guidance box already at the top of the install flow).*
 
 **Phase 2 — Reference depth**
 - WS4 Operate/Develop split + README sync + ADR-007 architecture spine.
