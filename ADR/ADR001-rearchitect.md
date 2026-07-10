@@ -650,6 +650,53 @@ previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before
 - [ ] Update `CLAUDE.md` + `README.md`: work happens on Codeberg; production still on GitHub until cutover.
 - [ ] Define the cutover step (repoint prod to Codeberg Pages / self-hosted Caddy; retire GitHub publish).
 
+### 11a.5 Codeberg CI / Pages bring-up — as-built checklist
+
+Reproducible path for standing up staging (and, later, the `tappaas.org` production cutover, which
+walks the same steps). `[x]` = done during first bring-up (2026-07-10).
+
+- [x] Create Codeberg org `TAPPaaS`; migrate `Documentation` repo from GitHub (New Migration).
+- [x] Add SSH key to Codeberg (reused `~/.ssh/id_rsa`); `ssh -T git@codeberg.org` greets you.
+- [x] Repoint local remotes: `origin` → Codeberg (SSH), `github` → GitHub; branch tracks `origin`.
+- [x] Add [`.woodpecker.yml`](../.woodpecker.yml) (build MkDocs + Kroki service → publish `site/` to
+      the `pages` branch) and [`.domains`](../.domains) (`staging.tappaas.org`) — Codeberg-only commits.
+- [x] Enable **Codeberg CI** for the repo at **ci.codeberg.org** (separate app, not codeberg.org settings).
+- [x] Add Woodpecker secret **`codeberg_token`** (Codeberg application token, **repo write** scope) in
+      the repo's settings on ci.codeberg.org; allow it on the `push` event.
+- [x] First pipeline run: clone → build → deploy green; `pages` branch auto-created.
+- [x] Cloudflare DNS: `CNAME staging → tappaas.codeberg.page`, **grey cloud (DNS-only)**.
+- [ ] **Codeberg on-demand TLS cert for `staging.tappaas.org`** — *pending* (see gotchas / status).
+
+**Gotchas learned (save future-us the pain):**
+
+1. **Woodpecker secret syntax** — use `environment: { VAR: { from_secret: name } }` (Woodpecker 2.x/3.x);
+   the old top-level `secrets: [ ... ]` list was removed → pipeline won't parse.
+2. **Manual runs** fire `event: manual`; if `when:` only lists `push`/`pull_request` you get
+   *"no matching workflow found"*. Include `manual`.
+3. **Services aren't on `localhost`** — reach them by service name (`http://kroki:8000`); the build
+   `sed`s `mkdocs.yml` (which defaults to `localhost:8000` for the GitHub build).
+4. **Service exit code 143** (= 128+SIGTERM) is **normal** container teardown, not a failure.
+5. **DNS negative cache** — after adding the CNAME, flush macOS
+   (`sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder`) **and** Firefox's DNS cache, or
+   you'll see "server not found" even though public resolvers (dig `@1.1.1.1`) already resolve it.
+6. **Cloudflare must be grey cloud (DNS-only)** — orange-cloud proxy makes Cloudflare terminate TLS
+   and hide the `Host`, breaking Codeberg's cert issuance and routing.
+7. **Do NOT hammer HTTPS while the cert issues.** Codeberg uses **on-demand TLS**; Let's Encrypt caps
+   **failed validations at 5/hour/hostname**. Aggressive polling or browser-reloading *exhausts the
+   quota and blocks issuance*. Probe at most every ~15 min; if stuck, **back off ~1h** to let the
+   window clear. (We tripped this on first bring-up.)
+8. **No CAA record** on `tappaas.org` that would block Let's Encrypt (verified — apex has no CAA).
+
+**Test status — 2026-07-10:**
+
+| Check | Result |
+|-------|--------|
+| Woodpecker pipeline (clone/build/deploy) | ✅ green |
+| Content at `tappaas.codeberg.page/Documentation/` | ✅ serves (redirects to staging canonical) |
+| DNS `staging.tappaas.org` → `tappaas.codeberg.page` → `217.197.84.141` | ✅ resolves globally |
+| HTTP (:80) | ✅ 302 → https (domain recognised, `.domains` read) |
+| HTTPS (:443) cert | ⏳ pending — issuance rate-limited; backing off ~1h then re-checking |
+
 ---
 
 ## 12. WS0 — Source-sync mechanism (cross-cutting enabler)
