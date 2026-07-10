@@ -149,10 +149,37 @@ maintenance load.
 ### 5.4 Tasks
 
 - [ ] Assemble a 1-page inspiration board from the reference products (screens + what to steal).
-- [ ] Spike A: a redesigned MkDocs landing (custom template + CSS/JS + motion) on a branch.
-- [ ] Spike B: a small Astro/Next landing that links into the existing docs.
+- [x] Spike A: a redesigned MkDocs landing (custom template + CSS/JS + motion) on a branch.
+- [x] Spike B: a small Astro/Next landing that links into the existing docs.
 - [ ] Side-by-side review; decide A / B / C and record the decision in this file.
-- [ ] Define the shared design tokens (color, type, spacing) so marketing + docs stay consistent.
+- [x] Define the shared design tokens (color, type, spacing) so marketing + docs stay consistent
+      *(first cut: identical `--tap-*` token values in both spikes — teal/amber palette, radius,
+      type scale; to be extracted into a shared tokens file once A/B is decided).*
+
+### 5.5 Spike status (2026-07-10) — built, awaiting side-by-side review
+
+Both spikes are live on branch previews, built by the sovereign Woodpecker/Codeberg pipeline
+(per the §5.2 decision box). **Copy is identical** (promo storyline §6.1) so the review compares
+frameworks, not content:
+
+| Spike | Branch | Preview URL | Shape |
+|-------|--------|-------------|-------|
+| **A — MkDocs Material, enhanced** | `spike-a` | <https://tappaas.codeberg.page/Documentation/@pages-spike-a/> | Custom `home.html` template (`theme.custom_dir`) + `landing.css`/`landing.js`. One toolchain; landing lives inside the Material shell (header/tabs/search kept). |
+| **B — Decoupled Astro landing** | `spike-b` | <https://tappaas.codeberg.page/Documentation/@pages-spike-b/> | Astro 5 app in `landing/` (zero extra deps) at the site root; untouched MkDocs site built to `/docs/` behind it. Two toolchains in one pipeline (extra `node` CI step, ~1–2 min). |
+
+Observed trade-offs to weigh in the review (§5.3 criteria):
+
+- **A**: cheapest to run and author (Markdown + one template); visual ceiling is real — the landing
+  sits inside Material's header/nav chrome, shares its fonts/breakpoints, and fights the theme's
+  CSS specificity. Material's *instant navigation* also constrains per-page JS/CSS tricks.
+- **B**: full design freedom (own typography, header, interactions) and a clean seam — the docs
+  corpus, Kroki pipeline and search are untouched under `/docs/`. Costs: a second toolchain
+  (npm/Astro) in CI, a visual seam between landing and docs (mitigated by shared tokens), and two
+  places to keep brand assets until a design-token file is extracted.
+- **Long-run lean (to validate in review):** B, because it also de-risks a later Option C — the
+  landing framework (Astro) is the same family as Astro Starlight, so if the docs experience ever
+  needs migrating, the marketing layer is already there; meanwhile MkDocs keeps serving the 90-page
+  corpus unchanged.
 
 ---
 
@@ -666,6 +693,18 @@ walks the same steps). `[x]` = done during first bring-up (2026-07-10).
 - [x] First pipeline run: clone → build → deploy green; `pages` branch auto-created.
 - [x] Cloudflare DNS: `CNAME staging → tappaas.codeberg.page`, **grey cloud (DNS-only)**.
 - [ ] **Codeberg on-demand TLS cert for `staging.tappaas.org`** — *pending* (see gotchas / status).
+- [x] **Temporary direct URL while the staging cert is pending** (2026-07-10): the build is
+      directly reachable at **<https://tappaas.codeberg.page/Documentation/>**. Mechanism: the
+      pipeline temporarily does **not** copy `.domains` into the published `pages` branch — with a
+      `.domains` present, the codeberg.page URL 307-redirects to the (TLS-broken) staging canonical.
+      *Failed first attempt, for the record:* listing `tappaas.codeberg.page` itself as the primary
+      `.domains` entry is **rejected by the pages-server (400 for the whole repo)** — `.domains` is
+      for custom domains only. **Revert = re-enable the `cp .domains` step** in
+      [`.woodpecker.yml`](../.woodpecker.yml) once the staging cert is issued (staging cert issuance
+      is paused while `.domains` is unpublished — acceptable, staging review isn't needed right now).
+- [x] **Branch previews**: the pipeline publishes any `spike-*` branch to `pages-<branch>`, served at
+      `https://tappaas.codeberg.page/Documentation/@pages-<branch>/` (Codeberg Pages `@branch` URL
+      scheme). Used for the WS1 spikes; the same mechanism extends to per-PR previews later.
 
 **Gotchas learned (save future-us the pain):**
 
@@ -692,10 +731,13 @@ walks the same steps). `[x]` = done during first bring-up (2026-07-10).
 | Check | Result |
 |-------|--------|
 | Woodpecker pipeline (clone/build/deploy) | ✅ green |
-| Content at `tappaas.codeberg.page/Documentation/` | ✅ serves (redirects to staging canonical) |
+| Content at `tappaas.codeberg.page/Documentation/` | ✅ serves **directly** (no redirect — `.domains` temporarily unpublished) |
 | DNS `staging.tappaas.org` → `tappaas.codeberg.page` → `217.197.84.141` | ✅ resolves globally |
-| HTTP (:80) | ✅ 302 → https (domain recognised, `.domains` read) |
-| HTTPS (:443) cert | ⏳ pending — issuance rate-limited; backing off ~1h then re-checking |
+| HTTPS (:443) cert for staging | ⏸ paused — `.domains` unpublished, so no issuance attempts; re-enable the `cp .domains` step to resume |
+| Spike previews `…/Documentation/@pages-spike-a/`, `…/@pages-spike-b/` | ✅ build & serve via branch-preview pipeline |
+
+> One transient Woodpecker failure observed (pipeline #3, `clone` step died before any repo code
+> ran; the identical config passed minutes later). If a pipeline fails in `clone`, just re-run it.
 
 ---
 

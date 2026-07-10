@@ -41,12 +41,16 @@ steps:
         sys.exit("Kroki did not become ready in time")
         PY
       - mkdocs build --strict
-      # Codeberg Pages custom-domain marker must sit at the served-branch root —
-      # only on the real `pages` branch; preview branches must not claim domains.
-      - |
-        case "$CI_COMMIT_BRANCH" in
-          main|staging) cp .domains site/.domains ;;
-        esac
+      # Codeberg Pages custom-domain marker (.domains) is temporarily NOT
+      # published: while the staging.tappaas.org TLS cert is pending, a
+      # .domains file makes the direct tappaas.codeberg.page URL redirect to
+      # the broken staging domain (and listing tappaas.codeberg.page itself in
+      # .domains is rejected with 400 — custom domains only). Re-enable the cp
+      # below once the staging cert is issued (see ADR-001 §11a.5).
+      #
+      # case "$CI_COMMIT_BRANCH" in
+      #   main|staging) cp .domains site/.domains ;;
+      # esac
 
   deploy-pages:
     image: alpine:3.20
