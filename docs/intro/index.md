@@ -1,123 +1,131 @@
 ---
-title: Introduction to TAPPaaS
-description: Learn what TAPPaaS is, its core concepts, and how it simplifies self-hosted infrastructure
+title: Why TAPPaaS
+description: >
+  Who is in control of your digital life? Why sovereignty is architecture, not a
+  contract — and how TAPPaaS packages a real cloud on your side of the glass wall.
 ---
 
-# Introduction to TAPPaaS
+# Why TAPPaaS
 
-TAPPaaS (Trusted Automated Private Platform as a Service) is an open-source platform that simplifies deploying, managing, and maintaining self-hosted applications on Proxmox virtualization. It provides enterprise-class capabilities without the complexity.
+Let's start with a simple question: **who is actually in control of your digital life?**
 
-## What is TAPPaaS?
+- **Your data** — where it lives, who can read it, whose law applies to it.
+- **Your costs** — the cloud bill that only ever goes up.
+- **Your access** — whether you could still reach your own systems if a provider,
+  a policy, or a geopolitical decision changed tomorrow.
 
-TAPPaaS bridges the gap between complex IT infrastructure and practical usability. It provides:
-
-- **Simple Deployment** - Deploy applications without deep infrastructure expertise
-- **Integrated Security** - Firewall, identity management, and network segmentation built-in
-- **Automated Backup** - 3-2-1 backup strategy with disaster recovery
-- **Operational Simplicity** - Reduce the operational burden of managing self-hosted infrastructure
-
-!!!tip "Quick Start"
-    Ready to try TAPPaaS? Start with our [Installation Guide](../installation/index.md) to get up and running.
-
----
-
-## Core Concepts
-
-Understanding these key concepts will help you get the most out of TAPPaaS:
-
-### Module / Applications
-
-A module is the primary unit of deployment in TAPPaaS. Often a module will have a single primary application at the center of the module. Each module represents a complete, deployable software project with its own configuration, dependencies, and runtime requirements.
-
-### Platform as a Service
-
-TAPPaaS provides a PaaS layer on top of physical hardware, abstracting away infrastructure complexity and maintaining all the modern complexity of backup, firewall, identity management, high availability, reverse proxy, and more.
-
-The hardware can be hosted in your own data center or in a local hosting provider.
-
-TAPPaaS scales from a medium sized single server system over a 3 node redundant cluster up to 10's of servers in a single platform cluster.
+For most organisations the honest answer is: *someone else*. We've traded control for
+convenience — and in a world that is getting less stable, not more, that trade is
+starting to look expensive.
 
 ---
 
-## How TAPPaaS Works
+## The cloud is a continuum — and there's a glass wall
 
-TAPPaaS operates through a simple, powerful workflow:
+![The cloud continuum: from public hyperscalers, across the glass wall, to private cloud on your own hardware](../assets/marketing/slide-1.png)
 
-### 1. Configure Your Application
+The cloud isn't one thing — it's a continuum. On the left, the public hyperscalers:
+fast, convenient, and outside your control. Moving right you gain sovereignty —
+sovereign controls, EU entities, EU clouds — and at the far end, **private cloud**:
+your hardware, your premises, your jurisdiction.
 
-Define your application using simple configuration files that specify:
+Notice the **glass wall**. The hyperscalers know sovereignty matters — they are all
+moving right, adding "sovereign" offerings. But they can never cross that wall: as long
+as your infrastructure is owned and operated under someone else's jurisdiction, your
+sovereignty is a promise in a contract — **not a fact of architecture**.
 
-- Application code location
-- Deployment dependencies
-- Runtime environment settings
-- Resource requirements
+And this isn't only about jurisdiction. It's about **resilience**. On the right side of
+the wall your systems keep running even if the connection to the outside world doesn't:
+connected to the internet, but not dependent on it.
 
-### 2. Deploy to Platform
-
-Use the TAPPaaS CI/CD system to deploy your application. TAPPaaS handles:
-
-- Building Virtual machines for each module
-- Configuring networking and ingress
-- Setting up backup, monitoring and logging
-
-### 3. Manage and Scale
-
-Once deployed, TAPPaaS provides tools to:
-
-- Monitor application health and performance
-- Scale applications across nodes
-- View logs and debug issues
-- Update applications with managed deployments
-
-### 4. Operate with Confidence
-
-TAPPaaS manages the operational complexity:
-
-- Health checks and automatic recovery
-- Rolling updates and rollbacks
-- Resource optimization
-- Security best practices
+So if the right side is where control and resilience live… why isn't everyone there
+already?
 
 ---
 
-## Getting Started
+## The hurdle: what a cloud really is
 
-Ready to start using TAPPaaS? Here's your path forward:
+![A real cloud is four building blocks: site, workloads, people, and environments](../assets/marketing/slide-2.png)
 
-<div class="grid cards" markdown>
+Here's the uncomfortable truth: the hyperscalers *earned* their position. Their real
+product was never servers — it was **packaging**. They took hundreds of complicated
+services and wrapped them into something easy, robust and automated.
 
--   :material-lightbulb-outline:{ .lg .middle } **Understand the Vision**
+Because a real cloud platform comes down to **four building blocks**:
 
-    ---
+1. **Site** — where your data lives and your AI runs: cluster, storage, network, firewall.
+2. **Workloads** — the applications your organisation actually uses: files,
+   collaboration, automation, AI.
+3. **People** — identity, sign-on, who has access to what.
+4. **Environments** — the security boundaries, the backup, the patching, the guardrails.
 
-    Learn about the problem TAPPaaS solves and who benefits.
+If you wanted to self-host all of that yourself, you would have to become your own cloud
+provider: integrate dozens of open-source components, keep them secure, patched and
+backed up. *That* is the hurdle — and why organisations that want sovereignty still end
+up on the left side of the glass wall.
 
-    [:octicons-arrow-right-24: Read the Vision](vision.md)
+**TAPPaaS removes that hurdle.** It packages the entire thing — all four building
+blocks, pre-integrated, automated and open source. The innovation isn't inventing new
+components; it's **curating, integrating and automating** proven ones — so self-hosting
+feels like the cloud:
 
--   :material-chart-timeline-variant:{ .lg .middle } **Explore Architecture**
+| Principle | What it means |
+|-----------|---------------|
+| **Curation** | Opinionated selection of mature, actively-maintained FOSS — fewer choices, better fits |
+| **Integration** | Components configured to work as one platform: identity, network, backup, ingress |
+| **Automation** | Install, patching, and backup handled by the platform — not by hand |
 
-    ---
-
-    Understand how TAPPaaS is built and how components interact.
-
-    [:octicons-arrow-right-24: Architecture Overview](../architecture/index.md)
-
--   :material-download:{ .lg .middle } **Install TAPPaaS**
-
-    ---
-
-    Get TAPPaaS running on your infrastructure.
-
-    [:octicons-arrow-right-24: Installation Guide](../installation/index.md)
-
--   :material-rocket-launch:{ .lg .middle } **Deploy Your First App**
-
-    ---
-
-    Follow our quickstart to deploy your first application.
-
-    [:octicons-arrow-right-24: Quick Start](../installation/index.md)
-
-</div>
+!!! note "The same four blocks, all the way down"
+    The four building blocks aren't just marketing: they are the platform's actual
+    architectural taxonomy (in the technical docs: *Site · Apps · People ·
+    Environments*). The [Architecture section](../architecture/index.md) is the same
+    model in full technical depth.
 
 ---
+
+## The vision: Trusted · Automated · Private
+
+![The TAPPaaS vision: trusted, automated, private — and resilient by design](../assets/marketing/slide-3.png)
+
+TAPPaaS stands for **Trusted, Automated, Private Platform as a Service** — self-hosted.
+
+- **Trusted** — security by design and fully open source (MPL 2.0): nothing you can't
+  inspect, no vendor that can lock you in.
+- **Automated** — installation, patching and backup are handled for you, matching the
+  cloud experience instead of fighting it.
+- **Private** — it runs on your own inexpensive hardware, under your roof and your law —
+  which also makes it remarkably cost-effective.
+
+And **resilient by design**: backed up, and ready to run off-grid when it has to.
+
+This isn't a slide-deck vision. TAPPaaS is [**running today**](examples.md) — serving
+files, running AI models locally, automating workflows — with its first adopters.
+
+---
+
+## Who is it for?
+
+TAPPaaS serves those who need digital independence but not a dedicated IT department:
+
+- **Small and medium businesses** — reliable office infrastructure on hardware you own,
+  without the ever-growing subscription stack.
+- **Governments, NGOs and critical-infrastructure providers** — systems that must obey
+  local law and keep working when connectivity doesn't.
+- **Communities of homes** — shared, self-governed digital services for a
+  neighbourhood, cooperative or association.
+- **Technically-capable households** — family photos, documents and automation under
+  your own roof.
+
+!!! tip "Platform Democracy"
+    TAPPaaS is built on the principle that producers are also consumers of the system:
+    **we use what we build, and we build what we need.** All of it Free and Open Source
+    Software — no proprietary dependencies, mobile-accessible, and offline-capable.
+
+---
+
+## Go deeper
+
+- [Digital Sovereignty](digital-sovereignty.md) — what sovereignty means, in plain terms.
+- [Examples](examples.md) — what people actually run on TAPPaaS today.
+- [Install TAPPaaS](../installation/index.md) — choose hardware and bootstrap your platform.
+- [Architecture](../architecture/index.md) — how the four building blocks are built.

@@ -171,6 +171,12 @@ maintenance load.
 > 3. **Clarity over spectacle** — TAPPaaS explains complex information; the front page must make
 >    navigation obvious (clear section nav, explicit paths into Install/Docs), not add confusion.
 
+> **Graduated (2026-07-10):** after the light restyle was approved, the Option B landing was
+> promoted to `main` — the staging root now serves the Astro landing with the MkDocs docs under
+> `/docs/`. The landing build is path-relative (no Astro `base`; CI relativizes asset URLs), so one
+> artifact serves staging, the codeberg.page sub-path, and branch previews. `spike-b` merged and
+> deleted; `spike-a` kept as the A-reference.
+
 ### 5.5 Spike status (2026-07-10) — reviewed, Option B chosen
 
 Both spikes are live on branch previews, built by the sovereign Woodpecker/Codeberg pipeline
@@ -266,17 +272,31 @@ doubles as social proof and as an entry point to installation.
 
 ### 6.4 Tasks
 
-- [ ] Rewrite `docs/index.md` around the promo storyline (§6.1); delete generic-PaaS copy.
+- [x] Rewrite `docs/index.md` around the promo storyline (§6.1); delete generic-PaaS copy.
+      *(2026-07-10: the marketing story now lives on the graduated Astro landing (site root); the
+      MkDocs home at `/docs/` became a clean documentation hub. Generic-PaaS copy deleted.)*
 - [x] Copy/export the marketing assets (§6.2) into `docs/assets/`; establish an assets convention.
       *(Done 2026-07-10: slide-1..3 downscaled 4K→1920 px in `docs/assets/marketing/`; script +
       slides-pptx sources in `assets-src/marketing/` — published exports in `docs/`, editable
       sources in `assets-src/`, bulky decks stay in Nextcloud. See `assets-src/marketing/README.md`.)*
 - [ ] Redraw continuum + four-blocks diagrams as Kroki/Mermaid (theme-aware) where worthwhile.
-- [ ] Consolidate `intro/*` into a lean set (kill duplication with the front page).
-- [ ] Present the four building blocks consistently with the ADR-007 taxonomy (align with WS4 §8.3).
-- [ ] Build the Examples gallery from real `src/apps` modules (the "running today" proof).
-- [ ] Copy-review pass: no "CLI/scale/multi-tenant/ship faster" unless literally true.
+      *(Deferred: the Why page uses the slide PNG exports for now; the landing draws the continuum
+      in HTML/CSS. Revisit when the design-token pass lands (Phase 3).)*
+- [x] Consolidate `intro/*` into a lean set (kill duplication with the front page).
+      *(2026-07-10: `intro/` = Why TAPPaaS (full storyline + slides) · Digital Sovereignty ·
+      Examples. `vision.md`/`problem.md`/`approach.md` retired — their substance folded into the
+      Why page (audiences, curation/integration/automation, platform democracy, principles).)*
+- [x] Present the four building blocks consistently with the ADR-007 taxonomy (align with WS4 §8.3).
+      *(The Why page names Site · Workloads · People · Environments and links them explicitly to
+      the technical taxonomy + Architecture section.)*
+- [x] Build the Examples gallery from real `src/apps` modules (the "running today" proof).
+      *(`intro/examples.md`: 12 real modules incl. Vaultwarden, NetBird, Windows Server —
+      verified against `src/apps` on `main` 2026-07-10 — grouped by story, each linking its
+      install guide or module source; plus multi-tenant (INSTALL-VARIANT) and 00-Template hooks.)*
+- [x] Copy-review pass: no "CLI/scale/multi-tenant/ship faster" unless literally true.
+      *(Grep-verified: only remaining hit is a factual "Cloud-native" descriptor of Zitadel.)*
 - [ ] Get sign-off before publishing any named-adopter/logo claim.
+      *(Nothing to sign off yet — the site says "first adopters" generically, no names/logos.)*
 
 ---
 
@@ -840,9 +860,11 @@ Python, no git needed — fetches the GitHub tarball):
 - [x] Import presentation assets from Nextcloud into `docs/assets/marketing/` (unblocks WS2).
 
 **Phase 1 — Public face**
-- WS2 messaging + front page + Examples.
-- WS3 installation macro-stages + hardware personas (consuming WS0).
-- WS6 stable-vs-main page.
+- [x] WS2 messaging + front page + Examples *(2026-07-10: Astro landing graduated to staging root;
+  Why-TAPPaaS storyline page + Examples gallery live; generic-PaaS copy retired. Open: diagram
+  redraw deferred; named-adopter sign-off not yet needed).*
+- [ ] WS3 installation macro-stages + hardware personas (consuming WS0).
+- [ ] WS6 stable-vs-main page.
 
 **Phase 2 — Reference depth**
 - WS4 Operate/Develop split + README sync + ADR-007 architecture spine.

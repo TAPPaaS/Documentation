@@ -5,7 +5,7 @@ Documentation site for TAPPaaS - Trusted Automated Private Platform as a (selfho
 | Environment | URL | Built from |
 |-------------|-----|------------|
 | **Production (1.x)** | <https://tappaas.org> | GitHub mirror, push to `main` (GitHub Actions) — untouched until the 2.0 cutover |
-| **Staging (2.0 work)** | <https://staging.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages) |
+| **Staging (2.0 work)** | <https://staging.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages). Root = Astro landing (`landing/`); docs under `/docs/` |
 | Staging fallback URL | <https://tappaas.codeberg.page/Documentation/> | same as staging |
 | Branch previews | `https://tappaas.codeberg.page/Documentation/spikes/<branch>/` | any `spike-*` branch |
 

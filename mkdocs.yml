@@ -157,12 +157,10 @@ extra:
 nav:
   - Home: index.md
 
-  - Intro:
+  - Why TAPPaaS:
     - Overview: intro/index.md
-    - Vision: intro/vision.md
-    - Problem: intro/problem.md
-    - Approach: intro/approach.md
     - Digital Sovereignty: intro/digital-sovereignty.md
+    - Examples: intro/examples.md
 
   - Installation:
     - Overview: installation/index.md

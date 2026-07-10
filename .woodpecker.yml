@@ -56,7 +56,23 @@ steps:
       # WS0 source-sync: pull allow-listed pages from the TAPPaaS source repo
       # (GitHub, pinned ref) into docs/generated/ — fails on source drift.
       - python scripts/sync-source.py
-      - mkdocs build --strict
+      # The MkDocs site lives under /docs/, behind the Astro landing (WS1
+      # Option B, graduated from spike-b).
+      - mkdocs build --strict -d site/docs
+
+  # Marketing landing (Astro) served at the site root (WS1 Option B).
+  build-landing:
+    image: node:22
+    commands:
+      - cd landing
+      - npm install --no-audit --no-fund --loglevel=error
+      - npm run build
+      # The landing is a single page at the site root using only relative
+      # links; relativize Astro's absolute asset URLs too, so one build works
+      # at staging root, under /Documentation/ on codeberg.page, and in
+      # spikes/<branch>/ previews alike.
+      - sed -i 's#"/_astro/#"./_astro/#g' dist/index.html
+      - cp -r dist/. ../site/
 
   deploy-pages:
     image: alpine:3.20
