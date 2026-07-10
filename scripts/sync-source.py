@@ -22,6 +22,7 @@ import posixpath
 import re
 import sys
 import tarfile
+import urllib.parse
 import urllib.request
 
 REPO = "TAPPaaS/TAPPaaS"
@@ -29,8 +30,17 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 
 # (path in source repo, output under docs/, page title)
 ALLOW_LIST = [
+    # Install (WS3)
     ("INSTALL.md", "generated/install.md", "INSTALL.md (source)"),
     ("INSTALL-VARIANT.md", "generated/install-variant.md", "INSTALL-VARIANT.md (source)"),
+    # Operate references (WS4)
+    ("src/foundation/ZONES.md", "generated/zones.md", "Network zones (source)"),
+    ("src/foundation/CONFIGURATION.md", "generated/configuration.md", "Configuration reference (source)"),
+    ("src/foundation/tappaas-cicd/opnsense-controller/README.md", "generated/opnsense-controller.md", "OPNsense controller (source)"),
+    # Develop references (WS4). (src/README.md and src/foundation/README.md were
+    # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
+    ("docs/ADR/ADR-007 - TAPPaaS Taxonomy.md", "generated/adr-007-taxonomy.md", "ADR-007 — TAPPaaS Taxonomy (source)"),
+    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module template — 00-Template (source)"),
 ]
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs")
@@ -41,12 +51,14 @@ title: "{title}"
 
 !!! info "Generated from source — do not edit here"
     This page is synced at build time from
-    [`{src}`](https://github.com/{repo}/blob/{ref}/{src}) in **`{repo}@{ref}`**.
+    [`{src}`](https://github.com/{repo}/blob/{ref}/{src_quoted}) in **`{repo}@{ref}`**.
     Changes belong upstream; edits to this page will be overwritten.
 
 """
 
-LINK_RE = re.compile(r"(!?)\[([^\]]*)\]\(([^)\s]+)((?:\s+\"[^\"]*\")?)\)")
+# Matches [text](target), ![alt](target), and the angle-bracket form
+# [text](<target with spaces>) used by some upstream ADRs.
+LINK_RE = re.compile(r"(!?)\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+\"[^\"]*\")?)\s*\)")
 
 
 def rewrite_links(markdown, src_path):
@@ -54,16 +66,17 @@ def rewrite_links(markdown, src_path):
     src_dir = posixpath.dirname(src_path)
 
     def repl(m):
-        bang, text, target, title = m.groups()
+        bang, text, target_angled, target_plain, title = m.groups()
+        target = target_angled or target_plain
         if re.match(r"^[a-z][a-z0-9+.-]*:", target) or target.startswith(("#", "/")):
             return m.group(0)  # absolute URL, anchor or site-absolute — leave alone
         path, _, frag = target.partition("#")
         resolved = posixpath.normpath(posixpath.join(src_dir, path)) if path else src_path
-        kind = "raw" if bang else "blob"
+        quoted = urllib.parse.quote(resolved, safe="/")
         base = (
-            "https://raw.githubusercontent.com/{}/{}/{}".format(REPO, REF, resolved)
+            "https://raw.githubusercontent.com/{}/{}/{}".format(REPO, REF, quoted)
             if bang
-            else "https://github.com/{}/{}/{}/{}".format(REPO, kind, REF, resolved)
+            else "https://github.com/{}/blob/{}/{}".format(REPO, REF, quoted)
         )
         if frag:
             base += "#" + frag
@@ -98,7 +111,10 @@ def main():
 
     for src, (out, title) in wanted.items():
         content = rewrite_links(found[src], src)
-        banner = BANNER.format(title=title, src=src, repo=REPO, ref=REF)
+        banner = BANNER.format(
+            title=title, src=src, repo=REPO, ref=REF,
+            src_quoted=urllib.parse.quote(src, safe="/"),
+        )
         out_path = os.path.join(DOCS_DIR, out)
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
         with open(out_path, "w") as fh:

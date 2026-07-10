@@ -496,11 +496,24 @@ references. Coordinate with WS6 — publish the ADR-007 model as the architectur
 
 ### 8.4 Tasks
 
-- [ ] Design the Operate vs Develop nav (see §10) and migrate existing pages into it.
-- [ ] Extend WS0 to sync an allow-listed set of `src/**/README.md` into Operate/Develop pages.
-- [ ] Rebuild the architecture overview around the ADR-007 taxonomy.
-- [ ] Fold the ArchiMate appendix into Develop (it's contributor-facing reference).
-- [ ] Add a contributor "author a module" guide from the `00-Template` + schemas.
+- [x] Design the Operate vs Develop nav (see §10) and migrate existing pages into it.
+      *(2026-07-10: nav = Home · Why TAPPaaS · Install · Operate · Develop · Roadmap · About.
+      **Paths kept** — Operate is `manual/*`, Develop is `architecture/*` + ArchiMate — so no URLs
+      break; only nav labels and section pages changed. `appendix/index.md` stub retired.)*
+- [x] Extend WS0 to sync an allow-listed set of `src/**` reference docs into Operate/Develop pages.
+      *(Synced: ZONES.md, CONFIGURATION.md, opnsense-controller README → Operate;
+      ADR-007 taxonomy, 00-Template README → Develop. The script now handles upstream paths with
+      spaces and `[x](<angle bracket>)` links. Evaluated-and-skipped: `src/README.md` and
+      `src/foundation/README.md` — 2-line stubs pointing back at tappaas.org.)*
+- [x] Rebuild the architecture overview around the ADR-007 taxonomy.
+      *(`architecture/index.md` now opens with the Site + 3-domains + Health-lens model (accurate
+      to upstream ADR-007 v2.3, incl. "Health is a lens, not a domain"), maps it to the front-page
+      four-blocks wording, flags 2.0 status honestly, and links the synced ADR text.)*
+- [x] Fold the ArchiMate appendix into Develop (it's contributor-facing reference).
+- [x] Add a contributor "author a module" guide from the `00-Template` + schemas.
+      *(`architecture/author-a-module.md`: 5-step path — template copy, module contract/schemas,
+      environments/zones placement, install/update/test scripts, good-citizen criteria — linking
+      the synced template README and field-definition JSONs.)*
 
 ---
 
@@ -521,9 +534,13 @@ plus a CI-refreshed milestone list. Remove the "on track for Q1 2026" style clai
 
 ### 9.1 Tasks
 
-- [ ] Strip dated status assertions from `roadmap/index.md`.
-- [ ] Add a short "how we plan / where to look" section pointing at milestones + this upgrade plan.
+- [x] Strip dated status assertions from `roadmap/index.md`.
+      *(2026-07-10: dateless phase timeline (Framework → MVP → 1.x → 2.0/ADR-007 → Growth); the
+      only status claim left — "1.x released and running on real systems" — is date-free and true.)*
+- [x] Add a short "how we plan / where to look" section pointing at milestones + this upgrade plan.
 - [ ] (Optional) CI job to render current open milestones into the page at build time.
+      *(Deliberately skipped for now: unauthenticated GitHub API calls from shared CI runners are
+      rate-limit-flaky and would make builds nondeterministic. Revisit with a token if wanted.)*
 
 ---
 
@@ -593,14 +610,24 @@ Codeberg terminates TLS for `tappaas.org` — acceptable for a public static sit
 ### 10.2 Tasks
 
 - [ ] Public build pins to `stable`; 2.0 content lives on staging until go-live.
-- [ ] Write the "stable vs main / what is 2.0 (ADR-007)" page.
-- [ ] Confirm the DNS provider's apex capability (ALIAS/flatten vs A/AAAA) for `tappaas.org`.
+      *(Blocked upstream: `stable` (1.x) has no INSTALL.md / ADR-007 files to sync — the pin flips
+      via `TAPPAAS_SOURCE_REF=stable` at cutover; see §12.1.)*
+- [x] Write the "stable vs main / what is 2.0 (ADR-007)" page.
+      *(2026-07-10: `installation/versions.md` — branch table, the 2.0 taxonomy in brief, status
+      honesty note, and the cutover story; linked from the install-flow warning box and nav.)*
+- [x] Confirm the DNS provider's apex capability (ALIAS/flatten vs A/AAAA) for `tappaas.org`.
+      *(Cloudflare flattens CNAME at apex ✓; and the staging bring-up established the git-pages
+      recipe — repo-qualified CNAME target + optional `_git-pages-repository` TXT — which is the
+      same recipe the apex cutover will use, §11a.5 fact 4.)*
 - [ ] Execute the §10.1 cutover runbook (repoint prod to 2.0; retire 1.x — no archive).
 - [ ] Sequence the ADR-007 content publish to coincide with the `stable` merge (ties to WS4 §8.3).
 
 ---
 
 ## 11. Proposed information architecture (target)
+
+> **Realised 2026-07-10** — the nav below is now live on staging (URLs kept: Operate = `manual/*`,
+> Develop = `architecture/*` + ArchiMate; only labels/section pages changed).
 
 A candidate top-level nav after the upgrade (audience-first):
 
@@ -877,11 +904,13 @@ Python, no git needed — fetches the GitHub tarball):
 - [x] WS3 installation macro-stages + hardware personas (consuming WS0) *(2026-07-10: 7-stage
   install overview + two-axis hardware page live; open: automated vllm-number sync, satellite
   module sync once it ships upstream).*
-- [ ] WS6 stable-vs-main page *(interim guidance box already at the top of the install flow).*
+- [x] WS6 stable-vs-main page *(2026-07-10: `installation/versions.md`; remaining WS6 items are
+  cutover-time actions, §10.2).*
 
-**Phase 2 — Reference depth**
-- WS4 Operate/Develop split + README sync + ADR-007 architecture spine.
-- WS5 roadmap rewamp.
+**Phase 2 — Reference depth** — ✅ **content complete 2026-07-10**
+- [x] WS4 Operate/Develop split + source-doc sync + ADR-007 architecture spine + author-a-module
+  guide *(open: more `src/**` READMEs can join the allow-list as upstream matures).*
+- [x] WS5 roadmap rewamp *(dateless; optional CI milestone-render skipped — rate-limit flakiness).*
 
 **Phase 3 — Polish & cutover**
 - One-time flip: repoint production to ADR-007 / 2.0 content when it hits `stable` (retire 1.x, no archive).

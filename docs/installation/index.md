@@ -14,9 +14,8 @@ you what it needs, and what "done" looks like before you move on.
 !!! warning "Which version to install: `stable` (1.x) vs `main` (2.0 preview)"
     The supported install today is **TAPPaaS 1.x from the `stable` branch**. The next
     major release (**2.0**, built around the ADR-007 taxonomy) is under active
-    development on `main` — that's what this staging site documents, and it is the
-    right choice only if you are evaluating or contributing. If in doubt: install
-    `stable`, and check the [roadmap](../roadmap/index.md) for the 2.0 status.
+    development on `main` — the right choice only if you are evaluating or
+    contributing. **[Full guidance: stable vs main, and what 2.0 is](versions.md).**
 
     The exact, always-current procedure is synced from the source repo:
     [INSTALL.md (source)](../generated/install.md).

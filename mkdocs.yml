@@ -162,8 +162,9 @@ nav:
     - Digital Sovereignty: intro/digital-sovereignty.md
     - Examples: intro/examples.md
 
-  - Installation:
+  - Install:
     - Overview: installation/index.md
+    - Stable vs Main (2.0): installation/versions.md
     - From Source (synced):
       - INSTALL.md: generated/install.md
       - INSTALL-VARIANT.md: generated/install-variant.md
@@ -193,7 +194,7 @@ nav:
       - Overview: installation/home-stack/index.md
       - Home Assistant: installation/home-stack/home-assistant.md
 
-  - Manual:
+  - Operate:
     - Overview: manual/index.md
     - TAPPaaS Module: manual/tappaas-module.md
     - TAPPaaS Scripts:
@@ -219,9 +220,18 @@ nav:
     - Update Scheduler: manual/update-tappaas.md
     - OPNsense Controller: manual/opnsense-controller.md
     - Backup: manual/backup.md
+    - From Source (synced):
+      - Network Zones: generated/zones.md
+      - Configuration Reference: generated/configuration.md
+      - OPNsense Controller: generated/opnsense-controller.md
 
-  - Architecture:
+  - Develop:
     - Overview: architecture/index.md
+    - Taxonomy (ADR-007):
+      - The Taxonomy (source): generated/adr-007-taxonomy.md
+    - Author a Module:
+      - Guide: architecture/author-a-module.md
+      - Module Template (source): generated/module-template.md
     - Capabilities: architecture/capabilities.md
     - Solution Design:
       - Overview: architecture/solution-design/index.md
@@ -245,6 +255,11 @@ nav:
       - Home Stack: architecture/module-designs/home.md
       - DevOps Stack: architecture/module-designs/devops.md
     - Meta Model: architecture/meta-model.md
+    - ArchiMate Diagrams:
+      - Introduction: appendix/archimate/introduction.md
+      - TAPPaaS Capabilities: appendix/archimate/capabilities.md
+      - TAPPaaS Stacks: appendix/archimate/stacks.md
+      - ArchiMate Notation: appendix/archimate/notation.md
 
   - Roadmap: roadmap/index.md
 
@@ -253,11 +268,3 @@ nav:
     - Logo: about/logo.md
     - Inspiration: about/inspiration.md
     - License: about/license.md
-
-  - Appendix:
-    - Overview: appendix/index.md
-    - ArchiMate Diagrams:
-      - Introduction: appendix/archimate/introduction.md
-      - TAPPaaS Capabilities: appendix/archimate/capabilities.md
-      - TAPPaaS Stacks: appendix/archimate/stacks.md
-      - ArchiMate Notation: appendix/archimate/notation.md

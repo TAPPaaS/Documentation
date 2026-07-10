@@ -1,45 +1,58 @@
 ---
 title: Roadmap
-description: TAPPaaS development roadmap and project timeline
+description: >
+  How TAPPaaS is planned, the phase narrative, and where to watch live progress —
+  no stale dates, milestones carry the specifics.
 ---
 
-# Development Roadmap: Eating the elephant one bite at a time
+# Roadmap: eating the elephant one bite at a time
 
-(disclaimer: no elephants were harmed creating TAPPaaS)
+*(disclaimer: no elephants were harmed creating TAPPaaS)*
 
-The TAPPaaS team follows a phased approach to building the platform.
+TAPPaaS is built in deliberate phases. This page tells the *shape* of the journey; the
+**live specifics — dates, scope, progress — always live in the
+[GitHub milestones](https://github.com/TAPPaaS/TAPPaaS/milestones)**, so nothing here
+can go stale.
+
+## The phases
 
 ```mermaid
 timeline
-    title TAPPaaS Development Timeline
-
-    section Summer 2025
-        Framework : Framework establishment
-                  : CI/CD pipeline creation
-                  : Core architecture decisions
-
-    section Fall 2025
-        MVP : Minimum viable product
-            : Manual installation process
-            : Focus on home use cases
-
-    section 2026 Q1
-        Version 1.0 : Automation of installation
-                    : Expansion of home-use capabilities
-                    : Small business support
-                    : Documentation and guides
-                    : 3 TAPPaaS systems in production
-
-    section 2026 Q2+
-        Growth : Grow user base
-               : Improve automation
-               : Grow modules
-               : Harden security
+    title The TAPPaaS journey
+    Framework : CI/CD pipeline and module structure
+              : Core architecture decisions
+    MVP : Manual installation, end to end
+        : Focus on home use cases
+    Version 1.x : Automated installation
+                : Home + small-business capability
+                : First production systems
+    Version 2.0 : ADR-007 taxonomy (People · Apps · Environments · Health)
+                : Rebuilt website & docs
+                : Migration path from 1.x
+    Growth : Grow user base and module catalog
+           : Community contributions
+           : Harden security, deepen automation
 ```
 
-for details look at the milestone backlog in git: [TAPPaaS Milestones](https://github.com/TAPPaaS/TAPPaaS/milestones)
+**Where we are:** 1.x is released and running on real systems ([examples](../intro/examples.md));
+the current focus is **Version 2.0** — the [ADR-007 taxonomy](../installation/versions.md)
+and this rebuilt documentation site are part of it.
 
----
+## How we plan
 
-!!!info "Current Status"
-    The project has advanced beyond the framing phase and is actively developing the MVP. We are on track for Version 1.0 by end of Q1 2026.
+- **Milestones drive everything.** Each phase is broken into
+  [GitHub milestones](https://github.com/TAPPaaS/TAPPaaS/milestones) with issues
+  attached; that's the single source of truth for "when" and "what exactly".
+- **Architecture is decided in ADRs** in the
+  [source repo](https://github.com/TAPPaaS/TAPPaaS/tree/main/docs/ADR) — significant
+  choices are written down before they're built.
+- **The website upgrade has its own plan** — the documentation re-architecture is
+  tracked in [ADR-001 of the Documentation repo](https://codeberg.org/TAPPaaS/Documentation/src/branch/main/ADR/ADR001-rearchitect.md).
+
+## Where to look
+
+| You want… | Go to |
+|-----------|-------|
+| What's being worked on right now | [Open milestones](https://github.com/TAPPaaS/TAPPaaS/milestones) |
+| What 2.0 means for you | [Stable vs Main](../installation/versions.md) |
+| To influence the direction | [Contributing](../community/contributing.md) · [issues](https://github.com/TAPPaaS/TAPPaaS/issues) |
