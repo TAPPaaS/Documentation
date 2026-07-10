@@ -164,8 +164,8 @@ frameworks, not content:
 
 | Spike | Branch | Preview URL | Shape |
 |-------|--------|-------------|-------|
-| **A — MkDocs Material, enhanced** | `spike-a` | <https://tappaas.codeberg.page/Documentation/@pages-spike-a/> | Custom `home.html` template (`theme.custom_dir`) + `landing.css`/`landing.js`. One toolchain; landing lives inside the Material shell (header/tabs/search kept). |
-| **B — Decoupled Astro landing** | `spike-b` | <https://tappaas.codeberg.page/Documentation/@pages-spike-b/> | Astro 5 app in `landing/` (zero extra deps) at the site root; untouched MkDocs site built to `/docs/` behind it. Two toolchains in one pipeline (extra `node` CI step, ~1–2 min). |
+| **A — MkDocs Material, enhanced** | `spike-a` | <https://tappaas.codeberg.page/Documentation/spikes/spike-a/> | Custom `home.html` template (`theme.custom_dir`) + `landing.css`/`landing.js`. One toolchain; landing lives inside the Material shell (header/tabs/search kept). |
+| **B — Decoupled Astro landing** | `spike-b` | <https://tappaas.codeberg.page/Documentation/spikes/spike-b/> | Astro 5 app in `landing/` (zero extra deps) at the site root; untouched MkDocs site built to `/docs/` behind it. Two toolchains in one pipeline (extra `node` CI step, ~1–2 min). |
 
 Observed trade-offs to weigh in the review (§5.3 criteria):
 
@@ -693,18 +693,36 @@ walks the same steps). `[x]` = done during first bring-up (2026-07-10).
 - [x] First pipeline run: clone → build → deploy green; `pages` branch auto-created.
 - [x] Cloudflare DNS: `CNAME staging → tappaas.codeberg.page`, **grey cloud (DNS-only)**.
 - [ ] **Codeberg on-demand TLS cert for `staging.tappaas.org`** — *pending* (see gotchas / status).
-- [x] **Temporary direct URL while the staging cert is pending** (2026-07-10): the build is
-      directly reachable at **<https://tappaas.codeberg.page/Documentation/>**. Mechanism: the
-      pipeline temporarily does **not** copy `.domains` into the published `pages` branch — with a
-      `.domains` present, the codeberg.page URL 307-redirects to the (TLS-broken) staging canonical.
-      *Failed first attempt, for the record:* listing `tappaas.codeberg.page` itself as the primary
-      `.domains` entry is **rejected by the pages-server (400 for the whole repo)** — `.domains` is
-      for custom domains only. **Revert = re-enable the `cp .domains` step** in
-      [`.woodpecker.yml`](../.woodpecker.yml) once the staging cert is issued (staging cert issuance
-      is paused while `.domains` is unpublished — acceptable, staging review isn't needed right now).
-- [x] **Branch previews**: the pipeline publishes any `spike-*` branch to `pages-<branch>`, served at
-      `https://tappaas.codeberg.page/Documentation/@pages-<branch>/` (Codeberg Pages `@branch` URL
-      scheme). Used for the WS1 spikes; the same mechanism extends to per-PR previews later.
+- [x] **Temporary direct URL** (2026-07-10): the build is directly reachable at
+      **<https://tappaas.codeberg.page/Documentation/>** — see the git-pages findings below for the
+      mechanics. `.domains` is temporarily not published (with it present, the codeberg.page URL
+      307-redirects to the TLS-broken staging canonical); staging is parked until the DNS fix below.
+- [x] **Branch previews**: `spike-*` branches publish into `spikes/<branch>/` sub-directories of the
+      single `pages` branch, served at `https://tappaas.codeberg.page/Documentation/spikes/<branch>/`.
+      (The new git-pages server deploys **only** `refs/heads/pages` — the legacy `@branch` URL scheme
+      is gone; sub-directories are the preview mechanism now.)
+
+**Root cause found (2026-07-10, supersedes the Let's-Encrypt-rate-limit theory):** Codeberg is
+migrating Pages to a **new "git-pages" server, mandatory for new orgs** — mid-bring-up, the legacy
+server started answering **400 "new users/orgs are not allowed to use the old pages server"** for
+everything. The staging cert never issued because the new server didn't know the site at all, not
+because of LE rate limits. New-server facts (from <https://codeberg.page> + experiment):
+
+1. **Deployment is webhook-driven**: a Forgejo push webhook on the repo targeting
+   `https://<org>.codeberg.page/<Repo>` (branch filter `pages`) tells git-pages to (re)deploy.
+   No webhook → no site. Creating the webhook via API needs a **repo-admin** token — the CI
+   `codeberg_token` is write-only (`403 user should be an owner or a collaborator with admin write`),
+   so the **deploy step self-notifies**: it POSTs the push payload to the target URL itself
+   (unauthenticated; needs `ref: refs/heads/pages` + `repository.clone_url`; answers `created`).
+   Optionally add the real webhook by hand in repo Settings → Webhooks later — either works.
+2. **Only `refs/heads/pages` deploys** (per-target allowlist); other refs are rejected, and
+   `@branch` preview URLs are not supported — hence the `spikes/<branch>/` sub-directory scheme.
+3. **~600 s edge cache** on served content — freshly deployed pages can lag up to 10 minutes.
+4. **Custom-domain DNS changed**: the CNAME target format is now `[[branch.]repo.]org.codeberg.page`,
+   i.e. staging should point at **`documentation.tappaas.codeberg.page`** (the current CNAME to bare
+   `tappaas.codeberg.page` maps to a non-existent org `pages` repo — very likely the *original*
+   staging failure). **To resume staging:** update the Cloudflare CNAME accordingly, re-enable the
+   `cp .domains` step in [`.woodpecker.yml`](../.woodpecker.yml), and re-test TLS.
 
 **Gotchas learned (save future-us the pain):**
 
@@ -731,10 +749,10 @@ walks the same steps). `[x]` = done during first bring-up (2026-07-10).
 | Check | Result |
 |-------|--------|
 | Woodpecker pipeline (clone/build/deploy) | ✅ green |
-| Content at `tappaas.codeberg.page/Documentation/` | ✅ serves **directly** (no redirect — `.domains` temporarily unpublished) |
-| DNS `staging.tappaas.org` → `tappaas.codeberg.page` → `217.197.84.141` | ✅ resolves globally |
-| HTTPS (:443) cert for staging | ⏸ paused — `.domains` unpublished, so no issuance attempts; re-enable the `cp .domains` step to resume |
-| Spike previews `…/Documentation/@pages-spike-a/`, `…/@pages-spike-b/` | ✅ build & serve via branch-preview pipeline |
+| Content at `tappaas.codeberg.page/Documentation/` | ✅ 200, serves **directly** (git-pages; no redirect) |
+| DNS `staging.tappaas.org` | ⚠️ CNAME must move to `documentation.tappaas.codeberg.page` (new git-pages format) before staging can work |
+| HTTPS (:443) cert for staging | ⏸ paused — resume via the 3-step plan above (DNS + `.domains` + re-test) |
+| Spike previews `…/Documentation/spikes/spike-a/`, `…/spikes/spike-b/` | ✅ build & serve via sub-directory preview pipeline |
 
 > One transient Woodpecker failure observed (pipeline #3, `clone` step died before any repo code
 > ran; the identical config passed minutes later). If a pipeline fails in `clone`, just re-run it.

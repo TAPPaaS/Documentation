@@ -1,20 +1,32 @@
 # Woodpecker CI pipeline for the TAPPaaS Documentation site (Codeberg CI).
 #
 # Builds the MkDocs site (Kroki renders the ArchiMate/PlantUML diagrams) and
-# publishes the output to the `pages` branch, which Codeberg Pages serves at
-# https://tappaas.codeberg.page/Documentation/ (canonical while the
-# staging.tappaas.org TLS cert is pending — see ADR-001 §11a.5; flip the order
-# in `.domains` to make staging canonical again once its cert is issued).
+# publishes the output to the `pages` branch, served by Codeberg's NEW
+# git-pages server at https://tappaas.codeberg.page/Documentation/
+# (the legacy pages server rejects new orgs like TAPPaaS with 400).
 #
-# Prototype/spike branches (`spike-*`) publish to `pages-<branch>` and are
-# served at https://tappaas.codeberg.page/Documentation/@pages-<branch>/
+# git-pages specifics (learned the hard way, see ADR-001 §11a.5):
+#   - Only the `pages` branch deploys (ref allowlist is refs/heads/pages),
+#     so spike/preview builds publish into spikes/<branch>/ sub-directories
+#     of the same branch: .../Documentation/spikes/<branch>/
+#   - Deployment is triggered by a Forgejo push webhook to
+#     https://tappaas.codeberg.page/Documentation — the repo has no such
+#     webhook yet (the CI token cannot manage hooks), so the deploy step
+#     POSTs the payload itself after pushing.
+#   - Serving goes through a ~600 s edge cache; freshly deployed content can
+#     lag up to 10 minutes.
+#   - `.domains` (custom domain staging.tappaas.org) is temporarily NOT
+#     published: the cert never issued under git-pages and a .domains file
+#     makes the direct codeberg.page URL redirect to the broken domain.
+#     Re-enable the cp below when re-attempting staging (the new DNS target
+#     per codeberg.page docs is `documentation.tappaas.codeberg.page`).
 #
 # Prerequisites (one-time, see repo docs / ADR-001 WS-S):
 #   - Codeberg CI enabled for this repo.
 #   - A Woodpecker secret `codeberg_token`: a Codeberg application token with
 #     write access to this repository (Codeberg → Settings → Applications).
-#   - A `pages` branch (the pipeline creates it on first run if missing).
-#   - DNS: CNAME staging.tappaas.org -> tappaas.codeberg.page. (Cloudflare: DNS-only / grey cloud).
+#   - DNS: CNAME staging.tappaas.org -> documentation.tappaas.codeberg.page.
+#     (Cloudflare: DNS-only / grey cloud) — for when staging is re-attempted.
 
 when:
   - event: [push, manual]
@@ -41,66 +53,11 @@ steps:
         sys.exit("Kroki did not become ready in time")
         PY
       - mkdocs build --strict
-      # Codeberg Pages custom-domain marker (.domains) is temporarily NOT
-      # published: while the staging.tappaas.org TLS cert is pending, a
-      # .domains file makes the direct tappaas.codeberg.page URL redirect to
-      # the broken staging domain (and listing tappaas.codeberg.page itself in
-      # .domains is rejected with 400 — custom domains only). Re-enable the cp
-      # below once the staging cert is issued (see ADR-001 §11a.5).
+      # Temporarily disabled — see header note on .domains / staging TLS.
       #
       # case "$CI_COMMIT_BRANCH" in
       #   main|staging) cp .domains site/.domains ;;
       # esac
-
-  # Codeberg's NEW git-pages server (mandatory for new orgs like TAPPaaS —
-  # the legacy pages server answers 400 "new users/orgs are not allowed")
-  # only deploys when a Forgejo webhook on this repo pings
-  # https://tappaas.codeberg.page/Documentation for pushes to pages* branches.
-  # Ensure that webhook exists before we push the built site.
-  ensure-pages-webhook:
-    image: alpine:3.20
-    when:
-      event: [push, manual]
-      branch: [main, staging, "spike-*"]
-    environment:
-      CODEBERG_TOKEN:
-        from_secret: codeberg_token
-    commands:
-      - apk add --no-cache curl jq git
-      - API="https://codeberg.org/api/v1/repos/TAPPaaS/Documentation"
-      - PAGES_URL="https://tappaas.codeberg.page/Documentation"
-      - |
-        {
-          echo "== token identity =="
-          curl -s -o /tmp/me.json -w "GET /user -> %{http_code}\n" \
-            -H "Authorization: token $CODEBERG_TOKEN" https://codeberg.org/api/v1/user
-          jq -r '.login // .message // empty' /tmp/me.json 2>/dev/null || head -c 200 /tmp/me.json
-          echo "== existing hooks =="
-          curl -s -o /tmp/hooks.json -w "GET hooks -> %{http_code}\n" \
-            -H "Authorization: token $CODEBERG_TOKEN" "$API/hooks"
-          cat /tmp/hooks.json
-          echo
-          echo "== ensure webhook =="
-          if jq -e --arg u "$PAGES_URL" '.[]? | select(.config.url == $u)' /tmp/hooks.json >/dev/null 2>&1; then
-            echo "git-pages webhook already present"
-          else
-            curl -s -o /tmp/create.json -w "POST hooks -> %{http_code}\n" -X POST \
-              -H "Authorization: token $CODEBERG_TOKEN" \
-              -H "Content-Type: application/json" \
-              -d "{\"type\":\"forgejo\",\"active\":true,\"events\":[\"push\"],\"branch_filter\":\"pages*\",\"config\":{\"url\":\"$PAGES_URL\",\"content_type\":\"json\"}}" \
-              "$API/hooks"
-            cat /tmp/create.json
-            echo
-          fi
-        } | tee /tmp/webhook-debug.txt
-      # Woodpecker logs are not publicly readable — publish the diagnostics
-      # (no secrets in them) to a throwaway ci-debug branch instead.
-      - git config --global user.email "ci@tappaas.org"
-      - git config --global user.name "TAPPaaS CI"
-      - REPO="https://oauth2:$CODEBERG_TOKEN@codeberg.org/TAPPaaS/Documentation.git"
-      - rm -rf /tmp/dbg && mkdir /tmp/dbg && cd /tmp/dbg && git init -q -b ci-debug .
-      - cp /tmp/webhook-debug.txt /tmp/dbg/
-      - cd /tmp/dbg && git add -A && git commit -q -m "webhook debug $CI_COMMIT_SHA" && git push -qf "$REPO" ci-debug
 
   deploy-pages:
     image: alpine:3.20
@@ -113,30 +70,49 @@ steps:
       CODEBERG_TOKEN:
         from_secret: codeberg_token
     commands:
-      - apk add --no-cache git rsync
+      - apk add --no-cache git rsync curl
       - git config --global user.email "ci@tappaas.org"
       - git config --global user.name "TAPPaaS CI"
       # Authenticated remote (token is masked in Woodpecker logs).
       - REPO="https://oauth2:$CODEBERG_TOKEN@codeberg.org/TAPPaaS/Documentation.git"
-      # main/staging publish the staging site (`pages`); spike-* branches publish
-      # previews to `pages-<branch>` (served via the @branch URL scheme).
+      # Everything publishes into the single `pages` branch: main/staging own
+      # the root (leaving spikes/ alone); spike-* branches own spikes/<branch>/.
       - |
         case "$CI_COMMIT_BRANCH" in
-          main|staging) TARGET=pages ;;
-          *) TARGET="pages-$CI_COMMIT_BRANCH" ;;
+          main|staging) DEST="" ;;
+          *) DEST="spikes/$CI_COMMIT_BRANCH" ;;
         esac
-      # Clone the target branch, or create it as an orphan on first run.
+      # Publish with a couple of retries in case a concurrent pipeline pushed
+      # to `pages` between our clone and push.
       - |
-        if ! git clone --depth 1 --branch "$TARGET" "$REPO" pages 2>/dev/null; then
-          git clone --depth 1 "$REPO" pages
-          cd pages && git checkout --orphan "$TARGET" && git rm -rf . >/dev/null 2>&1 || true; cd ..
-        fi
-      # Replace the published content with the fresh build (keep .git).
-      - rsync -a --delete --exclude='.git' site/ pages/
-      - cd pages
-      - git add -A
-      - git commit -m "Deploy ${CI_COMMIT_SHA} [SKIP CI]" || echo "nothing to publish"
-      - git push "$REPO" "HEAD:$TARGET"
+        publish() {
+          rm -rf pages
+          if ! git clone --depth 1 --branch pages "$REPO" pages 2>/dev/null; then
+            git clone --depth 1 "$REPO" pages
+            (cd pages && git checkout --orphan pages && git rm -rf . >/dev/null 2>&1 || true)
+          fi
+          if [ -z "$DEST" ]; then
+            rsync -a --delete --exclude='.git' --exclude='spikes/' site/ pages/
+          else
+            mkdir -p "pages/$DEST"
+            rsync -a --delete site/ "pages/$DEST/"
+          fi
+          (
+            cd pages
+            git add -A
+            git commit -m "Deploy $CI_COMMIT_BRANCH $CI_COMMIT_SHA [SKIP CI]" || echo "nothing to publish"
+            git push "$REPO" HEAD:pages
+          )
+        }
+        publish || publish || publish
+      # No git-pages webhook exists on the repo (token lacks hook-admin
+      # rights), so notify the pages server ourselves with the payload a
+      # Forgejo push webhook would send.
+      - |
+        curl -sf -X POST "https://tappaas.codeberg.page/Documentation" \
+          -H "Content-Type: application/json" \
+          -H "X-Forgejo-Event: push" \
+          -d '{"ref":"refs/heads/pages","repository":{"full_name":"TAPPaaS/Documentation","name":"Documentation","private":false,"clone_url":"https://codeberg.org/TAPPaaS/Documentation.git","html_url":"https://codeberg.org/TAPPaaS/Documentation","default_branch":"main","owner":{"login":"TAPPaaS","username":"TAPPaaS"}}}'
 
 services:
   kroki:
