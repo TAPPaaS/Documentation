@@ -5,7 +5,7 @@ Documentation site for TAPPaaS - Trusted Automated Private Platform as a (selfho
 | Environment | URL | Built from |
 |-------------|-----|------------|
 | **Production (1.x)** | <https://tappaas.org> | GitHub mirror, push to `main` (GitHub Actions) — untouched until the 2.0 cutover |
-| **Staging (2.0 work)** | <https://staging.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages). Root = Astro landing (`landing/`); docs under `/docs/` |
+| **Staging (2.0 work)** | <https://staging.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages). One MkDocs site; the landing is the home page (`overrides/home.html`) |
 | Staging fallback URL | <https://tappaas.codeberg.page/Documentation/> | same as staging |
 | Branch previews | `https://tappaas.codeberg.page/Documentation/spikes/<branch>/` | any `spike-*` branch |
 
@@ -22,9 +22,12 @@ Edit the markdown files in the `docs/` folder.
 - **Substantial changes**: use a `spike-*` (or feature) branch → the pipeline publishes a preview
   under `…/Documentation/spikes/<branch>/` → review → merge to `main`.
 
-Pages under *Installation → From Source (synced)* are **generated at build time** from the TAPPaaS
-source repo by [`scripts/sync-source.py`](scripts/sync-source.py) (WS0) — edit them **upstream** in
-[TAPPaaS/TAPPaaS](https://github.com/TAPPaaS/TAPPaaS), not here.
+Pages marked *(source)* — synced INSTALL docs, all *Managers*/*Controllers* pages, zones, schemas,
+the taxonomy — are **generated at build time** from the TAPPaaS source repo (branch `ADR007`) by
+[`scripts/sync-source.py`](scripts/sync-source.py) (WS0) — edit them **upstream** in
+[TAPPaaS/TAPPaaS](https://github.com/TAPPaaS/TAPPaaS), not here. New manager/controller READMEs
+upstream appear automatically (glob + generated SUMMARY.md + literate-nav); other new files need an
+allow-list line. See ADR-001 §12.2 — including the one-time Woodpecker cron for nightly freshness.
 
 ## Local Development
 

@@ -10,7 +10,7 @@ description: >
 
 TAPPaaS systems are live with their first adopters. Every example below is a **real
 module** in the TAPPaaS source tree
-([`src/apps`](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps)) — installed,
+([`src/apps`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps)) — installed,
 updated and backed up by the platform.
 
 ## Your files and collaboration
@@ -34,7 +34,7 @@ updated and backed up by the platform.
     A full web office suite integrated into Nextcloud — edit documents,
     spreadsheets and presentations in the browser, without a US SaaS in the loop.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/euro-office)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/euro-office)
 
 -   :material-shield-key-outline: **Vaultwarden**
 
@@ -43,7 +43,7 @@ updated and backed up by the platform.
     A Bitwarden-compatible password manager: one vault for the family or the
     company, stored on your hardware, reachable from every device.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/vaultwarden)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/vaultwarden)
 
 -   :material-phone-in-talk-outline: **Coturn**
 
@@ -52,7 +52,7 @@ updated and backed up by the platform.
     The TURN relay that makes Nextcloud Talk calls work reliably across firewalls —
     your calls never route through someone else's relay.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/coturn)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/coturn)
 
 </div>
 
@@ -76,7 +76,7 @@ updated and backed up by the platform.
     Local model serving on AMD GPUs and unified-memory APUs — from 7B up to
     100B+-class models on a single inexpensive box.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/vllm-amd)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/vllm-amd)
 
 -   :material-swap-horizontal: **LiteLLM**
 
@@ -109,7 +109,7 @@ updated and backed up by the platform.
     A Zigbee gateway for sensors, switches and lights — pairs naturally with Home
     Assistant, no vendor cloud required.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/deconz)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/deconz)
 
 -   :material-robot-industrial: **n8n**
 
@@ -133,7 +133,7 @@ updated and backed up by the platform.
     WireGuard-based mesh connectivity — reach your platform securely from anywhere
     without opening your network to the world.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/netbird-client)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/netbird-client)
 
 -   :material-microsoft-windows: **Windows Server**
 
@@ -142,7 +142,7 @@ updated and backed up by the platform.
     Some workloads just need Windows. Run it as a managed TAPPaaS module — inside
     your environments, backed up like everything else.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/windows-server)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/windows-server)
 
 </div>
 
@@ -152,12 +152,12 @@ updated and backed up by the platform.
 
 A single TAPPaaS site can host **separated environments** — production next to family,
 tenants next to experiments — with network boundaries between them. See the worked
-multi-tenant setup in [INSTALL-VARIANT.md (synced from source)](../generated/install-variant.md).
+multi-tenant setup in [INSTALL-ENVIRONMENT.md (synced from source)](../generated/install-environment.md).
 
 ## Build your own
 
 Every module follows the same structure (the
-[`00-Template`](https://github.com/TAPPaaS/TAPPaaS/tree/main/src/apps/00-Template) app is
+[`00-Template`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/00-Template) app is
 the starting point) — see the [module structure](../architecture/cicd-design/module-structure.md)
 documentation to package the app *you* need.
 

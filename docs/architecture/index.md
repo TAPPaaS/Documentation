@@ -66,5 +66,5 @@ two altitudes.
 ## Where decisions live
 
 Architecture decisions are recorded as ADRs in the source repository:
-[`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/main/docs/ADR). If you're about
+[`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/docs/ADR). If you're about
 to change something structural, start there — write the ADR before the code.

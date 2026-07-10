@@ -1,0 +1,9 @@
+{#-
+  Site-wide template override (framework convergence, ADR-001 §5.5 revision).
+  The tabs bar is suppressed here because the section tabs are inlined into
+  the header itself (overrides/partials/header.html) — one single header line
+  with brand, menus and search.
+-#}
+{% extends "base.html" %}
+
+{% block tabs %}{% endblock %}

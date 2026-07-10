@@ -177,6 +177,23 @@ maintenance load.
 > artifact serves staging, the codeberg.page sub-path, and branch previews. `spike-b` merged and
 > deleted; `spike-a` kept as the A-reference.
 
+> **Decision revised (2026-07-10 review, Lars): converge the frameworks.** Living with the
+> two-site split showed the seam: landing → docs-home → nav was not one logical structure. New
+> direction: **one framework (MkDocs Material) serving one site** — the landing *is* the home
+> page, rendered by a custom Material home template that carries the approved Option-B visual
+> design. Requirements from the review:
+>
+> 1. The site root **is** the landing; the separate "documentation home" page and the `Home` nav
+>    tab are gone — the logo/title click returns to the landing.
+> 2. **Top navigation for sections, side navigation for real content** (Material tabs + sidebar).
+> 3. **Header is a single line**: brand, section menus, and search together (custom header
+>    partial that inlines the tab links; the separate tabs bar is dropped).
+>
+> Consequences: the Astro `landing/` app and its CI step are **retired** (design ported into
+> `overrides/home.html` + `landing.css`); docs move back from `/docs/` to the site root (inbound
+> links are explicitly not a concern — the site is new). Astro Starlight remains the eventual
+> Option-C path only if the docs experience itself ever demands it.
+
 ### 5.5 Spike status (2026-07-10) — reviewed, Option B chosen
 
 Both spikes are live on branch previews, built by the sovereign Woodpecker/Codeberg pipeline
@@ -477,6 +494,16 @@ from the `vllm-amd` module via WS0 so they stay current).
 
 The current **Architecture** and **Appendix** sections mostly become the backbone of **Develop**;
 the **Manual** becomes the backbone of **Operate**.
+
+> **2026-07-10 review (Lars): the Operate content must reflect the manager/controller paradigm.**
+> The first WS4 pass synced from `main`, which still had the old standalone-scripts world — but
+> 2.0 (branch `ADR007`, soon `stable`) replaces it: **managers** realize the taxonomy domains
+> (site-, people-, module-, environment-, network-, backup-, health-, satellite-manager) and
+> **controllers** wrap concrete systems (opnsense, proxmox, identity, backup, ap, switch,
+> node-provisioner); the old `install-module.sh`-style scripts now live *inside* managers.
+> Actions: re-pin WS0 to `ADR007` (§12.1); **delete** the 19 hand-written `manual/scripts/*`
+> pages and the stale module/update/backup/opnsense manual pages; rebuild Operate around the
+> glob-synced manager/controller READMEs.
 
 ### 8.2 Systematic README sync
 
@@ -880,12 +907,35 @@ Python, no git needed — fetches the GitHub tarball):
 - **Transforms:** front-matter title; "generated from source — edit upstream" banner linking the
   upstream file at the pinned ref; relative links/images rewritten to absolute GitHub blob/raw URLs.
 - **Guardrail:** build fails if an allow-listed file is missing at the ref (drift alarm).
-- **Pin:** `TAPPAAS_SOURCE_REF` env var, default **`main`** — *not* `stable`, because upstream reality
-  differs from this ADR's assumptions: `INSTALL-ENVIRONMENT.md` has become **`INSTALL-VARIANT.md`**,
-  and `stable` (still 1.x) carries **neither** file. When 2.0 reaches `stable` (WS6 cutover), the
-  production build sets `TAPPAAS_SOURCE_REF=stable` and this note retires.
-- **Next (WS3/WS4):** extend the allow-list (selected `src/**/README.md`, `docs/ADR/ADR-007*`),
-  split synced pages into the macro-stage structure, move the allow-list to a manifest file.
+- **Pin:** `TAPPAAS_SOURCE_REF` env var. **Default `ADR007` since the 2026-07-10 review** (was
+  `main`): the docs must describe the manager/controller paradigm that ships as 2.0, and Lars will
+  promote `ADR007` → `stable` per the roadmap. On that promotion, flip the default to `stable` and
+  this note retires. (File-name whiplash for the record: `INSTALL-ENVIRONMENT.md` on `ADR007`,
+  renamed `INSTALL-VARIANT.md` on `main`, absent on `stable` (1.x) — the allow-list tracks the
+  pinned ref's names.)
+- **Glob rules** (2026-07-10 review): besides exact files, the script expands patterns —
+  `manager/*/README.md` and `controller/*/README.md` under `src/foundation/tappaas-cicd/` map to
+  `generated/managers/<name>.md` / `generated/controllers/<name>.md`, and the script emits a
+  `SUMMARY.md` per directory that **mkdocs-literate-nav** consumes — so a *new* manager or
+  controller upstream appears in the nav on the next build with **zero docs-repo changes**.
+
+### 12.2 Keeping synced content fresh (the "how do we keep it updated" answer)
+
+Three layers, from automatic to one-time setup:
+
+1. **Changed upstream content** — nothing to do. Every CI build re-fetches the pinned ref, so any
+   push to this docs repo republishes current upstream content. The build **fails loudly** if an
+   allow-listed file disappears (drift alarm) rather than silently serving stale pages.
+2. **New upstream content** — the glob rules (§12.1) pick up new `manager/*`/`controller/*`
+   READMEs automatically, including nav entries (generated `SUMMARY.md` + literate-nav). Content
+   outside the glob shapes (a brand-new doc type) still needs one allow-list line in
+   [`scripts/sync-source.py`](../scripts/sync-source.py) — deliberate, so internal/WIP docs can't
+   leak onto the site.
+3. **Rebuilds without docs pushes** — upstream-only changes don't trigger our CI. Fix: a
+   **Woodpecker nightly cron** on `main`. The pipeline already accepts `event: cron`; the cron
+   itself is created once in the Woodpecker UI (ci.codeberg.org → repo → Settings → Crons, e.g.
+   `nightly` @ `0 4 * * *` on branch `main`) — **one-time manual step for Lars** (needs repo-admin,
+   which the CI token doesn't have). Until then, any push or manual run refreshes.
 
 ---
 
@@ -976,3 +1026,4 @@ content remains recoverable from git history.
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 0.1 | 2026-07-09 | Draft | Initial upgrade plan |
+| 0.2 | 2026-07-10 | Lars review + build | Phases 0–2 built. Review corrections: (a) framework **convergence** — landing becomes the Material home page, Astro layer retired, single-line header (§5.5); (b) content re-pinned to **`ADR007`** — Operate rebuilt on the manager/controller paradigm, script pages deleted, glob-sync + literate-nav + nightly-cron freshness model (§8, §12.1–12.2) |

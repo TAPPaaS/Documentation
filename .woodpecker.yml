@@ -30,7 +30,10 @@
 #   - The DNS records above for the staging custom domain.
 
 when:
-  - event: [push, manual]
+  # cron = nightly content-freshness rebuild (WS0 re-syncs upstream docs even
+  # when this repo has no pushes) — create the cron once in the Woodpecker UI:
+  # ci.codeberg.org → repo → Settings → Crons (see ADR-001 §12.2).
+  - event: [push, manual, cron]
     branch: [main, staging, "spike-*"]
   - event: pull_request
 
@@ -53,32 +56,19 @@ steps:
                 time.sleep(2)
         sys.exit("Kroki did not become ready in time")
         PY
-      # WS0 source-sync: pull allow-listed pages from the TAPPaaS source repo
-      # (GitHub, pinned ref) into docs/generated/ — fails on source drift.
+      # WS0 source-sync: pull allow-listed pages + manager/controller READMEs
+      # from the TAPPaaS source repo (GitHub, pinned ref — currently ADR007)
+      # into docs/generated/ — fails on source drift.
       - python scripts/sync-source.py
-      # The MkDocs site lives under /docs/, behind the Astro landing (WS1
-      # Option B, graduated from spike-b).
-      - mkdocs build --strict -d site/docs
-
-  # Marketing landing (Astro) served at the site root (WS1 Option B).
-  build-landing:
-    image: node:22
-    commands:
-      - cd landing
-      - npm install --no-audit --no-fund --loglevel=error
-      - npm run build
-      # The landing is a single page at the site root using only relative
-      # links; relativize Astro's absolute asset URLs too, so one build works
-      # at staging root, under /Documentation/ on codeberg.page, and in
-      # spikes/<branch>/ previews alike.
-      - sed -i 's#"/_astro/#"./_astro/#g' dist/index.html
-      - cp -r dist/. ../site/
+      # One converged MkDocs site (ADR-001 §5.5 revision): the landing is the
+      # home page (overrides/home.html); the Astro layer is retired.
+      - mkdocs build --strict
 
   deploy-pages:
     image: alpine:3.20
     when:
-      # Publish on branch pushes and manual runs — never on pull requests.
-      event: [push, manual]
+      # Publish on branch pushes, manual and cron runs — never on pull requests.
+      event: [push, manual, cron]
       branch: [main, staging, "spike-*"]
     environment:
       # Modern Woodpecker (2.x/3.x) secret syntax; exposes the secret as $CODEBERG_TOKEN.

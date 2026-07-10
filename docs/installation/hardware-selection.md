@@ -36,7 +36,7 @@ backup nor ingress.
   (holds the GPU if you choose local AI), Node 3 = backup node (small box, big `tankc1`).
 - **Scale-out** extends SMB by adding role-dedicated nodes and separating tenants with
   **environments** — see the worked multi-tenant example in
-  [INSTALL-VARIANT.md (source)](../generated/install-variant.md).
+  [INSTALL-ENVIRONMENT.md (source)](../generated/install-environment.md).
 - For large bulk storage, consider ZFS raidz2 on spinning disks with an SSD cache;
   prefer ECC RAM from SMB tier upward.
 
@@ -68,12 +68,11 @@ backup needs none) and can carry any combination of three roles:
 
 One satellite can carry all three.
 
-!!! warning "Upstream status: design phase"
-    The satellite is specified in
-    [ADR-010](https://github.com/TAPPaaS/TAPPaaS/blob/main/docs/ADR/ADR-010-vps-satellite-reverse-proxy-backup.md)
-    with an [implementation design](https://github.com/TAPPaaS/TAPPaaS/blob/main/docs/design/ADR-010-implementation.md),
-    but is **not yet a shipping module**. Plan for it, don't depend on it today —
-    this page tracks its readiness.
+!!! info "Status: shipping with 2.0"
+    The satellite module ships on the 2.0 branch (with a satellite manager operating
+    it) — see the synced [Satellite README](../generated/satellite.md) and
+    [Satellite INSTALL](../generated/satellite-install.md). Design background:
+    [ADR-010](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-010-vps-satellite-reverse-proxy-backup.md).
 
 ---
 
@@ -121,7 +120,7 @@ a given model size.
 
 !!! info "Where these numbers come from"
     Model and throughput figures are as tested on the reference
-    [`vllm-amd` module](https://github.com/TAPPaaS/TAPPaaS/blob/main/src/apps/vllm-amd/README.md)
+    [`vllm-amd` module](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/src/apps/vllm-amd/README.md)
     (verified against its README 2026-07-10). They will move to an automated WS0 sync
     so they stay current.
 

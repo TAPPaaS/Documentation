@@ -18,6 +18,8 @@ copyright: Copyright &copy; 2026 TAPPaaS Contributors | Licensed under MPL 2.0
 theme:
   name: material
   language: en
+  # Landing home template + single-line header (ADR-001 §5.5 revision)
+  custom_dir: overrides
 
   # Color palette
   palette:
@@ -64,6 +66,11 @@ theme:
 plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  # Directory nav entries (trailing /) resolve via that dir's SUMMARY.md,
+  # which scripts/sync-source.py generates — new upstream managers/controllers
+  # appear in the nav automatically (ADR-001 §12.1/12.2).
+  - literate-nav:
+      nav_file: SUMMARY.md
   - minify:
       minify_html: true
   - kroki:
@@ -129,10 +136,12 @@ markdown_extensions:
 # Extra CSS
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/landing.css
 
 # Extra JavaScript
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/landing.js
 
 # Social links and extra configuration
 extra:
@@ -155,8 +164,6 @@ extra:
 
 # Navigation structure (Terraform-style)
 nav:
-  - Home: index.md
-
   - Why TAPPaaS:
     - Overview: intro/index.md
     - Digital Sovereignty: intro/digital-sovereignty.md
@@ -167,7 +174,9 @@ nav:
     - Stable vs Main (2.0): installation/versions.md
     - From Source (synced):
       - INSTALL.md: generated/install.md
-      - INSTALL-VARIANT.md: generated/install-variant.md
+      - INSTALL-ENVIRONMENT.md: generated/install-environment.md
+      - Satellite: generated/satellite.md
+      - Satellite INSTALL: generated/satellite-install.md
     - Hardware Selection: installation/hardware-selection.md
     - Preparation: installation/preparation.md
     - Foundation:
@@ -196,34 +205,9 @@ nav:
 
   - Operate:
     - Overview: manual/index.md
-    - TAPPaaS Module: manual/tappaas-module.md
-    - TAPPaaS Scripts:
-      - Overview: manual/scripts/index.md
-      - install-module.sh: manual/scripts/install-module.md
-      - update-module.sh: manual/scripts/update-module.md
-      - delete-module.sh: manual/scripts/delete-module.md
-      - repository.sh: manual/scripts/repository.md
-      - test-module.sh: manual/scripts/test-module.md
-      - update-os.sh: manual/scripts/update-os.md
-      - check-disk-threshold.sh: manual/scripts/check-disk-threshold.md
-      - resize-disk.sh: manual/scripts/resize-disk.md
-      - create-configuration.sh: manual/scripts/create-configuration.md
-      - copy-update-json.sh: manual/scripts/copy-update-json.md
-      - common-install-routines.sh: manual/scripts/common-install-routines.md
-      - update-cron.sh: manual/scripts/update-cron.md
-      - setup-caddy.sh: manual/scripts/setup-caddy.md
-      - snapshot-vm.sh: manual/scripts/snapshot-vm.md
-      - inspect-cluster.sh: manual/scripts/inspect-cluster.md
-      - inspect-vm.sh: manual/scripts/inspect-vm.md
-      - migrate-vm.sh: manual/scripts/migrate-vm.md
-      - migrate-node.sh: manual/scripts/migrate-node.md
-    - Update Scheduler: manual/update-tappaas.md
-    - OPNsense Controller: manual/opnsense-controller.md
-    - Backup: manual/backup.md
-    - From Source (synced):
-      - Network Zones: generated/zones.md
-      - Configuration Reference: generated/configuration.md
-      - OPNsense Controller: generated/opnsense-controller.md
+    - Managers: generated/managers/
+    - Controllers: generated/controllers/
+    - Network Zones: generated/zones.md
 
   - Develop:
     - Overview: architecture/index.md
@@ -232,6 +216,7 @@ nav:
     - Author a Module:
       - Guide: architecture/author-a-module.md
       - Module Template (source): generated/module-template.md
+      - Schemas (source): generated/schemas.md
     - Capabilities: architecture/capabilities.md
     - Solution Design:
       - Overview: architecture/solution-design/index.md

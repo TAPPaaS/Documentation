@@ -13,11 +13,11 @@ TAPPaaS development runs on two branches of the
 | Branch | What it is | Who should install it |
 |--------|------------|-----------------------|
 | **`stable`** | **TAPPaaS 1.x** — the current supported release | Everyone running a real system |
-| **`main`** | The **2.0 preview** (ADR-007 work) — moving fast, may break | Evaluators and contributors only |
+| **`ADR007`** | The **2.0 release branch** (manager/controller paradigm) — will be promoted to `stable` per the [roadmap](../roadmap/index.md) | Evaluators and contributors |
 
-**If in doubt, install `stable`.** The [install flow](index.md) works for both; the
-synced [INSTALL.md](../generated/install.md) on this site tracks `main`, since this
-staging site documents the 2.0 work.
+**If in doubt, install `stable`.** The synced pages on this site
+(the [INSTALL.md](../generated/install.md), managers, controllers, …) track **`ADR007`**,
+since this staging site documents 2.0.
 
 ---
 

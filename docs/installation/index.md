@@ -11,11 +11,11 @@ TAPPaaS installs as a set of interlinked foundation modules and platform service
 built and configured to work together. The process is **seven stages**; each one tells
 you what it needs, and what "done" looks like before you move on.
 
-!!! warning "Which version to install: `stable` (1.x) vs `main` (2.0 preview)"
+!!! warning "Which version to install: `stable` (1.x) vs `ADR007` (2.0)"
     The supported install today is **TAPPaaS 1.x from the `stable` branch**. The next
-    major release (**2.0**, built around the ADR-007 taxonomy) is under active
-    development on `main` — the right choice only if you are evaluating or
-    contributing. **[Full guidance: stable vs main, and what 2.0 is](versions.md).**
+    major release (**2.0**, the ADR-007 taxonomy and manager/controller paradigm) lives
+    on the `ADR007` branch — soon to be promoted to `stable` — and is what this site
+    documents. **[Full guidance: which branch, and what 2.0 is](versions.md).**
 
     The exact, always-current procedure is synced from the source repo:
     [INSTALL.md (source)](../generated/install.md).
@@ -97,7 +97,8 @@ Install the workloads you chose in stage 1:
 
 Browse [what people run on TAPPaaS](../intro/examples.md) for the full module gallery.
 
-**Done when:** each installed app answers on its URL and shows up in the update scheduler.
+**Done when:** each installed app answers on its URL and is known to the
+[Module Manager](../generated/managers/module-manager.md).
 
 ## Stage 6 — Cut over the network
 
@@ -111,8 +112,8 @@ it, and the old router is retired or bridged.
 
 ## Stage 7 — Operate
 
-Hand over to day-to-day operation: scheduled updates, backup verification, health
-monitoring. That's the [Manual](../manual/index.md) — bookmark it.
+Hand over to day-to-day operation: the managers keep updating, backing up and
+health-checking the platform. That's [Operate](../manual/index.md) — bookmark it.
 
 [:octicons-arrow-right-24: Operate TAPPaaS](../manual/index.md)
 
@@ -122,11 +123,11 @@ monitoring. That's the [Manual](../manual/index.md) — bookmark it.
 
 - **Multiple environments / tenants** (Scale-out): run separated environments —
   production, family, tenants, experiments — on one platform. Worked example:
-  [INSTALL-VARIANT.md (source)](../generated/install-variant.md).
+  [INSTALL-ENVIRONMENT.md (source)](../generated/install-environment.md).
 - **No public IP, or no local backup?** A small **satellite** VPS can carry public
   ingress, off-site backup and admin VPN — see the
   [satellite option](hardware-selection.md#the-satellite-the-gap-filler) in the
-  hardware guide *(upstream design in progress)*.
+  hardware guide and the synced [Satellite INSTALL](../generated/satellite-install.md).
 
 ## Need help?
 

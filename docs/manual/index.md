@@ -1,26 +1,42 @@
 ---
 title: Operate TAPPaaS
 description: >
-  Run a live TAPPaaS system day to day — scripts, scheduled updates, firewall
-  control, backup, and the operational source references.
+  Run a live TAPPaaS system day to day — the manager/controller operating model,
+  with reference pages synced from source on every build.
 ---
 
 # Operate TAPPaaS
 
-Everything you need to run a live system day to day.
+TAPPaaS 2.0 is operated through a small set of **managers** and **controllers**,
+running on the CICD mothership:
 
-## Sections
+- **Managers** own a *domain* of the platform — one per part of the
+  [taxonomy](../generated/adr-007-taxonomy.md): Site, People, Module (Apps),
+  Environment, Network, Backup, Health, and Satellite. When you install, update or
+  reconfigure something, you talk to a manager.
+- **Controllers** wrap a *concrete system* — OPNsense, Proxmox, the identity stack,
+  backup, access points, switches, node provisioning — and expose it to the managers.
+  You rarely call a controller directly, but they're where the system-specific
+  knowledge (and troubleshooting detail) lives.
 
-- **[TAPPaaS Module](tappaas-module.md)** — what a module is and how the platform manages it
-- **[TAPPaaS Scripts](scripts/index.md)** — utility scripts for module installation, updates, and system management
-- **[Update Scheduler](update-tappaas.md)** — automated update scheduler for all TAPPaaS modules
-- **[OPNsense Controller](opnsense-controller.md)** — CLI tools for managing firewall, VLANs, DHCP, and DNS
-- **[Backup](backup.md)** — backup operation and verification
+So: **managers decide, controllers do.** A day-to-day operation like "update all
+modules" is a manager conversation; "why didn't the VLAN get created" is a controller
+page.
 
-## Synced from source
+## Reference — synced from source
 
-Operational reference generated from the source repo at build time (always current):
+These pages are generated from the source repo on every build (always current, and
+new managers/controllers appear here automatically):
 
-- **[Network Zones](../generated/zones.md)** — the zone model your firewall enforces
-- **[Configuration Reference](../generated/configuration.md)** — platform configuration fields
-- **[OPNsense Controller (source)](../generated/opnsense-controller.md)** — the controller's full upstream reference
+- **Managers** — see the *Managers* section in the sidebar: one page per manager
+  (site, people, module, environment, network, backup, health, satellite).
+- **Controllers** — see the *Controllers* section: one page per controller
+  (opnsense, proxmox, identity, backup, ap, switch, node-provisioner).
+- **[Network Zones](../generated/zones.md)** — the zone model the network manager
+  maintains and the firewall enforces.
+
+## Related
+
+- [Install TAPPaaS](../installation/index.md) — getting to a running system.
+- [Stable vs Main](../installation/versions.md) — the 2.0 status of what's described here.
+- [Develop](../architecture/index.md) — how the managers/controllers are designed.

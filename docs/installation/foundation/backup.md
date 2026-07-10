@@ -38,7 +38,9 @@ The script automatically:
 7. Create a daily backup job at 21:00 for all VMs
 8. Register DNS entry in OPNsense (backup.mgmt.internal)
 
-For backup operations, restoration, monitoring, and troubleshooting, see the [Backup Manual](../../manual/backup.md).
+For backup operations, restoration, monitoring, and troubleshooting, see the
+[Backup Manager (source)](../../generated/managers/backup-manager.md) and
+[Backup Controller (source)](../../generated/controllers/backup-controller.md).
 
 ## Next Steps
 

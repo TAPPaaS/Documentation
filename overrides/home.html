@@ -1,0 +1,199 @@
+{#-
+  Landing / home page template (framework convergence, ADR-001 §5.5 revision).
+  Carries the approved Option-B visual design inside MkDocs Material: injected
+  via the `hero` block (full-bleed, directly under the single-line header).
+  Styles: stylesheets/landing.css · behavior: javascripts/landing.js.
+-#}
+{% extends "main.html" %}
+
+{% block hero %}
+<div class="tap-landing">
+
+  <!-- ============ Hero ============ -->
+  <section class="tap-hero">
+    <div class="tap-hero__bg" aria-hidden="true">
+      <span class="tap-orb tap-orb--1" data-tap-parallax="30"></span>
+      <span class="tap-orb tap-orb--2" data-tap-parallax="-45"></span>
+      <span class="tap-orb tap-orb--3" data-tap-parallax="60"></span>
+      <span class="tap-gridlines"></span>
+    </div>
+    <p class="tap-kicker tap-enter">Trusted · Automated · Private · Platform as a Service</p>
+    <h1 class="tap-h1 tap-enter">Who is in control of<br><span class="tap-grad">your digital life?</span></h1>
+    <div class="tap-triad tap-enter" role="list">
+      <span role="listitem">Your data.</span>
+      <span role="listitem">Your costs.</span>
+      <span role="listitem">Your access.</span>
+    </div>
+    <p class="tap-lede tap-enter">
+      TAPPaaS is an open-source, self-hosted platform for digital sovereignty.
+      Enterprise-class cloud capabilities &mdash; identity, updates, backup, security &mdash;
+      pre-integrated on hardware you own, for small businesses, governments, NGOs,
+      communities and capable households.
+    </p>
+    <p class="tap-actions tap-enter">
+      <a class="tap-btn tap-btn--primary" href="{{ 'installation/' | url }}">Get started</a>
+      <a class="tap-btn tap-btn--ghost" href="#why">Why TAPPaaS</a>
+      <a class="tap-btn tap-btn--ghost" href="https://github.com/TAPPaaS/TAPPaaS">Source code</a>
+    </p>
+  </section>
+
+  <!-- ============ The glass wall ============ -->
+  <section class="tap-section" id="why">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Sovereignty is architecture,<br>not a contract.</h2>
+      <p class="tap-lede tap-reveal">
+        Every cloud sits somewhere on a continuum. On the far side of the glass wall your
+        digital life runs on someone else&rsquo;s terms &mdash; their datacenter, their prices,
+        their access policies. TAPPaaS moves you to <em>your</em> side of the wall: the same
+        convenience, but on your architecture. And because it is architecture, it is
+        <strong>resilient</strong> &mdash; your platform keeps running even when the internet doesn&rsquo;t.
+      </p>
+      <div class="tap-continuum tap-reveal" role="img"
+           aria-label="Continuum from public cloud on their terms, across the glass wall, to a TAPPaaS platform on your own hardware">
+        <div class="tap-side tap-side--theirs">
+          <span class="tap-side__label">Their terms</span>
+          <span class="tap-item">Public SaaS</span>
+          <span class="tap-item">Public cloud</span>
+        </div>
+        <div class="tap-wall" aria-hidden="true"><span>the glass wall</span></div>
+        <div class="tap-side tap-side--yours">
+          <span class="tap-side__label">Your terms</span>
+          <span class="tap-item tap-item--hot">TAPPaaS</span>
+          <span class="tap-item">Your hardware</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Four building blocks ============ -->
+  <section class="tap-section tap-section--tint" id="blocks">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">A cloud is four building blocks.<br>Now they&rsquo;re yours.</h2>
+      <p class="tap-lede tap-reveal">
+        Hyperscalers won by <em>packaging complexity</em>: a site to run on, workloads to run,
+        people to serve, and environments to keep them apart. TAPPaaS packages the same four
+        blocks &mdash; pre-integrated and open source &mdash; on your side of the wall.
+      </p>
+      <div class="tap-cards">
+        <div class="tap-card tap-reveal">
+          <span class="tap-card__n">01</span>
+          <h3>Site</h3>
+          <p>Proxmox cluster, storage, network and firewall &mdash; the ground your cloud stands on.</p>
+        </div>
+        <div class="tap-card tap-reveal">
+          <span class="tap-card__n">02</span>
+          <h3>Workloads</h3>
+          <p>Apps and services installed, updated and backed up by the platform &mdash; not by hand.</p>
+        </div>
+        <div class="tap-card tap-reveal">
+          <span class="tap-card__n">03</span>
+          <h3>People</h3>
+          <p>Identity, single sign-on and access control for households, teams and tenants.</p>
+        </div>
+        <div class="tap-card tap-reveal">
+          <span class="tap-card__n">04</span>
+          <h3>Environments</h3>
+          <p>Clean separation for production, family, tenants and experiments &mdash; blast doors included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ T · A · P ============ -->
+  <section class="tap-section">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Trusted. Automated. Private.</h2>
+      <div class="tap-pillars">
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__letter">T</span>
+          <h3>Trusted</h3>
+          <p>Open source end to end (MPL&nbsp;2.0). Every component inspectable, every claim
+             checkable. No black boxes between you and your data.</p>
+        </div>
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__letter">A</span>
+          <h3>Automated</h3>
+          <p>One CICD mothership installs, updates, monitors and heals the whole platform.
+             Enterprise operations without an ops team.</p>
+        </div>
+        <div class="tap-pillar tap-reveal">
+          <span class="tap-pillar__letter">P</span>
+          <h3>Private</h3>
+          <p>Self-hosted by design. Your data never has to leave your building &mdash; and your
+             AI can run entirely on your own silicon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Running today ============ -->
+  <section class="tap-section tap-section--tint" id="examples">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Running today. Not a roadmap.</h2>
+      <p class="tap-lede tap-reveal">
+        TAPPaaS systems are live with first adopters, running the tools people actually use:
+      </p>
+    </div>
+    <div class="tap-marquee tap-reveal" aria-hidden="true">
+      <div class="tap-marquee__track">
+        {% for app in ["Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLLM",
+                       "EURO Office", "deCONZ", "Coturn", "Vaultwarden", "Proxmox", "OPNsense",
+                       "Nextcloud", "Home Assistant", "OpenWebUI", "n8n", "LiteLLM", "vLLM",
+                       "EURO Office", "deCONZ", "Coturn", "Vaultwarden", "Proxmox", "OPNsense"] %}
+        <span class="tap-chip">{{ app }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="tap-wrap">
+      <p class="tap-center tap-reveal">
+        <a class="tap-btn tap-btn--ghost" href="{{ 'intro/examples/' | url }}">See what you can run</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ Bridge into the docs ============ -->
+  <section class="tap-section" id="explore">
+    <div class="tap-wrap">
+      <h2 class="tap-h2 tap-reveal">Ready to go deeper?</h2>
+      <p class="tap-lede tap-reveal">
+        The documentation picks up where this page ends &mdash; same story, full detail.
+        Start wherever fits you:
+      </p>
+      <div class="tap-bridge">
+        <a class="tap-bridge__card tap-reveal" href="{{ 'installation/' | url }}">
+          <h3>Install <span aria-hidden="true">&rarr;</span></h3>
+          <p>Choose hardware, bootstrap the foundation, add the stacks you need.</p>
+        </a>
+        <a class="tap-bridge__card tap-reveal" href="{{ 'manual/' | url }}">
+          <h3>Operate <span aria-hidden="true">&rarr;</span></h3>
+          <p>Run a live system day to day: managers, controllers, zones.</p>
+        </a>
+        <a class="tap-bridge__card tap-reveal" href="{{ 'architecture/' | url }}">
+          <h3>Develop <span aria-hidden="true">&rarr;</span></h3>
+          <p>How the four building blocks are designed &mdash; and how to build your own module.</p>
+        </a>
+        <a class="tap-bridge__card tap-reveal" href="{{ 'roadmap/' | url }}">
+          <h3>Roadmap <span aria-hidden="true">&rarr;</span></h3>
+          <p>Where TAPPaaS is heading, milestone by milestone.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Closing CTA ============ -->
+  <section class="tap-cta">
+    <div class="tap-wrap">
+      <h2 class="tap-cta__title tap-reveal">Who is in control? <span>You are.</span></h2>
+      <p class="tap-cta__signoff tap-reveal">Your data. Your costs. Your access. <strong>Your platform.</strong></p>
+      <p class="tap-reveal">
+        <a class="tap-btn tap-btn--invert" href="{{ 'installation/' | url }}">Install TAPPaaS</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{#- The landing supplies all content; suppress the article area and sidebars. -#}
+{% block site_nav %}{% endblock %}
+{% block container %}{% endblock %}
