@@ -45,7 +45,10 @@ steps:
       # Publish only on branch pushes (main/staging) — never on pull requests.
       event: push
       branch: [main, staging]
-    secrets: [codeberg_token]
+    environment:
+      # Modern Woodpecker (2.x/3.x) secret syntax; exposes the secret as $CODEBERG_TOKEN.
+      CODEBERG_TOKEN:
+        from_secret: codeberg_token
     commands:
       - apk add --no-cache git rsync
       - git config --global user.email "ci@tappaas.org"
