@@ -2,7 +2,12 @@
 #
 # Builds the MkDocs site (Kroki renders the ArchiMate/PlantUML diagrams) and
 # publishes the output to the `pages` branch, which Codeberg Pages serves at
-# https://staging.tappaas.org (custom domain declared in the `.domains` file).
+# https://tappaas.codeberg.page/Documentation/ (canonical while the
+# staging.tappaas.org TLS cert is pending — see ADR-001 §11a.5; flip the order
+# in `.domains` to make staging canonical again once its cert is issued).
+#
+# Prototype/spike branches (`spike-*`) publish to `pages-<branch>` and are
+# served at https://tappaas.codeberg.page/Documentation/@pages-<branch>/
 #
 # Prerequisites (one-time, see repo docs / ADR-001 WS-S):
 #   - Codeberg CI enabled for this repo.
@@ -13,7 +18,7 @@
 
 when:
   - event: [push, manual]
-    branch: [main, staging]
+    branch: [main, staging, "spike-*"]
   - event: pull_request
 
 steps:
@@ -36,15 +41,19 @@ steps:
         sys.exit("Kroki did not become ready in time")
         PY
       - mkdocs build --strict
-      # Codeberg Pages custom-domain marker must sit at the served-branch root.
-      - cp .domains site/.domains
+      # Codeberg Pages custom-domain marker must sit at the served-branch root —
+      # only on the real `pages` branch; preview branches must not claim domains.
+      - |
+        case "$CI_COMMIT_BRANCH" in
+          main|staging) cp .domains site/.domains ;;
+        esac
 
   deploy-pages:
     image: alpine:3.20
     when:
-      # Publish on branch pushes and manual runs of main/staging — never on pull requests.
+      # Publish on branch pushes and manual runs — never on pull requests.
       event: [push, manual]
-      branch: [main, staging]
+      branch: [main, staging, "spike-*"]
     environment:
       # Modern Woodpecker (2.x/3.x) secret syntax; exposes the secret as $CODEBERG_TOKEN.
       CODEBERG_TOKEN:
@@ -55,18 +64,25 @@ steps:
       - git config --global user.name "TAPPaaS CI"
       # Authenticated remote (token is masked in Woodpecker logs).
       - REPO="https://oauth2:$CODEBERG_TOKEN@codeberg.org/TAPPaaS/Documentation.git"
-      # Clone the pages branch, or create it as an orphan on first run.
+      # main/staging publish the staging site (`pages`); spike-* branches publish
+      # previews to `pages-<branch>` (served via the @branch URL scheme).
       - |
-        if ! git clone --depth 1 --branch pages "$REPO" pages 2>/dev/null; then
+        case "$CI_COMMIT_BRANCH" in
+          main|staging) TARGET=pages ;;
+          *) TARGET="pages-$CI_COMMIT_BRANCH" ;;
+        esac
+      # Clone the target branch, or create it as an orphan on first run.
+      - |
+        if ! git clone --depth 1 --branch "$TARGET" "$REPO" pages 2>/dev/null; then
           git clone --depth 1 "$REPO" pages
-          cd pages && git checkout --orphan pages && git rm -rf . >/dev/null 2>&1 || true; cd ..
+          cd pages && git checkout --orphan "$TARGET" && git rm -rf . >/dev/null 2>&1 || true; cd ..
         fi
       # Replace the published content with the fresh build (keep .git).
       - rsync -a --delete --exclude='.git' site/ pages/
       - cd pages
       - git add -A
       - git commit -m "Deploy ${CI_COMMIT_SHA} [SKIP CI]" || echo "nothing to publish"
-      - git push "$REPO" pages
+      - git push "$REPO" "HEAD:$TARGET"
 
 services:
   kroki:
