@@ -1,0 +1,387 @@
+/* ==========================================================================
+   Landing page + single-line header (framework convergence, ADR-001 §5.5).
+   Landing rules are scoped under .tap-landing; header rules are site-wide.
+   Sizes use px (Material's root font-size is 125%, so rem would inflate).
+   ========================================================================== */
+
+/* ---- Single-line header: tabs are inlined by overrides/partials/header.html */
+.md-header .md-tabs {
+  width: auto;
+  background: transparent;
+  overflow: visible;
+  margin-right: auto;
+}
+.md-header .md-tabs .md-tabs__list {
+  margin: 0;
+  white-space: nowrap;
+  contain: none;
+}
+.md-header__title {
+  flex-grow: 0;
+  width: auto;
+  margin-right: 0.4rem;
+}
+/* the "current page" second topic line is noise in a one-line header */
+.md-header__topic + .md-header__topic { display: none; }
+
+/* ---- Shared design tokens (light-first; dark follows Material's scheme) --- */
+.tap-landing {
+  --tap-bg: #f7fbfa;
+  --tap-panel: #ffffff;
+  --tap-tint: #edf5f3;
+  --tap-teal: #009485;
+  --tap-teal-deep: #00695f;
+  --tap-teal-soft: rgba(0, 148, 133, 0.1);
+  --tap-amber: #c77b16;
+  --tap-text: #1d3038;
+  --tap-text-dim: #56707a;
+  --tap-line: rgba(0, 148, 133, 0.22);
+  --tap-shadow: 0 14px 40px rgba(9, 63, 60, 0.1);
+  --tap-radius: 16px;
+  display: block;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tap-text);
+  background: var(--tap-bg);
+  overflow-x: hidden;
+}
+[data-md-color-scheme="slate"] .tap-landing {
+  --tap-bg: #0e1a20;
+  --tap-panel: #14232b;
+  --tap-tint: #0b161c;
+  --tap-teal: #00b39b;
+  --tap-teal-deep: #00d0b0;
+  --tap-teal-soft: rgba(0, 208, 176, 0.1);
+  --tap-amber: #ffc46b;
+  --tap-text: #dfe9ec;
+  --tap-text-dim: #93a7ae;
+  --tap-line: rgba(0, 208, 176, 0.22);
+  --tap-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Hide the (empty) article area + footer-nav on the landing page only. */
+.md-container:has(.tap-landing) .md-main { display: none; }
+
+.tap-wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ---- Motion primitives ---------------------------------------------------- */
+.tap-enter {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: tap-enter 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.tap-enter:nth-child(2) { animation-delay: 0.05s; }
+.tap-enter:nth-child(3) { animation-delay: 0.18s; }
+.tap-enter:nth-child(4) { animation-delay: 0.38s; }
+.tap-enter:nth-child(5) { animation-delay: 0.52s; }
+.tap-enter:nth-child(6) { animation-delay: 0.66s; }
+@keyframes tap-enter { to { opacity: 1; transform: none; } }
+
+.tap-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.tap-reveal.tap-in { opacity: 1; transform: none; }
+
+/* ---- Buttons --------------------------------------------------------------- */
+.tap-btn {
+  display: inline-block;
+  padding: 11px 30px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tap-btn:hover { transform: translateY(-2px); }
+.tap-btn--primary {
+  background: linear-gradient(135deg, var(--tap-teal), var(--tap-teal-deep));
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 148, 133, 0.35);
+}
+.tap-btn--primary:hover { box-shadow: 0 10px 28px rgba(0, 148, 133, 0.45); color: #fff; }
+.tap-btn--ghost {
+  border: 1px solid var(--tap-line);
+  color: var(--tap-text);
+  background: var(--tap-panel);
+}
+.tap-btn--ghost:hover { border-color: var(--tap-teal); color: var(--tap-teal); }
+.tap-btn--invert {
+  background: #ffffff;
+  color: var(--tap-teal-deep);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+  padding: 14px 42px;
+  font-size: 17px;
+}
+
+/* ---- Hero ------------------------------------------------------------------ */
+.tap-hero {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 96px 24px 64px;
+  background: linear-gradient(175deg, var(--tap-bg), var(--tap-tint) 70%, var(--tap-bg));
+}
+.tap-hero__bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.tap-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.3;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tap-orb--1 { width: 640px; height: 640px; left: -220px; top: -190px;
+              background: radial-gradient(circle, rgba(0, 148, 133, 0.5), transparent 65%); }
+.tap-orb--2 { width: 460px; height: 460px; right: -160px; bottom: -130px;
+              background: radial-gradient(circle, rgba(27, 111, 143, 0.45), transparent 65%); }
+.tap-orb--3 { width: 280px; height: 280px; right: 16%; top: 10%;
+              background: radial-gradient(circle, rgba(199, 123, 22, 0.3), transparent 65%); }
+.tap-gridlines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--tap-teal-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tap-teal-soft) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.5;
+  mask-image: radial-gradient(60% 55% at 50% 45%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(60% 55% at 50% 45%, #000 0%, transparent 100%);
+}
+.tap-kicker {
+  position: relative;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tap-teal);
+  margin: 0 0 16px;
+}
+.tap-h1 {
+  position: relative;
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 1.06;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 22px;
+  color: var(--tap-text);
+}
+.tap-grad {
+  background: linear-gradient(100deg, var(--tap-teal-deep) 10%, var(--tap-teal) 55%, var(--tap-amber) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tap-triad { position: relative; display: flex; gap: 11px; flex-wrap: wrap; justify-content: center; margin: 0 0 26px; }
+.tap-triad span {
+  padding: 6px 18px;
+  border: 1px solid var(--tap-line);
+  border-radius: 999px;
+  background: var(--tap-teal-soft);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--tap-teal-deep);
+}
+.tap-lede {
+  position: relative;
+  max-width: 740px;
+  margin: 0 auto 34px;
+  color: var(--tap-text-dim);
+  font-size: 17px;
+}
+.tap-actions { position: relative; display: flex; gap: 13px; flex-wrap: wrap; justify-content: center; margin: 0; }
+
+/* ---- Sections ---------------------------------------------------------------- */
+.tap-section { padding: 88px 0; background: var(--tap-bg); }
+.tap-section--tint { background: var(--tap-tint); }
+.tap-h2 {
+  font-size: clamp(27px, 4vw, 42px);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 0 0 16px;
+  color: var(--tap-text);
+}
+.tap-section .tap-lede { margin: 0 0 42px; font-size: 16px; max-width: 740px; }
+.tap-center { text-align: center; margin-top: 32px; }
+
+/* ---- Continuum ----------------------------------------------------------------- */
+.tap-continuum {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  border-radius: var(--tap-radius);
+  overflow: hidden;
+  border: 1px solid var(--tap-line);
+  box-shadow: var(--tap-shadow);
+  background: var(--tap-panel);
+}
+.tap-side { display: flex; flex-direction: column; gap: 10px; padding: 32px 29px; }
+.tap-side--theirs { background: var(--tap-tint); color: var(--tap-text-dim); }
+.tap-side--yours {
+  background: linear-gradient(135deg, var(--tap-teal-deep), var(--tap-teal));
+  text-align: right;
+  color: #eafaf7;
+}
+.tap-side__label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+.tap-item { font-weight: 700; font-size: 16px; }
+.tap-item--hot { color: #ffffff; font-size: 20px; }
+.tap-wall {
+  position: relative;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, var(--tap-teal), transparent);
+  animation: tap-wall 3.5s ease-in-out infinite;
+}
+.tap-wall span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--tap-teal);
+  text-shadow: 0 0 14px rgba(0, 148, 133, 0.5);
+}
+@keyframes tap-wall {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 148, 133, 0.35); }
+  50% { box-shadow: 0 0 26px rgba(0, 148, 133, 0.8); }
+}
+
+/* ---- Cards & pillars & bridge ---------------------------------------------------- */
+.tap-cards, .tap-pillars, .tap-bridge {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 19px;
+}
+.tap-card, .tap-pillar, .tap-bridge__card {
+  position: relative;
+  background: var(--tap-panel);
+  border: 1px solid var(--tap-line);
+  border-radius: var(--tap-radius);
+  padding: 29px 24px;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.tap-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(380px 380px at var(--tap-mx, 50%) var(--tap-my, 50%),
+              var(--tap-teal-soft), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.tap-card:hover, .tap-bridge__card:hover {
+  transform: translateY(-6px);
+  border-color: var(--tap-teal);
+  box-shadow: var(--tap-shadow);
+}
+.tap-card:hover::before { opacity: 1; }
+.tap-card__n {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--tap-teal);
+}
+.tap-card h3, .tap-pillar h3 { margin: 8px 0; font-size: 18px; color: var(--tap-text); }
+.tap-card p, .tap-pillar p, .tap-bridge__card p { margin: 0; font-size: 14px; color: var(--tap-text-dim); }
+
+.tap-pillar { border-top: 3px solid var(--tap-teal); }
+.tap-pillar__letter {
+  position: absolute;
+  right: 14px;
+  top: 3px;
+  font-size: 70px;
+  font-weight: 800;
+  color: var(--tap-teal-soft);
+  line-height: 1;
+  user-select: none;
+}
+.tap-pillar h3 { color: var(--tap-teal-deep); }
+
+.tap-bridge__card { display: block; text-decoration: none; padding: 24px 22px; }
+.tap-bridge__card h3 { margin: 0 0 7px; font-size: 17px; color: var(--tap-teal-deep); }
+.tap-bridge__card h3 span { transition: transform 0.2s ease; display: inline-block; }
+.tap-bridge__card:hover h3 span { transform: translateX(4px); }
+
+.tap-cards .tap-reveal:nth-child(2), .tap-pillars .tap-reveal:nth-child(2), .tap-bridge .tap-reveal:nth-child(2) { transition-delay: 0.1s; }
+.tap-cards .tap-reveal:nth-child(3), .tap-pillars .tap-reveal:nth-child(3), .tap-bridge .tap-reveal:nth-child(3) { transition-delay: 0.2s; }
+.tap-cards .tap-reveal:nth-child(4), .tap-bridge .tap-reveal:nth-child(4) { transition-delay: 0.3s; }
+
+/* ---- Marquee ------------------------------------------------------------------------ */
+.tap-marquee {
+  overflow: hidden;
+  padding: 8px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.tap-marquee__track {
+  display: inline-flex;
+  gap: 13px;
+  white-space: nowrap;
+  animation: tap-marquee 34s linear infinite;
+  will-change: transform;
+}
+.tap-marquee:hover .tap-marquee__track { animation-play-state: paused; }
+.tap-chip {
+  padding: 8px 19px;
+  border: 1px solid var(--tap-line);
+  border-radius: 999px;
+  background: var(--tap-panel);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tap-text);
+}
+@keyframes tap-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---- CTA ------------------------------------------------------------------------------ */
+.tap-cta {
+  text-align: center;
+  padding: 104px 0;
+  color: #ffffff;
+  background:
+    radial-gradient(1100px 560px at 50% 130%, rgba(255, 255, 255, 0.14), transparent 60%),
+    linear-gradient(135deg, var(--tap-teal-deep), var(--tap-teal));
+}
+[data-md-color-scheme="slate"] .tap-landing .tap-cta {
+  background:
+    radial-gradient(1100px 560px at 50% 130%, rgba(255, 255, 255, 0.08), transparent 60%),
+    linear-gradient(135deg, #00695f, #009485);
+}
+.tap-cta__title { font-size: clamp(32px, 5vw, 51px); font-weight: 800; margin: 0 0 13px; }
+.tap-cta__title span { color: #ffe9c4; }
+.tap-cta__signoff { color: rgba(255, 255, 255, 0.85); font-size: 17px; margin: 0 0 35px; }
+.tap-cta__signoff strong { color: #ffe9c4; }
+
+/* ---- Reduced motion & small screens ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .tap-landing *, .tap-landing *::before, .tap-landing *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .tap-enter, .tap-reveal { opacity: 1; transform: none; }
+}
+@media (max-width: 700px) {
+  .tap-hero { min-height: auto; padding: 72px 24px 52px; }
+  .tap-continuum { grid-template-columns: 1fr; }
+  .tap-wall { width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--tap-teal), transparent); }
+  .tap-wall span { transform: translate(-50%, -50%); }
+  .tap-side--yours { text-align: left; }
+}
