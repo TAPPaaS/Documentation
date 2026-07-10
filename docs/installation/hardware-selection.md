@@ -68,10 +68,11 @@ backup needs none) and can carry any combination of three roles:
 
 One satellite can carry all three.
 
-!!! info "Status: shipping with 2.0"
-    The satellite module ships on the 2.0 branch (with a satellite manager operating
-    it) — see the synced [Satellite README](../generated/satellite.md) and
-    [Satellite INSTALL](../generated/satellite-install.md). Design background:
+!!! warning "Status: in development on the 2.0 branch"
+    The satellite module and its manager exist on the 2.0 branch but are **early-stage
+    (ADR-010 phase 1 scaffolding — not yet functional)**. Plan for it; don't depend on
+    it today. Track readiness via the synced [Satellite README](../generated/satellite.md)
+    and [Satellite INSTALL](../generated/satellite-install.md); design background:
     [ADR-010](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-010-vps-satellite-reverse-proxy-backup.md).
 
 ---
