@@ -919,6 +919,12 @@ Python, no git needed — fetches the GitHub tarball):
   `SUMMARY.md` per directory that **mkdocs-literate-nav** consumes — so a *new* manager or
   controller upstream appears in the nav on the next build with **zero docs-repo changes**.
 
+> **Upstream governance (2026-07-10):** the sync model below is being sanctioned upstream as
+> **ADR-013 — Documentation Structure and Standards** (drafted on the `ADR007` branch, from
+> TAPPaaS/TAPPaaS#362): source-repo docs are the SSOT per audience; the site publishes curated
+> narrative + allow-list/glob-synced source pages. Once ADR-013 is accepted, module/manager/
+> controller READMEs are *by rule* public web pages — internal notes belong in DESIGN.md or issues.
+
 ### 12.2 Keeping synced content fresh (the "how do we keep it updated" answer)
 
 Three layers, from automatic to one-time setup:
