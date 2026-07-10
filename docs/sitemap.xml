@@ -25,10 +25,6 @@
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/appendix/</loc>
-         <lastmod>2026-07-10</lastmod>
-    </url>
-    <url>
          <loc>https://tappaas.org/appendix/archimate/capabilities/</loc>
          <lastmod>2026-07-10</lastmod>
     </url>
@@ -46,6 +42,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/architecture/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/architecture/author-a-module/</loc>
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
@@ -149,11 +149,31 @@
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/adr-007-taxonomy/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/configuration/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/install-variant/</loc>
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
          <loc>https://tappaas.org/generated/install/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/module-template/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/opnsense-controller/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/zones/</loc>
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
@@ -170,6 +190,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/installation/preparation/</loc>
+         <lastmod>2026-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/installation/versions/</loc>
          <lastmod>2026-07-10</lastmod>
     </url>
     <url>
