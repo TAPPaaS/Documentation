@@ -53,6 +53,9 @@ steps:
                 time.sleep(2)
         sys.exit("Kroki did not become ready in time")
         PY
+      # WS0 source-sync: pull allow-listed pages from the TAPPaaS source repo
+      # (GitHub, pinned ref) into docs/generated/ — fails on source drift.
+      - python scripts/sync-source.py
       - mkdocs build --strict
 
   deploy-pages:

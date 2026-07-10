@@ -166,6 +166,9 @@ nav:
 
   - Installation:
     - Overview: installation/index.md
+    - From Source (synced):
+      - INSTALL.md: generated/install.md
+      - INSTALL-VARIANT.md: generated/install-variant.md
     - Hardware Selection: installation/hardware-selection.md
     - Preparation: installation/preparation.md
     - Foundation:

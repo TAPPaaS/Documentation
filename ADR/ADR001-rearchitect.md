@@ -267,7 +267,10 @@ doubles as social proof and as an entry point to installation.
 ### 6.4 Tasks
 
 - [ ] Rewrite `docs/index.md` around the promo storyline (§6.1); delete generic-PaaS copy.
-- [ ] Copy/export the marketing assets (§6.2) into `docs/assets/`; establish an assets convention.
+- [x] Copy/export the marketing assets (§6.2) into `docs/assets/`; establish an assets convention.
+      *(Done 2026-07-10: slide-1..3 downscaled 4K→1920 px in `docs/assets/marketing/`; script +
+      slides-pptx sources in `assets-src/marketing/` — published exports in `docs/`, editable
+      sources in `assets-src/`, bulky decks stay in Nextcloud. See `assets-src/marketing/README.md`.)*
 - [ ] Redraw continuum + four-blocks diagrams as Kroki/Mermaid (theme-aware) where worthwhile.
 - [ ] Consolidate `intro/*` into a lean set (kill duplication with the front page).
 - [ ] Present the four building blocks consistently with the ADR-007 taxonomy (align with WS4 §8.3).
@@ -410,7 +413,10 @@ from the `vllm-amd` module via WS0 so they stay current).
 
 ### 7.4 Tasks
 
-- [ ] Build the WS0 sync-runner for `INSTALL.md` + `INSTALL-ENVIRONMENT.md`.
+- [x] Build the WS0 sync-runner for `INSTALL.md` + `INSTALL-ENVIRONMENT.md`.
+      *(Skeleton done 2026-07-10: [`scripts/sync-source.py`](../scripts/sync-source.py) — see §12.
+      Upstream reality check: `INSTALL-ENVIRONMENT.md` is now `INSTALL-VARIANT.md`, and `stable`
+      has **neither** file yet — so the sync pins to `main` until 2.0 lands on `stable`.)*
 - [ ] Restructure `installation/index.md` around the 7 macro stages with a progress model.
 - [ ] Rewrite `hardware-selection.md` around the two-axis model (size tier × capability options).
 - [ ] Add a "Choose hardware" **decision flow** (the 4 steps above) with per-tier sizing tables.
@@ -803,16 +809,34 @@ Both WS3 and WS4 depend on pulling content from the TAPPaaS repo. Build one reus
 This is the highest-leverage early build: it turns "installation and manual drift" from a recurring
 chore into a solved problem.
 
+### 12.1 As built (skeleton, 2026-07-10)
+
+[`scripts/sync-source.py`](../scripts/sync-source.py), run by CI before `mkdocs build` (stdlib-only
+Python, no git needed — fetches the GitHub tarball):
+
+- **Allow-list** (in the script): `INSTALL.md`, `INSTALL-VARIANT.md` → `docs/generated/*` (git-ignored,
+  regenerated every build), in the nav under *Installation → From Source (synced)*.
+- **Transforms:** front-matter title; "generated from source — edit upstream" banner linking the
+  upstream file at the pinned ref; relative links/images rewritten to absolute GitHub blob/raw URLs.
+- **Guardrail:** build fails if an allow-listed file is missing at the ref (drift alarm).
+- **Pin:** `TAPPAAS_SOURCE_REF` env var, default **`main`** — *not* `stable`, because upstream reality
+  differs from this ADR's assumptions: `INSTALL-ENVIRONMENT.md` has become **`INSTALL-VARIANT.md`**,
+  and `stable` (still 1.x) carries **neither** file. When 2.0 reaches `stable` (WS6 cutover), the
+  production build sets `TAPPAAS_SOURCE_REF=stable` and this note retires.
+- **Next (WS3/WS4):** extend the allow-list (selected `src/**/README.md`, `docs/ADR/ADR-007*`),
+  split synced pages into the macro-stage structure, move the allow-list to a manifest file.
+
 ---
 
 ## 13. Phasing
 
-**Phase 0 — Enablers (do first)**
-- WS-S: set up Codeberg `TAPPaaS` org; move `Documentation` to Codeberg; Woodpecker (Codeberg CI) +
-  Codeberg Pages for staging + per-PR previews (GitHub keeps publishing 1.x production).
-- WS0 source-sync pipeline (skeleton; fetches TAPPaaS cross-forge from GitHub, pinned to `stable`).
-- WS1 framework spikes (A vs B) and decision — built on the Codeberg/Woodpecker pipeline.
-- Import presentation assets from Nextcloud into `docs/assets/` (unblocks WS2).
+**Phase 0 — Enablers (do first)** — ✅ **complete 2026-07-10**
+- [x] WS-S: Codeberg `TAPPaaS` org; `Documentation` on Codeberg; Woodpecker CI + git-pages for
+  staging (live at staging.tappaas.org) + `spikes/<branch>/` previews (GitHub keeps publishing 1.x).
+- [x] WS0 source-sync pipeline (skeleton; fetches TAPPaaS cross-forge from GitHub — pinned to
+  `main` until 2.0 reaches `stable`, see §12.1).
+- [x] WS1 framework spikes (A vs B) and decision (**Option B**, §5.5) — built on the pipeline.
+- [x] Import presentation assets from Nextcloud into `docs/assets/marketing/` (unblocks WS2).
 
 **Phase 1 — Public face**
 - WS2 messaging + front page + Examples.
