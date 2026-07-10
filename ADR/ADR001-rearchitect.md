@@ -843,8 +843,10 @@ because of LE rate limits. New-server facts (from <https://codeberg.page> + expe
 | Optional TXT `_git-pages-repository.staging.tappaas.org` | ▫ not required in practice; add for doc-compliance when convenient (value: `https://codeberg.org/TAPPaaS/Documentation.git`) |
 | Spike previews `…/Documentation/spikes/spike-a/`, `…/spikes/spike-b/` | ✅ build & serve via sub-directory preview pipeline |
 
-> One transient Woodpecker failure observed (pipeline #3, `clone` step died before any repo code
-> ran; the identical config passed minutes later). If a pipeline fails in `clone`, just re-run it.
+> Transient Woodpecker failures observed twice: pipeline #3 (`clone` step died before any repo code
+> ran) and pipeline #21 (the **kroki service failed to start**, so the build's wait-loop aborted
+> with "Kroki did not become ready in time"). Both passed unchanged on re-run — if a pipeline fails
+> in `clone` or in the kroki wait, just re-run it (empty commit or manual run) before debugging.
 
 ---
 
