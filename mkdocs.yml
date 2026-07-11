@@ -177,7 +177,6 @@ nav:
       - Glossary: generated/ontology.md
       - ArchiMate Diagrams:
         - Introduction: appendix/archimate/introduction.md
-        - TAPPaaS Stacks: appendix/archimate/stacks.md
         - ArchiMate Notation: appendix/archimate/notation.md
     - Foundation:
       - Overview: architecture/solution-design/index.md
