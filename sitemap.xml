@@ -185,6 +185,34 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/apps/deconz/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/hass/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/litellm/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/n8n/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/nextcloud/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/openwebui/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/apps/vllm-amd/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/controllers/SUMMARY/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
@@ -277,39 +305,11 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/installation/ai-stack/litellm/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/ai-stack/ollama/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/ai-stack/openwebui/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
          <loc>https://tappaas.org/installation/home-stack/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/installation/home-stack/home-assistant/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
          <loc>https://tappaas.org/installation/productivity-stack/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/productivity-stack/karakeep/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/productivity-stack/n8n/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/productivity-stack/nextcloud/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
