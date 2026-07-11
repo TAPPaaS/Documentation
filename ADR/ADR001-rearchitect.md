@@ -656,6 +656,18 @@ Codeberg terminates TLS for `tappaas.org` — acceptable for a public static sit
 > **Realised 2026-07-10** — the nav below is now live on staging (URLs kept: Operate = `manual/*`,
 > Develop = `architecture/*` + ArchiMate; only labels/section pages changed).
 
+> **Evolved 2026-07-11 (Lars review):** the IA split further into
+> `Why · What · Install · Operate · Develop · Stacks · Roadmap · About` — all URLs kept:
+>
+> - **Why** (renamed from "Why TAPPaaS"): story, sovereignty, examples.
+> - **What** (new): Capabilities · Principles (Design Principles + Software Selection, the latter
+>   moved out of Solution Design) · Categories & Ontology (taxonomy moved from Develop, merged with
+>   the newly-synced upstream `ontology.md` — resolving ADR-013 open question 3) · Foundation (the
+>   rest of Solution Design, retitled) · ADRs (new overview page pointing at the source repo).
+> - **Develop** now concentrates on module development: Author a Module + "How the CICD works"
+>   (renamed CICD Design) + Meta Model + ArchiMate; overview rewritten around the module/CICD story.
+> - **Stacks** (new): the Module Designs pages, one per stack (Foundation/AI/Productivity/Home/DevOps).
+
 A candidate top-level nav after the upgrade (audience-first):
 
 ```

@@ -1,71 +1,57 @@
 ---
-title: Develop — Architecture Overview
+title: Develop — Build a TAPPaaS Module
 description: >
-  How TAPPaaS is built: the ADR-007 taxonomy (Site · People · Apps · Environments ·
-  Health) as the architecture spine, plus solution design, CICD and module authoring.
+  The Develop track: how modules are structured, how the CICD mothership installs,
+  updates and tests them, and how to package your own app for TAPPaaS.
 ---
 
-# Architecture Overview
+# Developing TAPPaaS
 
-This is the **Develop** track: how TAPPaaS is designed, for contributors and module
-authors. If you're *running* a system, you want [Operate](../manual/index.md) instead.
+This is the **Develop** track: everything you need to extend TAPPaaS with your own
+module. If you're *running* a system, you want [Operate](../manual/index.md); if you
+want the platform's concepts and design, that's [What](../what/adrs.md) (capabilities,
+principles, [taxonomy](../generated/adr-007-taxonomy.md), foundation design, ADRs).
 
-## The spine: one taxonomy for everything
+## The one idea to hold on to
 
-The architecture of TAPPaaS 2.0 is organised by **ADR-007 — the TAPPaaS taxonomy**.
-One **Site** (the physical and administrative perimeter — one TAPPaaS = one Site)
-contains **three classification domains**, with one cross-cutting lens:
+Everything deployable is a **module**: a directory with a json contract
+(`<module>.json` — schema-checked, declares zones, sizing, `dependsOn` and the
+services it `provides`), the scripts the platform calls (`install.sh`, `update.sh`,
+`test.sh`), and its docs (README / INSTALL / DESIGN). In the
+[taxonomy](../generated/adr-007-taxonomy.md), your module is an **App**; it runs
+inside an **Environment**; managers operate it for the rest of its life.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ 🏢 SITE  (the physical + admin perimeter — one TAPPaaS)     │
-│   ┌───────────────────────────────────────────────────────┐ │
-│   │ 👥 PEOPLE          📦 APPS          🏠 ENVIRONMENTS   │ │
-│   │ Org→Group→User     what runs        where apps run    │ │
-│   └───────────────────────────────────────────────────────┘ │
-│   🩺 HEALTH  (lens — observability over all of the above)   │
-└─────────────────────────────────────────────────────────────┘
-```
+## How the CICD works
 
-- **People** — organizations, groups, users: identity and access.
-- **Apps** — everything that runs, classified by tier and source.
-- **Environments** — where apps run: zones, domains, update windows.
-- **Health** — not a domain but a *lens*: status and observability overlaid on all of it.
+The **CICD mothership** (`tappaas-cicd`) is the platform's control plane — a VM that
+holds the TAPPaaS git checkout and runs everything:
 
-Every artifact on the platform is exactly one of People / Apps / Environments (the
-model is MECE); *how* a deployable unit is composed is a separate concern (ADR-009,
-see the [meta model](meta-model.md)).
+1. **Install**: `install-module.sh <module>` stages and validates your json, resolves
+   `dependsOn` (creating the VM via `cluster:vm` first), then runs your `install.sh`
+   for the module-specific work.
+2. **Update**: the module manager runs `update.sh` on schedule — modules keep
+   themselves patched without operator attention.
+3. **Test**: `test-module.sh <module>` runs your `test.sh` — the same tests gate
+   regressions after updates.
+4. Under the hood, **managers decide, controllers do** — your module talks to the
+   platform through its json contract, never by hand-wiring firewalls or DNS. See
+   [How the CICD works](cicd-design/index.md) for the full design (git structure,
+   module structure, script contracts).
 
-This is the same model the [front page](../intro/index.md) tells as *Site · Workloads ·
-People · Environments* — "Workloads" is the everyday word for Apps. One mental model,
-two altitudes.
+## Start here
 
-!!! note "2.0 status"
-    ADR-007 is the accepted basis for **TAPPaaS 2.0** and is being implemented now;
-    1.x (today's `stable`) predates it. See
-    [Stable vs Main](../installation/versions.md) for what that means when installing.
-    The full ADR text is synced from source:
-    [ADR-007 — TAPPaaS Taxonomy](../generated/adr-007-taxonomy.md).
+1. **[Author a Module](author-a-module.md)** — the 5-step path from `00-Template`
+   copy to a good platform citizen.
+2. **[How the CICD works](cicd-design/index.md)** — what the automation does with
+   your module.
+3. **[Meta Model](meta-model.md)** — composition rules (ADR-009): what a deployable
+   unit is, `<module>:<service>` coordinates.
+4. **[ArchiMate Diagrams](../appendix/archimate/introduction.md)** — the formal
+   architecture views, rendered from source.
 
-## The sections
+## Decide in writing first
 
-- **[Taxonomy (ADR-007, source)](../generated/adr-007-taxonomy.md)** — the model, its
-  decision tree, and the sub-ADRs per domain.
-- **[Capabilities](capabilities.md)** — what the platform can do, top-level structure.
-- **[Solution Design](solution-design/index.md)** — the concrete design: software
-  selection, network, storage, security, SSO, backup.
-- **[CICD Design](cicd-design/index.md)** — the automation that installs, updates and
-  heals everything: git structure, module structure, scripts.
-- **[Module Designs](module-designs/index.md)** — per-stack module specifications.
-- **[Meta Model](meta-model.md)** — the general concepts (composition, ADR-009).
-- **[Author a Module](author-a-module.md)** — the contributor path: package your own
-  app for TAPPaaS.
-- **[ArchiMate Diagrams](../appendix/archimate/introduction.md)** — the enterprise
-  architecture views, rendered from source with Kroki.
-
-## Where decisions live
-
-Architecture decisions are recorded as ADRs in the source repository:
-[`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/docs/ADR). If you're about
-to change something structural, start there — write the ADR before the code, and test
-the idea against the [design principles](../intro/design-principles.md).
+Structural changes start as an ADR in the source repo
+([`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/docs/ADR) — overview
+[here](../what/adrs.md)) — write the decision before the code, and test the idea
+against the [design principles](../intro/design-principles.md).

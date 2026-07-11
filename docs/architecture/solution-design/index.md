@@ -1,19 +1,17 @@
 ---
-title: Solution Design
-description: TAPPaaS solution design overview
+title: Foundation
+description: What the TAPPaaS foundation is — network, storage, security, identity and backup design
 ---
 
-# Solution Design
+# The Foundation
 
-This section covers the overall solution design of TAPPaaS.
+What the TAPPaaS foundation consists of, and how each part is designed:
 
----
+- **[Network](network.md)** — network topology and zone/VLAN design
+- **[Storage](storage.md)** — data storage design
+- **[Security](security.md)** — security architecture and controls
+- **[Single Sign-On](single-signon.md)** — identity and authentication
+- **[Backup](backup.md)** — backup and recovery design
 
-## Design Areas
-
-- **[Software Selection](software-selection.md)** - Overall system architecture
-- **[Network](network.md)** - Network topology and VLAN design
-- **[Storage](storage.md)** - Data storage design
-- **[Security](security.md)** - Security architecture and controls
-- **[Single Sign-On](single-signon.md)** - Identity and authentication
-- **[Backup](backup.md)** - Backup and recovery design
+How the software behind each part gets chosen is a principle, not an accident — see
+[Software Selection](software-selection.md) under Principles.

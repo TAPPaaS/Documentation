@@ -44,6 +44,7 @@ ALLOW_LIST = [
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network zones (source)"),
     # Develop references (WS4)
     ("docs/ADR/ADR-007 - TAPPaaS Taxonomy.md", "generated/adr-007-taxonomy.md", "ADR-007 — TAPPaaS Taxonomy (source)"),
+    ("docs/Architecture/ontology.md", "generated/ontology.md", "Ontology — Consolidated Glossary (source)"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Schemas — the module contract (source)"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module template — 00-Template (source)"),
 ]

@@ -164,11 +164,27 @@ extra:
 
 # Navigation structure (Terraform-style)
 nav:
-  - Why TAPPaaS:
+  - Why:
     - Overview: intro/index.md
-    - Design Principles: intro/design-principles.md
     - Digital Sovereignty: intro/digital-sovereignty.md
     - Examples: intro/examples.md
+
+  - What:
+    - Capabilities: architecture/capabilities.md
+    - Principles:
+      - Design Principles: intro/design-principles.md
+      - Software Selection: architecture/solution-design/software-selection.md
+    - Categories & Ontology:
+      - Taxonomy (ADR-007, source): generated/adr-007-taxonomy.md
+      - Ontology (source): generated/ontology.md
+    - Foundation:
+      - Overview: architecture/solution-design/index.md
+      - Network: architecture/solution-design/network.md
+      - Storage: architecture/solution-design/storage.md
+      - Security: architecture/solution-design/security.md
+      - Single Sign-On: architecture/solution-design/single-signon.md
+      - Backup: architecture/solution-design/backup.md
+    - ADRs: what/adrs.md
 
   - Install:
     - Overview: installation/index.md
@@ -212,40 +228,30 @@ nav:
 
   - Develop:
     - Overview: architecture/index.md
-    - Taxonomy (ADR-007):
-      - The Taxonomy (source): generated/adr-007-taxonomy.md
     - Author a Module:
       - Guide: architecture/author-a-module.md
       - Module Template (source): generated/module-template.md
       - Schemas (source): generated/schemas.md
-    - Capabilities: architecture/capabilities.md
-    - Solution Design:
-      - Overview: architecture/solution-design/index.md
-      - Software Selection: architecture/solution-design/software-selection.md
-      - Network: architecture/solution-design/network.md
-      - Storage: architecture/solution-design/storage.md
-      - Security: architecture/solution-design/security.md
-      - Single Sign-On: architecture/solution-design/single-signon.md
-      - Backup: architecture/solution-design/backup.md
-    - CICD Design:
+    - How the CICD works:
       - Overview: architecture/cicd-design/index.md
       - Git Structure: architecture/cicd-design/git-structure.md
       - Module Structure: architecture/cicd-design/module-structure.md
       - CICD Script Structure: architecture/cicd-design/script-structure.md
       - Plans: architecture/cicd-design/plans.md
-    - Module Designs:
-      - Overview: architecture/module-designs/index.md
-      - Foundation Stack: architecture/module-designs/foundation.md
-      - AI Stack: architecture/module-designs/ai.md
-      - Productivity Stack: architecture/module-designs/productivity.md
-      - Home Stack: architecture/module-designs/home.md
-      - DevOps Stack: architecture/module-designs/devops.md
     - Meta Model: architecture/meta-model.md
     - ArchiMate Diagrams:
       - Introduction: appendix/archimate/introduction.md
       - TAPPaaS Capabilities: appendix/archimate/capabilities.md
       - TAPPaaS Stacks: appendix/archimate/stacks.md
       - ArchiMate Notation: appendix/archimate/notation.md
+
+  - Stacks:
+    - Overview: architecture/module-designs/index.md
+    - Foundation Stack: architecture/module-designs/foundation.md
+    - AI Stack: architecture/module-designs/ai.md
+    - Productivity Stack: architecture/module-designs/productivity.md
+    - Home Stack: architecture/module-designs/home.md
+    - DevOps Stack: architecture/module-designs/devops.md
 
   - Roadmap: roadmap/index.md
 
