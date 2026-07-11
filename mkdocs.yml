@@ -170,13 +170,13 @@ nav:
     - Examples: intro/examples.md
 
   - What:
-    - Capabilities: architecture/capabilities.md
     - Principles:
       - Design Principles: intro/design-principles.md
       - Software Selection: architecture/solution-design/software-selection.md
-    - Categories & Ontology:
-      - Taxonomy (ADR-007, source): generated/adr-007-taxonomy.md
-      - Ontology (source): generated/ontology.md
+    - Ontology:
+      - Capabilities: architecture/capabilities.md
+      - Taxonomy (source): generated/adr-007-taxonomy.md
+      - Glossary (source): generated/ontology.md
     - Foundation:
       - Overview: architecture/solution-design/index.md
       - Network: architecture/solution-design/network.md
