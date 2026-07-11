@@ -46,8 +46,8 @@ holds the TAPPaaS git checkout and runs everything:
    your module.
 3. **[Meta Model](meta-model.md)** — composition rules (ADR-009): what a deployable
    unit is, `<module>:<service>` coordinates.
-4. **[ArchiMate Diagrams](../appendix/archimate/introduction.md)** — the formal
-   architecture views, rendered from source.
+4. **[Meta Model](meta-model.md)** — how the architecture is modeled, with the
+   platform overview diagram.
 
 ## Decide in writing first
 

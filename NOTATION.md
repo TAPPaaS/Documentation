@@ -1,9 +1,8 @@
----
-title: ArchiMate Notation
-description: Reference guide for creating ArchiMate diagrams
----
+# ArchiMate Notation — drawing conventions
 
-# ArchiMate Notation
+Authoring reference for the ArchiMate diagrams on the documentation site (rendered
+with Kroki/PlantUML). Not published — for diagram authors working in this repo.
+Moved here from the site's ArchiMate appendix (2026-07-11 review).
 
 This page provides a reference guide for creating ArchiMate diagrams in the TAPPaaS documentation.
 
