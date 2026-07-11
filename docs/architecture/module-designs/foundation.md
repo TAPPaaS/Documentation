@@ -7,9 +7,9 @@ description: >
 
 # Foundation Stack
 
-The foundation is what makes TAPPaaS a *platform* rather than a pile of VMs. Its
-design is described under [What → Foundation](../solution-design/index.md); here is
-the module catalog:
+The foundation is what makes TAPPaaS a *platform* rather than a pile of VMs. Like
+everything else it is built from modules — see the
+[Module Model](../solution-design/index.md); here is the module catalog:
 
 | Module | Role |
 |--------|------|

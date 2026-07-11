@@ -10,7 +10,7 @@ description: >
 This is the **Develop** track: everything you need to extend TAPPaaS with your own
 module. If you're *running* a system, you want [Operate](../manual/index.md); if you
 want the platform's concepts and design, that's [What](../what/adrs.md) (capabilities,
-principles, [taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md), foundation design, ADRs).
+principles, the [module model](solution-design/index.md), ADRs).
 
 ## The one idea to hold on to
 
@@ -44,9 +44,7 @@ holds the TAPPaaS git checkout and runs everything:
    copy to a good platform citizen.
 2. **[How the CICD works](cicd-design/index.md)** — what the automation does with
    your module.
-3. **[Meta Model](meta-model.md)** — composition rules (ADR-009): what a deployable
-   unit is, `<module>:<service>` coordinates.
-4. **[Meta Model](meta-model.md)** — how the architecture is modeled, with the
+3. **[Meta Model](meta-model.md)** — how the architecture is modeled, with the
    platform overview diagram.
 
 ## Decide in writing first

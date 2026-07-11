@@ -172,11 +172,11 @@ nav:
   - What:
     - Principles: intro/design-principles.md
     - Capabilities: architecture/capabilities.md
-    - Meta Model: architecture/meta-model.md
-    - Foundation:
+    - Module Model:
       - Overview: architecture/solution-design/index.md
       - Module Dependencies: generated/module-dependencies.md
     - ADRs: what/adrs.md
+    - Meta Model: architecture/meta-model.md
     - Glossary: generated/ontology.md
 
   - Install:
