@@ -8,9 +8,12 @@ description: >
 # Design Principles
 
 Seven principles guide every TAPPaaS decision — which software gets curated in, how
-modules must behave, what ships enabled and what stays off. They are ordered the way
-our users evaluate platforms: **risk first, then cost, then capability**. They also
-serve as the evaluation filter for new [modules](../architecture/author-a-module.md).
+modules must behave, what ships enabled and what stays off. It is why the platform is
+called TAPPaaS — pronounced *tapas*, like the Spanish dish: a curated collection of
+delicious servings that together make a comprehensive meal. The principles are ordered
+the way our users evaluate platforms: **risk first, then cost, then capability** —
+and they serve as the evaluation filter for new
+[modules](../architecture/author-a-module.md).
 
 ## 1. Digital sovereignty — you stay in control
 
@@ -40,6 +43,14 @@ opposite.*
 Fully open source (MPL 2.0). No subscriptions, no per-seat pricing, no egress fees,
 no cloud-provider dependency. You can inspect, audit, fork, or migrate at any time —
 and it meets open-standard requirements for public-sector procurement.
+
+The same rule governs every component we curate into the platform. It must:
+
+- be **open source**;
+- show a **track record of being secure**;
+- be **established and sufficiently feature-complete**;
+- use **open data formats** — so you can migrate away from any component, or from
+  TAPPaaS itself. No lock-in means not even ours.
 
 ## 5. Predictable cost — hardware versatility
 

@@ -13,8 +13,9 @@ What the TAPPaaS foundation consists of, and how each part is designed:
 - **[Single Sign-On](single-signon.md)** — identity and authentication
 - **[Backup](backup.md)** — backup and recovery design
 
-How the software behind each part gets chosen is a principle, not an accident — see
-[Software Selection](software-selection.md) under Principles.
+How the software behind each part gets chosen is a principle, not an accident — the
+curation criteria live in the [Design Principles](../../intro/design-principles.md)
+(principle 4); each module's README records the alternatives that were considered.
 
 ## The module model
 

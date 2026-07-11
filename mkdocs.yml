@@ -170,9 +170,7 @@ nav:
     - Examples: intro/examples.md
 
   - What:
-    - Principles:
-      - Design Principles: intro/design-principles.md
-      - Software Selection: architecture/solution-design/software-selection.md
+    - Principles: intro/design-principles.md
     - Architecture:
       - Capabilities: architecture/capabilities.md
       - Taxonomy: generated/adr-007-taxonomy.md
