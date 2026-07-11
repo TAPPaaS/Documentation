@@ -97,6 +97,10 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/architecture/module-designs/iot/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/architecture/module-designs/productivity/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
@@ -161,6 +165,10 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/module-dependencies/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/module-template/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
@@ -170,10 +178,6 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/satellite-install/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/generated/satellite/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
@@ -245,6 +249,42 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/foundation/SUMMARY/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/backup/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/cluster/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/identity/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/logging/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/network/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/satellite/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/tappaas-cicd/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/foundation/templates/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/managers/SUMMARY/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
@@ -278,6 +318,62 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/managers/site-manager/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/SUMMARY/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/coturn/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/deconz/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/euro-office/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/hass/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/litellm/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/n8n/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/netbird-client/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/nextcloud-hpb/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/nextcloud/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/openwebui/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/vaultwarden/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/vllm-amd/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/windows-server/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
