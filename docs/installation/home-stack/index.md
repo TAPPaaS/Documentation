@@ -1,7 +1,8 @@
 ---
 title: Home Stack
 description: >
-  Home automation with local control — Home Assistant, with deCONZ for Zigbee.
+  Home automation and home media — Home Assistant today; Jellyfin and Immich
+  planned.
 ---
 
 # Home Stack
@@ -9,9 +10,10 @@ description: >
 | Module | Role | Status |
 |--------|------|--------|
 | **[Home Assistant](../../generated/apps/hass.md)** | Home automation with local control — lights, heating, sensors, cameras | Available |
-| **[deCONZ](../../generated/apps/deconz.md)** | Zigbee gateway (ConBee) for sensors, switches and lights — pairs with Home Assistant | Available (Development) |
+| **Jellyfin** | Media server — your movies, series and music, streamed locally | Planned — no module yet |
+| **Immich** | Photo and video library — your pictures, indexed and searchable at home | Planned — no module yet |
 
 Home Assistant runs as a sealed appliance VM in the home service zone; IoT devices
-live in the separated IoT zones with firewall boundaries between them — see
-[Network Zones](../../generated/zones.md) for the zone model. Access from outside is
-gated at the reverse-proxy layer.
+live in the separated IoT zones — see the [IoT Stack](../iot-stack/index.md) for the
+device-side modules and [Network Zones](../../generated/zones.md) for the zone model.
+Access from outside is gated at the reverse-proxy layer.

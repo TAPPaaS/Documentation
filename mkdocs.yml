@@ -193,10 +193,8 @@ nav:
       - Overview: installation/preparation.md
       - Branch Selection: installation/branch-selection.md
     - Install Foundation: generated/install.md
-    - Add an Environment:
-      - Environments: generated/install-environment.md
-      - Satellite: generated/satellite.md
-      - Satellite Install: generated/satellite-install.md
+    - Add Environment: generated/install-environment.md
+    - Add Satellite: generated/satellite-install.md
     - Add Stacks:
       - AI Stack:
         - Overview: installation/ai-stack/index.md
@@ -210,6 +208,8 @@ nav:
       - Home Stack:
         - Overview: installation/home-stack/index.md
         - Home Assistant: generated/apps/hass.md
+      - IoT Stack:
+        - Overview: installation/iot-stack/index.md
         - deCONZ: generated/apps/deconz.md
 
   - Operate:

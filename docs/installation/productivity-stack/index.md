@@ -9,7 +9,7 @@ description: >
 
 | Module | Role | Status |
 |--------|------|--------|
-| **[Nextcloud](../../generated/apps/nextcloud.md)** | Files, calendars, contacts, photos, Talk — your own cloud drive | Available (Testing) |
+| **[Nextcloud](../../generated/apps/nextcloud.md)** | Files, calendars, contacts, Talk — your own cloud drive | Available (Testing) |
 | **[n8n](../../generated/apps/n8n.md)** | Workflow automation (AI access planned via the LiteLLM gateway) | Planned — placeholder module |
 | **Karakeep** | Bookmarking / read-it-later | Planned — no module yet |
 

@@ -13,19 +13,21 @@ you what it needs, and what "done" looks like before you move on.
 
 ## The seven stages
 
+Each stage is a menu item on the left — work through them in order.
+
 | # | Stage | You'll need | Done when |
 |---|-------|-------------|-----------|
-| 1 | [Choose hardware](#stage-1-choose-hardware) | An honest look at your needs | Hardware ordered/on the bench, sized by tier + options |
-| 2 | [Prepare](#stage-2-prepare) | Network, domain, credentials, branch choice | The [preparation checklist](preparation.md) is all ticked |
-| 3 | [Bootstrap the foundation](#stage-3-bootstrap-the-foundation) | Stages 1 + 2 complete | Foundation installed; network cut over; you can log in everywhere |
-| 4 | [Grow the cluster](#stage-4-grow-the-cluster-optional) *(optional)* | Additional nodes | All nodes joined; HA where intended |
-| 5 | [Add environments](#stage-5-add-environments) *(optional)* | A running foundation | Each tenant/purpose has its own separated environment |
-| 6 | [Add stacks](#stage-6-add-stacks) | A running foundation | The apps you chose are installed and reachable |
+| 1 | [Hardware Selection](#stage-1-hardware-selection) | An honest look at your needs | Hardware ordered/on the bench, sized by tier + options |
+| 2 | [Preparation](#stage-2-preparation) | Network, domain, credentials, branch choice | The [preparation checklist](preparation.md) is all ticked |
+| 3 | [Install Foundation](#stage-3-install-foundation) | Stages 1 + 2 complete | Foundation installed (all nodes); network cut over; you can log in everywhere |
+| 4 | [Add Environment](#stage-4-add-environment-optional) *(optional)* | A running foundation | Each tenant/purpose has its own separated environment |
+| 5 | [Add Satellite](#stage-5-add-satellite-optional) *(optional)* | A VPS, if you planned one | The satellite carries its roles (ingress / backup / VPN) |
+| 6 | [Add Stacks](#stage-6-add-stacks) | A running foundation | The apps you chose are installed and reachable |
 | 7 | [Operate](#stage-7-operate) | — | Updates, backup and health checks running on schedule |
 
 ---
 
-## Stage 1 — Choose hardware
+## Stage 1 — Hardware Selection
 
 Pick a **size tier** (Evaluation / Home / SMB / Scale-out), then toggle three
 **capability options** — local AI, local backup, local public IP — independently.
@@ -36,7 +38,7 @@ and gives per-tier sizing tables.
 
 [:octicons-arrow-right-24: Hardware Selection](hardware-selection.md)
 
-## Stage 2 — Prepare
+## Stage 2 — Preparation
 
 One concise checklist: network facts, domain + DNS API token, credentials, admin
 email — and the **[branch selection](branch-selection.md)** your system will track.
@@ -45,54 +47,58 @@ email — and the **[branch selection](branch-selection.md)** your system will t
 
 [:octicons-arrow-right-24: Preparation](preparation.md)
 
-## Stage 3 — Bootstrap the foundation
+## Stage 3 — Install Foundation
 
-One command chain does the heavy lifting — first Proxmox node, the OPNsense
-firewall, the **network cut-over** (additive: the firewall becomes your gateway
-without dropping your session or moving cables), the CICD mothership, **DNS/TLS
-setup** (wildcard certificates via your DNS provider's API), **switch management**
-where a managed switch carries the VLAN trunks, and then the remaining foundation
-modules (backup, identity, logging) with your organisation bootstrapped in the
-identity provider.
+Four steps, mostly automated — first Proxmox node plus one command chain that
+brings up the OPNsense firewall, the **network cut-over** (additive: the firewall
+becomes your gateway without dropping your session or moving cables) and the CICD
+mothership; additional nodes joining over the network, fully unattended; **DNS/TLS
+setup** (wildcard certificates via your DNS provider's API) with **switch
+management** where a managed switch carries the VLAN trunks; and the remaining
+foundation modules (backup, identity, logging) with your organisation bootstrapped
+in the identity provider.
 
 The authoritative, always-current procedure is
-**[Install Foundation](../generated/install.md)** — follow it top to bottom.
+**[Install Foundation](../generated/install.md)** — follow its steps top to bottom.
 
 **Done when:** the install prints its "🎉 your TAPPaaS foundation is installed"
 summary, and you can reach the Proxmox UI, the firewall UI and the CICD mothership.
 
 [:octicons-arrow-right-24: Install Foundation](../generated/install.md)
 
-## Stage 4 — Grow the cluster *(optional)*
-
-Single-node tiers skip this. Additional nodes install over the network, fully
-unattended — one command per node (`site-manager node add tappaasN --pxe`), covered
-in [Install Foundation](../generated/install.md).
-
-**Done when:** every node shows in the cluster and HA-marked services migrate cleanly.
-
-## Stage 5 — Add environments *(optional)*
+## Stage 4 — Add Environment *(optional)*
 
 Run more than one world on the same platform: production next to family, tenants
 next to experiments — separated environments with network boundaries between them.
-This is also where a **[satellite](../generated/satellite.md)** joins the site if
-you planned one (public ingress, off-site backup, admin VPN —
-[Satellite Install](../generated/satellite-install.md)).
 
-**Done when:** each environment exists with its own zones/domain, and the satellite
-(if any) carries its roles.
+**Done when:** each environment exists with its own zones and domain.
 
-[:octicons-arrow-right-24: Add an Environment](../generated/install-environment.md)
+[:octicons-arrow-right-24: Add Environment](../generated/install-environment.md)
 
-## Stage 6 — Add stacks
+## Stage 5 — Add Satellite *(optional)*
 
-Install the workloads you chose in stage 1:
+If you planned a **satellite** in stage 1 (public ingress without a public IP,
+off-site backup, admin VPN — see the
+[hardware guide](hardware-selection.md#the-satellite-the-gap-filler)), enrol the
+VPS now.
+
+**Done when:** the satellite carries its roles.
+
+[:octicons-arrow-right-24: Add Satellite](../generated/satellite-install.md)
+
+## Stage 6 — Add Stacks
+
+Install the workloads you chose in stage 1. First-party modules install with
+`install-module.sh <module>` from the module's directory; community module stores
+register once with `repository.sh add <repo> --branch <branch>`, after which their
+modules install the same way.
 
 | Stack | What you get |
 |-------|--------------|
-| **[AI stack](ai-stack/index.md)** | Local AI: OpenWebUI, LiteLLM, vLLM/Ollama |
-| **[Productivity stack](productivity-stack/index.md)** | Nextcloud, n8n, Karakeep |
-| **[Home stack](home-stack/index.md)** | Home Assistant (+ deCONZ for Zigbee) |
+| **[AI stack](ai-stack/index.md)** | Local AI: vLLM serving, LiteLLM gateway, OpenWebUI |
+| **[Productivity stack](productivity-stack/index.md)** | Nextcloud (n8n, Karakeep planned) |
+| **[Home stack](home-stack/index.md)** | Home Assistant (Jellyfin, Immich planned) |
+| **[IoT stack](iot-stack/index.md)** | deCONZ Zigbee gateway |
 
 Browse [what people run on TAPPaaS](../intro/examples.md) for the full module gallery.
 
