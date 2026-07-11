@@ -26,7 +26,7 @@ LiteLLM provides a unified API gateway for multiple LLM providers, allowing you 
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] API keys for desired providers
 - [ ] DNS record configured
 

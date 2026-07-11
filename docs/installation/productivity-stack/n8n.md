@@ -26,7 +26,7 @@ n8n is a fair-code workflow automation platform that allows you to connect servi
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] DNS record configured
 - [ ] Reverse proxy ready
 

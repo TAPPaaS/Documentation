@@ -17,7 +17,7 @@ The TAPPaaS Productivity Stack provides workflow automation and productivity too
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] DNS management access
 - [ ] Optional: AI Stack for AI-powered workflows
 

@@ -35,7 +35,7 @@ timeline
 ```
 
 **Where we are:** 1.x is released and running on real systems ([examples](../intro/examples.md));
-the current focus is **Version 2.0** — the [ADR-007 taxonomy](../installation/versions.md)
+the current focus is **Version 2.0** — the [ADR-007 taxonomy](../installation/branch-selection.md)
 and this rebuilt documentation site are part of it.
 
 ## How we plan
@@ -54,5 +54,5 @@ and this rebuilt documentation site are part of it.
 | You want… | Go to |
 |-----------|-------|
 | What's being worked on right now | [Open milestones](https://github.com/TAPPaaS/TAPPaaS/milestones) |
-| What 2.0 means for you | [Stable vs Main](../installation/versions.md) |
+| What 2.0 means for you | [Branch Selection](../installation/branch-selection.md) |
 | To influence the direction | [Contributing](../community/contributing.md) · [issues](https://github.com/TAPPaaS/TAPPaaS/issues) |

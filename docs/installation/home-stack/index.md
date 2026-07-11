@@ -24,7 +24,7 @@ Home Assistant is a powerful open-source home automation platform that:
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] VLAN configured for IoT devices (recommended)
 - [ ] Compatible smart home devices
 

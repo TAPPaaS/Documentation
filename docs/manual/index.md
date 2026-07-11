@@ -2,7 +2,7 @@
 title: Operate TAPPaaS
 description: >
   Run a live TAPPaaS system day to day — the manager/controller operating model,
-  with reference pages synced from source on every build.
+  with reference pages that are always current with the source code.
 ---
 
 # Operate TAPPaaS
@@ -23,10 +23,10 @@ So: **managers decide, controllers do.** A day-to-day operation like "update all
 modules" is a manager conversation; "why didn't the VLAN get created" is a controller
 page.
 
-## Reference — synced from source
+## Reference
 
-These pages are generated from the source repo on every build (always current, and
-new managers/controllers appear here automatically):
+These pages are always current with the source code (new managers and controllers
+appear here automatically):
 
 - **Managers** — see the *Managers* section in the sidebar: one page per manager
   (site, people, module, environment, network, backup, health, satellite).
@@ -38,5 +38,5 @@ new managers/controllers appear here automatically):
 ## Related
 
 - [Install TAPPaaS](../installation/index.md) — getting to a running system.
-- [Stable vs Main](../installation/versions.md) — the 2.0 status of what's described here.
+- [Branch Selection](../installation/branch-selection.md) — the 2.0 status of what is described here.
 - [Develop](../architecture/index.md) — how the managers/controllers are designed.

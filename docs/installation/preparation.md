@@ -1,113 +1,55 @@
 ---
 title: Preparation
-description: Prepare your environment before installing TAPPaaS
+description: >
+  Everything to have ready before running the TAPPaaS install — network, domain,
+  credentials, branch — as one concise checklist.
 ---
 
 # Preparation
 
-Before beginning the TAPPaaS installation, complete these preparation steps to ensure a smooth deployment.
+Have these ready **before** you run the [install](../generated/install.md). Hardware
+itself is the previous step — [Hardware Selection](hardware-selection.md).
 
-## Prerequisites Checklist
+## 1. Network
 
-- [ ] Hardware acquired and assembled
-- [ ] Network connectivity established
-- [ ] Domain name registered
-- [ ] DNS access configured
-- [ ] Admin email account prepared
+- [ ] An **existing network** (your home/office LAN) with working **DHCP and
+  internet** — the install runs on it, and after cut-over it feeds the firewall's
+  WAN via DHCP.
+- [ ] A **free IP** on that network for the first node (the Proxmox installer does
+  not use DHCP), plus its real gateway and DNS server addresses.
+- [ ] Each node wired with **two NICs**: one towards the upstream router (WAN), one
+  towards your downstream switch (LAN). Clusters need a switch between the nodes —
+  **unmanaged works out of the box**; a **managed switch must have its inter-node
+  ports configured as VLAN trunks before you add nodes**.
+- [ ] Drive the install from a client that is **not** on `10.0.0.0/24` (that subnet
+  becomes the management network during cut-over).
 
-## Network Preparation
+## 2. Domain and DNS
 
-### Internet Connectivity
+- [ ] A **registered domain** with **API-accessible DNS**. Not a hard requirement —
+  you can even configure a domain you haven't registered yet — but needed for
+  automatic public TLS certificates.
+- [ ] An **API token** for your DNS provider (used for ACME DNS-01; ~120 providers
+  supported — Cloudflare, deSEC, Hetzner, OVH, Route 53, …). For Cloudflare: a
+  custom token with `Zone → Zone → Read` and `Zone → DNS → Edit`, restricted to
+  your domain. You'll enter it after bootstrap, not before.
 
-Ensure you have:
+## 3. Credentials and contact
 
-- Reliable wired internet connection
-- Public IP address (static preferred)
-- Ports 80 and 443 available for inbound traffic
+- [ ] A **strong password** for Proxmox and the firewall — you'll be asked for it
+  several times during install.
+- [ ] A **working email address you actually monitor** — Proxmox sends system and
+  health notifications there, and TAPPaaS reuses it as the admin email.
 
-### Domain Name
+## 4. Decisions to make now
 
-You will need:
+- [ ] **[Branch selection](branch-selection.md)** — which branch the system will
+  install from and track.
+- [ ] **Organisation name** (`--name`): lowercase, ≤15 characters. This one name
+  becomes the Proxmox cluster, the site, the default environment and your
+  organisation in the identity provider.
+- [ ] **Your public domain** (`--domain`), used by the reverse proxy as
+  `<service>.yourdomain.com`.
 
-- A registered domain name
-- Access to DNS management
-- Ability to create A records and subdomains
-
-Example DNS records you'll create:
-
-```
-tappaas.yourdomain.com    → Your public IP
-*.tappaas.yourdomain.com  → Your public IP (wildcard)
-```
-
-## Bootstrap IP
-
-for the bootstrap of the first node of the TAPPaaS cluster we have to give it a local IP address.
-
-It is assumed that your public IP is hitting a NAT router so you would have say a 192.168.0.0/24 or /16 network available. For instance 192.168.1.234
-
-note down a free IP number from this range, you will need it in the bootstrap phase. We call it tmp-local-ip
-
-also note down you gateway ip number. Likely 192.168.0.1 and a dns server. you can use 1.1.1.1. it will only be used during bootstrap
-
-## Email Account Preparation
-
-Prepare a dedicated email account for system administration notifications. This email will be used for:
-
-- Let's Encrypt certificate notifications
-- System alerts and monitoring
-- Backup status reports
-- Security notifications
-
-!!! tip "Recommendation"
-    Use a dedicated admin email address (e.g., `admin@yourdomain.com`) rather than a personal email to ensure notifications are not missed and can be monitored by multiple team members if needed.
-
-## Software Preparation
-
-### Download Proxmox VE
-
-1. Visit [proxmox.com/downloads](https://www.proxmox.com/en/downloads)
-2. Download the latest Proxmox VE ISO
-3. Create bootable USB media using:
-   - **Windows**: Rufus
-   - **macOS**: balenaEtcher
-   - **Linux**: `dd` command
-
-### Verify Downloads
-
-Always verify ISO checksums:
-
-```bash
-sha256sum proxmox-ve_*.iso
-```
-
-Compare with the official checksums from the Proxmox download page.
-
-## Hardware Preparation
-
-### BIOS/UEFI Settings
-
-Configure your hardware:
-
-- Enable virtualization (VT-x/AMD-V)
-- Enable IOMMU if available
-- Set boot order to USB first
-- Disable Secure Boot (optional, for compatibility)
-
-## Documentation
-
-Keep records of:
-
-| Item | Value |
-|------|-------|
-| Public IP | |
-| Domain name | |
-| Root password | |
-| Admin email | |
-
-## Next Steps
-
-Once preparation is complete:
-
-1. Begin with [Foundation Installation](foundation/index.md)
-2. Start with the [Cluster](foundation/cluster.md) setup
+**Done when** every box above is ticked — then proceed to
+[Install Foundation](../generated/install.md).

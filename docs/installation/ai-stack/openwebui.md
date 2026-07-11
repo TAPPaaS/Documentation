@@ -29,7 +29,7 @@ The OpenWebUI deployment includes:
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] DNS record for OpenWebUI
 - [ ] Reverse proxy configured
 

@@ -28,7 +28,7 @@ Ollama provides an easy way to run large language models locally, offering an Op
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] Sufficient RAM for chosen models
 - [ ] GPU recommended for performance
 

@@ -18,7 +18,7 @@ Home Assistant Operating System (HAOS) provides a complete home automation platf
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) complete
+- [ ] [Install Foundation](../../generated/install.md) complete
 - [ ] VLAN 200 configured for srv (recommended)
 - [ ] DNS record (optional)
 

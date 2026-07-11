@@ -152,7 +152,7 @@ updated and backed up by the platform.
 
 A single TAPPaaS site can host **separated environments** — production next to family,
 tenants next to experiments — with network boundaries between them. See the worked
-multi-tenant setup in [INSTALL-ENVIRONMENT.md (synced from source)](../generated/install-environment.md).
+multi-tenant setup in [Add an Environment](../generated/install-environment.md).
 
 ## Build your own
 

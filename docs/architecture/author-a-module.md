@@ -17,7 +17,7 @@ how you add it.
 1. **Copy the template.** The
    [`00-Template`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/00-Template)
    app is the canonical starting point — its synced README is here:
-   [Module template (source)](../generated/module-template.md). The module name you
+   [Module Template](../generated/module-template.md). The module name you
    choose becomes the VM name, hostname and DNS name.
 2. **Fill in the module contract.** Configuration and metadata are schema-checked —
    the field definitions per taxonomy domain (module, environment, organization,
@@ -25,12 +25,12 @@ how you add it.
    [`src/foundation/schemas/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/foundation/schemas),
    described in the synced [Schemas reference](../generated/schemas.md).
 3. **Understand where your module runs.** Modules live inside **Environments** —
-   zones with firewall boundaries; see [Network Zones (source)](../generated/zones.md)
+   zones with firewall boundaries; see [Network Zones](../generated/zones.md)
    and the [taxonomy](../generated/adr-007-taxonomy.md) for how your module is
    classified (it's an **App**).
 4. **Install and iterate with the Module Manager** — the manager that installs,
    updates and tests modules (the old standalone scripts now live inside it). See
-   [Module Manager (source)](../generated/managers/module-manager.md).
+   [Module Manager](../generated/managers/module-manager.md).
 5. **Make it a good citizen.** A finished module updates unattended via the
    [Module Manager](../generated/managers/module-manager.md), is covered by the
    [Backup Manager](../generated/managers/backup-manager.md), and reports into the

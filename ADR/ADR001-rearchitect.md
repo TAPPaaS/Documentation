@@ -668,6 +668,19 @@ Codeberg terminates TLS for `tappaas.org` — acceptable for a public static sit
 >   (renamed CICD Design) + Meta Model + ArchiMate; overview rewritten around the module/CICD story.
 > - **Stacks** (new): the Module Designs pages, one per stack (Foundation/AI/Productivity/Home/DevOps).
 
+> **Install restructure (2026-07-11 review):** Install = Overview · Hardware Selection ·
+> Preparation (completely rewritten as one concise checklist, with **Branch Selection** — ex
+> "Stable vs Main" — as its sub-page, incl. a transitional "Migrating from ADR007 to 2.0"
+> subsection to delete after promotion) · **Install Foundation** (the synced INSTALL.md, retitled) ·
+> **Add an Environment** (synced INSTALL-ENVIRONMENT + the satellite pages) · **Add Stacks** ·
+> and the stage model became: hardware → prepare → bootstrap (now including network cut-over,
+> DNS/TLS and switch management) → grow → **add environments (incl. satellites)** → add stacks →
+> operate. The 8 hand-written 1.x-era `installation/foundation/*` pages were deleted as outdated.
+> Upstream split: INSTALL.md (working tree, pending commit) lost its Prepare section — preparation
+> lives on the site, INSTALL.md concentrates on installing. Synced pages: no "From Source" nav
+> grouping and no reader-visible banner — provenance is now an HTML comment; titles are real
+> ("Install Foundation", "Add an Environment", "Taxonomy", "Glossary", …).
+
 A candidate top-level nav after the upgrade (audience-first):
 
 ```

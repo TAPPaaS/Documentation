@@ -11,25 +11,16 @@ TAPPaaS installs as a set of interlinked foundation modules and platform service
 built and configured to work together. The process is **seven stages**; each one tells
 you what it needs, and what "done" looks like before you move on.
 
-!!! warning "Which version to install: `stable` (1.x) vs `ADR007` (2.0)"
-    The supported install today is **TAPPaaS 1.x from the `stable` branch**. The next
-    major release (**2.0**, the ADR-007 taxonomy and manager/controller paradigm) lives
-    on the `ADR007` branch — soon to be promoted to `stable` — and is what this site
-    documents. **[Full guidance: which branch, and what 2.0 is](versions.md).**
-
-    The exact, always-current procedure is synced from the source repo:
-    [INSTALL.md (source)](../generated/install.md).
-
 ## The seven stages
 
 | # | Stage | You'll need | Done when |
 |---|-------|-------------|-----------|
 | 1 | [Choose hardware](#stage-1-choose-hardware) | An honest look at your needs | Hardware ordered/on the bench, sized by tier + options |
-| 2 | [Prepare](#stage-2-prepare) | Domain, DNS access, wired network | Network plan, credentials and DNS records ready |
-| 3 | [Bootstrap the foundation](#stage-3-bootstrap-the-foundation) | Stage 1 + 2 complete | First node, firewall and CICD mothership up; you can log in |
+| 2 | [Prepare](#stage-2-prepare) | Network, domain, credentials, branch choice | The [preparation checklist](preparation.md) is all ticked |
+| 3 | [Bootstrap the foundation](#stage-3-bootstrap-the-foundation) | Stages 1 + 2 complete | Foundation installed; network cut over; you can log in everywhere |
 | 4 | [Grow the cluster](#stage-4-grow-the-cluster-optional) *(optional)* | Additional nodes | All nodes joined; HA where intended |
-| 5 | [Add stacks](#stage-5-add-stacks) | A running foundation | The apps you chose are installed and reachable |
-| 6 | [Cut over the network](#stage-6-cut-over-the-network) | A maintenance window | TAPPaaS firewall is your network's edge |
+| 5 | [Add environments](#stage-5-add-environments) *(optional)* | A running foundation | Each tenant/purpose has its own separated environment |
+| 6 | [Add stacks](#stage-6-add-stacks) | A running foundation | The apps you chose are installed and reachable |
 | 7 | [Operate](#stage-7-operate) | — | Updates, backup and health checks running on schedule |
 
 ---
@@ -43,49 +34,57 @@ and gives per-tier sizing tables.
 
 **Done when:** you know your tier, your options, and the machine(s) are in hand.
 
-[:octicons-arrow-right-24: Hardware selection](hardware-selection.md)
+[:octicons-arrow-right-24: Hardware Selection](hardware-selection.md)
 
 ## Stage 2 — Prepare
 
-Plan the network, register/point your domain, and gather credentials before touching
-any installer. See the [preparation guide](preparation.md), and the prerequisites
-section of the synced [INSTALL.md](../generated/install.md).
+One concise checklist: network facts, domain + DNS API token, credentials, admin
+email — and the **[branch selection](branch-selection.md)** your system will track.
 
-**You'll need:** a reliable wired connection, a registered domain with DNS management,
-and a strong root password policy for hypervisor and firewall.
-
-**Done when:** the checklist in [preparation](preparation.md) is complete.
+**Done when:** every box in [Preparation](preparation.md) is ticked.
 
 [:octicons-arrow-right-24: Preparation](preparation.md)
 
 ## Stage 3 — Bootstrap the foundation
 
-Install the first Proxmox node, the OPNsense firewall and the **CICD mothership** —
-the automation that installs, updates and heals everything else. The bootstrap
-scripts chain together; the authoritative commands are in the synced
-[INSTALL.md](../generated/install.md).
+One command chain does the heavy lifting — first Proxmox node, the OPNsense
+firewall, the **network cut-over** (additive: the firewall becomes your gateway
+without dropping your session or moving cables), the CICD mothership, **DNS/TLS
+setup** (wildcard certificates via your DNS provider's API), **switch management**
+where a managed switch carries the VLAN trunks, and then the remaining foundation
+modules (backup, identity, logging) with your organisation bootstrapped in the
+identity provider.
 
-The [foundation section](foundation/index.md) covers each piece:
-[cluster](foundation/cluster.md) · [firewall](foundation/firewall.md) ·
-[VM templates](foundation/vm-templates.md) · [CICD](foundation/cicd.md) ·
-[identity](foundation/identity.md) · [backup](foundation/backup.md) ·
-[security](foundation/security.md).
+The authoritative, always-current procedure is
+**[Install Foundation](../generated/install.md)** — follow it top to bottom.
 
-**Done when:** you can reach the Proxmox UI, the firewall UI and the CICD mothership,
-and the foundation health checks pass.
+**Done when:** the install prints its "🎉 your TAPPaaS foundation is installed"
+summary, and you can reach the Proxmox UI, the firewall UI and the CICD mothership.
 
-[:octicons-arrow-right-24: Foundation](foundation/index.md)
+[:octicons-arrow-right-24: Install Foundation](../generated/install.md)
 
 ## Stage 4 — Grow the cluster *(optional)*
 
-Single-node tiers skip this. For SMB/Scale-out, join the remaining nodes and enable
-high availability.
+Single-node tiers skip this. Additional nodes install over the network, fully
+unattended — one command per node (`site-manager node add tappaasN --pxe`), covered
+in [Install Foundation](../generated/install.md).
 
 **Done when:** every node shows in the cluster and HA-marked services migrate cleanly.
 
-[:octicons-arrow-right-24: Expanding the cluster](foundation/expanding-cluster.md)
+## Stage 5 — Add environments *(optional)*
 
-## Stage 5 — Add stacks
+Run more than one world on the same platform: production next to family, tenants
+next to experiments — separated environments with network boundaries between them.
+This is also where a **[satellite](../generated/satellite.md)** joins the site if
+you planned one (public ingress, off-site backup, admin VPN —
+[Satellite Install](../generated/satellite-install.md)).
+
+**Done when:** each environment exists with its own zones/domain, and the satellite
+(if any) carries its roles.
+
+[:octicons-arrow-right-24: Add an Environment](../generated/install-environment.md)
+
+## Stage 6 — Add stacks
 
 Install the workloads you chose in stage 1:
 
@@ -100,16 +99,6 @@ Browse [what people run on TAPPaaS](../intro/examples.md) for the full module ga
 **Done when:** each installed app answers on its URL and is known to the
 [Module Manager](../generated/managers/module-manager.md).
 
-## Stage 6 — Cut over the network
-
-Make the TAPPaaS firewall the edge of your network — the step that turns "a lab in the
-corner" into *your platform*. Plan a maintenance window; the procedure and rollback are
-described in the synced [INSTALL.md](../generated/install.md) (network cut-over section)
-and the [firewall page](foundation/firewall.md).
-
-**Done when:** clients get addresses from the TAPPaaS firewall, ingress flows through
-it, and the old router is retired or bridged.
-
 ## Stage 7 — Operate
 
 Hand over to day-to-day operation: the managers keep updating, backing up and
@@ -118,16 +107,6 @@ health-checking the platform. That's [Operate](../manual/index.md) — bookmark 
 [:octicons-arrow-right-24: Operate TAPPaaS](../manual/index.md)
 
 ---
-
-## Beyond one tenant, beyond one site
-
-- **Multiple environments / tenants** (Scale-out): run separated environments —
-  production, family, tenants, experiments — on one platform. Worked example:
-  [INSTALL-ENVIRONMENT.md (source)](../generated/install-environment.md).
-- **No public IP, or no local backup?** A small **satellite** VPS can carry public
-  ingress, off-site backup and admin VPN — see the
-  [satellite option](hardware-selection.md#the-satellite-the-gap-filler) in the
-  hardware guide and the synced [Satellite INSTALL](../generated/satellite-install.md).
 
 ## Need help?
 

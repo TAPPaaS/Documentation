@@ -27,7 +27,7 @@ graph TB
 
 ## Prerequisites
 
-- [ ] [Foundation](../foundation/index.md) installed
+- [ ] [Install Foundation](../../generated/install.md) installed
 - [ ] Sufficient RAM (minimum 8GB for AI workloads)
 - [ ] GPU recommended for local LLM inference
 

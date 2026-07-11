@@ -35,18 +35,19 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "ADR007")
 # Exact files: (path in source repo, output under docs/, page title).
 # Paths follow the pinned ref (ADR007); the build fails if one goes missing.
 ALLOW_LIST = [
-    # Install (WS3)
-    ("INSTALL.md", "generated/install.md", "INSTALL.md (source)"),
-    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "INSTALL-ENVIRONMENT.md (source)"),
-    ("src/foundation/satellite/README.md", "generated/satellite.md", "Satellite (source)"),
-    ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite INSTALL (source)"),
-    # Operate references (WS4)
-    ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network zones (source)"),
-    # Develop references (WS4)
-    ("docs/ADR/ADR-007 - TAPPaaS Taxonomy.md", "generated/adr-007-taxonomy.md", "ADR-007 — TAPPaaS Taxonomy (source)"),
-    ("docs/Architecture/ontology.md", "generated/ontology.md", "Ontology — Consolidated Glossary (source)"),
-    ("src/foundation/schemas/README.md", "generated/schemas.md", "Schemas — the module contract (source)"),
-    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module template — 00-Template (source)"),
+    # Install
+    ("INSTALL.md", "generated/install.md", "Install Foundation"),
+    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Add an Environment"),
+    ("src/foundation/satellite/README.md", "generated/satellite.md", "Satellite"),
+    ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
+    # Operate references
+    ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
+    # What / Develop references. (src/README.md and src/foundation/README.md were
+    # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
+    ("docs/ADR/ADR-007 - TAPPaaS Taxonomy.md", "generated/adr-007-taxonomy.md", "The TAPPaaS Taxonomy"),
+    ("docs/Architecture/ontology.md", "generated/ontology.md", "Glossary"),
+    ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
+    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),
 ]
 
 # Glob rules: (pattern, output dir under docs/, name = capture between prefix
@@ -59,14 +60,18 @@ GLOB_RULES = [
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs")
 
+# The provenance note is an HTML comment — visible to editors viewing the
+# source, invisible to readers of the page (per the 2026-07-11 review).
 BANNER = """---
 title: "{title}"
 ---
 
-!!! info "Generated from source — do not edit here"
-    This page is synced at build time from
-    [`{src}`](https://github.com/{repo}/blob/{ref}/{src_quoted}) in **`{repo}@{ref}`**.
-    Changes belong upstream; edits to this page will be overwritten.
+<!--
+  GENERATED FROM SOURCE - do not edit here.
+  Synced at build time from {src} in {repo}@{ref}
+  (https://github.com/{repo}/blob/{ref}/{src_quoted}).
+  Changes belong upstream; edits to this page will be overwritten.
+-->
 
 """
 
@@ -160,7 +165,7 @@ def main():
         summary_lines = []
         for component in sorted(components):
             src, content = components[component]
-            title = "{} (source)".format(pretty_name(component))
+            title = pretty_name(component)
             write_page(src, "{}/{}.md".format(outdir, component), title, content)
             summary_lines.append("* [{}]({}.md)".format(pretty_name(component), component))
         # Nav for this directory (consumed by mkdocs-literate-nav).
