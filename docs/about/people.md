@@ -13,8 +13,8 @@ TAPPaaS is built by a community of people who believe in digital sovereignty and
 
 TAPPaaS was founded by:
 
-- **Lars Rossen**
-- **Erik van Busschbach**
+- **[Lars Rossen](https://www.linkedin.com/in/larsrossen/)**
+- **[Erik van Busschbach](https://www.linkedin.com/in/erik-van-busschbach/)**
 
 ---
 
