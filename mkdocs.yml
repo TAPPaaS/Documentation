@@ -171,23 +171,17 @@ nav:
 
   - What:
     - Principles: intro/design-principles.md
+    - Capabilities: architecture/capabilities.md
     - Architecture:
-      - Capabilities: architecture/capabilities.md
       - Taxonomy: generated/adr-007-taxonomy.md
       - Meta Model: architecture/meta-model.md
       - Glossary: generated/ontology.md
       - ArchiMate Diagrams:
         - Introduction: appendix/archimate/introduction.md
-        - TAPPaaS Capabilities: appendix/archimate/capabilities.md
         - TAPPaaS Stacks: appendix/archimate/stacks.md
         - ArchiMate Notation: appendix/archimate/notation.md
     - Foundation:
       - Overview: architecture/solution-design/index.md
-      - Network: architecture/solution-design/network.md
-      - Storage: architecture/solution-design/storage.md
-      - Security: architecture/solution-design/security.md
-      - Single Sign-On: architecture/solution-design/single-signon.md
-      - Backup: architecture/solution-design/backup.md
       - Module Dependencies: generated/module-dependencies.md
     - ADRs: what/adrs.md
 

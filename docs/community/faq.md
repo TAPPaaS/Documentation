@@ -87,7 +87,7 @@ TAPPaaS supports:
 - **Node clustering**: 3+ node Proxmox clusters with failover
 - **Backup**: Automated backups with Proxmox Backup Server
 
-See the [Backup Design](../architecture/solution-design/backup.md) for details.
+See the [Backup Manager](../generated/managers/backup-manager.md) for details.
 
 ### How does networking work?
 
@@ -98,7 +98,7 @@ TAPPaaS uses VLAN segmentation to isolate different parts of the platform:
 - Service networks
 - IoT networks
 
-See the [Network Design](../architecture/solution-design/network.md) for details.
+See the [Network module](../generated/foundation/network.md) for details.
 
 ---
 
@@ -116,7 +116,7 @@ TAPPaaS follows the 3-2-1 backup principle:
 - **2 different formats**
 - **1 remote location**
 
-Proxmox Backup Server handles automated daily backups. See [Backup Design](../architecture/solution-design/backup.md).
+Proxmox Backup Server handles automated daily backups. See the [Backup module](../generated/foundation/backup.md).
 
 ### How do I access services remotely?
 
