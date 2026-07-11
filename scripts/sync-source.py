@@ -54,7 +54,6 @@ ALLOW_LIST = [
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
     # What / Develop references. (src/README.md and src/foundation/README.md were
     # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
-    ("docs/ADR/ADR-007 - TAPPaaS Taxonomy.md", "generated/adr-007-taxonomy.md", "The TAPPaaS Taxonomy"),
     ("docs/Architecture/ontology.md", "generated/ontology.md", "Glossary"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),

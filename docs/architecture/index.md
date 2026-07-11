@@ -10,7 +10,7 @@ description: >
 This is the **Develop** track: everything you need to extend TAPPaaS with your own
 module. If you're *running* a system, you want [Operate](../manual/index.md); if you
 want the platform's concepts and design, that's [What](../what/adrs.md) (capabilities,
-principles, [taxonomy](../generated/adr-007-taxonomy.md), foundation design, ADRs).
+principles, [taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md), foundation design, ADRs).
 
 ## The one idea to hold on to
 
@@ -18,7 +18,7 @@ Everything deployable is a **module**: a directory with a json contract
 (`<module>.json` — schema-checked, declares zones, sizing, `dependsOn` and the
 services it `provides`), the scripts the platform calls (`install.sh`, `update.sh`,
 `test.sh`), and its docs (README / INSTALL / DESIGN). In the
-[taxonomy](../generated/adr-007-taxonomy.md), your module is an **App**; it runs
+[taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md), your module is an **App**; it runs
 inside an **Environment**; managers operate it for the rest of its life.
 
 ## How the CICD works

@@ -26,7 +26,7 @@ how you add it.
    described in the synced [Schemas reference](../generated/schemas.md).
 3. **Understand where your module runs.** Modules live inside **Environments** —
    zones with firewall boundaries; see [Network Zones](../generated/zones.md)
-   and the [taxonomy](../generated/adr-007-taxonomy.md) for how your module is
+   and the [taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md) for how your module is
    classified (it's an **App**).
 4. **Install and iterate with the Module Manager** — the manager that installs,
    updates and tests modules (the old standalone scripts now live inside it). See

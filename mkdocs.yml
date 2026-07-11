@@ -173,7 +173,6 @@ nav:
     - Principles: intro/design-principles.md
     - Capabilities: architecture/capabilities.md
     - Architecture:
-      - Taxonomy: generated/adr-007-taxonomy.md
       - Meta Model: architecture/meta-model.md
       - Glossary: generated/ontology.md
       - ArchiMate Diagrams:

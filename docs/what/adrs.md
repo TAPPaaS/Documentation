@@ -19,7 +19,7 @@ platform is the way it is, this is the trail.
 
 | ADR | Decides |
 |-----|---------|
-| [ADR-007 — TAPPaaS Taxonomy](../generated/adr-007-taxonomy.md) | The model everything hangs on: one **Site**, three classification domains (**People · Apps · Environments**), **Health** as a cross-cutting lens. Detailed per domain in sub-ADRs 007a–007e, realization (managers/controllers) in 007f. *(Synced on this site — the sub-ADRs are linked from it.)* |
+| [ADR-007 — TAPPaaS Taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md) | The model everything hangs on: one **Site**, three classification domains (**People · Apps · Environments**), **Health** as a cross-cutting lens. Detailed per domain in sub-ADRs 007a–007e, realization (managers/controllers) in 007f. |
 | [ADR-009 — Composition Meta-Model](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-009%20-%20Composition%20Meta-Model.md) | How a deployable unit is *built* (module = atomic deployable unit; `<module>:<service>` coordinates) — composition, as distinct from ADR-007's classification. |
 
 ## Platform decisions
