@@ -34,7 +34,7 @@ updated and backed up by the platform.
     A full web office suite integrated into Nextcloud — edit documents,
     spreadsheets and presentations in the browser, without a US SaaS in the loop.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/euro-office)
+    [:octicons-arrow-right-24: Module page](../generated/modules/euro-office.md)
 
 -   :material-shield-key-outline: **Vaultwarden**
 
@@ -43,7 +43,7 @@ updated and backed up by the platform.
     A Bitwarden-compatible password manager: one vault for the family or the
     company, stored on your hardware, reachable from every device.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/vaultwarden)
+    [:octicons-arrow-right-24: Module page](../generated/modules/vaultwarden.md)
 
 -   :material-phone-in-talk-outline: **Coturn**
 
@@ -52,7 +52,7 @@ updated and backed up by the platform.
     The TURN relay that makes Nextcloud Talk calls work reliably across firewalls —
     your calls never route through someone else's relay.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/coturn)
+    [:octicons-arrow-right-24: Module page](../generated/modules/coturn.md)
 
 </div>
 
@@ -76,7 +76,7 @@ updated and backed up by the platform.
     Local model serving on AMD GPUs and unified-memory APUs — from 7B up to
     100B+-class models on a single inexpensive box.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/vllm-amd)
+    [:octicons-arrow-right-24: Module page](../generated/modules/vllm-amd.md)
 
 -   :material-swap-horizontal: **LiteLLM**
 
@@ -109,7 +109,7 @@ updated and backed up by the platform.
     A Zigbee gateway for sensors, switches and lights — pairs naturally with Home
     Assistant, no vendor cloud required.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/deconz)
+    [:octicons-arrow-right-24: Module page](../generated/modules/deconz.md)
 
 -   :material-robot-industrial: **n8n**
 
@@ -118,7 +118,7 @@ updated and backed up by the platform.
     Workflow automation connecting your services — the "glue" tier of your platform,
     self-hosted instead of subscription-hosted.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/n8n)
+    [:octicons-arrow-right-24: Module page](../generated/modules/n8n.md)
 
 </div>
 
@@ -133,7 +133,7 @@ updated and backed up by the platform.
     WireGuard-based mesh connectivity — reach your platform securely from anywhere
     without opening your network to the world.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/netbird-client)
+    [:octicons-arrow-right-24: Module page](../generated/modules/netbird-client.md)
 
 -   :material-microsoft-windows: **Windows Server**
 
@@ -142,7 +142,7 @@ updated and backed up by the platform.
     Some workloads just need Windows. Run it as a managed TAPPaaS module — inside
     your environments, backed up like everything else.
 
-    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/windows-server)
+    [:octicons-arrow-right-24: Module page](../generated/modules/windows-server.md)
 
 </div>
 

@@ -681,6 +681,17 @@ Codeberg terminates TLS for `tappaas.org` — acceptable for a public static sit
 > grouping and no reader-visible banner — provenance is now an HTML comment; titles are real
 > ("Install Foundation", "Add an Environment", "Taxonomy", "Glossary", …).
 >
+> **Architecture & Stacks catalog (2026-07-11 review):** What → Ontology renamed **Architecture**
+> and took Meta Model + ArchiMate Diagrams from Develop (kept as separate items). What → Foundation
+> gained **Module Dependencies** — a mermaid graph now *computed from the module jsons* by a new
+> upstream script (`src/generate-module-dependencies.sh`, with `--check` for CI) and synced; the
+> hand-drawn stale graph is retired. The **Stacks** menu became a catalog: per-stack pages (incl.
+> new IoT + honest DevOps-planned) whose entries link the **module READMEs**, now glob-synced
+> (`src/foundation/*/README.md`, `src/apps/*/README.md` — new modules auto-appear). Upstream, the
+> foundation capability diagrams moved into their module READMEs (names corrected) and the README
+> template gained an optional "Alternatives considered" section, populated only where documented
+> rationale exists. Develop now contains exactly: Overview · Author a Module · How the CICD works.
+
 > **Add Stacks = module INSTALL.md (2026-07-11):** each stack item is now the module's synced
 > INSTALL.md (vllm-amd/litellm/openwebui · nextcloud/n8n · hass/deconz); the seven hand-written
 > pages were reconciled first (truth preserved upstream in DESIGN/ADMIN files, inconsistencies

@@ -173,10 +173,16 @@ nav:
     - Principles:
       - Design Principles: intro/design-principles.md
       - Software Selection: architecture/solution-design/software-selection.md
-    - Ontology:
+    - Architecture:
       - Capabilities: architecture/capabilities.md
       - Taxonomy: generated/adr-007-taxonomy.md
+      - Meta Model: architecture/meta-model.md
       - Glossary: generated/ontology.md
+      - ArchiMate Diagrams:
+        - Introduction: appendix/archimate/introduction.md
+        - TAPPaaS Capabilities: appendix/archimate/capabilities.md
+        - TAPPaaS Stacks: appendix/archimate/stacks.md
+        - ArchiMate Notation: appendix/archimate/notation.md
     - Foundation:
       - Overview: architecture/solution-design/index.md
       - Network: architecture/solution-design/network.md
@@ -184,6 +190,7 @@ nav:
       - Security: architecture/solution-design/security.md
       - Single Sign-On: architecture/solution-design/single-signon.md
       - Backup: architecture/solution-design/backup.md
+      - Module Dependencies: generated/module-dependencies.md
     - ADRs: what/adrs.md
 
   - Install:
@@ -230,12 +237,6 @@ nav:
       - Module Structure: architecture/cicd-design/module-structure.md
       - CICD Script Structure: architecture/cicd-design/script-structure.md
       - Plans: architecture/cicd-design/plans.md
-    - Meta Model: architecture/meta-model.md
-    - ArchiMate Diagrams:
-      - Introduction: appendix/archimate/introduction.md
-      - TAPPaaS Capabilities: appendix/archimate/capabilities.md
-      - TAPPaaS Stacks: appendix/archimate/stacks.md
-      - ArchiMate Notation: appendix/archimate/notation.md
 
   - Stacks:
     - Overview: architecture/module-designs/index.md
@@ -243,7 +244,10 @@ nav:
     - AI Stack: architecture/module-designs/ai.md
     - Productivity Stack: architecture/module-designs/productivity.md
     - Home Stack: architecture/module-designs/home.md
+    - IoT Stack: architecture/module-designs/iot.md
     - DevOps Stack: architecture/module-designs/devops.md
+    - Foundation Modules: generated/foundation/
+    - App Modules: generated/modules/
 
   - Roadmap: roadmap/index.md
 

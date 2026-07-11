@@ -38,8 +38,10 @@ ALLOW_LIST = [
     # Install
     ("INSTALL.md", "generated/install.md", "Install Foundation"),
     ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Add an Environment"),
-    ("src/foundation/satellite/README.md", "generated/satellite.md", "Satellite"),
     ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
+    # What → Foundation: the computed module dependency graph
+    # (regenerated upstream by src/generate-module-dependencies.sh)
+    ("src/module-dependencies.md", "generated/module-dependencies.md", "Module Dependencies"),
     # Stack module installs (Add Stacks — each stack item is the module's INSTALL.md)
     ("src/apps/openwebui/INSTALL.md", "generated/apps/openwebui.md", "OpenWebUI"),
     ("src/apps/litellm/INSTALL.md", "generated/apps/litellm.md", "LiteLLM"),
@@ -58,13 +60,34 @@ ALLOW_LIST = [
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),
 ]
 
-# Glob rules: (pattern, output dir under docs/, name = capture between prefix
-# and suffix). Every match becomes generated/<outdir>/<name>.md, and each
-# output dir gets a SUMMARY.md for mkdocs-literate-nav.
+# Glob rules: (pattern, output dir under docs/, excluded component dirs).
+# Every match becomes generated/<outdir>/<name>.md, and each output dir gets
+# a SUMMARY.md for mkdocs-literate-nav.
 GLOB_RULES = [
-    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers"),
-    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers"),
+    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers", set()),
+    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers", set()),
+    # Module catalog entries (the Stacks section points at these).
+    # schemas has its own synced page; Deprecated must never publish;
+    # 00-Template is synced separately as the Module Template.
+    ("src/foundation/*/README.md", "generated/foundation", {"schemas", "Deprecated"}),
+    ("src/apps/*/README.md", "generated/modules", {"00-Template"}),
 ]
+
+# Nicer titles for globbed component names.
+TITLE_OVERRIDES = {
+    "vllm-amd": "vLLM (AMD)",
+    "nextcloud-hpb": "Nextcloud HPB",
+    "hass": "Home Assistant",
+    "deconz": "deCONZ",
+    "euro-office": "EURO Office",
+    "litellm": "LiteLLM",
+    "openwebui": "OpenWebUI",
+    "n8n": "n8n",
+    "netbird-client": "NetBird Client",
+    "tappaas-cicd": "TAPPaaS CICD",
+    "opnsense-controller": "OPNsense Controller",
+    "ap-controller": "AP Controller",
+}
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs")
 
@@ -113,7 +136,9 @@ def rewrite_links(markdown, src_path):
 
 
 def pretty_name(component):
-    """'backup-manager' -> 'Backup Manager'."""
+    """'backup-manager' -> 'Backup Manager' (with overrides for brand names)."""
+    if component in TITLE_OVERRIDES:
+        return TITLE_OVERRIDES[component]
     return " ".join(w.capitalize() for w in component.split("-"))
 
 
@@ -137,7 +162,7 @@ def main():
 
     wanted = {src: (out, title) for src, out, title in ALLOW_LIST}
     found = {}
-    globbed = {outdir: {} for _, outdir in GLOB_RULES}
+    globbed = {outdir: {} for _, outdir, _ in GLOB_RULES}
 
     with tarfile.open(fileobj=io.BytesIO(blob), mode="r:gz") as tar:
         for member in tar:
@@ -147,11 +172,13 @@ def main():
             if rel in wanted:
                 found[rel] = tar.extractfile(member).read().decode("utf-8")
                 continue
-            for pattern, outdir in GLOB_RULES:
+            for pattern, outdir, excluded in GLOB_RULES:
                 # fnmatch's * spans '/', so also require equal path depth —
                 # keeps nested files (e.g. opnsense-controller/patches/README.md) out.
                 if fnmatch.fnmatch(rel, pattern) and rel.count("/") == pattern.count("/"):
                     component = rel.split("/")[-2]  # the dir holding README.md
+                    if component in excluded:
+                        continue
                     globbed[outdir][component] = (rel, tar.extractfile(member).read().decode("utf-8"))
 
     missing = sorted(set(wanted) - set(found))
@@ -166,7 +193,7 @@ def main():
     for src, (out, title) in wanted.items():
         write_page(src, out, title, found[src])
 
-    for pattern, outdir in GLOB_RULES:
+    for pattern, outdir, _ in GLOB_RULES:
         components = globbed[outdir]
         if not components:
             sys.exit("WS0 sync FAILED: glob '{}' matched nothing in {}@{}".format(pattern, REPO, REF))
