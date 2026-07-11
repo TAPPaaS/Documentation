@@ -44,9 +44,13 @@ steps:
       - pip install --no-cache-dir -r requirements.txt
       # Woodpecker services are reached by service name, not localhost — repoint Kroki.
       - sed -i 's#http://localhost:8000#http://kroki:8000#' mkdocs.yml
-      # Wait for the Kroki (JVM) service to answer before building.
+      # Wait for the Kroki (JVM) service; if it never comes up (e.g. the
+      # runner hit Docker Hub pull limits and the service container died —
+      # seen on pipelines #21/#34/#35), fall back to the public kroki.io so
+      # the build still succeeds. Self-hosted Kroki remains the default.
       - |
-        python - <<'PY'
+        rc=0
+        python - <<'PY' || rc=$?
         import urllib.request, time, sys
         for _ in range(30):
             try:
@@ -54,8 +58,14 @@ steps:
                 print("Kroki ready"); sys.exit(0)
             except Exception:
                 time.sleep(2)
-        sys.exit("Kroki did not become ready in time")
+        print("WARNING: Kroki service not ready - falling back to kroki.io")
+        sys.exit(42)
         PY
+        if [ "$rc" -eq 42 ]; then
+          sed -i 's#http://kroki:8000#https://kroki.io#' mkdocs.yml
+        elif [ "$rc" -ne 0 ]; then
+          exit "$rc"
+        fi
       # WS0 source-sync: pull allow-listed pages + manager/controller READMEs
       # from the TAPPaaS source repo (GitHub, pinned ref — currently ADR007)
       # into docs/generated/ — fails on source drift.
