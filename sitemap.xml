@@ -261,15 +261,15 @@
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/installation/branch-selection/</loc>
+         <lastmod>2026-07-11</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/installation/hardware-selection/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
          <loc>https://tappaas.org/installation/preparation/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/versions/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
@@ -286,42 +286,6 @@
     </url>
     <url>
          <loc>https://tappaas.org/installation/ai-stack/openwebui/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/backup/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/cicd/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/cluster/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/expanding-cluster/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/firewall/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/identity/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/security/</loc>
-         <lastmod>2026-07-11</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/installation/foundation/vm-templates/</loc>
          <lastmod>2026-07-11</lastmod>
     </url>
     <url>
