@@ -40,6 +40,14 @@ ALLOW_LIST = [
     ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Add an Environment"),
     ("src/foundation/satellite/README.md", "generated/satellite.md", "Satellite"),
     ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
+    # Stack module installs (Add Stacks — each stack item is the module's INSTALL.md)
+    ("src/apps/openwebui/INSTALL.md", "generated/apps/openwebui.md", "OpenWebUI"),
+    ("src/apps/litellm/INSTALL.md", "generated/apps/litellm.md", "LiteLLM"),
+    ("src/apps/vllm-amd/INSTALL.md", "generated/apps/vllm-amd.md", "vLLM (AMD)"),
+    ("src/apps/nextcloud/INSTALL.md", "generated/apps/nextcloud.md", "Nextcloud"),
+    ("src/apps/n8n/INSTALL.md", "generated/apps/n8n.md", "n8n"),
+    ("src/apps/hass/INSTALL.md", "generated/apps/hass.md", "Home Assistant"),
+    ("src/apps/deconz/INSTALL.md", "generated/apps/deconz.md", "deCONZ"),
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
     # What / Develop references. (src/README.md and src/foundation/README.md were

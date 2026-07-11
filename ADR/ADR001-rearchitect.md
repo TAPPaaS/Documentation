@@ -680,6 +680,13 @@ Codeberg terminates TLS for `tappaas.org` — acceptable for a public static sit
 > lives on the site, INSTALL.md concentrates on installing. Synced pages: no "From Source" nav
 > grouping and no reader-visible banner — provenance is now an HTML comment; titles are real
 > ("Install Foundation", "Add an Environment", "Taxonomy", "Glossary", …).
+>
+> **Add Stacks = module INSTALL.md (2026-07-11):** each stack item is now the module's synced
+> INSTALL.md (vllm-amd/litellm/openwebui · nextcloud/n8n · hass/deconz); the seven hand-written
+> pages were reconciled first (truth preserved upstream in DESIGN/ADMIN files, inconsistencies
+> resolved by reality) and deleted. **ollama** (251-line page, no module — retired approach; its
+> kernel became a LiteLLM "other backends" note) and **karakeep** (no module) have no pages;
+> stack overview pages rewritten with honest statuses (n8n = placeholder) and correct zones.
 
 A candidate top-level nav after the upgrade (audience-first):
 

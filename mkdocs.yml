@@ -200,17 +200,17 @@ nav:
     - Add Stacks:
       - AI Stack:
         - Overview: installation/ai-stack/index.md
-        - OpenWebUI: installation/ai-stack/openwebui.md
-        - LiteLLM: installation/ai-stack/litellm.md
-        - Ollama: installation/ai-stack/ollama.md
+        - vLLM (AMD): generated/apps/vllm-amd.md
+        - LiteLLM: generated/apps/litellm.md
+        - OpenWebUI: generated/apps/openwebui.md
       - Productivity Stack:
         - Overview: installation/productivity-stack/index.md
-        - n8n: installation/productivity-stack/n8n.md
-        - Nextcloud: installation/productivity-stack/nextcloud.md
-        - Karakeep: installation/productivity-stack/karakeep.md
+        - Nextcloud: generated/apps/nextcloud.md
+        - n8n: generated/apps/n8n.md
       - Home Stack:
         - Overview: installation/home-stack/index.md
-        - Home Assistant: installation/home-stack/home-assistant.md
+        - Home Assistant: generated/apps/hass.md
+        - deCONZ: generated/apps/deconz.md
 
   - Operate:
     - Overview: manual/index.md

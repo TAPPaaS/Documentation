@@ -25,7 +25,7 @@ updated and backed up by the platform.
     roof. A high-performance backend module (`nextcloud-hpb`) scales Talk and push
     notifications.
 
-    [:octicons-arrow-right-24: Install guide](../installation/productivity-stack/nextcloud.md)
+    [:octicons-arrow-right-24: Install guide](../generated/apps/nextcloud.md)
 
 -   :material-file-document-edit-outline: **EURO Office**
 
@@ -67,7 +67,7 @@ updated and backed up by the platform.
     A polished chat interface for AI models — the familiar assistant experience,
     served from your own rack.
 
-    [:octicons-arrow-right-24: Install guide](../installation/ai-stack/openwebui.md)
+    [:octicons-arrow-right-24: Install guide](../generated/apps/openwebui.md)
 
 -   :material-brain: **vLLM (AMD)**
 
@@ -85,7 +85,7 @@ updated and backed up by the platform.
     One OpenAI-compatible gateway in front of your local models (and, if you choose,
     remote ones) — apps talk to one API, you decide where inference runs.
 
-    [:octicons-arrow-right-24: Install guide](../installation/ai-stack/litellm.md)
+    [:octicons-arrow-right-24: Install guide](../generated/apps/litellm.md)
 
 </div>
 
@@ -100,7 +100,7 @@ updated and backed up by the platform.
     Home automation with local control: lights, heating, sensors and cameras that
     keep working when the internet doesn't.
 
-    [:octicons-arrow-right-24: Install guide](../installation/home-stack/home-assistant.md)
+    [:octicons-arrow-right-24: Install guide](../generated/apps/hass.md)
 
 -   :material-zigbee: **deCONZ**
 
@@ -118,7 +118,7 @@ updated and backed up by the platform.
     Workflow automation connecting your services — the "glue" tier of your platform,
     self-hosted instead of subscription-hosted.
 
-    [:octicons-arrow-right-24: Install guide](../installation/productivity-stack/n8n.md)
+    [:octicons-arrow-right-24: Module source](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/n8n)
 
 </div>
 

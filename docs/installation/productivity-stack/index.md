@@ -1,26 +1,18 @@
 ---
 title: Productivity Stack
-description: Deploy workflow automation and productivity tools
+description: >
+  Files, collaboration and workflow automation — Nextcloud today, n8n and
+  Karakeep planned.
 ---
 
 # Productivity Stack
 
-The TAPPaaS Productivity Stack provides workflow automation and productivity tools to streamline your operations.
+| Module | Role | Status |
+|--------|------|--------|
+| **[Nextcloud](../../generated/apps/nextcloud.md)** | Files, calendars, contacts, photos, Talk — your own cloud drive | Available (Testing) |
+| **[n8n](../../generated/apps/n8n.md)** | Workflow automation (AI access planned via the LiteLLM gateway) | Planned — placeholder module |
+| **Karakeep** | Bookmarking / read-it-later | Planned — no module yet |
 
-## Components
-
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| **[n8n](n8n.md)** | Workflow automation and integration platform | Available |
-| **[Nextcloud](nextcloud.md)** | File sync, collaboration, and productivity suite | Coming Soon |
-| **[Karakeep](karakeep.md)** | Bookmark and knowledge management | Coming Soon |
-
-## Prerequisites
-
-- [ ] [Install Foundation](../../generated/install.md) complete
-- [ ] DNS management access
-- [ ] Optional: AI Stack for AI-powered workflows
-
-## Next Steps
-
-Select a component above to begin installation.
+Related productivity modules you can install today: **EURO Office** (web office suite
+in Nextcloud), **Vaultwarden** (password manager) and **Coturn** (Talk call relay) —
+see the [module gallery](../../intro/examples.md).

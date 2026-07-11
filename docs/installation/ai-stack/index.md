@@ -1,126 +1,28 @@
 ---
 title: AI Stack
-description: Deploy local AI capabilities with OpenWebUI, LiteLLM, and LLM serving
+description: >
+  Local AI on your own silicon: vLLM serving, the LiteLLM gateway, and the
+  OpenWebUI chat interface.
 ---
 
 # AI Stack
 
-The TAPPaaS AI Stack provides local AI capabilities, giving you control over your AI infrastructure while maintaining privacy and reducing costs.
+Three modules give you the full local-AI experience — models served on your own
+hardware, one API for every consumer, and a polished chat UI:
 
-## Components
+| Module | Role | Status |
+|--------|------|--------|
+| **[vLLM (AMD)](../../generated/apps/vllm-amd.md)** | Model serving on AMD GPUs / unified-memory APUs | Available |
+| **[LiteLLM](../../generated/apps/litellm.md)** | OpenAI-compatible gateway: one API + per-user keys in front of local (and optional remote) models | Available |
+| **[OpenWebUI](../../generated/apps/openwebui.md)** | Chat interface for your users | Available |
 
-| Component | Purpose |
-|-----------|---------|
-| **OpenWebUI** | Web interface for interacting with LLMs |
-| **LiteLLM** | Unified API gateway for multiple LLM providers |
-| **Ollama/vLLM** | Local LLM serving engines |
+**Install order follows the dependencies:** vLLM (AMD) → LiteLLM → OpenWebUI.
 
-## Architecture
+**Hardware:** local AI is sized by accelerator memory and the model you want — see the
+[GPU / VRAM guidance](../hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
+The reference AI node is an AMD Ryzen AI MAX+ 395 ("Strix Halo") with 128 GB unified
+memory; discrete GPUs work too.
 
-```mermaid
-graph TB
-    User[User] --> OWU[OpenWebUI]
-    OWU --> LLM[LiteLLM Proxy]
-    LLM --> Local[Local LLM<br/>Ollama/vLLM]
-    LLM --> Cloud[Cloud APIs<br/>OpenAI/Anthropic]
-```
-
-## Prerequisites
-
-- [ ] [Install Foundation](../../generated/install.md) installed
-- [ ] Sufficient RAM (minimum 8GB for AI workloads)
-- [ ] GPU recommended for local LLM inference
-
-## Hardware Requirements
-
-| Configuration | RAM | GPU | Use Case |
-|---------------|-----|-----|----------|
-| Minimal | 8 GB | None | API proxy only |
-| Standard | 16 GB | Optional | Small models (7B) |
-| Performance | 32+ GB | Recommended | Large models (13B+) |
-
-## Quick Start
-
-For a basic AI setup:
-
-1. Deploy [LiteLLM](litellm.md) as your API gateway
-2. Configure cloud provider API keys
-3. Deploy [OpenWebUI](openwebui.md) for user interface
-4. Optionally add local LLM with [Ollama](ollama.md)
-
-## Stack Options
-
-### Cloud-Only Setup
-
-Use LiteLLM as a proxy to cloud providers:
-
-- Low resource requirements
-- Access to latest models
-- Pay-per-use pricing
-- Requires internet connectivity
-
-### Hybrid Setup
-
-Combine local and cloud models:
-
-- Use local models for common tasks
-- Fall back to cloud for complex queries
-- Balance cost and capability
-
-### Fully Local
-
-Run everything on-premises:
-
-- Complete data privacy
-- No ongoing API costs
-- Requires significant hardware
-- Limited to available open models
-
-## Installation Guides
-
-<div class="grid cards" markdown>
-
--   :material-api: **[LiteLLM](litellm.md)**
-
-    ---
-
-    Unified API gateway for managing multiple LLM providers
-
--   :material-chat: **[OpenWebUI](openwebui.md)**
-
-    ---
-
-    Feature-rich web interface for AI interactions
-
--   :material-cube: **[Ollama](ollama.md)**
-
-    ---
-
-    Easy local LLM deployment and management
-
-</div>
-
-## Cost Considerations
-
-### Cloud API Costs
-
-| Provider | Model | Approximate Cost |
-|----------|-------|------------------|
-| OpenAI | GPT-4 | $0.03/1K tokens |
-| Anthropic | Claude 3 | $0.015/1K tokens |
-| OpenRouter | Various | Varies |
-
-### Self-Hosted Costs
-
-| Component | Monthly Cost |
-|-----------|--------------|
-| Electricity | €20-50 |
-| Hardware amortization | €30-100 |
-| Internet | Existing |
-
-## Security Notes
-
-- API keys are stored securely in LiteLLM
-- Local inference keeps data on-premises
-- OpenWebUI supports user authentication
-- Consider network isolation for AI workloads
+**No local AI hardware?** LiteLLM can front remote models instead — convenient, less
+sovereign. Any other OpenAI-compatible backend on your network (e.g. a vLLM or Ollama
+you already run) can also be added as a provider.
