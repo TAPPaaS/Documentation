@@ -125,6 +125,8 @@ TAPPaaS serves those who need digital independence but not a dedicated IT depart
 
 ## Go deeper
 
+- [Design Principles](design-principles.md) — the seven rules everything is built by,
+  and what TAPPaaS deliberately is *not*.
 - [Digital Sovereignty](digital-sovereignty.md) — what sovereignty means, in plain terms.
 - [Examples](examples.md) — what people actually run on TAPPaaS today.
 - [Install TAPPaaS](../installation/index.md) — choose hardware and bootstrap your platform.

@@ -166,6 +166,7 @@ extra:
 nav:
   - Why TAPPaaS:
     - Overview: intro/index.md
+    - Design Principles: intro/design-principles.md
     - Digital Sovereignty: intro/digital-sovereignty.md
     - Examples: intro/examples.md
 

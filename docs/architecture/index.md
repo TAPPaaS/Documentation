@@ -67,4 +67,5 @@ two altitudes.
 
 Architecture decisions are recorded as ADRs in the source repository:
 [`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/docs/ADR). If you're about
-to change something structural, start there — write the ADR before the code.
+to change something structural, start there — write the ADR before the code, and test
+the idea against the [design principles](../intro/design-principles.md).
