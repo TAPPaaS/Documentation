@@ -2,7 +2,7 @@
 title: Preparation
 description: >
   Everything to have ready before running the TAPPaaS install — network, domain,
-  credentials, branch — as one concise checklist.
+  credentials, branch and naming — as one concise checklist.
 ---
 
 # Preparation
@@ -41,15 +41,41 @@ itself is the previous step — [Hardware Selection](hardware-selection.md).
 - [ ] A **working email address you actually monitor** — Proxmox sends system and
   health notifications there, and TAPPaaS reuses it as the admin email.
 
-## 4. Decisions to make now
+## 4. Branch selection
 
-- [ ] **[Branch selection](branch-selection.md)** — which branch the system will
-  install from and track.
-- [ ] **Organisation name** (`--name`): lowercase, ≤15 characters. This one name
+The bootstrap command takes a branch (`BRANCH="..."` in the
+[install guide](../generated/install.md)) — decide it now:
+
+| Branch | What it is | Who should install it |
+|--------|------------|-----------------------|
+| **`stable`** | The released, supported version of TAPPaaS | Everyone running a real system |
+| **`main`** | Ongoing development — moves fast, may break | Contributors, and evaluators who want the newest work |
+
+**If in doubt, choose `stable`.** `stable` only moves when a release is cut and
+tested; `main` moves with every merged change. A system tracks its branch through
+the automated updates — the choice you make here is the risk profile you keep.
+
+??? note "Transitional: migrating from ADR007 to 2.0"
+    The next major release (**2.0** — the taxonomy and manager/controller platform)
+    is being finished on the **`ADR007`** branch and will be promoted to `stable`
+    per the [roadmap](../roadmap/index.md). Until that promotion:
+
+    - **New 2.0 installs** use `BRANCH="ADR007"`. This site documents 2.0 — the
+      synced pages here track `ADR007`.
+    - **Existing 1.x/main systems** convert with the
+      [ADR-007 migration runbook](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/design/ADR-007-migration-runbook.md)
+      maintained in the source repo.
+    - **At promotion**, `stable` simply becomes 2.0 — and this note gets deleted.
+
+## 5. Solution naming
+
+Two names define your installation — pick them now:
+
+- [ ] **Organisation name** (`--name`): lowercase, ≤15 characters. This **one name**
   becomes the Proxmox cluster, the site, the default environment and your
   organisation in the identity provider.
-- [ ] **Your public domain** (`--domain`), used by the reverse proxy as
-  `<service>.yourdomain.com`.
+- [ ] **Public domain** (`--domain`): services are published as
+  `<service>.yourdomain.com` by the reverse proxy (the domain from point 2).
 
 **Done when** every box above is ticked — then proceed to
 [Install Foundation](../generated/install.md).

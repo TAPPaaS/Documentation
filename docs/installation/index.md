@@ -41,7 +41,7 @@ and gives per-tier sizing tables.
 ## Stage 2 — Preparation
 
 One concise checklist: network facts, domain + DNS API token, credentials, admin
-email — and the **[branch selection](branch-selection.md)** your system will track.
+email — and the **[branch selection](preparation.md#4-branch-selection)** your system will track.
 
 **Done when:** every box in [Preparation](preparation.md) is ticked.
 

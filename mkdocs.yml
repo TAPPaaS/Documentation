@@ -196,9 +196,7 @@ nav:
   - Install:
     - Overview: installation/index.md
     - Hardware Selection: installation/hardware-selection.md
-    - Preparation:
-      - Overview: installation/preparation.md
-      - Branch Selection: installation/branch-selection.md
+    - Preparation: installation/preparation.md
     - Install Foundation: generated/install.md
     - Add Environment: generated/install-environment.md
     - Add Satellite: generated/satellite-install.md
