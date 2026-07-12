@@ -5,7 +5,7 @@ Update the Module Designs index page with dependency information from the TAPPaa
 ## Instructions
 
 1. **Fetch the source content** from:
-   `https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/main/src/module-dependencies.md`
+   `https://codeberg.org/TAPPaaS/TAPPaaS/raw/branch/main/src/module-dependencies.md`
 
 2. **Extract the following sections** from the fetched content:
    - Dependency Graph (including the mermaid diagram)

@@ -25,7 +25,7 @@ Edit the markdown files in the `docs/` folder.
 Pages marked *(source)* — synced INSTALL docs, all *Managers*/*Controllers* pages, zones, schemas,
 the taxonomy — are **generated at build time** from the TAPPaaS source repo (branch `ADR007`) by
 [`scripts/sync-source.py`](scripts/sync-source.py) (WS0) — edit them **upstream** in
-[TAPPaaS/TAPPaaS](https://github.com/TAPPaaS/TAPPaaS), not here. New manager/controller READMEs
+[TAPPaaS/TAPPaaS](https://codeberg.org/TAPPaaS/TAPPaaS), not here. New manager/controller READMEs
 upstream appear automatically (glob + generated SUMMARY.md + literate-nav); other new files need an
 allow-list line. See ADR-001 §12.2 — including the one-time Woodpecker cron for nightly freshness.
 

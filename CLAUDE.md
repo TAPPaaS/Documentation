@@ -22,7 +22,7 @@ When asked to publish or push changes:
 ## Gotchas
 
 - `docs/generated/` is build-time output of `scripts/sync-source.py` (WS0) — never edit or commit
-  it; content changes belong upstream in github.com/TAPPaaS/TAPPaaS.
+  it; content changes belong upstream in codeberg.org/TAPPaaS/TAPPaaS.
 - Local `mkdocs build --strict` needs Python ≥ 3.10 (Kroki plugin) and a Kroki server
   (`docker-compose up -d`, or strip the kroki plugin from a temp config copy).
 - CI logs on ci.codeberg.org are not publicly readable; debug via commit statuses or by having a

@@ -51,7 +51,7 @@ The best place to ask questions and get help from the community.
 
 Found a bug? Please report it on GitHub Issues.
 
-[:octicons-issue-opened-24: Report a Bug](https://github.com/TAPPaaS/TAPPaaS/issues/new?template=bug_report.md){ .md-button }
+[:octicons-issue-opened-24: Report a Bug](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button }
 
 ### What to Include
 
@@ -68,7 +68,7 @@ Found a bug? Please report it on GitHub Issues.
 
 Have an idea for improving TAPPaaS?
 
-[:octicons-light-bulb-24: Request a Feature](https://github.com/TAPPaaS/TAPPaaS/issues/new?template=feature_request.md){ .md-button }
+[:octicons-light-bulb-24: Request a Feature](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button }
 
 Before submitting:
 

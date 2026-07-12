@@ -27,7 +27,7 @@ The MPL-2.0 is a permissive open source license that:
 
 ## Full License Text
 
-The complete license text is available in the [LICENSE](https://github.com/TAPPaaS/Documentation/blob/main/LICENSE) file in the repository.
+The complete license text is available in the [LICENSE](https://codeberg.org/TAPPaaS/Documentation/src/branch/main/LICENSE) file in the repository.
 
 ## Third-Party Licenses
 

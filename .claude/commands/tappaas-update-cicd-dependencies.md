@@ -5,7 +5,7 @@ Update the CICD Script Structure page with dependency information from the TAPPa
 ## Instructions
 
 1. **Fetch the source content** from:
-   `https://raw.githubusercontent.com/TAPPaaS/TAPPaaS/main/src/foundation/DEPENDENCIES.md`
+   `https://codeberg.org/TAPPaaS/TAPPaaS/raw/branch/main/src/foundation/DEPENDENCIES.md`
 
 2. **Replace the content** of `docs/architecture/cicd-design/script-structure.md`:
    - Keep the frontmatter (title, description)
@@ -20,4 +20,4 @@ Update the CICD Script Structure page with dependency information from the TAPPa
 
 ## Source
 
-Content is sourced from: `github.com/TAPPaaS/TAPPaaS/src/foundation/DEPENDENCIES.md`
+Content is sourced from: `codeberg.org/TAPPaaS/TAPPaaS/src/foundation/DEPENDENCIES.md`

@@ -139,7 +139,7 @@ We welcome contributions! See our [Contributing Guide](contributing.md) for:
 
 - **Documentation**: You're already here!
 - **GitHub Discussions**: [Ask questions](https://github.com/TAPPaaS/TAPPaaS/discussions)
-- **GitHub Issues**: [Report bugs](https://github.com/TAPPaaS/TAPPaaS/issues)
+- **GitHub Issues**: [Report bugs](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
 
 See [Support](support.md) for more options.
 

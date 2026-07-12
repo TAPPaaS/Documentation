@@ -55,7 +55,7 @@ Validate all links in the documentation.
 | docs/api.md | 15 | https://old.url | Redirects to https://new.url |
 
 ### External Links Checked
-- https://github.com/TAPPaaS - OK
+- https://codeberg.org/TAPPaaS - OK
 - https://example.com/docs - OK
 ```
 

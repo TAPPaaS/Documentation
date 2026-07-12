@@ -15,18 +15,18 @@ how you add it.
 ## The short version
 
 1. **Copy the template.** The
-   [`00-Template`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/00-Template)
+   [`00-Template`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/apps/00-Template)
    app is the canonical starting point — its synced README is here:
    [Module Template](../generated/module-template.md). The module name you
    choose becomes the VM name, hostname and DNS name.
 2. **Fill in the module contract.** Configuration and metadata are schema-checked —
    the field definitions per taxonomy domain (module, environment, organization,
    group, role, satellite) live in
-   [`src/foundation/schemas/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/foundation/schemas),
+   [`src/foundation/schemas/`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/foundation/schemas),
    described in the synced [Schemas reference](../generated/schemas.md).
 3. **Understand where your module runs.** Modules live inside **Environments** —
    zones with firewall boundaries; see [Network Zones](../generated/zones.md)
-   and the [taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md) for how your module is
+   and the [taxonomy](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md) for how your module is
    classified (it's an **App**).
 4. **Install and iterate with the Module Manager** — the manager that installs,
    updates and tests modules (the old standalone scripts now live inside it). See
@@ -47,6 +47,6 @@ how you add it.
 ## Contributing your module
 
 Modules are contributed via pull request to the
-[TAPPaaS source repo](https://github.com/TAPPaaS/TAPPaaS) — see the
+[TAPPaaS source repo](https://codeberg.org/TAPPaaS/TAPPaaS) — see the
 [contribution guide](../community/contributing.md). Good first check before you start:
 open an issue describing the app; someone may already be packaging it.

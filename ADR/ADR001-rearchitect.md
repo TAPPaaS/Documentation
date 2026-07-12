@@ -548,7 +548,7 @@ references. Coordinate with WS6 — publish the ADR-007 model as the architectur
 
 **Goal:** a roadmap that stays current with near-zero maintenance.
 
-The page already links to [GitHub milestones](https://github.com/TAPPaaS/TAPPaaS/milestones); the
+The page already links to [GitHub milestones](https://codeberg.org/TAPPaaS/TAPPaaS/milestones); the
 problem is the *hand-maintained* timeline and status note that go stale. Options:
 
 - **Replace** the static timeline with a short "how we plan" explainer + a live pointer to
@@ -926,7 +926,7 @@ Both WS3 and WS4 depend on pulling content from the TAPPaaS repo. Build one reus
 
 - A **CI step** (runs in **Woodpecker / Codeberg CI**) that fetches TAPPaaS **cross-forge from
   GitHub** — the source code stays on GitHub for now (open decision #7), so the runner clones/pulls
-  `github.com/TAPPaaS/TAPPaaS` at a **pinned ref** (`stable` for prod content, `main`/next on
+  `codeberg.org/TAPPaaS/TAPPaaS` at a **pinned ref** (`stable` for prod content, `main`/next on
   staging) — reads an **allow-list** of files (`INSTALL.md`, `INSTALL-ENVIRONMENT.md`, selected
   `src/**/README.md`, `docs/ADR/ADR-007*`), and **transforms** them into site pages: rewrite
   relative links, inject front matter/nav, prepend a "generated from `<ref>` — edit upstream" banner.

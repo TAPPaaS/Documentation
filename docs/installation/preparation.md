@@ -63,7 +63,7 @@ the automated updates — the choice you make here is the risk profile you keep.
     - **New 2.0 installs** use `BRANCH="ADR007"`. This site documents 2.0 — the
       synced pages here track `ADR007`.
     - **Existing 1.x/main systems** convert with the
-      [ADR-007 migration runbook](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/design/ADR-007-migration-runbook.md)
+      [ADR-007 migration runbook](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/design/ADR-007-migration-runbook.md)
       maintained in the source repo.
     - **At promotion**, `stable` simply becomes 2.0 — and this note gets deleted.
 

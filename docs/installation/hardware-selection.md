@@ -73,7 +73,7 @@ One satellite can carry all three.
     (ADR-010 phase 1 scaffolding — not yet functional)**. Plan for it; don't depend on
     it today. Track readiness via the synced [Satellite README](../generated/foundation/satellite.md)
     and [Satellite INSTALL](../generated/satellite-install.md); design background:
-    [ADR-010](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-010-vps-satellite-reverse-proxy-backup.md).
+    [ADR-010](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR/ADR-010-vps-satellite-reverse-proxy-backup.md).
 
 ---
 
@@ -121,7 +121,7 @@ a given model size.
 
 !!! info "Where these numbers come from"
     Model and throughput figures are as tested on the reference
-    [`vllm-amd` module](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/src/apps/vllm-amd/README.md)
+    [`vllm-amd` module](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/apps/vllm-amd/README.md)
     (verified against its README 2026-07-10). They will move to an automated WS0 sync
     so they stay current.
 

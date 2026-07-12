@@ -11,7 +11,7 @@ TAPPaaS 2.0 is operated through a small set of **managers** and **controllers**,
 running on the CICD mothership:
 
 - **Managers** own a *domain* of the platform — one per part of the
-  [taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md): Site, People, Module (Apps),
+  [taxonomy](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md): Site, People, Module (Apps),
   Environment, Network, Backup, Health, and Satellite. When you install, update or
   reconfigure something, you talk to a manager.
 - **Controllers** wrap a *concrete system* — OPNsense, Proxmox, the identity stack,

@@ -53,7 +53,7 @@ There are many ways to contribute to TAPPaaS:
 |------------------|-------------|-------------|
 | **Code** | Fix bugs, add features, improve performance | [Contributing Guide](contributing.md) |
 | **Documentation** | Improve guides, fix typos, add examples | [Contributing Guide](contributing.md) |
-| **Issues** | Report bugs, suggest features | [GitHub Issues](https://github.com/TAPPaaS/TAPPaaS/issues) |
+| **Issues** | Report bugs, suggest features | [GitHub Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues) |
 | **Support** | Help others in discussions | [GitHub Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions) |
 | **Spread the Word** | Blog posts, talks, social media | Share your experience! |
 
@@ -71,7 +71,7 @@ Our primary community forum for questions, ideas, and discussions.
 
 Report bugs and request features through our issue tracker.
 
-[:octicons-issue-opened-24: View Issues](https://github.com/TAPPaaS/TAPPaaS/issues){ .md-button }
+[:octicons-issue-opened-24: View Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues){ .md-button }
 
 ---
 
@@ -109,7 +109,7 @@ We value every contribution to TAPPaaS. Contributors are recognized in:
 
 ## Stay Updated
 
-- **Watch** the [GitHub repository](https://github.com/TAPPaaS/TAPPaaS) for updates
+- **Watch** the [Codeberg repository](https://codeberg.org/TAPPaaS/TAPPaaS) for updates
 - **Star** the project to show your support
 - Follow release announcements for new features
 

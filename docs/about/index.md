@@ -28,8 +28,8 @@ TAPPaaS is developed openly on GitHub. Major decisions are made through communit
 
 ## Contact
 
-- **GitHub**: [github.com/TAPPaaS](https://github.com/TAPPaaS)
-- **Issues**: [Report a bug or request a feature](https://github.com/TAPPaaS/TAPPaaS/issues)
+- **Codeberg**: [codeberg.org/TAPPaaS](https://codeberg.org/TAPPaaS)
+- **Issues**: [Report a bug or request a feature](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
 
 ## License
 

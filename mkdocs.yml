@@ -8,7 +8,7 @@ site_author: TAPPaaS Community
 
 # Repository
 repo_name: TAPPaaS/TAPPaaS
-repo_url: https://github.com/TAPPaaS/TAPPaaS
+repo_url: https://codeberg.org/TAPPaaS/TAPPaaS
 edit_uri: ""
 
 # Copyright
@@ -146,9 +146,9 @@ extra_javascript:
 # Social links and extra configuration
 extra:
   social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/TAPPaaS
-      name: TAPPaaS on GitHub
+    - icon: fontawesome/brands/git-alt
+      link: https://codeberg.org/TAPPaaS
+      name: TAPPaaS on Codeberg
     # Add more social links as needed:
     # - icon: fontawesome/brands/twitter
     #   link: https://twitter.com/tappaas

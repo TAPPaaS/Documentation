@@ -18,7 +18,7 @@ Everything deployable is a **module**: a directory with a json contract
 (`<module>.json` — schema-checked, declares zones, sizing, `dependsOn` and the
 services it `provides`), the scripts the platform calls (`install.sh`, `update.sh`,
 `test.sh`), and its docs (README / INSTALL / DESIGN). In the
-[taxonomy](https://github.com/TAPPaaS/TAPPaaS/blob/ADR007/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md), your module is an **App**; it runs
+[taxonomy](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR/ADR-007%20-%20TAPPaaS%20Taxonomy.md), your module is an **App**; it runs
 inside an **Environment**; managers operate it for the rest of its life.
 
 ## How the CICD works
@@ -50,6 +50,6 @@ holds the TAPPaaS git checkout and runs everything:
 ## Decide in writing first
 
 Structural changes start as an ADR in the source repo
-([`docs/ADR/`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/docs/ADR) — overview
+([`docs/ADR/`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR) — overview
 [here](../what/adrs.md)) — write the decision before the code, and test the idea
 against the [design principles](../intro/design-principles.md).

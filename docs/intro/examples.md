@@ -10,7 +10,7 @@ description: >
 
 TAPPaaS systems are live with their first adopters. Every example below is a **real
 module** in the TAPPaaS source tree
-([`src/apps`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps)) — installed,
+([`src/apps`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/apps)) — installed,
 updated and backed up by the platform.
 
 ## Your files and collaboration
@@ -157,7 +157,7 @@ multi-tenant setup in [Add an Environment](../generated/install-environment.md).
 ## Build your own
 
 Every module follows the same structure (the
-[`00-Template`](https://github.com/TAPPaaS/TAPPaaS/tree/ADR007/src/apps/00-Template) app is
+[`00-Template`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/apps/00-Template) app is
 the starting point) — see the [module structure](../architecture/cicd-design/module-structure.md)
 documentation to package the app *you* need.
 

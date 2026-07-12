@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """WS0 source-sync runner (ADR-001 §12).
 
-Fetches an allow-listed set of files from the TAPPaaS source repo (GitHub,
-cross-forge — see ADR-001 open decision #7) at a pinned ref and transforms
-them into site pages under docs/generated/:
+Fetches an allow-listed set of files from the TAPPaaS source repo (Codeberg —
+the dev home since the Codeberg migration; see the code repo's
+docs/codeberg-migration.md) at a pinned ref and transforms them into site
+pages under docs/generated/:
 
   - prepends a "generated from source — edit upstream" banner,
   - injects front matter (title),
-  - rewrites relative links/images to absolute GitHub URLs at the pinned ref,
+  - rewrites relative links/images to absolute Codeberg URLs at the pinned ref,
   - expands GLOB rules (e.g. every manager/controller README) and emits a
     SUMMARY.md per output directory for mkdocs-literate-nav, so new upstream
     managers/controllers appear in the nav with zero docs-repo changes,
   - FAILS the build if an expected exact file is missing (drift guard).
 
 Run before `mkdocs build` (CI does; locally: python3 scripts/sync-source.py).
-Pin override: TAPPAAS_SOURCE_REF env var. Default: ADR007 — the docs describe
-the 2.0 manager/controller paradigm (ADR-001 §8/§12.1); flip to `stable` when
-ADR007 is promoted.
+Pin override: TAPPAAS_SOURCE_REF env var. Default: main — since the ADR007→main
+promotion, main is the 2.0 manager/controller line; flip to `stable` when the
+tested 2.0 is promoted to stable (migration Phase 6).
 """
 
 import fnmatch
@@ -29,8 +30,9 @@ import tarfile
 import urllib.parse
 import urllib.request
 
+FORGE = "https://codeberg.org"
 REPO = "TAPPaaS/TAPPaaS"
-REF = os.environ.get("TAPPAAS_SOURCE_REF", "ADR007")
+REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 
 # Exact files: (path in source repo, output under docs/, page title).
 # Paths follow the pinned ref (ADR007); the build fails if one goes missing.
@@ -99,7 +101,7 @@ title: "{title}"
 <!--
   GENERATED FROM SOURCE - do not edit here.
   Synced at build time from {src} in {repo}@{ref}
-  (https://github.com/{repo}/blob/{ref}/{src_quoted}).
+  (https://codeberg.org/{repo}/src/branch/{ref}/{src_quoted}).
   Changes belong upstream; edits to this page will be overwritten.
 -->
 
@@ -111,7 +113,7 @@ LINK_RE = re.compile(r"(!?)\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+\"[^\"
 
 
 def rewrite_links(markdown, src_path):
-    """Point relative links/images at GitHub (blob/raw) at the pinned ref."""
+    """Point relative links/images at Codeberg (src/raw) at the pinned ref."""
     src_dir = posixpath.dirname(src_path)
 
     def repl(m):
@@ -123,9 +125,9 @@ def rewrite_links(markdown, src_path):
         resolved = posixpath.normpath(posixpath.join(src_dir, path)) if path else src_path
         quoted = urllib.parse.quote(resolved, safe="/")
         base = (
-            "https://raw.githubusercontent.com/{}/{}/{}".format(REPO, REF, quoted)
+            "{}/{}/raw/branch/{}/{}".format(FORGE, REPO, REF, quoted)
             if bang
-            else "https://github.com/{}/blob/{}/{}".format(REPO, REF, quoted)
+            else "{}/{}/src/branch/{}/{}".format(FORGE, REPO, REF, quoted)
         )
         if frag:
             base += "#" + frag
@@ -154,7 +156,9 @@ def write_page(src, out, title, content):
 
 
 def main():
-    url = "https://codeload.github.com/{}/tar.gz/refs/heads/{}".format(REPO, urllib.parse.quote(REF))
+    # Forgejo archive endpoint (top-level dir name in the tarball is stripped
+    # generically below, so its exact shape does not matter).
+    url = "{}/{}/archive/{}.tar.gz".format(FORGE, REPO, urllib.parse.quote(REF))
     print("WS0 sync: fetching {}@{} ...".format(REPO, REF))
     with urllib.request.urlopen(url, timeout=60) as resp:
         blob = resp.read()

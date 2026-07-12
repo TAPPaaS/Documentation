@@ -20,7 +20,7 @@ TAPPaaS was founded by:
 
 ## Contributors
 
-Our contributors help make TAPPaaS better every day. You can find the full list of contributors on our [GitHub repository](https://github.com/TAPPaaS/TAPPaaS/graphs/contributors).
+Our contributors help make TAPPaaS better every day. You can find the full list of contributors on our [GitHub repository](https://codeberg.org/TAPPaaS/TAPPaaS/activity).
 
 ---
 
