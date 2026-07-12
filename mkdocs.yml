@@ -56,7 +56,7 @@ theme:
 
   # Custom assets
   icon:
-    repo: fontawesome/brands/github
+    repo: simple/codeberg
 
   # Logo and favicon
   logo: tappaas-icon.png
@@ -146,7 +146,7 @@ extra_javascript:
 # Social links and extra configuration
 extra:
   social:
-    - icon: fontawesome/brands/git-alt
+    - icon: simple/codeberg
       link: https://codeberg.org/TAPPaaS
       name: TAPPaaS on Codeberg
     # Add more social links as needed:
