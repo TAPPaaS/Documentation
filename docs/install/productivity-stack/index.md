@@ -15,4 +15,4 @@ description: >
 
 Related productivity modules you can install today: **EURO Office** (web office suite
 in Nextcloud), **Vaultwarden** (password manager) and **Coturn** (Talk call relay) —
-see the [module gallery](../../intro/examples.md).
+see the [module gallery](../../why/examples.md).

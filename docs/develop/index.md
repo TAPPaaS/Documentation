@@ -8,9 +8,9 @@ description: >
 # Developing TAPPaaS
 
 This is the **Develop** track: everything you need to extend TAPPaaS with your own
-module. If you're *running* a system, you want [Operate](../manual/index.md); if you
+module. If you're *running* a system, you want [Operate](../operate/index.md); if you
 want the platform's concepts and design, that's [What](../what/adrs.md) (capabilities,
-principles, the [module model](solution-design/index.md), ADRs).
+principles, the [module model](../what/module-model.md), ADRs).
 
 ## The one idea to hold on to
 
@@ -44,7 +44,7 @@ holds the TAPPaaS git checkout and runs everything:
    copy to a good platform citizen.
 2. **[How the CICD works](cicd-design/index.md)** — what the automation does with
    your module.
-3. **[Meta Model](meta-model.md)** — how the architecture is modeled, with the
+3. **[Meta Model](../what/meta-model.md)** — how the architecture is modeled, with the
    platform overview diagram.
 
 ## Decide in writing first
@@ -52,4 +52,4 @@ holds the TAPPaaS git checkout and runs everything:
 Structural changes start as an ADR in the source repo
 ([`docs/ADR/`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR) — overview
 [here](../what/adrs.md)) — write the decision before the code, and test the idea
-against the [design principles](../intro/design-principles.md).
+against the [design principles](../what/principles.md).

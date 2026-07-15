@@ -158,7 +158,7 @@ multi-tenant setup in [Add an Environment](../generated/install-environment.md).
 
 Every module follows the same structure (the
 [`00-Template`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/src/apps/00-Template) app is
-the starting point) — see the [module structure](../architecture/cicd-design/module-structure.md)
+the starting point) — see the [module structure](../develop/cicd-design/module-structure.md)
 documentation to package the app *you* need.
 
-[Install TAPPaaS](../installation/index.md){ .md-button .md-button--primary }
+[Install TAPPaaS](../install/index.md){ .md-button .md-button--primary }

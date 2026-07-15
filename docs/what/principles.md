@@ -13,7 +13,7 @@ called TAPPaaS — pronounced *tapas*, like the Spanish dish: a curated collecti
 delicious servings that together make a comprehensive meal. The principles are ordered
 the way our users evaluate platforms: **risk first, then cost, then capability** —
 and they serve as the evaluation filter for new
-[modules](../architecture/author-a-module.md).
+[modules](../develop/author-a-module.md).
 
 ## 1. Digital sovereignty — you stay in control
 
@@ -21,7 +21,7 @@ Your data, your infrastructure, your rules. TAPPaaS runs fully local, across a
 cluster, or hybrid alongside cloud services. No dependency on external vendors: you
 decide where your data lives and who can access it.
 *Directly relevant for government, healthcare, and SMBs subject to GDPR / NIS2 —
-see [Digital Sovereignty](digital-sovereignty.md).*
+see [Digital Sovereignty](../why/digital-sovereignty.md).*
 
 ## 2. Security by design — zero trust
 
@@ -85,5 +85,5 @@ different tool.
 
 ---
 
-*These principles are the yardstick for [module decisions](../architecture/author-a-module.md)
-and roadmap trade-offs. Where the story came from: [Why TAPPaaS](index.md).*
+*These principles are the yardstick for [module decisions](../develop/author-a-module.md)
+and roadmap trade-offs. Where the story came from: [Why TAPPaaS](../why/index.md).*

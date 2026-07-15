@@ -9,8 +9,8 @@ description: >
 
 A **stack** is a container of related capabilities, delivered by **modules** — the
 smallest deployable units in TAPPaaS (see the
-[Capabilities](../capabilities.md) overview and the
-[Meta Model](../meta-model.md) for how this is modeled).
+[Capabilities](../what/capabilities.md) overview and the
+[Meta Model](../what/meta-model.md) for how this is modeled).
 
 | Stack | What it delivers |
 |-------|------------------|
@@ -24,10 +24,10 @@ smallest deployable units in TAPPaaS (see the
 Each stack page links the **module catalog entries** (the modules' own READMEs,
 always current with the source). How modules depend on each other is computed from
 the modules themselves: see the
-[module dependency graph](../../generated/module-dependencies.md).
+[module dependency graph](../generated/module-dependencies.md).
 
-Modules that serve every stack rather than one: **[NetBird Client](../../generated/modules/netbird-client.md)**
-(mesh connectivity) and **[Windows Server](../../generated/modules/windows-server.md)**
+Modules that serve every stack rather than one: **[NetBird Client](../generated/modules/netbird-client.md)**
+(mesh connectivity) and **[Windows Server](../generated/modules/windows-server.md)**
 (run Windows workloads as managed modules).
 
 ## Module deployment pattern

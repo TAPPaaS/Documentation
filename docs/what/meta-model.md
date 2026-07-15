@@ -146,12 +146,12 @@ Rel_Serving(firewall, proxmox, "protects")
 - **Strategy layer** — the capabilities, organized into stacks
   (see [Capabilities](capabilities.md)).
 - **Application layer** — the components realizing the capabilities
-  (see the module catalog under [Stacks](module-designs/index.md)).
+  (see the module catalog under [Stacks](../stacks/index.md)).
 - **Technology layer** — Proxmox virtualization, OPNsense firewall + Caddy reverse
   proxy, ZFS storage with replication.
 
 ---
 
-*The stack-level ArchiMate views live on the [Stacks pages](module-designs/index.md);
+*The stack-level ArchiMate views live on the [Stacks pages](../stacks/index.md);
 drawing conventions for diagram authors are in `NOTATION.md` in the Documentation
 repository (not published).*

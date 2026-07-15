@@ -78,7 +78,7 @@ feels like the cloud:
 !!! note "The same four blocks, all the way down"
     The four building blocks aren't just marketing: they are the platform's actual
     architectural taxonomy (in the technical docs: *Site · Apps · People ·
-    Environments*). The [Architecture section](../architecture/index.md) is the same
+    Environments*). The [Architecture section](../develop/index.md) is the same
     model in full technical depth.
 
 ---
@@ -125,9 +125,9 @@ TAPPaaS serves those who need digital independence but not a dedicated IT depart
 
 ## Go deeper
 
-- [Design Principles](design-principles.md) — the seven rules everything is built by,
+- [Design Principles](../what/principles.md) — the seven rules everything is built by,
   and what TAPPaaS deliberately is *not*.
 - [Digital Sovereignty](digital-sovereignty.md) — what sovereignty means, in plain terms.
 - [Examples](examples.md) — what people actually run on TAPPaaS today.
-- [Install TAPPaaS](../installation/index.md) — choose hardware and bootstrap your platform.
-- [Architecture](../architecture/index.md) — how the four building blocks are built.
+- [Install TAPPaaS](../install/index.md) — choose hardware and bootstrap your platform.
+- [Architecture](../develop/index.md) — how the four building blocks are built.

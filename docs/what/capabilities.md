@@ -27,7 +27,7 @@ all other stacks depend.
     More stacks are planned and not all capabilities below are implemented yet
     (planned ones are marked). TAPPaaS also allows any community or private modules
     to be deployed. The current module catalog per stack lives under
-    [Stacks](module-designs/index.md).
+    [Stacks](../stacks/index.md).
 
 ## Platform Capability Overview
 

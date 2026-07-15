@@ -9,7 +9,7 @@ description: >
 
 A TAPPaaS **module** is the unit everything else revolves around: it typically runs in
 its own VM, and the platform installs, updates, backs up and health-checks it like any
-other. If your favourite app isn't in the [gallery](../intro/examples.md) yet, this is
+other. If your favourite app isn't in the [gallery](../why/examples.md) yet, this is
 how you add it.
 
 ## The short version
@@ -42,7 +42,7 @@ how you add it.
 - [CICD Script Structure](cicd-design/script-structure.md) — how the automation calls
   into your module.
 - [Git Structure](cicd-design/git-structure.md) — where your module lives in the repo.
-- [Meta Model](meta-model.md) — how deployable units compose (ADR-009).
+- [Meta Model](../what/meta-model.md) — how deployable units compose (ADR-009).
 
 ## Contributing your module
 

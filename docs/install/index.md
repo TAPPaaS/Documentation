@@ -100,7 +100,7 @@ modules install the same way.
 | **[Home stack](home-stack/index.md)** | Home Assistant (Jellyfin, Immich planned) |
 | **[IoT stack](iot-stack/index.md)** | deCONZ Zigbee gateway |
 
-Browse [what people run on TAPPaaS](../intro/examples.md) for the full module gallery.
+Browse [what people run on TAPPaaS](../why/examples.md) for the full module gallery.
 
 **Done when:** each installed app answers on its URL and is known to the
 [Module Manager](../generated/managers/module-manager.md).
@@ -108,9 +108,9 @@ Browse [what people run on TAPPaaS](../intro/examples.md) for the full module ga
 ## Stage 7 — Operate
 
 Hand over to day-to-day operation: the managers keep updating, backing up and
-health-checking the platform. That's [Operate](../manual/index.md) — bookmark it.
+health-checking the platform. That's [Operate](../operate/index.md) — bookmark it.
 
-[:octicons-arrow-right-24: Operate TAPPaaS](../manual/index.md)
+[:octicons-arrow-right-24: Operate TAPPaaS](../operate/index.md)
 
 ---
 

@@ -45,5 +45,5 @@ platform is the way it is, this is the trail.
 
 ---
 
-Writing a new ADR is part of [developing TAPPaaS](../architecture/index.md) — decide in
-writing first, test the idea against the [design principles](../intro/design-principles.md).
+Writing a new ADR is part of [developing TAPPaaS](../develop/index.md) — decide in
+writing first, test the idea against the [design principles](principles.md).

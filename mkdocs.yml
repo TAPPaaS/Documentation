@@ -165,71 +165,71 @@ extra:
 # Navigation structure (Terraform-style)
 nav:
   - Why:
-    - Overview: intro/index.md
-    - Digital Sovereignty: intro/digital-sovereignty.md
-    - Examples: intro/examples.md
+    - Overview: why/index.md
+    - Digital Sovereignty: why/digital-sovereignty.md
+    - Examples: why/examples.md
 
   - What:
-    - Principles: intro/design-principles.md
-    - Capabilities: architecture/capabilities.md
+    - Principles: what/principles.md
+    - Capabilities: what/capabilities.md
     - Module Model:
-      - Overview: architecture/solution-design/index.md
+      - Overview: what/module-model.md
       - Module Dependencies: generated/module-dependencies.md
     - ADRs: what/adrs.md
-    - Meta Model: architecture/meta-model.md
+    - Meta Model: what/meta-model.md
     - Glossary: generated/ontology.md
 
   - Install:
-    - Overview: installation/index.md
-    - Hardware Selection: installation/hardware-selection.md
-    - Preparation: installation/preparation.md
+    - Overview: install/index.md
+    - Hardware Selection: install/hardware-selection.md
+    - Preparation: install/preparation.md
     - Install Foundation: generated/install.md
     - Add Environment: generated/install-environment.md
     - Add Satellite: generated/satellite-install.md
     - Add Stacks:
       - AI Stack:
-        - Overview: installation/ai-stack/index.md
+        - Overview: install/ai-stack/index.md
         - vLLM (AMD): generated/apps/vllm-amd.md
         - LiteLLM: generated/apps/litellm.md
         - OpenWebUI: generated/apps/openwebui.md
       - Productivity Stack:
-        - Overview: installation/productivity-stack/index.md
+        - Overview: install/productivity-stack/index.md
         - Nextcloud: generated/apps/nextcloud.md
         - n8n: generated/apps/n8n.md
       - Home Stack:
-        - Overview: installation/home-stack/index.md
+        - Overview: install/home-stack/index.md
         - Home Assistant: generated/apps/hass.md
       - IoT Stack:
-        - Overview: installation/iot-stack/index.md
+        - Overview: install/iot-stack/index.md
         - deCONZ: generated/apps/deconz.md
 
   - Operate:
-    - Overview: manual/index.md
+    - Overview: operate/index.md
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
 
   - Develop:
-    - Overview: architecture/index.md
+    - Overview: develop/index.md
     - Author a Module:
-      - Guide: architecture/author-a-module.md
+      - Guide: develop/author-a-module.md
       - Module Template: generated/module-template.md
       - Schemas: generated/schemas.md
     - How the CICD works:
-      - Overview: architecture/cicd-design/index.md
-      - Git Structure: architecture/cicd-design/git-structure.md
-      - Module Structure: architecture/cicd-design/module-structure.md
-      - CICD Script Structure: architecture/cicd-design/script-structure.md
-      - Plans: architecture/cicd-design/plans.md
+      - Overview: develop/cicd-design/index.md
+      - Git Structure: develop/cicd-design/git-structure.md
+      - Module Structure: develop/cicd-design/module-structure.md
+      - CICD Script Structure: develop/cicd-design/script-structure.md
+      - Plans: develop/cicd-design/plans.md
 
   - Stacks:
-    - Overview: architecture/module-designs/index.md
-    - Foundation Stack: architecture/module-designs/foundation.md
-    - AI Stack: architecture/module-designs/ai.md
-    - Productivity Stack: architecture/module-designs/productivity.md
-    - Home Stack: architecture/module-designs/home.md
-    - IoT Stack: architecture/module-designs/iot.md
-    - DevOps Stack: architecture/module-designs/devops.md
+    - Overview: stacks/index.md
+    - Foundation Stack: stacks/foundation.md
+    - AI Stack: stacks/ai.md
+    - Productivity Stack: stacks/productivity.md
+    - Home Stack: stacks/home.md
+    - IoT Stack: stacks/iot.md
+    - DevOps Stack: stacks/devops.md
     - Foundation Modules: generated/foundation/
     - App Modules: generated/modules/
 
