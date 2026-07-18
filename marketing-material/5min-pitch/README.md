@@ -8,7 +8,6 @@ exports live in [`docs/assets/marketing/`](../../docs/assets/marketing/) (slides
 |------|------|
 | `tappaas-promo-video-script.md` | The promo-video script — **storyline SSOT** for the front page and Intro copy |
 | `tappaas-promo-video-slides.pptx` | Editable source of the three slide PNGs |
-| `assorted-ramblings.md` | Early vision prose (homes/communities/SMB) rescued from the source repo's `docs/assorted stuff/` (#317 cleanup) — raw material for WS2/#208 copy |
 
 Originals (plus the larger decks deliberately *not* committed — `5 minute TAPPAaS overview.pptx`,
 `TOG - Oslo - Sovereignty and Resiliency v2.pptx`, teleprompter, PDF) live in Nextcloud:

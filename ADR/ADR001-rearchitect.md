@@ -294,8 +294,9 @@ doubles as social proof and as an entry point to installation.
       MkDocs home at `/docs/` became a clean documentation hub. Generic-PaaS copy deleted.)*
 - [x] Copy/export the marketing assets (§6.2) into `docs/assets/`; establish an assets convention.
       *(Done 2026-07-10: slide-1..3 downscaled 4K→1920 px in `docs/assets/marketing/`; script +
-      slides-pptx sources in `assets-src/marketing/` — published exports in `docs/`, editable
-      sources in `assets-src/`, bulky decks stay in Nextcloud. See `assets-src/marketing/README.md`.)*
+      slides-pptx sources in `marketing-material/5min-pitch/` — published exports in `docs/`, editable
+      sources in `marketing-material/`, bulky decks stay in Nextcloud. See
+      `marketing-material/5min-pitch/README.md`.)*
 - [ ] Redraw continuum + four-blocks diagrams as Kroki/Mermaid (theme-aware) where worthwhile.
       *(Deferred: the Why page uses the slide PNG exports for now; the landing draws the continuum
       in HTML/CSS. Revisit when the design-token pass lands (Phase 3).)*
