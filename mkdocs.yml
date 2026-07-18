@@ -176,6 +176,11 @@ nav:
       - Overview: what/module-model.md
       - Module Dependencies: generated/module-dependencies.md
     - ADRs: what/adrs.md
+    - Design:
+      - Overview: what/design.md
+      - Cluster: generated/design/cluster.md
+      - Network: generated/design/network.md
+      - Backup: generated/design/backup.md
     - Meta Model: what/meta-model.md
     - Glossary: generated/ontology.md
 

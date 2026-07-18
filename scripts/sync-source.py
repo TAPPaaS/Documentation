@@ -59,6 +59,10 @@ ALLOW_LIST = [
     ("docs/Architecture/ontology.md", "generated/ontology.md", "Glossary"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),
+    # What → Design: module design notes surfaced under the "Design" submenu
+    ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
+    ("src/foundation/network/DESIGN.md", "generated/design/network.md", "Network Design"),
+    ("src/foundation/backup/DESIGN.md", "generated/design/backup.md", "Backup Design"),
 ]
 
 # Glob rules: (pattern, output dir under docs/, excluded component dirs).
