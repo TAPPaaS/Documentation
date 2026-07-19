@@ -178,6 +178,7 @@ nav:
     - ADRs: what/adrs.md
     - Design:
       - Overview: what/design.md
+      - Security: what/security-design.md
       - Cluster: generated/design/cluster.md
       - Network: generated/design/network.md
       - Backup: generated/design/backup.md
