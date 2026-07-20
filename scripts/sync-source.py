@@ -38,7 +38,10 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 # Paths follow the pinned ref (ADR007); the build fails if one goes missing.
 ALLOW_LIST = [
     # Install
-    ("INSTALL.md", "generated/install.md", "Install Foundation"),
+    ("INSTALL.md", "generated/install-overview.md", "Install Overview"),
+    ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
+    ("preparation.md", "generated/preparation.md", "Preparation"),
+    ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),
     ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Add an Environment"),
     ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
     # What → Foundation: the computed module dependency graph
@@ -117,9 +120,12 @@ title: "{title}"
 LINK_RE = re.compile(r"(!?)\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+\"[^\"]*\")?)\s*\)")
 
 
-def rewrite_links(markdown, src_path):
-    """Point relative links/images at Codeberg (src/raw) at the pinned ref."""
+def rewrite_links(markdown, src_path, out_path, syncmap):
+    """Rewrite relative links. A link to another **synced** page is repointed at that
+    page's on-site location (so the site cross-links internally); everything else points
+    at Codeberg (src/raw) at the pinned ref."""
     src_dir = posixpath.dirname(src_path)
+    out_dir = posixpath.dirname(out_path)
 
     def repl(m):
         bang, text, target_angled, target_plain, title = m.groups()
@@ -128,6 +134,10 @@ def rewrite_links(markdown, src_path):
             return m.group(0)  # absolute URL, anchor or site-absolute — leave alone
         path, _, frag = target.partition("#")
         resolved = posixpath.normpath(posixpath.join(src_dir, path)) if path else src_path
+        # Cross-link to another synced page → link within the site (relative to this page).
+        if not bang and resolved in syncmap:
+            target_out = posixpath.relpath(syncmap[resolved], out_dir) if out_dir else syncmap[resolved]
+            return "{}[{}]({}{}{})".format(bang, text, target_out, ("#" + frag) if frag else "", title)
         quoted = urllib.parse.quote(resolved, safe="/")
         base = (
             "{}/{}/raw/branch/{}/{}".format(FORGE, REPO, REF, quoted)
@@ -148,7 +158,7 @@ def pretty_name(component):
     return " ".join(w.capitalize() for w in component.split("-"))
 
 
-def write_page(src, out, title, content):
+def write_page(src, out, title, content, syncmap):
     banner = BANNER.format(
         title=title, src=src, repo=REPO, ref=REF,
         src_quoted=urllib.parse.quote(src, safe="/"),
@@ -156,7 +166,7 @@ def write_page(src, out, title, content):
     out_path = os.path.join(DOCS_DIR, out)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as fh:
-        fh.write(banner + rewrite_links(content, src))
+        fh.write(banner + rewrite_links(content, src, out, syncmap))
     print("WS0 sync: {} -> docs/{}".format(src, out))
 
 
@@ -198,8 +208,15 @@ def main():
             )
         )
 
+    # Map every synced source path to its on-site output, so links between synced
+    # pages resolve within the site instead of bouncing out to Codeberg.
+    syncmap = {src: out for src, out, title in ALLOW_LIST}
+    for _, outdir, _ in GLOB_RULES:
+        for component, (rel, _content) in globbed[outdir].items():
+            syncmap[rel] = "{}/{}.md".format(outdir, component)
+
     for src, (out, title) in wanted.items():
-        write_page(src, out, title, found[src])
+        write_page(src, out, title, found[src], syncmap)
 
     for pattern, outdir, _ in GLOB_RULES:
         components = globbed[outdir]
@@ -209,7 +226,7 @@ def main():
         for component in sorted(components):
             src, content = components[component]
             title = pretty_name(component)
-            write_page(src, "{}/{}.md".format(outdir, component), title, content)
+            write_page(src, "{}/{}.md".format(outdir, component), title, content, syncmap)
             summary_lines.append("* [{}]({}.md)".format(pretty_name(component), component))
         # Nav for this directory (consumed by mkdocs-literate-nav).
         summary_path = os.path.join(DOCS_DIR, outdir, "SUMMARY.md")

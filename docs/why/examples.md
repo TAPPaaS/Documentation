@@ -161,4 +161,4 @@ Every module follows the same structure (the
 the starting point) — see the [module structure](../develop/cicd-design/module-structure.md)
 documentation to package the app *you* need.
 
-[Install TAPPaaS](../install/index.md){ .md-button .md-button--primary }
+[Install TAPPaaS](../generated/install-overview.md){ .md-button .md-button--primary }

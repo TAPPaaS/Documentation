@@ -12,7 +12,7 @@ description: Private AI — model serving, one gateway API, and a chat interface
 | [OpenWebUI](../generated/modules/openwebui.md) | Chat interface for your users |
 
 Install guides live under [Install → Add Stacks](../install/ai-stack/index.md);
-hardware sizing under [Hardware Selection](../install/hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
+hardware sizing under [Hardware Selection](../generated/hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
 
 ## Architecture view
 

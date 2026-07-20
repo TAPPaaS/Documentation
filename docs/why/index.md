@@ -129,5 +129,5 @@ TAPPaaS serves those who need digital independence but not a dedicated IT depart
   and what TAPPaaS deliberately is *not*.
 - [Digital Sovereignty](digital-sovereignty.md) — what sovereignty means, in plain terms.
 - [Examples](examples.md) — what people actually run on TAPPaaS today.
-- [Install TAPPaaS](../install/index.md) — choose hardware and bootstrap your platform.
+- [Install TAPPaaS](../generated/install-overview.md) — choose hardware and bootstrap your platform.
 - [Architecture](../develop/index.md) — how the four building blocks are built.

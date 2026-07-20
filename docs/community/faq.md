@@ -61,11 +61,11 @@ TAPPaaS serves:
 - 1x 12TB (tankb - backup)
 - Dedicated network switch
 
-See the [Hardware Selection Guide](../install/hardware-selection.md) for details.
+See the [Hardware Selection Guide](../generated/hardware-selection.md) for details.
 
 ### Can I run TAPPaaS on my existing hardware?
 
-Yes! TAPPaaS runs on standard x86_64 hardware. You can repurpose existing servers, use mini PCs, or purchase new hardware. See our [Installation Guide](../install/index.md).
+Yes! TAPPaaS runs on standard x86_64 hardware. You can repurpose existing servers, use mini PCs, or purchase new hardware. See our [Installation Guide](../generated/install-overview.md).
 
 ### How do I upgrade TAPPaaS?
 
