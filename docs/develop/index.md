@@ -9,7 +9,7 @@ description: >
 
 This is the **Develop** track: everything you need to extend TAPPaaS with your own
 module. If you're *running* a system, you want [Operate](../operate/index.md); if you
-want the platform's concepts and design, that's [What](../what/adrs.md) (capabilities,
+want the platform's concepts and design, that's [What](../generated/adrs.md) (capabilities,
 principles, the [module model](../what/module-model.md), ADRs).
 
 ## The one idea to hold on to
@@ -51,5 +51,5 @@ holds the TAPPaaS git checkout and runs everything:
 
 Structural changes start as an ADR in the source repo
 ([`docs/ADR/`](https://codeberg.org/TAPPaaS/TAPPaaS/src/branch/main/docs/ADR) — overview
-[here](../what/adrs.md)) — write the decision before the code, and test the idea
+[here](../generated/adrs.md)) — write the decision before the code, and test the idea
 against the [design principles](../what/principles.md).

@@ -57,6 +57,7 @@ ALLOW_LIST = [
     # What / Develop references. (src/README.md and src/foundation/README.md were
     # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
     ("GLOSSARY.md", "generated/ontology.md", "Glossary"),
+    ("docs/ADR/README.md", "generated/adrs.md", "Architecture Decision Records"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),
     # What → Design: module design notes surfaced under the "Design" submenu

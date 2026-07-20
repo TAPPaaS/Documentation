@@ -175,7 +175,7 @@ nav:
     - Module Model:
       - Overview: what/module-model.md
       - Module Dependencies: generated/module-dependencies.md
-    - ADRs: what/adrs.md
+    - ADRs: generated/adrs.md
     - Design:
       - Overview: what/design.md
       - Security: what/security-design.md
