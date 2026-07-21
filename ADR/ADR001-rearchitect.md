@@ -683,7 +683,11 @@ the ADR-010 satellite `reverse-proxy`), with **Caddy** serving the static build 
       *(Cloudflare flattens CNAME at apex ✓; and the staging bring-up established the git-pages
       recipe — repo-qualified CNAME target + optional `_git-pages-repository` TXT — which is the
       same recipe the apex cutover will use, §11a.5 fact 4.)*
-- [ ] Execute the §10.1 cutover runbook (repoint prod to 2.0; retire 1.x — no archive).
+- [x] Execute the §10.1 cutover runbook (repoint prod to 2.0; retire 1.x — no archive).
+      *(**Done 2026-07-21**: apex flipped to the flattened CNAME + `_git-pages-repository` TXT,
+      apex deployment webhook answered `created`, LE cert issued in ~3 min, `https://tappaas.org`
+      serves the 2.0 site from Codeberg. `www` cut over the same day; `_redirects` canonicalizes
+      www→apex. GitHub Pages + its workflow retired; the GitHub repo remains as a frozen archive.)*
 - [ ] Sequence the ADR-007 content publish to coincide with the `stable` merge (ties to WS4 §8.3).
 
 ---
@@ -824,20 +828,21 @@ container (Woodpecker supports `services:`), so there is no proprietary dependen
 > Net effect: we skip the "interim previews on GitHub" hop of Option A and go straight to the Codeberg
 > bridge for *this repo*, because that is precisely where the risky work needs a safe review surface.
 
-### 11a.3 Environments model (transition state)
+### 11a.3 Environments model
 
-Three tiers. During the transition, **production lives on GitHub (1.x)** and **staging/preview live
-on Codeberg (2.0)** — a deliberate split so the live site is never at risk while we build:
+**Post-cutover (as of 2026-07-21)** — all tiers live on Codeberg git-pages:
 
-| Tier | Forge / host | Trigger | URL | TAPPaaS source pin (WS0/WS6) |
-|------|--------------|---------|-----|------------------------------|
-| **Preview** | Codeberg → Codeberg Pages | any open PR | per-PR preview URL | target branch |
-| **Staging** | Codeberg → Codeberg Pages | `staging`/`next` branch | `staging.tappaas.org` | GitHub `main`/next — preview 2.0 / ADR-007 |
-| **Production (1.x)** | GitHub → GitHub Pages | push to `main` | `tappaas.org` | GitHub `stable` |
+| Tier | Forge / host | Trigger | URL |
+|------|--------------|---------|-----|
+| **Preview** | Codeberg → git-pages | `spike-*` branch push | `tappaas.codeberg.page/Documentation/spikes/<branch>/` |
+| **Production (2.0)** | Codeberg → git-pages | push to `main` | `tappaas.org` (+ `www`, `staging.tappaas.org`, the codeberg.page URL — same build) |
 
-At **cutover** (WS6 §10), production is repointed to the Codeberg-built 2.0 site (Codeberg Pages, or
-later self-hosted Caddy), and the GitHub `Documentation` repo/publish is retired. Post-cutover all
-three tiers live on Codeberg (then progressively on self-hosted Caddy).
+`staging.tappaas.org` currently serves the same deployment as production; splitting it onto its own
+branch/deployment is possible later if a separate staging tier is wanted again. The next hop remains
+**self-hosted Caddy on TAPPaaS** (§10.1 deSEC guidance).
+
+*Transition-era model (historical): production 1.x stayed on GitHub Pages while 2.0 was built and
+reviewed on Codeberg — the deliberate split that kept the live site risk-free during the rework.*
 
 This dovetails with **WS6**: staging is exactly the `main`/next preview build (open decision #6) — it
 previews upcoming **2.0 / ADR-007** content *and* upcoming TAPPaaS source before prod cutover.
