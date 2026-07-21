@@ -601,39 +601,49 @@ This is handled entirely by the WS-S environments model:
 ### 10.1 Cutover runbook — serving `tappaas.org` v2 from Codeberg
 
 The cutover is a **staged, reversible DNS flip**, made safe by the parallel setup (1.x on GitHub,
-v2 on Codeberg staging). The one wrinkle: `tappaas.org` is an **apex domain**, and DNS forbids a
-CNAME at the apex — so the apex uses one of, **depending on the DNS provider**:
+v2 on Codeberg). **Proven by staging:** `staging.tappaas.org` already runs on Codeberg's git-pages
+via `CNAME staging → documentation.tappaas.codeberg.page` (grey cloud, auto TLS) — the same target
+serves production.
 
-- **CNAME-flattening / ALIAS → `tappaas.codeberg.page`** (preferred — auto-tracks Codeberg's IP).
-  **Cloudflare** (current provider) does this: put a "CNAME" at the apex and it flattens to A records.
-  Route 53 ALIAS likewise. **deSEC does *not*** offer flattening/ALIAS.
-- **A/AAAA → Codeberg Pages server IPs** (from docs.codeberg.org/codeberg-pages/; works anywhere but
-  must be updated by hand if Codeberg changes IPs). This is the path on **deSEC** (planned future
-  provider).
+**Codeberg git-pages specifics (as-built):**
 
-> **Cloudflare proxy must be OFF (grey cloud / DNS-only)** for both `staging` and the apex — an
-> orange-cloud proxy makes Cloudflare terminate TLS and hides the real `Host`, so Codeberg can't
-> issue its cert or route. Grey cloud also keeps Cloudflare out of the data path.
->
-> **deSEC synergy:** TAPPaaS already uses **deSEC for DNS-01 ACME**, so `deSEC + self-hosted Caddy on
-> TAPPaaS` is the natural sovereign end state (apex A/AAAA → the site's public IP or the ADR-010
-> satellite; Caddy issues certs via deSEC) — no Cloudflare or Codeberg in the path. Treat the
-> Cloudflare→deSEC move as its own step; don't combine it with the site cutover.
+- The CNAME target is **`documentation.tappaas.codeberg.page`** — the *new* git-pages server encodes
+  `<repo>.<owner>` in that subdomain and **routes custom domains by resolving that CNAME target**.
+  The legacy **`.domains` file is deprecated** and no longer used.
+- **Cloudflare proxy must be OFF (grey cloud / DNS-only)** on every record pointing at Codeberg — an
+  orange-cloud proxy terminates TLS at Cloudflare and hides the real `Host`, so Codeberg can't issue
+  its cert or route.
 
-Steps:
+**Apex wrinkle.** `tappaas.org` is an apex; DNS forbids a real CNAME there. On **Cloudflare** (current
+provider) **CNAME-flattening** fakes it — enter a CNAME at `@` and it serves A/AAAA at query time
+while still tracking Codeberg's IP.
 
-1. **Lower the TTL** on the `tappaas.org` record ~24h ahead (fast propagation + fast rollback).
-2. **Promote v2** to the production Pages content on Codeberg; add `tappaas.org` (+ optional `www`)
-   as the **primary** entry in `.domains`.
-3. **Flip the apex DNS** GitHub Pages → Codeberg (ALIAS/flatten or A/AAAA). Codeberg auto-issues the
-   Let's Encrypt cert for `tappaas.org`.
-4. **Verify**, then **retire GitHub Pages** (drop its workflow/CNAME). Keep the GitHub repo intact a
-   while so **rollback = repoint the apex back** to GitHub.
+Steps (Cloudflare):
 
-`staging.tappaas.org` stays as the permanent staging environment. **Trust note:** on Codeberg Pages,
-Codeberg terminates TLS for `tappaas.org` — acceptable for a public static site; the later hop to
-**self-hosted Caddy on TAPPaaS** (A/AAAA to the site's public IP, or via the ADR-010 satellite
-`reverse-proxy`) removes Codeberg from the TLS path and is the *same* repoint operation.
+1. **Lower the TTL** on the `tappaas.org` / `www` records ~a few hours ahead (fast flip + fast rollback).
+2. **Note the current A/AAAA values** (GitHub Pages) so rollback = re-create them.
+3. **Repoint DNS** — for **both** `tappaas.org` (`@`) and `www`, **delete the A + AAAA records** and
+   add a single **`CNAME → documentation.tappaas.codeberg.page`, grey cloud**. (A CNAME can't coexist
+   with A/AAAA on a name; the apex CNAME relies on Cloudflare flattening.)
+4. **TLS** — Codeberg auto-issues Let's Encrypt certs for `tappaas.org` + `www` on first access (a few
+   minutes each). **Do not reload repeatedly** — Let's Encrypt caps failed validations at
+   5/hour/hostname (this bit us on staging).
+5. **Verify** `https://tappaas.org` serves the 2.0 site, then **retire GitHub Pages** (remove
+   `docs/CNAME` + the Pages custom-domain setting). Keep the GitHub repo intact as rollback.
+
+`staging.tappaas.org` stays on the same target, so it and `tappaas.org` serve **identical** content
+until/unless staging is split onto its own branch/deployment. **Trust note:** on Codeberg Pages,
+Codeberg terminates TLS for `tappaas.org` — acceptable for a public static site.
+
+**Cloudflare → deSEC later (apex catch — decided guidance).** `www` (a subdomain) keeps its CNAME on
+any provider. The **apex is the problem**: **deSEC has no CNAME-flattening**, so `tappaas.org` would
+need **A/AAAA to Codeberg's Pages IPs** — but git-pages identifies the repo from the **CNAME target**,
+so a bare A/AAAA apex loses that routing hint and **may not resolve to the Documentation repo at all**
+(verify apex support in `docs.codeberg.org/codeberg-pages/` at the time). Therefore **the deSEC move
+pairs naturally with self-hosting the site on TAPPaaS**: apex A/AAAA → the site's own public IP (or
+the ADR-010 satellite `reverse-proxy`), with **Caddy** serving the static build and issuing TLS via
+**deSEC DNS-01** (already used by TAPPaaS) — removing both Cloudflare and Codeberg from the path. Do
+**not** move DNS to deSEC while still depending on a Codeberg *apex* CNAME; `www` can move anytime.
 
 ### 10.2 Tasks
 
