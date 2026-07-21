@@ -67,6 +67,9 @@ ALLOW_LIST = [
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
     ("src/foundation/network/DESIGN.md", "generated/design/network.md", "Network Design"),
     ("src/foundation/backup/DESIGN.md", "generated/design/backup.md", "Backup Design"),
+    ("src/foundation/tappaas-cicd/DESIGN.md", "generated/design/cicd-mothership.md", "CICD Mothership"),
+    ("src/foundation/tappaas-cicd/DESIGN-GIT.md", "generated/design/cicd-git.md", "Git & Repository Topology"),
+    ("src/foundation/DEPENDENCIES.md", "generated/design/foundation-dependencies.md", "Foundation Dependencies"),
 ]
 
 # Glob rules: (pattern, output dir under docs/, excluded component dirs).

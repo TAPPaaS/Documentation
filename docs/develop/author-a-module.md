@@ -38,10 +38,13 @@ how you add it.
 
 ## The deeper reference
 
-- [Module Structure](cicd-design/module-structure.md) — what a module consists of.
-- [CICD Script Structure](cicd-design/script-structure.md) — how the automation calls
-  into your module.
-- [Git Structure](cicd-design/git-structure.md) — where your module lives in the repo.
+- [Module Template](../generated/module-template.md) — what a module consists of, including how to
+  provide a service other modules depend on.
+- [Schemas](../generated/schemas.md) — the `module.json` contract and every field, defined once.
+- [CICD Mothership](../generated/design/cicd-mothership.md) — how the control plane installs,
+  updates and tests your module (What → Design).
+- [Git & Repository Topology](../generated/design/cicd-git.md) — where your module lives in the repo,
+  and the developer workflow.
 - [Meta Model](../what/meta-model.md) — how deployable units compose (ADR-009).
 
 ## Contributing your module

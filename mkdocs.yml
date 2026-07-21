@@ -182,6 +182,11 @@ nav:
       - Cluster: generated/design/cluster.md
       - Network: generated/design/network.md
       - Backup: generated/design/backup.md
+      - CICD Mothership:
+        - Overview: generated/design/cicd-mothership.md
+        - Git & Repository Topology: generated/design/cicd-git.md
+        - Foundation Dependencies: generated/design/foundation-dependencies.md
+      - Schemas: generated/schemas.md
     - Meta Model: what/meta-model.md
     - Glossary: generated/ontology.md
 
@@ -220,13 +225,6 @@ nav:
     - Author a Module:
       - Guide: develop/author-a-module.md
       - Module Template: generated/module-template.md
-      - Schemas: generated/schemas.md
-    - How the CICD works:
-      - Overview: develop/cicd-design/index.md
-      - Git Structure: develop/cicd-design/git-structure.md
-      - Module Structure: develop/cicd-design/module-structure.md
-      - CICD Script Structure: develop/cicd-design/script-structure.md
-      - Plans: develop/cicd-design/plans.md
 
   - Stacks:
     - Overview: stacks/index.md

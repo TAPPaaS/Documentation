@@ -34,16 +34,17 @@ holds the TAPPaaS git checkout and runs everything:
 3. **Test**: `test-module.sh <module>` runs your `test.sh` — the same tests gate
    regressions after updates.
 4. Under the hood, **managers decide, controllers do** — your module talks to the
-   platform through its json contract, never by hand-wiring firewalls or DNS. See
-   [How the CICD works](cicd-design/index.md) for the full design (git structure,
-   module structure, script contracts).
+   platform through its json contract, never by hand-wiring firewalls or DNS. See the
+   [CICD Mothership design](../generated/design/cicd-mothership.md) and its
+   [git & repository topology](../generated/design/cicd-git.md) (under What → Design)
+   for the full picture.
 
 ## Start here
 
 1. **[Author a Module](author-a-module.md)** — the 5-step path from `00-Template`
    copy to a good platform citizen.
-2. **[How the CICD works](cicd-design/index.md)** — what the automation does with
-   your module.
+2. **[CICD Mothership](../generated/design/cicd-mothership.md)** (What → Design) — how the
+   control plane installs, updates and tests your module.
 3. **[Meta Model](../what/meta-model.md)** — how the architecture is modeled, with the
    platform overview diagram.
 
