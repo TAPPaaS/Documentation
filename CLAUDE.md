@@ -20,7 +20,10 @@
 2. **Substantial changes**: use a `spike-*` branch; the pipeline publishes a preview at
    `https://tappaas.codeberg.page/Documentation/spikes/<branch>/` — review there **before**
    merging to `main`.
-3. Do **not** create pull requests unless asked.
+3. **After every push, verify the pipeline**: run `scripts/ci-status.sh` and wait for "CI green"
+   before considering the work published. Red pipelines are otherwise silent — a strict-build
+   failure once hid for 28 hours while the site served a stale deploy.
+4. Do **not** create pull requests unless asked.
 
 ## Gotchas
 

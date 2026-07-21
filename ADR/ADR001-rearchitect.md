@@ -947,6 +947,22 @@ because of LE rate limits. New-server facts (from <https://codeberg.page> + expe
    deployments (and cert issuance) are **per-domain**; POST the push webhook to *that hostname's own
    URL* (over `http://`, TLS isn't up yet; expect `created`). This — not the rate limit — was the
    real cause of the multi-day `www.tappaas.org` cert failure (solved 2026-07-21; see §10.1).
+10. **Red pipelines are silent.** A `mkdocs --strict` failure (one stale relative link) went unnoticed
+    for 28h while the site served the last good deploy — the per-domain webhooks will happily
+    re-deploy stale content, masking the breakage. Guard: run `scripts/ci-status.sh` after **every**
+    push (now mandated in `CLAUDE.md`); a push-channel notification (Woodpecker webhook/email) is a
+    possible future upgrade.
+
+**Supply-chain incident (2026-07-22):** `mkdocs-literate-nav` 0.6.3 (PyPI, 2026-03-16) ships a
+hard-coded hook (`plugin.py: import properdocs.replacement_warning`) that installs **`properdocs`** —
+a full MkDocs fork — and injects a scare banner ("MkDocs is abandoned, switch to ProperDocs") into
+every build. With `requirements.txt` unpinned (`>=0.6.0`), CI built production with it from 2026-07-10
+until detection. **The deployed site was verified clean** (no properdocs traces in the `pages`
+branch — console adware only), but an unvetted framework fork inside the production build is exactly
+the supply-chain risk the TAPPaaS security design warns about. Fixed: pinned
+`mkdocs-literate-nav==0.6.2` (last pre-hook release), purged locally. Lesson: **pin exact versions**
+in `requirements.txt` for anything that runs in the production build; treat unexpected build-output
+banners as incidents, not noise.
 
 **Test status — 2026-07-10:**
 
