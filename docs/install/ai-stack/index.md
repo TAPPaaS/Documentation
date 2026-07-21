@@ -19,7 +19,7 @@ hardware, one API for every consumer, and a polished chat UI:
 **Install order follows the dependencies:** vLLM (AMD) → LiteLLM → OpenWebUI.
 
 **Hardware:** local AI is sized by accelerator memory and the model you want — see the
-[GPU / VRAM guidance](../hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
+[GPU / VRAM guidance](../../generated/hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
 The reference AI node is an AMD Ryzen AI MAX+ 395 ("Strix Halo") with 128 GB unified
 memory; discrete GPUs work too.
 
