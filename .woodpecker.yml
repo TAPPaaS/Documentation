@@ -135,6 +135,8 @@ steps:
         }
         notify "https://tappaas.codeberg.page/Documentation"
         notify "https://staging.tappaas.org" || true
+        notify "https://www.tappaas.org" || true
+        # At the apex cutover, add:  notify "https://tappaas.org" || true
 
 services:
   kroki:
