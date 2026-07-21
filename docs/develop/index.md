@@ -41,13 +41,10 @@ contract, never by hand-wiring firewalls or DNS. The full design is under What �
 
 ## Start here
 
-1. **[Develop a Module](develop-a-module.md)** — the path from `00-Template` copy to a
-   shipped module: quick start, the contract, debugging, contributing.
-2. **[Module Template](../generated/module-template.md)** — the annotated template every
-   module starts from (synced from source).
+1. **[Develop a Module](../generated/develop-a-module.md)** — the quick start: from
+   `00-Template` copy to a shipped module.
+2. **[Module Details](../generated/module-template.md)** — the reference behind it:
+   every file, field and convention of a module.
 
-## Decide in writing first
-
-Structural changes start as an ADR in the source repo
-([overview](../generated/adrs.md)) — write the decision before the code, and test the
-idea against the [design principles](../what/principles.md).
+Both are maintained with the template itself in the source repo
+(`src/apps/00-Template/`) and synced here at build time.

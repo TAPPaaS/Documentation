@@ -62,7 +62,8 @@ ALLOW_LIST = [
     ("GLOSSARY.md", "generated/ontology.md", "Glossary"),
     ("docs/ADR/README.md", "generated/adrs.md", "Architecture Decision Records"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
-    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Template"),
+    ("src/apps/00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
+    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Details"),
     # What → Design: module design notes surfaced under the "Design" submenu
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
     ("src/foundation/network/DESIGN.md", "generated/design/network.md", "Network Design"),
