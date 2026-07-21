@@ -601,39 +601,65 @@ This is handled entirely by the WS-S environments model:
 ### 10.1 Cutover runbook — serving `tappaas.org` v2 from Codeberg
 
 The cutover is a **staged, reversible DNS flip**, made safe by the parallel setup (1.x on GitHub,
-v2 on Codeberg). **Proven by staging:** `staging.tappaas.org` already runs on Codeberg's git-pages
-via `CNAME staging → documentation.tappaas.codeberg.page` (grey cloud, auto TLS) — the same target
-serves production.
+v2 on Codeberg). **Proven end-to-end (2026-07-21) by `staging.tappaas.org` and `www.tappaas.org`:**
+CNAME → routing → per-domain deployment → auto TLS → serving, all on the same target that will serve
+production.
 
-**Codeberg git-pages specifics (as-built):**
+**Codeberg git-pages specifics (as-proven):**
 
 - The CNAME target is **`documentation.tappaas.codeberg.page`** — the *new* git-pages server encodes
   `<repo>.<owner>` in that subdomain and **routes custom domains by resolving that CNAME target**.
   The legacy **`.domains` file is deprecated** and no longer used.
+- **Deployments are per-domain** — the docs' *"deploy your website to both domains (i.e. set up two
+  separate webhooks)"* is load-bearing. Each hostname needs its own deploy trigger: a Forgejo-style
+  push webhook POSTed **to that hostname's own URL**. A domain that is routed but never deployed
+  serves HTTP 302s **but never gets a TLS cert** — this cost us a day on `www` (misdiagnosed as
+  Let's-Encrypt backoff) until a single hand-fired webhook answered `created` and the cert issued
+  within ~2 minutes. The pipeline's `notify()` list in [`.woodpecker.yml`](../.woodpecker.yml) now
+  POSTs to every served domain on each deploy (canonical + staging + www; apex line ready).
+- **Cert issuance happens as part of a domain's deployment** — not on browser demand. If HTTPS gives
+  `tlsv1 alert internal error` while HTTP :80 302s, the domain is routed-but-undeployed: fire its
+  webhook (over `http://` — TLS isn't up yet), don't wait.
 - **Cloudflare proxy must be OFF (grey cloud / DNS-only)** on every record pointing at Codeberg — an
   orange-cloud proxy terminates TLS at Cloudflare and hides the real `Host`, so Codeberg can't issue
-  its cert or route.
+  its cert or route. Corollary: never grey-cloud a record *still pointing at GitHub Pages* — GitHub
+  has no cert for the bare domain and HTTPS breaks instantly (this briefly took production down).
+- **Authorization TXT (`_git-pages-repository.<host>`)**: not needed for a subdomain whose CNAME
+  target already encodes the repo (`www`/`staging` work without it). It **is** the documented
+  mechanism when DNS doesn't reveal the repo — i.e. **the apex**: Cloudflare's flattening answers
+  A/AAAA and hides the CNAME target from external queries, so add
+  `TXT _git-pages-repository.tappaas.org = "https://codeberg.org/TAPPaaS/Documentation.git"`.
 
 **Apex wrinkle.** `tappaas.org` is an apex; DNS forbids a real CNAME there. On **Cloudflare** (current
 provider) **CNAME-flattening** fakes it — enter a CNAME at `@` and it serves A/AAAA at query time
-while still tracking Codeberg's IP.
+while still tracking Codeberg's IP (but hidden from external queries, hence the TXT above).
 
-Steps (Cloudflare):
+Steps (Cloudflare) — `www` completed 2026-07-21, apex remaining:
 
-1. **Lower the TTL** on the `tappaas.org` / `www` records ~a few hours ahead (fast flip + fast rollback).
-2. **Note the current A/AAAA values** (GitHub Pages) so rollback = re-create them.
-3. **Repoint DNS** — for **both** `tappaas.org` (`@`) and `www`, **delete the A + AAAA records** and
-   add a single **`CNAME → documentation.tappaas.codeberg.page`, grey cloud**. (A CNAME can't coexist
-   with A/AAAA on a name; the apex CNAME relies on Cloudflare flattening.)
-4. **TLS** — Codeberg auto-issues Let's Encrypt certs for `tappaas.org` + `www` on first access (a few
-   minutes each). **Do not reload repeatedly** — Let's Encrypt caps failed validations at
-   5/hour/hostname (this bit us on staging).
-5. **Verify** `https://tappaas.org` serves the 2.0 site, then **retire GitHub Pages** (remove
+1. **Lower the TTL** on the record ~a few hours ahead (fast flip + fast rollback). *(done)*
+2. **Note the current A/AAAA values** (GitHub Pages) so rollback = re-create them. *(done)*
+3. **Repoint DNS** — delete the apex **A + AAAA** records and add a single
+   **`CNAME @ → documentation.tappaas.codeberg.page`, grey cloud** (a CNAME can't coexist with
+   A/AAAA; the apex relies on flattening). Add the **`_git-pages-repository` TXT** (above).
+   *(www: done, works)*
+4. **Deploy to the domain** — uncomment the apex `notify` line in `.woodpecker.yml` and push, or
+   hand-fire the webhook once at `http://tappaas.org` (expect `created`). The Let's Encrypt cert
+   issues within minutes of the deployment. Verify with one request, not a reload-storm (failed
+   validations are capped at 5/hour/hostname).
+5. **Canonicalize** — add **`docs/_redirects`** so `www` redirects to the apex
+   (`//www.tappaas.org/* https://tappaas.org/:splat 302!` — the trailing `!` is required).
+6. **Verify** `https://tappaas.org` serves the 2.0 site, then **retire GitHub Pages** (remove
    `docs/CNAME` + the Pages custom-domain setting). Keep the GitHub repo intact as rollback.
 
 `staging.tappaas.org` stays on the same target, so it and `tappaas.org` serve **identical** content
 until/unless staging is split onto its own branch/deployment. **Trust note:** on Codeberg Pages,
 Codeberg terminates TLS for `tappaas.org` — acceptable for a public static site.
+
+> **Fronting note (2026-07-21):** a third party CNAME-ing their own domain at
+> `documentation.tappaas.codeberg.page` *and* deploying to it could serve our (public, unmodified)
+> content under their name — Codeberg's countermeasure is the per-domain webhook + DNS authorization
+> above; the `_redirects` canonical rule further bounces stray hosts to `tappaas.org`. Low risk for
+> a public docs site; noted for completeness.
 
 **Cloudflare → deSEC later (apex catch — decided guidance).** `www` (a subdomain) keeps its CNAME on
 any provider. The **apex is the problem**: **deSEC has no CNAME-flattening**, so `tappaas.org` would
@@ -912,6 +938,10 @@ because of LE rate limits. New-server facts (from <https://codeberg.page> + expe
    quota and blocks issuance*. Probe at most every ~15 min; if stuck, **back off ~1h** to let the
    window clear. (We tripped this on first bring-up.)
 8. **No CAA record** on `tappaas.org` that would block Let's Encrypt (verified — apex has no CAA).
+9. **Custom domain gets no cert but HTTP :80 302s?** It's **routed but never deployed** — git-pages
+   deployments (and cert issuance) are **per-domain**; POST the push webhook to *that hostname's own
+   URL* (over `http://`, TLS isn't up yet; expect `created`). This — not the rate limit — was the
+   real cause of the multi-day `www.tappaas.org` cert failure (solved 2026-07-21; see §10.1).
 
 **Test status — 2026-07-10:**
 
