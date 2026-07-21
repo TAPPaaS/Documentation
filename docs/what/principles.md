@@ -13,7 +13,7 @@ called TAPPaaS — pronounced *tapas*, like the Spanish dish: a curated collecti
 delicious servings that together make a comprehensive meal. The principles are ordered
 the way our users evaluate platforms: **risk first, then cost, then capability** —
 and they serve as the evaluation filter for new
-[modules](../develop/author-a-module.md).
+[modules](../develop/develop-a-module.md).
 
 ## 1. Digital sovereignty — you stay in control
 
@@ -85,5 +85,5 @@ different tool.
 
 ---
 
-*These principles are the yardstick for [module decisions](../develop/author-a-module.md)
+*These principles are the yardstick for [module decisions](../develop/develop-a-module.md)
 and roadmap trade-offs. Where the story came from: [Why TAPPaaS](../why/index.md).*

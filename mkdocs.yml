@@ -222,9 +222,8 @@ nav:
 
   - Develop:
     - Overview: develop/index.md
-    - Author a Module:
-      - Guide: develop/author-a-module.md
-      - Module Template: generated/module-template.md
+    - Develop a Module: develop/develop-a-module.md
+    - Module Template: generated/module-template.md
 
   - Stacks:
     - Overview: stacks/index.md
