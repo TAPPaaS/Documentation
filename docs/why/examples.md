@@ -161,4 +161,4 @@ Every module follows the same structure (the
 the starting point) — see the [module structure](../generated/module-template.md)
 documentation to package the app *you* need.
 
-[Install TAPPaaS](../generated/install-overview.md){ .md-button .md-button--primary }
+[Install TAPPaaS](../install/index.md){ .md-button .md-button--primary }

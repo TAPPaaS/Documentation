@@ -65,7 +65,7 @@ See the [Hardware Selection Guide](../generated/hardware-selection.md) for detai
 
 ### Can I run TAPPaaS on my existing hardware?
 
-Yes! TAPPaaS runs on standard x86_64 hardware. You can repurpose existing servers, use mini PCs, or purchase new hardware. See our [Installation Guide](../generated/install-overview.md).
+Yes! TAPPaaS runs on standard x86_64 hardware. You can repurpose existing servers, use mini PCs, or purchase new hardware. See our [Installation Guide](../install/index.md).
 
 ### How do I upgrade TAPPaaS?
 

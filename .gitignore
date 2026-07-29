@@ -1,3 +1,4 @@
 site/
 venv/
 docs/generated/
+docs/install/index.md

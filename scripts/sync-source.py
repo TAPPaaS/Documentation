@@ -38,7 +38,7 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 # Paths follow the pinned ref (ADR007); the build fails if one goes missing.
 ALLOW_LIST = [
     # Install
-    ("INSTALL.md", "generated/install-overview.md", "Install Overview"),
+    ("INSTALL.md", "install/index.md", "Install Overview"),
     ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
     ("preparation.md", "generated/preparation.md", "Preparation"),
     ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),

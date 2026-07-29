@@ -191,7 +191,7 @@ nav:
     - Glossary: generated/ontology.md
 
   - Install:
-    - Overview: generated/install-overview.md
+    - Overview: install/index.md
     - Hardware Selection: generated/hardware-selection.md
     - Preparation: generated/preparation.md
     - Install Foundation: generated/install.md
