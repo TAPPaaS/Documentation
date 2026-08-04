@@ -42,7 +42,7 @@ ALLOW_LIST = [
     ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
     ("preparation.md", "generated/preparation.md", "Preparation"),
     ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),
-    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Add an Environment"),
+    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Install Environments"),
     ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
     # What → Foundation: the computed module dependency graph
     # (regenerated upstream by src/generate-module-dependencies.sh)

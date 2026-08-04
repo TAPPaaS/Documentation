@@ -195,7 +195,7 @@ nav:
     - Hardware Selection: generated/hardware-selection.md
     - Preparation: generated/preparation.md
     - Install Foundation: generated/install.md
-    - Add Environment: generated/install-environment.md
+    - Install Environments: generated/install-environment.md
     - Add Satellite: generated/satellite-install.md
     - Add Stacks:
       - AI Stack:
