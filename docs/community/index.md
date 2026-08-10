@@ -53,25 +53,21 @@ There are many ways to contribute to TAPPaaS:
 |------------------|-------------|-------------|
 | **Code** | Fix bugs, add features, improve performance | [Contributing Guide](contributing.md) |
 | **Documentation** | Improve guides, fix typos, add examples | [Contributing Guide](contributing.md) |
-| **Issues** | Report bugs, suggest features | [GitHub Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues) |
-| **Support** | Help others in discussions | [GitHub Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions) |
+| **Issues** | Report bugs, suggest features | [Codeberg Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues) |
+| **Support** | Help others in issues | [Codeberg Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues) |
 | **Spread the Word** | Blog posts, talks, social media | Share your experience! |
 
 ---
 
 ## Communication Channels
 
-### GitHub Discussions
+### Codeberg Issues
 
-Our primary community forum for questions, ideas, and discussions.
+Our primary community forum — ask questions, share ideas, and report bugs or
+request features through the issue tracker.
 
-[:octicons-comment-discussion-24: Join Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions){ .md-button }
-
-### GitHub Issues
-
-Report bugs and request features through our issue tracker.
-
-[:octicons-issue-opened-24: View Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues){ .md-button }
+[:octicons-comment-discussion-24: Ask a Question](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button .md-button--primary }
+[:octicons-issue-opened-24: Browse Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues){ .md-button }
 
 ---
 

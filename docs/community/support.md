@@ -22,34 +22,35 @@ Many questions are already answered in our documentation:
 
 ## Community Support
 
-### GitHub Discussions
+### Codeberg Issues
 
 The best place to ask questions and get help from the community.
 
-[:octicons-comment-discussion-24: Ask a Question](https://github.com/TAPPaaS/TAPPaaS/discussions/new?category=q-a){ .md-button .md-button--primary }
+[:octicons-comment-discussion-24: Ask a Question](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button .md-button--primary }
 
 **Tips for getting help:**
 
-- Search existing discussions first
+- Search existing issues first
 - Use a clear, descriptive title
 - Include relevant details (version, environment, error messages)
 - Share what you've already tried
 - Format code and logs properly
 
-### Categories
+### Labelling your issue
 
-| Category | Use For |
-|----------|---------|
-| **Q&A** | Technical questions about using TAPPaaS |
-| **Ideas** | Feature suggestions and enhancement ideas |
-| **Show & Tell** | Share what you've built with TAPPaaS |
-| **General** | Other discussions about TAPPaaS |
+When you open an issue, add a label so maintainers can triage it:
+
+| Label | Use For |
+|-------|---------|
+| **question** | Technical questions about using TAPPaaS |
+| **enhancement** | Feature suggestions and enhancement ideas |
+| **bug** | Something isn't working as documented |
 
 ---
 
 ## Reporting Issues
 
-Found a bug? Please report it on GitHub Issues.
+Found a bug? Please report it on Codeberg Issues.
 
 [:octicons-issue-opened-24: Report a Bug](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button }
 
@@ -82,7 +83,7 @@ Before submitting:
 ## Security Issues
 
 !!! warning "Security Vulnerabilities"
-    **Do not** report security vulnerabilities through public GitHub issues.
+    **Do not** report security vulnerabilities through public issues.
 
     Please email security concerns to the maintainers for responsible disclosure.
 
@@ -109,7 +110,7 @@ TAPPaaS is a community-driven open source project. Response times vary based on:
 
 ## How to Help Others
 
-Want to give back? Help answer questions in GitHub Discussions!
+Want to give back? Help answer questions in Codeberg Issues!
 
 - Share your knowledge and experience
 - Provide working examples and solutions

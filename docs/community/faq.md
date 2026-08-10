@@ -138,8 +138,7 @@ We welcome contributions! See our [Contributing Guide](contributing.md) for:
 ### Where can I get help?
 
 - **Documentation**: You're already here!
-- **GitHub Discussions**: [Ask questions](https://github.com/TAPPaaS/TAPPaaS/discussions)
-- **GitHub Issues**: [Report bugs](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
+- **Codeberg Issues**: [Ask questions or report bugs](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
 
 See [Support](support.md) for more options.
 
@@ -150,7 +149,7 @@ See [Support](support.md) for more options.
 If your question isn't answered here:
 
 1. Search the [documentation](../index.md)
-2. Check [GitHub Discussions](https://github.com/TAPPaaS/TAPPaaS/discussions)
+2. Check [Codeberg Issues](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
 3. Ask a new question in the community
 
-[:octicons-comment-discussion-24: Ask the Community](https://github.com/TAPPaaS/TAPPaaS/discussions/new?category=q-a){ .md-button .md-button--primary }
+[:octicons-comment-discussion-24: Ask the Community](https://codeberg.org/TAPPaaS/TAPPaaS/issues/new){ .md-button .md-button--primary }

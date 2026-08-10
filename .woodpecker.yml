@@ -67,8 +67,9 @@ steps:
           exit "$rc"
         fi
       # WS0 source-sync: pull allow-listed pages + manager/controller READMEs
-      # from the TAPPaaS source repo (GitHub, pinned ref — currently ADR007)
-      # into docs/generated/ — fails on source drift.
+      # from the TAPPaaS source repo (Codeberg TAPPaaS/TAPPaaS, ref =
+      # TAPPAAS_SOURCE_REF, default `main`) into docs/generated/ — fails on
+      # source drift.
       - python scripts/sync-source.py
       # One converged MkDocs site (ADR-001 §5.5 revision): the landing is the
       # home page (overrides/home.html); the Astro layer is retired.

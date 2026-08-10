@@ -48,7 +48,7 @@ All contributors must follow our [Code of Conduct](code-of-conduct.md).
 
 ## Questions?
 
-- Open a [Discussion](https://github.com/TAPPaaS/TAPPaaS/discussions)
+- Open an [Issue](https://codeberg.org/TAPPaaS/TAPPaaS/issues)
 - Join our community chat
 
 We appreciate your contributions!

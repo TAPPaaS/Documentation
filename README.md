@@ -4,14 +4,15 @@ Documentation site for TAPPaaS - Trusted Automated Private Platform as a (selfho
 
 | Environment | URL | Built from |
 |-------------|-----|------------|
-| **Production (1.x)** | <https://tappaas.org> | GitHub mirror, push to `main` (GitHub Actions) — untouched until the 2.0 cutover |
-| **Staging (2.0 work)** | <https://staging.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages). One MkDocs site; the landing is the home page (`overrides/home.html`) |
-| Staging fallback URL | <https://tappaas.codeberg.page/Documentation/> | same as staging |
+| **Production** | <https://tappaas.org> / <https://www.tappaas.org> | **This repo (Codeberg)**, push to `main` (Woodpecker CI → Codeberg Pages). One MkDocs site; the landing is the home page (`overrides/home.html`) |
+| **Staging** | <https://staging.tappaas.org> | This repo (Codeberg), push to `main` or the `staging` branch — same build/pipeline as production |
+| Fallback URL | <https://tappaas.codeberg.page/Documentation/> | same build |
 | Branch previews | `https://tappaas.codeberg.page/Documentation/spikes/<branch>/` | any `spike-*` branch |
 
-**This Codeberg repo is the primary home** — all 2.0 upgrade work happens here (see
-[`ADR/ADR001-rearchitect.md`](ADR/ADR001-rearchitect.md)). The GitHub copy only keeps publishing
-the live 1.x site until the one-time cutover (ADR-001 §10.1).
+**This Codeberg repo is the primary and sole home of the site** (see
+[`ADR/ADR001-rearchitect.md`](ADR/ADR001-rearchitect.md)). The 2.0 cutover is complete —
+<https://tappaas.org> is now served from here via Codeberg Pages; the previous GitHub-Actions
+publish path is retired.
 
 ## Making Changes
 
@@ -23,7 +24,8 @@ Edit the markdown files in the `docs/` folder.
   under `…/Documentation/spikes/<branch>/` → review → merge to `main`.
 
 Pages marked *(source)* — synced INSTALL docs, all *Managers*/*Controllers* pages, zones, schemas,
-the taxonomy — are **generated at build time** from the TAPPaaS source repo (branch `ADR007`) by
+the taxonomy — are **generated at build time** from the TAPPaaS source repo (Codeberg, branch
+`main` by default; override with the `TAPPAAS_SOURCE_REF` env) by
 [`scripts/sync-source.py`](scripts/sync-source.py) (WS0) — edit them **upstream** in
 [TAPPaaS/TAPPaaS](https://codeberg.org/TAPPaaS/TAPPaaS), not here. New manager/controller READMEs
 upstream appear automatically (glob + generated SUMMARY.md + literate-nav); other new files need an
