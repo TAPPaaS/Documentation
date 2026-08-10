@@ -21,14 +21,14 @@ tested 2.0 is promoted to stable (migration Phase 6).
 """
 
 import fnmatch
-import io
 import os
 import posixpath
 import re
+import shutil
+import subprocess
 import sys
-import tarfile
+import tempfile
 import urllib.parse
-import urllib.request
 
 FORGE = "https://codeberg.org"
 REPO = "TAPPaaS/TAPPaaS"
@@ -174,34 +174,52 @@ def write_page(src, out, title, content, syncmap):
     print("WS0 sync: {} -> docs/{}".format(src, out))
 
 
-def main():
-    # Forgejo archive endpoint (top-level dir name in the tarball is stripped
-    # generically below, so its exact shape does not matter).
-    url = "{}/{}/archive/{}.tar.gz".format(FORGE, REPO, urllib.parse.quote(REF))
-    print("WS0 sync: fetching {}@{} ...".format(REPO, REF))
-    with urllib.request.urlopen(url, timeout=60) as resp:
-        blob = resp.read()
+def clone_source(dest):
+    """Shallow-clone the source repo at REF into dest.
 
+    Replaces the previous on-demand tarball download (…/archive/REF.tar.gz):
+    Codeberg regenerates that tarball per request and it repeatedly exceeded the
+    socket timeout for this large repo, failing the whole build (pipelines
+    #76/#77). A shallow clone transfers a git pack instead — seconds, not
+    minutes — and is far more reliable.
+    """
+    url = "{}/{}.git".format(FORGE, REPO)
+    print("WS0 sync: shallow-cloning {}@{} ...".format(REPO, REF))
+    subprocess.run(
+        ["git", "clone", "--depth", "1", "--branch", REF, url, dest],
+        check=True,
+    )
+
+
+def main():
     wanted = {src: (out, title) for src, out, title in ALLOW_LIST}
     found = {}
     globbed = {outdir: {} for _, outdir, _ in GLOB_RULES}
 
-    with tarfile.open(fileobj=io.BytesIO(blob), mode="r:gz") as tar:
-        for member in tar:
-            if not member.isfile():
-                continue
-            rel = member.name.split("/", 1)[1] if "/" in member.name else ""
-            if rel in wanted:
-                found[rel] = tar.extractfile(member).read().decode("utf-8")
-                continue
-            for pattern, outdir, excluded in GLOB_RULES:
-                # fnmatch's * spans '/', so also require equal path depth —
-                # keeps nested files (e.g. opnsense-controller/patches/README.md) out.
-                if fnmatch.fnmatch(rel, pattern) and rel.count("/") == pattern.count("/"):
-                    component = rel.split("/")[-2]  # the dir holding README.md
-                    if component in excluded:
-                        continue
-                    globbed[outdir][component] = (rel, tar.extractfile(member).read().decode("utf-8"))
+    tmp = tempfile.mkdtemp(prefix="tappaas-src-")
+    try:
+        clone_source(tmp)
+        for root, dirs, filenames in os.walk(tmp):
+            if ".git" in dirs:
+                dirs.remove(".git")  # never descend into git metadata
+            for fn in filenames:
+                full = os.path.join(root, fn)
+                rel = os.path.relpath(full, tmp)  # repo-relative path (POSIX on Linux/macOS)
+                if rel in wanted:
+                    with open(full, encoding="utf-8") as fh:
+                        found[rel] = fh.read()
+                    continue
+                for pattern, outdir, excluded in GLOB_RULES:
+                    # fnmatch's * spans '/', so also require equal path depth —
+                    # keeps nested files (e.g. opnsense-controller/patches/README.md) out.
+                    if fnmatch.fnmatch(rel, pattern) and rel.count("/") == pattern.count("/"):
+                        component = rel.split("/")[-2]  # the dir holding README.md
+                        if component in excluded:
+                            continue
+                        with open(full, encoding="utf-8") as fh:
+                            globbed[outdir][component] = (rel, fh.read())
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
 
     missing = sorted(set(wanted) - set(found))
     if missing:

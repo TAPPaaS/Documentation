@@ -41,6 +41,9 @@ steps:
   build:
     image: python:3.12-slim
     commands:
+      # git is needed by scripts/sync-source.py (shallow-clones the source repo;
+      # python:3.12-slim ships no git). Kept minimal.
+      - apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
       - pip install --no-cache-dir -r requirements.txt
       # Woodpecker services are reached by service name, not localhost — repoint Kroki.
       - sed -i 's#http://localhost:8000#http://kroki:8000#' mkdocs.yml
