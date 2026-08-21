@@ -57,6 +57,7 @@ ALLOW_LIST = [
     ("src/apps/deconz/INSTALL.md", "generated/apps/deconz.md", "deCONZ"),
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
+    ("src/foundation/tappaas-cicd/ADMIN-VPN.md", "generated/admin-vpn.md", "Admin VPN (WireGuard)"),
     # What / Develop references. (src/README.md and src/foundation/README.md were
     # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
     ("GLOSSARY.md", "generated/ontology.md", "Glossary"),

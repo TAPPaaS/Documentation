@@ -216,6 +216,9 @@ nav:
 
   - Operate:
     - Overview: operate/index.md
+    - Admin Access:
+      - Overview: operate/admin-access.md
+      - Admin VPN (WireGuard): generated/admin-vpn.md
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md

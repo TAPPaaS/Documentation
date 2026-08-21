@@ -23,6 +23,10 @@ So: **managers decide, controllers do.** A day-to-day operation like "update all
 modules" is a manager conversation; "why didn't the VLAN get created" is a controller
 page.
 
+You reach both from the `tappaas@tappaas-cicd` prompt — see
+**[Admin Access](admin-access.md)** for the three ways to get there (on the management
+network, or over WireGuard with a public IP or a satellite).
+
 ## Reference
 
 These pages are always current with the source code (new managers and controllers
