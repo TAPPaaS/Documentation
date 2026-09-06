@@ -227,6 +227,7 @@ nav:
     - Overview: develop/index.md
     - Develop a Module: generated/develop-a-module.md
     - Module Details: generated/module-template.md
+    - Build Process: generated/build.md
 
   - Stacks:
     - Overview: stacks/index.md
