@@ -317,6 +317,54 @@
          <lastmod>2026-09-06</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/services/SUMMARY/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/backup-vm/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/cluster-ha/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/cluster-lxc/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/cluster-vm/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/identity-identity/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/network-discovery/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/network-dns/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/network-nat/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/network-proxy/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/network-rules/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/templates-windows/</loc>
+         <lastmod>2026-09-06</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/includes/abbreviations/</loc>
          <lastmod>2026-09-06</lastmod>
     </url>
