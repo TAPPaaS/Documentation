@@ -65,7 +65,7 @@ ALLOW_LIST = [
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
     ("src/apps/00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Details"),
-    ("BUILD.md", "generated/build.md", "Building TAPPaaS"),
+    ("BUILD.md", "generated/build.md", "TAPPaaS Build Process"),
     # What → Design: module design notes surfaced under the "Design" submenu
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
     ("src/foundation/network/DESIGN.md", "generated/design/network.md", "Network Design"),
@@ -75,18 +75,40 @@ ALLOW_LIST = [
     ("src/foundation/DEPENDENCIES.md", "generated/design/foundation-dependencies.md", "Foundation Dependencies"),
 ]
 
-# Glob rules: (pattern, output dir under docs/, excluded component dirs).
+# Glob rules: (pattern, output dir under docs/, excluded component dirs, naming).
 # Every match becomes generated/<outdir>/<name>.md, and each output dir gets
-# a SUMMARY.md for mkdocs-literate-nav.
+# a SUMMARY.md for mkdocs-literate-nav. `naming` picks the page name/title:
+#   "dir"            -> the README's own dir (e.g. network-manager); title = pretty_name.
+#   "module-service" -> <module>-<service> (e.g. network-proxy), because service
+#                       dir names collide across modules (cluster/backup both have
+#                       a `vm`); title = the `module:service` coordinate.
 GLOB_RULES = [
-    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers", set()),
-    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers", set()),
+    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers", set(), "dir"),
+    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers", set(), "dir"),
+    # Foundation service contracts — the provider:service pairs modules depend on.
+    ("src/foundation/*/services/*/README.md", "generated/services", set(), "module-service"),
     # Module catalog entries (the Stacks section points at these).
     # schemas has its own synced page; Deprecated must never publish;
     # 00-Template is synced separately as the Module Template.
-    ("src/foundation/*/README.md", "generated/foundation", {"schemas", "Deprecated"}),
-    ("src/apps/*/README.md", "generated/modules", {"00-Template"}),
+    ("src/foundation/*/README.md", "generated/foundation", {"schemas", "Deprecated"}, "dir"),
+    ("src/apps/*/README.md", "generated/modules", {"00-Template"}, "dir"),
 ]
+
+
+def glob_component(rel, naming):
+    """Page name (without .md) for a globbed match under its output dir."""
+    parts = rel.split("/")
+    if naming == "module-service":
+        return "{}-{}".format(parts[-4], parts[-2])  # <module>-<service>
+    return parts[-2]  # the dir holding README.md
+
+
+def glob_title(rel, naming):
+    """Front-matter title / nav label for a globbed match."""
+    parts = rel.split("/")
+    if naming == "module-service":
+        return "{}:{}".format(parts[-4], parts[-2])  # the module:service coordinate
+    return pretty_name(parts[-2])
 
 # Nicer titles for globbed component names.
 TITLE_OVERRIDES = {
@@ -196,7 +218,7 @@ def clone_source(dest):
 def main():
     wanted = {src: (out, title) for src, out, title in ALLOW_LIST}
     found = {}
-    globbed = {outdir: {} for _, outdir, _ in GLOB_RULES}
+    globbed = {outdir: {} for _, outdir, _, _ in GLOB_RULES}
 
     tmp = tempfile.mkdtemp(prefix="tappaas-src-")
     try:
@@ -211,13 +233,13 @@ def main():
                     with open(full, encoding="utf-8") as fh:
                         found[rel] = fh.read()
                     continue
-                for pattern, outdir, excluded in GLOB_RULES:
+                for pattern, outdir, excluded, naming in GLOB_RULES:
                     # fnmatch's * spans '/', so also require equal path depth —
                     # keeps nested files (e.g. opnsense-controller/patches/README.md) out.
                     if fnmatch.fnmatch(rel, pattern) and rel.count("/") == pattern.count("/"):
-                        component = rel.split("/")[-2]  # the dir holding README.md
-                        if component in excluded:
+                        if rel.split("/")[-2] in excluded:
                             continue
+                        component = glob_component(rel, naming)
                         with open(full, encoding="utf-8") as fh:
                             globbed[outdir][component] = (rel, fh.read())
     finally:
@@ -235,23 +257,23 @@ def main():
     # Map every synced source path to its on-site output, so links between synced
     # pages resolve within the site instead of bouncing out to Codeberg.
     syncmap = {src: out for src, out, title in ALLOW_LIST}
-    for _, outdir, _ in GLOB_RULES:
+    for _, outdir, _, _ in GLOB_RULES:
         for component, (rel, _content) in globbed[outdir].items():
             syncmap[rel] = "{}/{}.md".format(outdir, component)
 
     for src, (out, title) in wanted.items():
         write_page(src, out, title, found[src], syncmap)
 
-    for pattern, outdir, _ in GLOB_RULES:
+    for pattern, outdir, _, naming in GLOB_RULES:
         components = globbed[outdir]
         if not components:
             sys.exit("WS0 sync FAILED: glob '{}' matched nothing in {}@{}".format(pattern, REPO, REF))
         summary_lines = []
         for component in sorted(components):
             src, content = components[component]
-            title = pretty_name(component)
+            title = glob_title(src, naming)
             write_page(src, "{}/{}.md".format(outdir, component), title, content, syncmap)
-            summary_lines.append("* [{}]({}.md)".format(pretty_name(component), component))
+            summary_lines.append("* [{}]({}.md)".format(title, component))
         # Nav for this directory (consumed by mkdocs-literate-nav).
         summary_path = os.path.join(DOCS_DIR, outdir, "SUMMARY.md")
         with open(summary_path, "w") as fh:

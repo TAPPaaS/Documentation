@@ -12,6 +12,9 @@ TAPPaaS. If you're *running* a system, you want [Operate](../operate/index.md); 
 want the platform's concepts and design, that's What ([capabilities](../what/capabilities.md),
 [principles](../what/principles.md), [design](../what/design.md), [ADRs](../generated/adrs.md)).
 
+If instead you want to understand how TAPPaaS *itself* is built — the release process,
+images and CI behind the platform — see [TAPPaaS Build Process](../generated/build.md).
+
 ## The one idea to hold on to
 
 Everything deployable is a **module**: a directory with a json contract
