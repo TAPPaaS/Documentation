@@ -222,6 +222,7 @@ nav:
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
+    - Disaster Recovery: generated/disaster-recovery.md
 
   - Develop:
     - Overview: develop/index.md
