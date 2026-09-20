@@ -51,3 +51,13 @@ contract, never by hand-wiring firewalls or DNS. The full design is under What �
 
 Both are maintained with the template itself in the source repo
 (`src/apps/00-Template/`) and synced here at build time.
+
+## Changing the shape of a config
+
+A module's own config is yours to change with
+[`module-manager module modify`](../generated/managers/module-manager.md). Changing the
+*shape* every site's `config/` is written in — a renamed field, a changed type, a module
+that moves to another repository — is a **migration**, and it ships with the release that
+needs it: see **[Config Migrations](../generated/config-migrations.md)** for how to write
+one, the contract it meets, the fixture test it ships with, and `move-module.sh` for moving
+a module without writing one by hand.

@@ -57,7 +57,7 @@ ALLOW_LIST = [
     ("src/apps/deconz/INSTALL.md", "generated/apps/deconz.md", "deCONZ"),
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
-    ("src/foundation/tappaas-cicd/ADMIN-VPN.md", "generated/admin-vpn.md", "Admin VPN (WireGuard)"),
+    ("src/foundation/tappaas-cicd/manager/network-manager/ADMIN-VPN.md", "generated/admin-vpn.md", "Admin VPN (WireGuard)"),
     ("src/foundation/backup/RESTORE.md", "generated/disaster-recovery.md", "Disaster Recovery"),
     # What / Develop references. (src/README.md and src/foundation/README.md were
     # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
@@ -66,6 +66,7 @@ ALLOW_LIST = [
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
     ("src/apps/00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
     ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Details"),
+    ("src/foundation/tappaas-cicd/migrations/README.md", "generated/config-migrations.md", "Config Migrations"),
     ("BUILD.md", "generated/build.md", "TAPPaaS Build Process"),
     # What → Design: module design notes surfaced under the "Design" submenu
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
