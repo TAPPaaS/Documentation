@@ -1047,6 +1047,8 @@ Three layers, from automatic to one-time setup:
    itself is created once in the Woodpecker UI (ci.codeberg.org → repo → Settings → Crons, e.g.
    `nightly` @ `0 4 * * *` on branch `main`) — **one-time manual step for Lars** (needs repo-admin,
    which the CI token doesn't have). Until then, any push or manual run refreshes.
+   *Status 2026-09-23:* still not created — pipelines #1–#84 contain no cron event, so upstream
+   doc changes (e.g. ADR-028) stayed off the site until the next docs push.
 
 ---
 
