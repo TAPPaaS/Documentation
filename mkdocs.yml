@@ -203,15 +203,13 @@ nav:
         - vLLM (AMD): generated/apps/vllm-amd.md
         - LiteLLM: generated/apps/litellm.md
         - OpenWebUI: generated/apps/openwebui.md
-      - Productivity Stack:
-        - Overview: install/productivity-stack/index.md
+      - Collaboration Stack:
+        - Overview: install/collaboration-stack/index.md
         - Nextcloud: generated/apps/nextcloud.md
         - n8n: generated/apps/n8n.md
       - Home Stack:
         - Overview: install/home-stack/index.md
         - Home Assistant: generated/apps/hass.md
-      - IoT Stack:
-        - Overview: install/iot-stack/index.md
         - deCONZ: generated/apps/deconz.md
 
   - Operate:
@@ -236,9 +234,9 @@ nav:
     - Overview: stacks/index.md
     - Foundation Stack: stacks/foundation.md
     - AI Stack: stacks/ai.md
-    - Productivity Stack: stacks/productivity.md
+    - Collaboration Stack: stacks/collaboration.md
     - Home Stack: stacks/home.md
-    - IoT Stack: stacks/iot.md
+    - Security Stack: stacks/security.md
     - DevOps Stack: stacks/devops.md
     - Foundation Modules: generated/foundation/
     - App Modules: generated/modules/

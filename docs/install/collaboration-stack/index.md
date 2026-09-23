@@ -1,11 +1,11 @@
 ---
-title: Productivity Stack
+title: Collaboration Stack
 description: >
   Files, collaboration and workflow automation — Nextcloud today, n8n and
   Karakeep planned.
 ---
 
-# Productivity Stack
+# Collaboration Stack
 
 | Module | Role | Status |
 |--------|------|--------|
@@ -13,6 +13,6 @@ description: >
 | **[n8n](../../generated/apps/n8n.md)** | Workflow automation (AI access planned via the LiteLLM gateway) | Planned — placeholder module |
 | **Karakeep** | Bookmarking / read-it-later | Planned — no module yet |
 
-Related productivity modules you can install today: **EURO Office** (web office suite
-in Nextcloud), **Vaultwarden** (password manager) and **Coturn** (Talk call relay) —
-see the [module gallery](../../why/examples.md).
+Related modules you can install today: **EURO Office** (web office suite in Nextcloud)
+and **Coturn** (Talk call relay) — see the [module gallery](../../why/examples.md).
+**Vaultwarden** moved to the [Security Stack](../../stacks/security.md).
