@@ -220,6 +220,7 @@ nav:
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
+    - Release Train: generated/release-train.md
     - Disaster Recovery: generated/disaster-recovery.md
 
   - Develop:
