@@ -30,9 +30,9 @@
 #   - The DNS records above for the staging custom domain.
 
 when:
-  # cron = nightly content-freshness rebuild (WS0 re-syncs upstream docs even
-  # when this repo has no pushes) — create the cron once in the Woodpecker UI:
-  # ci.codeberg.org → repo → Settings → Crons (see ADR-001 §12.2).
+  # Upstream doc changes arrive as `manual` runs, started by TAPPaaS/TAPPaaS's
+  # .woodpecker/docs-trigger.yml only when a synced file changes. No cron is
+  # configured on purpose (ADR-001 §12.2); `cron` stays accepted if one is added.
   - event: [push, manual, cron]
     branch: [main, staging, "spike-*"]
   - event: pull_request

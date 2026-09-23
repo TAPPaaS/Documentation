@@ -1042,13 +1042,13 @@ Three layers, from automatic to one-time setup:
    outside the glob shapes (a brand-new doc type) still needs one allow-list line in
    [`scripts/sync-source.py`](../scripts/sync-source.py) — deliberate, so internal/WIP docs can't
    leak onto the site.
-3. **Rebuilds without docs pushes** — upstream-only changes don't trigger our CI. Fix: a
-   **Woodpecker nightly cron** on `main`. The pipeline already accepts `event: cron`; the cron
-   itself is created once in the Woodpecker UI (ci.codeberg.org → repo → Settings → Crons, e.g.
-   `nightly` @ `0 4 * * *` on branch `main`) — **one-time manual step for Lars** (needs repo-admin,
-   which the CI token doesn't have). Until then, any push or manual run refreshes.
-   *Status 2026-09-23:* still not created — pipelines #1–#84 contain no cron event, so upstream
-   doc changes (e.g. ADR-028) stayed off the site until the next docs push.
+3. **Rebuilds without docs pushes** — upstream-only changes don't trigger our CI. Fix: the
+   source repo's `.woodpecker/docs-trigger.yml` starts a `main` pipeline here, via the Woodpecker
+   API, on a push to its `main` that touches a synced path (a `path` filter mirroring
+   `sync-source.py`). A push that touches none starts nothing. *Decided 2026-09-23:* no nightly
+   cron — rebuilding without a doc change is load on Codeberg for nothing. The cron event stays
+   accepted in `.woodpecker.yml` but none is configured. Setup: one Woodpecker secret
+   `woodpecker_token` on TAPPaaS/TAPPaaS (Lars, one-time). Fallback: any docs push or manual run.
 
 ---
 
