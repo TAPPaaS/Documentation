@@ -220,7 +220,6 @@ nav:
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
-    - Release Train: generated/release-train.md
     - Disaster Recovery: generated/disaster-recovery.md
 
   - Develop:
@@ -230,6 +229,7 @@ nav:
     - Config Migrations: generated/config-migrations.md
     - Foundation Services: generated/services/
     - TAPPaaS Build Process: generated/build.md
+    - Release Train: generated/release-train.md
 
   - Stacks:
     - Overview: stacks/index.md
