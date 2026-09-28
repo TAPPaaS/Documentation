@@ -235,3 +235,91 @@ nav.md-nav[data-md-level="2"] .md-nav__link:hover {
   background-color: var(--md-primary-fg-color);
   color: var(--md-primary-bg-color);
 }
+
+/* ── Roadmap timeline (docs/roadmap/index.md) ─────────────────────────
+   One entry per row: when · marker · card. Now = filled marker, Soon = hollow,
+   a date = done, a release = accented. Colours come from the theme's own
+   variables, so dark mode follows without a second palette. */
+.tap-roadmap {
+  --rm-when: 7.5rem;
+  --rm-dot: 0.85rem;
+  position: relative;
+  margin: 2rem 0 2.5rem;
+}
+.tap-roadmap::before {            /* the vertical line */
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: calc(var(--rm-when) + 1rem + var(--rm-dot) / 2 - 1px);
+  width: 2px;
+  background: var(--md-default-fg-color--lightest);
+}
+.tap-rm {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rm-when) calc(var(--rm-dot) + 2rem) 1fr;
+  align-items: start;
+  margin: 0 0 0.9rem;
+}
+.tap-rm__when {
+  padding-top: 0.75rem;
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+}
+.tap-rm--now .tap-rm__when,
+.tap-rm--soon .tap-rm__when { font-style: italic; }
+.tap-rm::after {                  /* the marker on the line */
+  content: "";
+  position: absolute;
+  top: 0.95rem;
+  left: calc(var(--rm-when) + 1rem);
+  width: var(--rm-dot);
+  height: var(--rm-dot);
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid var(--md-primary-fg-color);
+  background: var(--md-default-bg-color);
+}
+.tap-rm--now::after     { background: var(--md-primary-fg-color); }
+.tap-rm--done::after    { border-color: var(--md-default-fg-color--light); background: var(--md-default-fg-color--light); }
+.tap-rm--release::after { border-color: var(--md-accent-fg-color); background: var(--md-accent-fg-color); }
+.tap-rm__card {
+  grid-column: 3;
+  padding: 0.6rem 0.9rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  background: var(--md-default-bg-color);
+}
+.tap-rm--release .tap-rm__card { border-color: var(--md-accent-fg-color); }
+.md-typeset .tap-rm__card p { margin: 0; font-size: 0.72rem; line-height: 1.5; }
+.md-typeset .tap-rm__card p.tap-rm__title {
+  margin-bottom: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.md-typeset .tap-rm__tag {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0 0.45rem;
+  border-radius: 1rem;
+  font-size: 0.62rem;
+  line-height: 1.6;
+  color: var(--md-primary-fg-color);
+  border: 1px solid var(--md-primary-fg-color);
+}
+@media screen and (max-width: 40em) {  /* phones: the date moves into the card's row */
+  .tap-roadmap { --rm-when: 0rem; }
+  .tap-rm { grid-template-columns: calc(var(--rm-dot) + 1.4rem) 1fr; }
+  .tap-rm__when {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0 0 0.2rem;
+    text-align: left;
+  }
+  .tap-rm__card { grid-column: 2; grid-row: 2; }
+  .tap-roadmap::before { left: calc(var(--rm-dot) / 2 - 1px); }
+  .tap-rm::after { left: 0; top: 0.1rem; }
+}
