@@ -25,7 +25,7 @@ updated and backed up by the platform.
     roof. A high-performance backend module (`nextcloud-hpb`) scales Talk and push
     notifications.
 
-    [:octicons-arrow-right-24: Install guide](../generated/apps/nextcloud.md)
+    [:octicons-arrow-right-24: Install guide](../generated/install/collaboration/nextcloud.md)
 
 -   :material-file-document-edit-outline: **EURO Office**
 
@@ -67,7 +67,7 @@ updated and backed up by the platform.
     A polished chat interface for AI models — the familiar assistant experience,
     served from your own rack.
 
-    [:octicons-arrow-right-24: Install guide](../generated/apps/openwebui.md)
+    [:octicons-arrow-right-24: Install guide](../generated/install/ai/openwebui.md)
 
 -   :material-brain: **vLLM (AMD)**
 
@@ -85,7 +85,7 @@ updated and backed up by the platform.
     One OpenAI-compatible gateway in front of your local models (and, if you choose,
     remote ones) — apps talk to one API, you decide where inference runs.
 
-    [:octicons-arrow-right-24: Install guide](../generated/apps/litellm.md)
+    [:octicons-arrow-right-24: Install guide](../generated/install/ai/litellm.md)
 
 </div>
 
@@ -100,7 +100,7 @@ updated and backed up by the platform.
     Home automation with local control: lights, heating, sensors and cameras that
     keep working when the internet doesn't.
 
-    [:octicons-arrow-right-24: Install guide](../generated/apps/hass.md)
+    [:octicons-arrow-right-24: Install guide](../generated/install/home/hass.md)
 
 -   :material-zigbee: **deCONZ**
 

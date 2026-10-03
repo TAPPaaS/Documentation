@@ -18,4 +18,4 @@ their own zones (local-only, cloud-dependent, cameras, untrusted) with firewall
 boundaries, and Home Assistant reaches them across those boundaries through controlled
 pinholes — see [Network Zones](../generated/zones.md).
 
-Install guides under [Install → Add Stacks](../install/home-stack/index.md).
+Install guides under [Install → Add Stacks](../generated/install/home/index.md).

@@ -11,9 +11,8 @@ description: Files, collaboration, office, passwords and call relay.
 | [Nextcloud HPB](../generated/modules/nextcloud-hpb.md) | High-performance backend for Talk and push |
 | [EURO Office](../generated/modules/euro-office.md) | Web office suite inside Nextcloud |
 | [Coturn](../generated/modules/coturn.md) | TURN relay for reliable calls |
-| [n8n](../generated/modules/n8n.md) | Workflow automation *(planned — placeholder module)* |
 
-Install guides live under [Install → Add Stacks](../install/collaboration-stack/index.md).
+Install guides live under [Install → Add Stacks](../generated/install/collaboration/index.md).
 
 ## Architecture view
 

@@ -17,4 +17,4 @@ the zone model (see [Network Zones](../generated/zones.md)), and off-site, encry
 backup from `backup`. A stack groups modules by what they are *for*; it does not say
 where the security lives.
 
-Install guides live under [Install → Add Stacks](../install/index.md).
+Install guides live under [Install → Add Stacks](../generated/install/security/index.md).

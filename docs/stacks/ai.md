@@ -10,8 +10,9 @@ description: Private AI — model serving, one gateway API, and a chat interface
 | [vLLM (AMD)](../generated/modules/vllm-amd.md) | Model serving on AMD GPUs / unified-memory APUs |
 | [LiteLLM](../generated/modules/litellm.md) | OpenAI-compatible gateway with per-user keys |
 | [OpenWebUI](../generated/modules/openwebui.md) | Chat interface for your users |
+| [n8n](../generated/modules/n8n.md) | Workflow automation *(planned — placeholder module)* |
 
-Install guides live under [Install → Add Stacks](../install/ai-stack/index.md);
+Install guides live under [Install → Add Stacks](../generated/install/ai/index.md);
 hardware sizing under [Hardware Selection](../generated/hardware-selection.md#sizing-local-ai-gpu-vram-guidance).
 
 ## Architecture view
