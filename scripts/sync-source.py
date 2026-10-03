@@ -15,6 +15,8 @@ pages under docs/generated/:
   - FAILS the build if an expected exact file is missing (drift guard).
 
 Run before `mkdocs build` (CI does; locally: python3 scripts/sync-source.py).
+Local checkout instead of a clone: TAPPAAS_SOURCE_DIR=<path> (for trying a source
+branch before it is pushed; the banner still names REPO@REF).
 Pin override: TAPPAAS_SOURCE_REF env var. Default: main — since the ADR007→main
 promotion, main is the 2.0 manager/controller line; flip to `stable` when the
 tested 2.0 is promoted to stable (migration Phase 6).
@@ -36,6 +38,11 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 
 # Exact files: (path in source repo, output under docs/, page title).
 # Paths follow the pinned ref (ADR007); the build fails if one goes missing.
+#
+# "@<module>/<file>" names a file in a module's own directory wherever it sits:
+# src/<dir>/<module>/<file> outside src/foundation, exactly one match. Modules
+# are grouped by stack (TAPPaaS #421: src/apps/hass -> src/home/hass), so a
+# module page must not depend on which directory its stack is.
 ALLOW_LIST = [
     # Install
     ("INSTALL.md", "install/index.md", "Install Overview"),
@@ -48,13 +55,13 @@ ALLOW_LIST = [
     # (regenerated upstream by src/generate-module-dependencies.sh)
     ("src/module-dependencies.md", "generated/module-dependencies.md", "Module Dependencies"),
     # Stack module installs (Add Stacks — each stack item is the module's INSTALL.md)
-    ("src/apps/openwebui/INSTALL.md", "generated/apps/openwebui.md", "OpenWebUI"),
-    ("src/apps/litellm/INSTALL.md", "generated/apps/litellm.md", "LiteLLM"),
-    ("src/apps/vllm-amd/INSTALL.md", "generated/apps/vllm-amd.md", "vLLM (AMD)"),
-    ("src/apps/nextcloud/INSTALL.md", "generated/apps/nextcloud.md", "Nextcloud"),
-    ("src/apps/n8n/INSTALL.md", "generated/apps/n8n.md", "n8n"),
-    ("src/apps/hass/INSTALL.md", "generated/apps/hass.md", "Home Assistant"),
-    ("src/apps/deconz/INSTALL.md", "generated/apps/deconz.md", "deCONZ"),
+    ("@openwebui/INSTALL.md", "generated/apps/openwebui.md", "OpenWebUI"),
+    ("@litellm/INSTALL.md", "generated/apps/litellm.md", "LiteLLM"),
+    ("@vllm-amd/INSTALL.md", "generated/apps/vllm-amd.md", "vLLM (AMD)"),
+    ("@nextcloud/INSTALL.md", "generated/apps/nextcloud.md", "Nextcloud"),
+    ("@n8n/INSTALL.md", "generated/apps/n8n.md", "n8n"),
+    ("@hass/INSTALL.md", "generated/apps/hass.md", "Home Assistant"),
+    ("@deconz/INSTALL.md", "generated/apps/deconz.md", "deCONZ"),
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
     ("src/foundation/tappaas-cicd/manager/network-manager/ADMIN-VPN.md", "generated/admin-vpn.md", "Admin VPN (WireGuard)"),
@@ -65,8 +72,8 @@ ALLOW_LIST = [
     ("GLOSSARY.md", "generated/ontology.md", "Glossary"),
     ("docs/ADR/README.md", "generated/adrs.md", "Architecture Decision Records"),
     ("src/foundation/schemas/README.md", "generated/schemas.md", "Module Schemas"),
-    ("src/apps/00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
-    ("src/apps/00-Template/README.md", "generated/module-template.md", "Module Details"),
+    ("@00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
+    ("@00-Template/README.md", "generated/module-template.md", "Module Details"),
     ("src/foundation/tappaas-cicd/migrations/README.md", "generated/config-migrations.md", "Config Migrations"),
     ("BUILD.md", "generated/build.md", "TAPPaaS Build Process"),
     # What → Design: module design notes surfaced under the "Design" submenu
@@ -78,7 +85,9 @@ ALLOW_LIST = [
     ("src/foundation/DEPENDENCIES.md", "generated/design/foundation-dependencies.md", "Foundation Dependencies"),
 ]
 
-# Glob rules: (pattern, output dir under docs/, excluded component dirs, naming).
+# Glob rules: (pattern, output dir under docs/, excluded component dirs, naming,
+# excluded top-level dirs under src/ — "*" in the pattern's second part matches
+# any of them otherwise).
 # Every match becomes generated/<outdir>/<name>.md, and each output dir gets
 # a SUMMARY.md for mkdocs-literate-nav. `naming` picks the page name/title:
 #   "dir"            -> the README's own dir (e.g. network-manager); title = pretty_name.
@@ -86,15 +95,17 @@ ALLOW_LIST = [
 #                       dir names collide across modules (cluster/backup both have
 #                       a `vm`); title = the `module:service` coordinate.
 GLOB_RULES = [
-    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers", set(), "dir"),
-    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers", set(), "dir"),
+    ("src/foundation/tappaas-cicd/manager/*/README.md", "generated/managers", set(), "dir", set()),
+    ("src/foundation/tappaas-cicd/controller/*/README.md", "generated/controllers", set(), "dir", set()),
     # Foundation service contracts — the provider:service pairs modules depend on.
-    ("src/foundation/*/services/*/README.md", "generated/services", set(), "module-service"),
+    ("src/foundation/*/services/*/README.md", "generated/services", set(), "module-service", set()),
     # Module catalog entries (the Stacks section points at these).
     # schemas has its own synced page; Deprecated must never publish;
     # 00-Template is synced separately as the Module Template.
-    ("src/foundation/*/README.md", "generated/foundation", {"schemas", "Deprecated"}, "dir"),
-    ("src/apps/*/README.md", "generated/modules", {"00-Template"}, "dir"),
+    ("src/foundation/*/README.md", "generated/foundation", {"schemas", "Deprecated"}, "dir", set()),
+    # Every other module, in whichever stack directory it lives (src/apps/<m>
+    # before TAPPaaS #421, src/<stack>/<m> after).
+    ("src/*/*/README.md", "generated/modules", {"00-Template"}, "dir", {"foundation"}),
 ]
 
 
@@ -218,14 +229,41 @@ def clone_source(dest):
     )
 
 
-def main():
-    wanted = {src: (out, title) for src, out, title in ALLOW_LIST}
-    found = {}
-    globbed = {outdir: {} for _, outdir, _, _ in GLOB_RULES}
+def resolve_module_paths(paths):
+    """ALLOW_LIST with every "@<module>/<file>" replaced by the one path that holds
+    it (src/<dir>/<module>/<file>, <dir> not foundation). Fails the build on none or
+    several — the drift guard, applied to a module that moved."""
+    out = []
+    for src, page, title in ALLOW_LIST:
+        if src.startswith("@"):
+            module, _, name = src[1:].partition("/")
+            hits = sorted(p for p in paths
+                          if p.count("/") == 3 and p.startswith("src/") and not p.startswith("src/foundation/")
+                          and p.split("/")[2] == module and p.split("/")[3] == name)
+            if len(hits) != 1:
+                sys.exit("WS0 sync FAILED: {} matched {} file(s) in {}@{}: {}".format(
+                    src, len(hits), REPO, REF, ", ".join(hits) or "none"))
+            src = hits[0]
+        out.append((src, page, title))
+    return out
 
-    tmp = tempfile.mkdtemp(prefix="tappaas-src-")
+
+def main():
+    found = {}
+    globbed = {outdir: {} for _, outdir, _, _, _ in GLOB_RULES}
+
+    local = os.environ.get("TAPPAAS_SOURCE_DIR")
+    tmp = local or tempfile.mkdtemp(prefix="tappaas-src-")
     try:
-        clone_source(tmp)
+        if not local:
+            clone_source(tmp)
+        paths = []
+        for root, dirs, filenames in os.walk(tmp):
+            if ".git" in dirs:
+                dirs.remove(".git")
+            paths += [os.path.relpath(os.path.join(root, fn), tmp) for fn in filenames]
+        allow = resolve_module_paths(paths)
+        wanted = {src: (out, title) for src, out, title in allow}
         for root, dirs, filenames in os.walk(tmp):
             if ".git" in dirs:
                 dirs.remove(".git")  # never descend into git metadata
@@ -236,17 +274,18 @@ def main():
                     with open(full, encoding="utf-8") as fh:
                         found[rel] = fh.read()
                     continue
-                for pattern, outdir, excluded, naming in GLOB_RULES:
+                for pattern, outdir, excluded, naming, tops in GLOB_RULES:
                     # fnmatch's * spans '/', so also require equal path depth —
                     # keeps nested files (e.g. opnsense-controller/patches/README.md) out.
                     if fnmatch.fnmatch(rel, pattern) and rel.count("/") == pattern.count("/"):
-                        if rel.split("/")[-2] in excluded:
+                        if rel.split("/")[-2] in excluded or rel.split("/")[1] in tops:
                             continue
                         component = glob_component(rel, naming)
                         with open(full, encoding="utf-8") as fh:
                             globbed[outdir][component] = (rel, fh.read())
     finally:
-        shutil.rmtree(tmp, ignore_errors=True)
+        if not local:
+            shutil.rmtree(tmp, ignore_errors=True)
 
     missing = sorted(set(wanted) - set(found))
     if missing:
@@ -259,15 +298,15 @@ def main():
 
     # Map every synced source path to its on-site output, so links between synced
     # pages resolve within the site instead of bouncing out to Codeberg.
-    syncmap = {src: out for src, out, title in ALLOW_LIST}
-    for _, outdir, _, _ in GLOB_RULES:
+    syncmap = {src: out for src, out, title in allow}
+    for _, outdir, _, _, _ in GLOB_RULES:
         for component, (rel, _content) in globbed[outdir].items():
             syncmap[rel] = "{}/{}.md".format(outdir, component)
 
     for src, (out, title) in wanted.items():
         write_page(src, out, title, found[src], syncmap)
 
-    for pattern, outdir, _, naming in GLOB_RULES:
+    for pattern, outdir, _, naming, _ in GLOB_RULES:
         components = globbed[outdir]
         if not components:
             sys.exit("WS0 sync FAILED: glob '{}' matched nothing in {}@{}".format(pattern, REPO, REF))
