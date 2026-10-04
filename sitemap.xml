@@ -173,6 +173,10 @@
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/foundation/SUMMARY/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/foundation/backup/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
@@ -222,6 +226,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/install/ai/litellm/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/ai/n8n/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
@@ -314,6 +322,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/managers/site-manager/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/SUMMARY/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
@@ -461,10 +473,6 @@
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/stacks/SUMMARY/</loc>
-         <lastmod>2026-10-04</lastmod>
-    </url>
-    <url>
          <loc>https://tappaas.org/stacks/ai/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
@@ -473,15 +481,15 @@
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/stacks/devops/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/stacks/foundation/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
          <loc>https://tappaas.org/stacks/home/</loc>
-         <lastmod>2026-10-04</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/stacks/misc/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
