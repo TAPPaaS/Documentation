@@ -49,12 +49,12 @@ ALLOW_LIST = [
     ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
     ("preparation.md", "generated/preparation.md", "Preparation"),
     ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),
-    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Install Environments"),
+    ("INSTALL-ENVIRONMENT.md", "generated/install-environment.md", "Configure Environments"),
     ("src/foundation/satellite/INSTALL.md", "generated/satellite-install.md", "Satellite Install"),
     # What → Foundation: the computed module dependency graph
     # (regenerated upstream by src/generate-module-dependencies.sh)
     ("src/module-dependencies.md", "generated/module-dependencies.md", "Module Dependencies"),
-    # Install → Add Stacks is not listed here: it is built from src/<stack>/ by
+    # Install → Add Workloads is not listed here: it is built from src/<stack>/ by
     # sync_stacks() below.
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
@@ -140,7 +140,7 @@ TITLE_OVERRIDES = {
 # what the stack is — and, once it has modules, an INSTALL.md — how to install it.
 #   Stacks menu:              the README is the stack's page (stacks/<stack>.md, the URLs
 #                             the hand-written pages had), its modules' READMEs under it.
-#   Install → Add Stacks:     the INSTALL.md is the section overview, under it the INSTALL.md
+#   Install → Add Workloads:  the INSTALL.md is the section overview, under it the INSTALL.md
 #                             of every module its generated table lists, in that order — so a
 #                             planned module (no catalogue entry) is never listed for install.
 # A new stack or module appears in both menus with zero docs-repo changes.

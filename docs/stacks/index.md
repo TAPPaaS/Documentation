@@ -24,7 +24,7 @@ smallest deployable units in TAPPaaS (see the
 
 Each stack page is the stack's own README in the source, followed by its **module catalog
 entries** (the modules' own READMEs) — always current with the source. How to install a
-stack is under [Install → Add Stacks](../generated/install/ai/index.md). How modules depend on each other is computed from
+stack is under [Install → Add Workloads](../generated/install/ai/index.md). How modules depend on each other is computed from
 the modules themselves: see the
 [module dependency graph](../generated/module-dependencies.md).
 
