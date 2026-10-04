@@ -108,11 +108,9 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
-  - pymdownx.magiclink:
-      normalize_issue_symbols: true
-      repo_url_shorthand: true
-      user: TAPPaaS
-      repo: Documentation
+  # Plain URLs become links. "#123" is NOT linked here: magiclink can only point it at
+  # GitHub, and the issues live on Codeberg — scripts/sync-source.py links them.
+  - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.snippets:

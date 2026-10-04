@@ -208,6 +208,43 @@ def rewrite_links(markdown, src_path, out_path, syncmap):
     return LINK_RE.sub(repl, markdown)
 
 
+# An issue reference "#123" in synced TAPPaaS text means a TAPPaaS/TAPPaaS issue on
+# Codeberg. (pymdownx.magiclink can only link GitHub/GitLab/Bitbucket, so mkdocs.yml
+# leaves "#123" alone and this links it.) Not inside code, an existing link's text or
+# target, an HTML entity (&#123;) or an anchor such as "#1-step" — the number must
+# stand alone.
+FENCE_RE = re.compile(r"^(\s*)(```|~~~)")
+ISSUE_RE = re.compile(r"(?<![\w&/#\[])#(\d{1,5})(?![\w-])")
+INLINE_CODE_OR_LINK_RE = re.compile(r"(`+)(?:.+?)\1|!?\[[^\]]*\]\([^)]*\)|<[^>\n]+>")
+
+
+def link_issues(markdown):
+    out, fence = [], None
+    for line in markdown.split("\n"):
+        m = FENCE_RE.match(line)
+        if fence:
+            if m and m.group(2) == fence:
+                fence = None
+            out.append(line)
+            continue
+        if m:
+            fence = m.group(2)
+            out.append(line)
+            continue
+        parts, last = [], 0
+        for c in INLINE_CODE_OR_LINK_RE.finditer(line):  # code spans and links stay as they are
+            parts.append(ISSUE_RE.sub(_issue_link, line[last:c.start()]))
+            parts.append(c.group(0))
+            last = c.end()
+        parts.append(ISSUE_RE.sub(_issue_link, line[last:]))
+        out.append("".join(parts))
+    return "\n".join(out)
+
+
+def _issue_link(m):
+    return "[#{0}]({1}/{2}/issues/{0})".format(m.group(1), FORGE, REPO)
+
+
 def pretty_name(component):
     """'backup-manager' -> 'Backup Manager' (with overrides for brand names)."""
     if component in TITLE_OVERRIDES:
@@ -223,7 +260,7 @@ def write_page(src, out, title, content, syncmap):
     out_path = os.path.join(DOCS_DIR, out)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as fh:
-        fh.write(banner + rewrite_links(content, src, out, syncmap))
+        fh.write(banner + link_issues(rewrite_links(content, src, out, syncmap)))
     print("WS0 sync: {} -> docs/{}".format(src, out))
 
 
