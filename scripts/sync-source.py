@@ -69,6 +69,7 @@ ALLOW_LIST = [
     ("@00-Template/DEVELOP.md", "generated/develop-a-module.md", "Develop a Module"),
     ("@00-Template/README.md", "generated/module-template.md", "Module Details"),
     ("src/foundation/tappaas-cicd/migrations/README.md", "generated/config-migrations.md", "Config Migrations"),
+    ("src/foundation/tappaas-cicd/MOVE-MODULE.md", "generated/move-module.md", "Moving a Module's Source"),
     ("BUILD.md", "generated/build.md", "TAPPaaS Build Process"),
     # What → Design: module design notes surfaced under the "Design" submenu
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
