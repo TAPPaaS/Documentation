@@ -132,16 +132,27 @@ TITLE_OVERRIDES = {
     "tappaas-cicd": "TAPPaaS CICD",
     "opnsense-controller": "OPNsense Controller",
     "ap-controller": "AP Controller",
+    "pvehost": "PVE Host",
+    "debianhost": "Debian Host",
 }
 
-# Install → Add Stacks, one section per stack directory src/<stack>/ (TAPPaaS #421):
-# the stack's README.md is the section overview, each src/<stack>/<module>/INSTALL.md
-# a page under it, in the install order the README's generated table lists.
-# A new stack or module appears in the nav with zero docs-repo changes.
-STACKS_OUTDIR = "generated/install"
-STACKS_EXCLUDED = {"foundation"}            # has its own Install Foundation pages
-STACK_MODULES_EXCLUDED = {"00-Template"}    # copied, never installed
+# Stacks (TAPPaaS #421, ADR-004): each stack directory src/<stack>/ has a README.md —
+# what the stack is — and, once it has modules, an INSTALL.md — how to install it.
+#   Stacks menu:              the README is the stack's page (stacks/<stack>.md, the URLs
+#                             the hand-written pages had), its modules' READMEs under it.
+#   Install → Add Stacks:     the INSTALL.md is the section overview, under it the INSTALL.md
+#                             of every module its generated table lists, in that order — so a
+#                             planned module (no catalogue entry) is never listed for install.
+# A new stack or module appears in both menus with zero docs-repo changes.
+STACK_PAGES_DIR = "stacks"
+INSTALL_OUTDIR = "generated/install"
+INSTALL_EXCLUDED = {"foundation"}           # has its own Install Foundation pages
+STACK_TITLES = {"foundation": "Foundation Stack"}  # its README is titled "TAPPaaS Foundation"
+STACKS_FIRST = ["foundation"]               # what everything else stands on
 STACKS_LAST = ["misc"]                      # the leftovers go at the end of the nav
+# Where each stack's module READMEs are synced (GLOB_RULES output dirs).
+MODULE_PAGE_DIRS = {"foundation": "generated/foundation"}
+MODULE_PAGE_DIR_DEFAULT = "generated/modules"
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs")
 
@@ -251,45 +262,61 @@ def resolve_module_paths(paths):
     return out
 
 
-def find_stacks(paths):
-    """{stack: (readme, [(module, install), ...] in install order)} for every
-    src/<stack>/ holding a README.md and at least one module INSTALL.md."""
-    stacks = {}
-    for p in paths:
-        parts = p.split("/")
-        if (len(parts) == 4 and parts[0] == "src" and parts[3] == "INSTALL.md"
-                and parts[1] not in STACKS_EXCLUDED and parts[2] not in STACK_MODULES_EXCLUDED):
-            stacks.setdefault(parts[1], []).append((parts[2], p))
-    out = {}
-    for stack, modules in stacks.items():
-        readme = "src/{}/README.md".format(stack)
-        if readme not in paths:
-            sys.exit("WS0 sync FAILED: stack src/{}/ has modules but no README.md in {}@{}".format(
-                stack, REPO, REF))
-        out[stack] = (readme, modules)
-    if not out:
-        sys.exit("WS0 sync FAILED: no stack directories src/<stack>/<module>/INSTALL.md in {}@{}".format(
-            REPO, REF))
-    return out
-
-
 def stack_title(readme_text, stack):
     """'# AI stack' -> 'AI Stack' (the site writes Stack with a capital)."""
+    if stack in STACK_TITLES:
+        return STACK_TITLES[stack]
     m = re.search(r"^#\s+(.+?)\s*$", readme_text, re.M)
     title = m.group(1) if m else pretty_name(stack)
     return re.sub(r"\bstack$", "Stack", title)
 
 
-def install_order(readme_text, modules):
-    """Modules in the order the stack README links them (its generated install-order
-    table); any it does not mention follow alphabetically."""
-    listed = re.findall(r"\]\(([^)/\s]+)/README\.md\)", readme_text)
-    rank = {m: i for i, m in enumerate(dict.fromkeys(listed))}
-    return sorted(modules, key=lambda mi: (rank.get(mi[0], len(rank)), mi[0]))
+GENERATED_BLOCK_RE = re.compile(r"<!-- BEGIN GENERATED MODULES.*?<!-- END GENERATED MODULES -->", re.S)
+
+
+def linked(text, filename):
+    """Module dirs a stack document links as <module>/<filename>, in order, once each —
+    from its generated module list when it has one (hand-written prose may link a module
+    out of order, or a planned one)."""
+    m = GENERATED_BLOCK_RE.search(text)
+    return list(dict.fromkeys(re.findall(r"\]\(([^)/\s]+)/" + re.escape(filename) + r"\)",
+                                         m.group(0) if m else text)))
 
 
 def stack_sort_key(stack):
-    return (stack in STACKS_LAST, STACKS_LAST.index(stack) if stack in STACKS_LAST else 0, stack)
+    if stack in STACKS_FIRST:
+        return (0, STACKS_FIRST.index(stack), stack)
+    if stack in STACKS_LAST:
+        return (2, STACKS_LAST.index(stack), stack)
+    return (1, 0, stack)
+
+
+def read_stacks(tmp, paths):
+    """{stack: {"readme": text, "install": text or None, "modules": {module: INSTALL text}}}
+    for every src/<stack>/README.md. Fails the build when a stack INSTALL.md lists a module
+    without an INSTALL.md (the drift guard)."""
+    stacks = {}
+    for p in sorted(paths):
+        parts = p.split("/")
+        if len(parts) == 3 and parts[0] == "src" and parts[2] == "README.md":
+            stack = parts[1]
+            with open(os.path.join(tmp, p), encoding="utf-8") as fh:
+                entry = {"readme": fh.read(), "install": None, "modules": {}}
+            install = "src/{}/INSTALL.md".format(stack)
+            if stack not in INSTALL_EXCLUDED and install in paths:
+                with open(os.path.join(tmp, install), encoding="utf-8") as fh:
+                    entry["install"] = fh.read()
+                for module in linked(entry["install"], "INSTALL.md"):
+                    mi = "src/{}/{}/INSTALL.md".format(stack, module)
+                    if mi not in paths:
+                        sys.exit("WS0 sync FAILED: {} lists {} but {} is missing in {}@{}".format(
+                            install, module, mi, REPO, REF))
+                    with open(os.path.join(tmp, mi), encoding="utf-8") as fh:
+                        entry["modules"][module] = fh.read()
+            stacks[stack] = entry
+    if not stacks:
+        sys.exit("WS0 sync FAILED: no stack README src/<stack>/README.md in {}@{}".format(REPO, REF))
+    return stacks
 
 
 def main():
@@ -307,17 +334,7 @@ def main():
                 dirs.remove(".git")
             paths += [os.path.relpath(os.path.join(root, fn), tmp) for fn in filenames]
         allow = resolve_module_paths(paths)
-        stacks = find_stacks(set(paths))
-        stack_pages = {}  # src -> (out, title, text); text filled below
-        for stack, (readme, modules) in stacks.items():
-            with open(os.path.join(tmp, readme), encoding="utf-8") as fh:
-                readme_text = fh.read()
-            stack_pages[readme] = ["{}/{}/index.md".format(STACKS_OUTDIR, stack),
-                                   stack_title(readme_text, stack), readme_text]
-            for module, install in modules:
-                with open(os.path.join(tmp, install), encoding="utf-8") as fh:
-                    stack_pages[install] = ["{}/{}/{}.md".format(STACKS_OUTDIR, stack, module),
-                                            pretty_name(module), fh.read()]
+        stacks = read_stacks(tmp, set(paths))
         wanted = {src: (out, title) for src, out, title in allow}
         for root, dirs, filenames in os.walk(tmp):
             if ".git" in dirs:
@@ -354,7 +371,13 @@ def main():
     # Map every synced source path to its on-site output, so links between synced
     # pages resolve within the site instead of bouncing out to Codeberg.
     syncmap = {src: out for src, out, title in allow}
-    syncmap.update({src: page[0] for src, page in stack_pages.items()})
+    for stack, st in stacks.items():
+        syncmap["src/{}/README.md".format(stack)] = "{}/{}.md".format(STACK_PAGES_DIR, stack)
+        if st["install"] is not None:
+            syncmap["src/{}/INSTALL.md".format(stack)] = "{}/{}/index.md".format(INSTALL_OUTDIR, stack)
+            for module in st["modules"]:
+                syncmap["src/{}/{}/INSTALL.md".format(stack, module)] = "{}/{}/{}.md".format(
+                    INSTALL_OUTDIR, stack, module)
     for _, outdir, _, _, _ in GLOB_RULES:
         for component, (rel, _content) in globbed[outdir].items():
             syncmap[rel] = "{}/{}.md".format(outdir, component)
@@ -372,26 +395,45 @@ def main():
             title = glob_title(src, naming)
             write_page(src, "{}/{}.md".format(outdir, component), title, content, syncmap)
             summary_lines.append("* [{}]({}.md)".format(title, component))
+        if outdir in MODULE_PAGE_DIRS.values() or outdir == MODULE_PAGE_DIR_DEFAULT:
+            # Module catalog pages: the Stacks nav (stacks/SUMMARY.md) lists them per stack.
+            print("WS0 sync: {} pages -> docs/{}/".format(len(components), outdir))
+            continue
         # Nav for this directory (consumed by mkdocs-literate-nav).
         summary_path = os.path.join(DOCS_DIR, outdir, "SUMMARY.md")
         with open(summary_path, "w") as fh:
             fh.write("\n".join(summary_lines) + "\n")
         print("WS0 sync: {} pages + SUMMARY.md -> docs/{}/".format(len(components), outdir))
 
-    summary_lines = []
+    # Stacks menu: index (hand-written), then per stack its README and module READMEs.
+    stack_nav = ["* [Overview](index.md)"]
+    install_nav = []
     for stack in sorted(stacks, key=stack_sort_key):
-        readme, modules = stacks[stack]
-        out, title, text = stack_pages[readme]
-        write_page(readme, out, title, text, syncmap)
-        summary_lines += ["* {}".format(title), "    * [Overview]({}/index.md)".format(stack)]
-        for module, install in install_order(text, modules):
-            out, mtitle, mtext = stack_pages[install]
-            write_page(install, out, mtitle, mtext, syncmap)
-            summary_lines.append("    * [{}]({}/{}.md)".format(mtitle, stack, module))
-    with open(os.path.join(DOCS_DIR, STACKS_OUTDIR, "SUMMARY.md"), "w") as fh:
-        fh.write("\n".join(summary_lines) + "\n")
-    print("WS0 sync: {} stacks, {} module installs + SUMMARY.md -> docs/{}/".format(
-        len(stacks), sum(len(m) for _, m in stacks.values()), STACKS_OUTDIR))
+        st = stacks[stack]
+        title = stack_title(st["readme"], stack)
+        write_page("src/{}/README.md".format(stack), "{}/{}.md".format(STACK_PAGES_DIR, stack),
+                   title, st["readme"], syncmap)
+        stack_nav += ["* {}".format(title), "    * [Overview]({}.md)".format(stack)]
+        pagedir = MODULE_PAGE_DIRS.get(stack, MODULE_PAGE_DIR_DEFAULT)
+        members = {c: rel for c, (rel, _t) in globbed[pagedir].items() if rel.split("/")[1] == stack}
+        rank = {m: n for n, m in enumerate(linked(st["readme"], "README.md"))}
+        for module in sorted(members, key=lambda m: (rank.get(m, len(rank)), m)):
+            stack_nav.append("    * [{}](../{}/{}.md)".format(
+                glob_title(members[module], "dir"), pagedir, module))
+        if st["install"] is not None:
+            write_page("src/{}/INSTALL.md".format(stack), "{}/{}/index.md".format(INSTALL_OUTDIR, stack),
+                       title, st["install"], syncmap)
+            install_nav += ["* {}".format(title), "    * [Overview]({}/index.md)".format(stack)]
+            for module, text in st["modules"].items():  # dict order = the table's order
+                write_page("src/{}/{}/INSTALL.md".format(stack, module),
+                           "{}/{}/{}.md".format(INSTALL_OUTDIR, stack, module), pretty_name(module), text, syncmap)
+                install_nav.append("    * [{}]({}/{}.md)".format(pretty_name(module), stack, module))
+    for outdir, lines in ((STACK_PAGES_DIR, stack_nav), (INSTALL_OUTDIR, install_nav)):
+        os.makedirs(os.path.join(DOCS_DIR, outdir), exist_ok=True)
+        with open(os.path.join(DOCS_DIR, outdir, "SUMMARY.md"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+    print("WS0 sync: {} stacks -> docs/{}/, {} with install pages -> docs/{}/".format(
+        len(stacks), STACK_PAGES_DIR, sum(1 for st in stacks.values() if st["install"] is not None), INSTALL_OUTDIR))
 
     print("WS0 sync: OK ({}@{})".format(REPO, REF))
 
