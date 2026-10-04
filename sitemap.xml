@@ -253,6 +253,14 @@
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/install/devops/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/devops/forgejo/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/install/home/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
@@ -262,6 +270,14 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/install/home/hass/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/home/immich/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/home/jellyfin/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
@@ -329,7 +345,19 @@
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/modules/forgejo/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/modules/hass/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/immich/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/jellyfin/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
@@ -474,6 +502,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/stacks/collaboration/</loc>
+         <lastmod>2026-10-04</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/stacks/devops/</loc>
          <lastmod>2026-10-04</lastmod>
     </url>
     <url>
