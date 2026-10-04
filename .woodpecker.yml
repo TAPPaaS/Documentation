@@ -102,9 +102,17 @@ steps:
           *) DEST="spikes/$CI_COMMIT_BRANCH" ;;
         esac
       # Publish with a couple of retries in case a concurrent pipeline pushed
-      # to `pages` between our clone and push.
+      # to `pages` between our clone and push. A build of a commit that is no
+      # longer the branch head never publishes: a newer build will, and the
+      # older one finishing last would roll the site back (2026-10-04, a TAPPaaS
+      # docs-trigger run started on the old head overwrote the new deploy).
       - |
         publish() {
+          HEAD_SHA=$(git ls-remote "$REPO" "refs/heads/$CI_COMMIT_BRANCH" | cut -f1)
+          if [ -n "$HEAD_SHA" ] && [ "$HEAD_SHA" != "$CI_COMMIT_SHA" ]; then
+            echo "skip publish: $CI_COMMIT_BRANCH is now at $HEAD_SHA, this build is $CI_COMMIT_SHA"
+            return 0
+          fi
           rm -rf pages
           if ! git clone --depth 1 --branch pages "$REPO" pages 2>/dev/null; then
             git clone --depth 1 "$REPO" pages
