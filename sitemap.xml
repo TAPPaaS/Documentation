@@ -209,6 +209,10 @@
          <lastmod>2026-10-05</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/foundation/storage/</loc>
+         <lastmod>2026-10-05</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/foundation/tappaas-cicd/</loc>
          <lastmod>2026-10-05</lastmod>
     </url>
@@ -337,6 +341,10 @@
          <lastmod>2026-10-05</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/managers/storage-manager/</loc>
+         <lastmod>2026-10-05</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/modules/coturn/</loc>
          <lastmod>2026-10-05</lastmod>
     </url>
@@ -457,7 +465,7 @@
          <lastmod>2026-10-05</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/generated/services/pvehost-nfs/</loc>
+         <loc>https://tappaas.org/generated/services/storage-nfs/</loc>
          <lastmod>2026-10-05</lastmod>
     </url>
     <url>
