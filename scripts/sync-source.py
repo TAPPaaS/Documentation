@@ -32,6 +32,8 @@ import sys
 import tempfile
 import urllib.parse
 
+import roadmap_page  # scripts/roadmap_page.py: the Roadmap page, from ROADMAP.md
+
 FORGE = "https://codeberg.org"
 REPO = "TAPPaaS/TAPPaaS"
 REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
@@ -373,6 +375,11 @@ def main():
             paths += [os.path.relpath(os.path.join(root, fn), tmp) for fn in filenames]
         allow = resolve_module_paths(paths)
         stacks = read_stacks(tmp, set(paths))
+        roadmap_src = os.path.join(tmp, "ROADMAP.md")
+        if not os.path.isfile(roadmap_src):
+            sys.exit("WS0 sync FAILED: ROADMAP.md missing in {}@{}".format(REPO, REF))
+        with open(roadmap_src, encoding="utf-8") as fh:
+            roadmap_text = fh.read()
         wanted = {src: (out, title) for src, out, title in allow}
         for root, dirs, filenames in os.walk(tmp):
             if ".git" in dirs:
@@ -472,6 +479,17 @@ def main():
             fh.write("\n".join(lines) + "\n")
     print("WS0 sync: {} stacks -> docs/{}/, {} with install pages -> docs/{}/".format(
         len(stacks), STACK_PAGES_DIR, sum(1 for st in stacks.values() if st["install"] is not None), INSTALL_OUTDIR))
+
+    # The Roadmap page is a view of ROADMAP.md (scripts/roadmap_page.py); a ROADMAP.md it cannot
+    # read fails the build rather than publishing a half-empty page.
+    try:
+        page = roadmap_page.build(roadmap_text)
+    except ValueError as exc:
+        sys.exit("WS0 sync FAILED: {}".format(exc))
+    os.makedirs(os.path.join(DOCS_DIR, "roadmap"), exist_ok=True)
+    with open(os.path.join(DOCS_DIR, "roadmap", "index.md"), "w") as fh:
+        fh.write(page)
+    print("WS0 sync: ROADMAP.md -> docs/roadmap/index.md")
 
     print("WS0 sync: OK ({}@{})".format(REPO, REF))
 
