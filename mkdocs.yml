@@ -207,6 +207,7 @@ nav:
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
     - Disaster Recovery: generated/disaster-recovery.md
+    - Backup Buddy: generated/backup-buddy.md
 
   - Develop:
     - Overview: develop/index.md
