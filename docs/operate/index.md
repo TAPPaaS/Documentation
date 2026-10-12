@@ -37,7 +37,9 @@ appear here automatically):
 - **Controllers** — see the *Controllers* section: one page per controller
   (opnsense, proxmox, identity, backup, ap, switch, node-provisioner).
 - **[Network Zones](../generated/zones.md)** — the zone model the network manager
-  maintains and the firewall enforces.
+  maintains.
+- **[Firewall Rules](../generated/firewall-rules.md)** — how the zones and the modules in
+  them become the firewall's rule set, in which order it is evaluated, and the known gaps.
 
 ## Related
 

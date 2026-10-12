@@ -55,4 +55,4 @@ peer or a key then revokes exactly one device.
   peer, managing peers, reaching zones beyond `mgmt`, and troubleshooting.
 - [Install Foundation](../generated/install.md) — the admin VPN termination is brought
   up during bootstrap; no manual firewall step is needed.
-- [Network Zones](../generated/zones.md) — the zone model the firewall enforces.
+- [Network Zones](../generated/zones.md) — the zone model; [Firewall Rules](../generated/firewall-rules.md) — what the firewall enforces from it.

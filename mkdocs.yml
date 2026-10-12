@@ -206,6 +206,7 @@ nav:
     - Managers: generated/managers/
     - Controllers: generated/controllers/
     - Network Zones: generated/zones.md
+    - Firewall Rules: generated/firewall-rules.md
     - Disaster Recovery: generated/disaster-recovery.md
     - Backup Buddy: generated/backup-buddy.md
 
