@@ -61,6 +61,7 @@ ALLOW_LIST = [
     # Operate references
     ("src/foundation/tappaas-cicd/manager/network-manager/ZONES.md", "generated/zones.md", "Network Zones"),
     ("src/foundation/tappaas-cicd/manager/network-manager/FIREWALL-RULES.md", "generated/firewall-rules.md", "Firewall Rules"),
+    ("src/foundation/tappaas-cicd/manager/network-manager/IPV6.md", "generated/ipv6.md", "IPv6"),
     ("src/foundation/tappaas-cicd/manager/network-manager/ADMIN-VPN.md", "generated/admin-vpn.md", "Admin VPN (WireGuard)"),
     ("src/foundation/backup/RESTORE.md", "generated/disaster-recovery.md", "Disaster Recovery"),
     ("src/foundation/backup/BUDDY.md", "generated/backup-buddy.md", "Backup Buddy"),
