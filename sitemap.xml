@@ -301,6 +301,10 @@
          <lastmod>2026-10-15</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/install/home/nomad/</loc>
+         <lastmod>2026-10-15</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/install/misc/</loc>
          <lastmod>2026-10-15</lastmod>
     </url>
@@ -402,6 +406,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/modules/nextcloud/</loc>
+         <lastmod>2026-10-15</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/nomad/</loc>
          <lastmod>2026-10-15</lastmod>
     </url>
     <url>
