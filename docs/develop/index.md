@@ -14,6 +14,8 @@ want the platform's concepts and design, that's What ([capabilities](../what/cap
 
 If instead you want to understand how TAPPaaS *itself* is built — the release process,
 images and CI behind the platform — see [TAPPaaS Build Process](../generated/build.md).
+Releases and images are signed: who signs them, how, and how to sign a module repository of your
+own is in [Signing Releases](../generated/signing.md).
 
 ## The one idea to hold on to
 

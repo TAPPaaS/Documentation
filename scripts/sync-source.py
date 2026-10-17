@@ -66,6 +66,8 @@ ALLOW_LIST = [
     ("src/foundation/backup/RESTORE.md", "generated/disaster-recovery.md", "Disaster Recovery"),
     ("src/foundation/backup/BUDDY.md", "generated/backup-buddy.md", "Backup Buddy"),
     ("src/foundation/tappaas-cicd/RELEASE-TRAIN.md", "generated/release-train.md", "Release Train"),
+    ("src/foundation/tappaas-cicd/VERIFIED-UPDATES.md", "generated/verified-updates.md", "Verified Updates"),
+    ("src/foundation/tappaas-cicd/SIGNING.md", "generated/signing.md", "Signing Releases"),
     # What / Develop references. (src/README.md and src/foundation/README.md were
     # evaluated and skipped — they are 2-line stubs pointing back at tappaas.org.)
     ("GLOSSARY.md", "generated/ontology.md", "Glossary"),

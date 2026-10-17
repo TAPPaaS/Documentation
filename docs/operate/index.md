@@ -42,6 +42,9 @@ appear here automatically):
   them become the firewall's rule set, in which order it is evaluated, and the known gaps.
 - **[IPv6](../generated/ipv6.md)** — running IPv6 next to IPv4: turning it on and off, the
   WAN modes, which zones carry it, names, the reverse proxy and IPv4 fallback.
+- **[Verified Updates](../generated/verified-updates.md)** — what the site checks before it runs
+  new code (signed releases, image hashes, signed guest systems), how to read the result in
+  `health-manager validate`, requiring signed releases, and what to do when an update is refused.
 
 ## Related
 
