@@ -145,15 +145,7 @@
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/generated/controllers/ap-controller/</loc>
-         <lastmod>2026-10-20</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/generated/controllers/backup-controller/</loc>
-         <lastmod>2026-10-20</lastmod>
-    </url>
-    <url>
-         <loc>https://tappaas.org/generated/controllers/identity-controller/</loc>
+         <loc>https://tappaas.org/generated/controllers/authentik-controller/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
@@ -165,11 +157,15 @@
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/controllers/pbs-controller/</loc>
+         <lastmod>2026-10-20</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/controllers/proxmox-controller/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/generated/controllers/switch-controller/</loc>
+         <loc>https://tappaas.org/generated/controllers/unifi-controller/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
@@ -353,6 +349,10 @@
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/managers/ap-manager/</loc>
+         <lastmod>2026-10-20</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/managers/backup-manager/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
@@ -382,6 +382,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/managers/storage-manager/</loc>
+         <lastmod>2026-10-20</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/managers/switch-manager/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
