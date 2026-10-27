@@ -81,7 +81,7 @@ The alert says to forward the mail to your site's support address. That address 
 after an install; set it, as a day-two step, when you have a support contact:
 
 ```bash
-site-manager site modify --supportEmail <address>
+site-manager site modify --set supportEmail=<address>
 ```
 
 TAPPaaS support plans, with the address to use, are still to come; this page will name
