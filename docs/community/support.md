@@ -63,6 +63,34 @@ Found a bug? Please report it on Codeberg Issues.
     - [ ] Error messages and logs
     - [ ] Environment details (cloud provider, OS, etc.)
 
+### Support bundles from your site
+
+When something goes wrong — a failed update, a lost cluster quorum, a host gone silent —
+your TAPPaaS site mails you an alert, and for the problems a maintainer could look into it
+attaches a **support bundle**: the logs of the event, the state of the site and its
+configuration, with names, e-mail and street addresses, public IP addresses and secrets
+replaced. Domains, private addresses and module names are kept: they are what we debug
+with. `manifest.json` inside lists what is there and what was replaced, and the table to
+decode the replacements stays on your site, in `/var/lib/tappaas/support/`.
+
+Nothing is sent to us by itself — you decide. The bundle still shows your domains and how
+your network is built, so **do not attach it to a public issue**: open the issue with a
+description, and say that you have a bundle.
+
+The alert says to forward the mail to your site's support address. That address is empty
+after an install; set it, as a day-two step, when you have a support contact:
+
+```bash
+site-manager site modify --supportEmail <address>
+```
+
+TAPPaaS support plans, with the address to use, are still to come; this page will name
+it then.
+
+To see what a bundle looks like, and that alert mails reach you at all, run
+`tappaas-support-bundle.sh --test` on the mothership: it sends a test alert with a bundle,
+then its all-clear.
+
 ---
 
 ## Feature Requests
