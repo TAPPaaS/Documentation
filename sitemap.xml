@@ -273,10 +273,6 @@
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/generated/install/collaboration/lazysite/</loc>
-         <lastmod>2026-11-02</lastmod>
-    </url>
-    <url>
          <loc>https://tappaas.org/generated/install/collaboration/nextcloud-hpb/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
@@ -342,6 +338,14 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/install/security/vaultwarden/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/web-hosting/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install/web-hosting/lazysite/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
@@ -602,6 +606,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/stacks/security/</loc>
+         <lastmod>2026-11-02</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/stacks/web-hosting/</loc>
          <lastmod>2026-11-02</lastmod>
     </url>
     <url>
