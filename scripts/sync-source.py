@@ -49,6 +49,7 @@ ALLOW_LIST = [
     # Install
     ("INSTALL.md", "install/index.md", "Install Overview"),
     ("INSTALL/SINGLE-NODE-LOCAL.md", "generated/install-single-node-local.md", "Single Node, Local"),
+    ("INSTALL/SINGLE-NODE-WINDOWS.md", "generated/install-single-node-windows.md", "Single Node from a Windows PC"),
     ("INSTALL/SINGLE-NODE-HETZNER.md", "generated/install-single-node-hetzner.md", "Single Node in Hetzner"),
     ("INSTALL/CLUSTER-LOCAL.md", "generated/install-cluster-local.md", "Multi Node Cluster, Local"),
     ("INSTALL/CLUSTER-HETZNER.md", "generated/install-cluster-hetzner.md", "Multi Node Cluster in Hetzner"),

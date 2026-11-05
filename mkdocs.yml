@@ -191,6 +191,7 @@ nav:
   - Install:
     - Overview: install/index.md
     - Single Node, Local: generated/install-single-node-local.md
+    - Single Node from a Windows PC: generated/install-single-node-windows.md
     - Single Node in Hetzner: generated/install-single-node-hetzner.md
     - Multi Node Cluster, Local: generated/install-cluster-local.md
     - Multi Node Cluster in Hetzner: generated/install-cluster-hetzner.md
