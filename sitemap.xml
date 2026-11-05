@@ -85,11 +85,27 @@
          <lastmod>2026-11-05</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/install-cluster-hetzner/</loc>
+         <lastmod>2026-11-05</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install-cluster-local/</loc>
+         <lastmod>2026-11-05</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/install-environment/</loc>
          <lastmod>2026-11-05</lastmod>
     </url>
     <url>
-         <loc>https://tappaas.org/generated/install-singlenode/</loc>
+         <loc>https://tappaas.org/generated/install-single-node-hetzner/</loc>
+         <lastmod>2026-11-05</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install-single-node-local/</loc>
+         <lastmod>2026-11-05</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/install-single-node-windows/</loc>
          <lastmod>2026-11-05</lastmod>
     </url>
     <url>
