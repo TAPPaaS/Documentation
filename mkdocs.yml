@@ -190,6 +190,7 @@ nav:
 
   - Install:
     - Overview: install/index.md
+    - Single-Node Test Install: generated/install-singlenode.md
     - Hardware Selection: generated/hardware-selection.md
     - Preparation: generated/preparation.md
     - Install Foundation: generated/install.md

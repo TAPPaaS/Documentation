@@ -48,6 +48,7 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 ALLOW_LIST = [
     # Install
     ("INSTALL.md", "install/index.md", "Install Overview"),
+    ("INSTALL-SINGLENODE.md", "generated/install-singlenode.md", "Single-Node Test Install"),
     ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
     ("preparation.md", "generated/preparation.md", "Preparation"),
     ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),
