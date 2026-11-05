@@ -48,7 +48,10 @@ REF = os.environ.get("TAPPAAS_SOURCE_REF", "main")
 ALLOW_LIST = [
     # Install
     ("INSTALL.md", "install/index.md", "Install Overview"),
-    ("INSTALL-SINGLENODE.md", "generated/install-singlenode.md", "Single-Node Test Install"),
+    ("INSTALL/SINGLE-NODE-LOCAL.md", "generated/install-single-node-local.md", "Single Node, Local"),
+    ("INSTALL/SINGLE-NODE-HETZNER.md", "generated/install-single-node-hetzner.md", "Single Node in Hetzner"),
+    ("INSTALL/CLUSTER-LOCAL.md", "generated/install-cluster-local.md", "Multi Node Cluster, Local"),
+    ("INSTALL/CLUSTER-HETZNER.md", "generated/install-cluster-hetzner.md", "Multi Node Cluster in Hetzner"),
     ("hardware-selection.md", "generated/hardware-selection.md", "Hardware Selection"),
     ("preparation.md", "generated/preparation.md", "Preparation"),
     ("src/foundation/INSTALL.md", "generated/install.md", "Install Foundation"),

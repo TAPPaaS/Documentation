@@ -190,7 +190,10 @@ nav:
 
   - Install:
     - Overview: install/index.md
-    - Single-Node Test Install: generated/install-singlenode.md
+    - Single Node, Local: generated/install-single-node-local.md
+    - Single Node in Hetzner: generated/install-single-node-hetzner.md
+    - Multi Node Cluster, Local: generated/install-cluster-local.md
+    - Multi Node Cluster in Hetzner: generated/install-cluster-hetzner.md
     - Hardware Selection: generated/hardware-selection.md
     - Preparation: generated/preparation.md
     - Install Foundation: generated/install.md
