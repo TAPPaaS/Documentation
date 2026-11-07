@@ -49,5 +49,5 @@ appear here automatically):
 ## Related
 
 - [Install TAPPaaS](../install/index.md) — getting to a running system.
-- [Branch Selection](../generated/preparation.md#4-branch-selection) — the 2.0 status of what is described here.
+- [Branch Selection](../generated/preparation.md#7-the-branch) — the 2.0 status of what is described here.
 - [Develop](../develop/index.md) — how the managers/controllers are designed.
