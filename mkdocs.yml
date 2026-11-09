@@ -227,6 +227,7 @@ nav:
     - Moving a Module's Source: generated/move-module.md
     - Config Migrations: generated/config-migrations.md
     - Foundation Services: generated/services/
+    - Testing: generated/testing.md
     - TAPPaaS Build Process: generated/build.md
     - Release Train: generated/release-train.md
     - Signing Releases: generated/signing.md

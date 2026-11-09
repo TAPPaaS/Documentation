@@ -86,6 +86,7 @@ ALLOW_LIST = [
     ("src/foundation/tappaas-cicd/migrations/README.md", "generated/config-migrations.md", "Config Migrations"),
     ("src/foundation/tappaas-cicd/MOVE-MODULE.md", "generated/move-module.md", "Moving a Module's Source"),
     ("BUILD.md", "generated/build.md", "TAPPaaS Build Process"),
+    ("TESTING.md", "generated/testing.md", "Testing"),
     # What → Design: module design notes surfaced under the "Design" submenu
     ("src/foundation/cluster/DESIGN.md", "generated/design/cluster.md", "Cluster Design"),
     ("src/foundation/network/DESIGN.md", "generated/design/network.md", "Network Design"),
