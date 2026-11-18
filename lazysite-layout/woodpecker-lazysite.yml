@@ -15,9 +15,7 @@
 #   - the lazysite instance with repoBranch=live and repoPushUser=true;
 #   - the Woodpecker secret site_push_token: the token forgejo:repo wrote to
 #     ~/secrets/forgejo-push.<module>.token on the mothership;
-#   - SITE_REPO and SITE_USER below naming that instance;
-#   - this repository public in the tappaas Forgejo (as on Codeberg): the branch
-#     check reads it without credentials.
+#   - SITE_REPO and SITE_USER below naming that instance.
 # On two sites (hosting design §5): a second publish step with the other site's
 # repository and token.
 #
@@ -56,18 +54,22 @@ steps:
       - git config --global user.name "TAPPaaS docs"
       # The token reaches git through a credential helper, never the command line or a URL in the log.
       - git config --global credential.helper '!f() { echo "username=$SITE_USER"; echo "password=$SITE_PUSH_TOKEN"; }; f'
-      # A build of a commit that is no longer its branch's head never publishes
-      # (an older build finishing last would roll the site back).
+      # The site records which source commit it was built from (.tappaas-published,
+      # never served: lazysite answers dot-files 404). A build of an older commit than
+      # the one published never publishes: an older build finishing last would roll
+      # the site back. The commit time comes from the workspace clone, so nothing has
+      # to read the source repository again.
       - |
-        HEAD_SHA=$(git ls-remote "$CI_REPO_CLONE_URL" "refs/heads/$CI_COMMIT_BRANCH" | cut -f1)
-        if [ -n "$HEAD_SHA" ] && [ "$HEAD_SHA" != "$CI_COMMIT_SHA" ]; then
-          echo "skip publish: $CI_COMMIT_BRANCH is now at $HEAD_SHA, this build is $CI_COMMIT_SHA"; exit 0
-        fi
-      - |
+        SRC_CT=$(git log -1 --format=%ct)
         rm -rf out
         git clone -q --depth 1 --branch "$SITE_BRANCH" "$SITE_REPO" out 2>/dev/null || git init -q -b "$SITE_BRANCH" out
+        PUB_CT=$(cut -d' ' -f1 out/.tappaas-published 2>/dev/null || echo 0)
+        if [ "${PUB_CT:-0}" -gt "$SRC_CT" ]; then
+          echo "skip publish: the site is from a newer commit ($(cut -d' ' -f2 out/.tappaas-published))"; exit 0
+        fi
         find out -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
         cp -a site/. out/
+        echo "$SRC_CT $CI_COMMIT_SHA $CI_COMMIT_BRANCH" > out/.tappaas-published
         cd out && git add -A
         git commit -qm "Publish ${CI_COMMIT_SHA} (${CI_COMMIT_BRANCH})" || { echo "nothing to publish"; exit 0; }
         git push -q "$SITE_REPO" "HEAD:$SITE_BRANCH"
