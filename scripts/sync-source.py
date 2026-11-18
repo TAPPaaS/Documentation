@@ -221,7 +221,21 @@ def rewrite_links(markdown, src_path, out_path, syncmap):
             base += "#" + frag
         return "{}[{}]({}{})".format(bang, text, base, title)
 
-    return LINK_RE.sub(repl, markdown)
+    # Not inside code: a fenced block, or a code span (a regex such as
+    # `^[a-z]([a-z.-]*[a-z])?$` is link-shaped and was turned into a Codeberg link).
+    out, fence = [], None
+    for line in markdown.split("\n"):
+        m = FENCE_RE.match(line)
+        if fence or m:
+            if fence and m and m.group(2) == fence:
+                fence = None
+            elif not fence:
+                fence = m.group(2)
+            out.append(line)
+            continue
+        spans = [c.span() for c in re.finditer(r"(`+).+?\1", line)]
+        out.append(LINK_RE.sub(lambda lm: lm.group(0) if any(a <= lm.start() < b for a, b in spans) else repl(lm), line))
+    return "\n".join(out)
 
 
 # An issue reference "#123" in synced TAPPaaS text means a TAPPaaS/TAPPaaS issue on

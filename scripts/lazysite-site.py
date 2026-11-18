@@ -36,7 +36,7 @@ ASSET_EXT = {".png", ".svg", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
 
 STATS = {k: 0 for k in ("pages", "links_rewritten", "links_unresolved", "anchors", "list_blank",
                         "pipes", "tasks", "table_blank", "after_table", "bare_urls", "admonitions", "icons", "attr_lists",
-                        "kroki_fences", "mermaid_fences")}
+                        "kroki_fences", "kroki_rendered", "mermaid_fences")}
 UNRESOLVED = []
 
 
@@ -114,7 +114,7 @@ def rewrite_link(m, page_rel, pages):
 
 def normalise(body, page_rel, pages):
     lines = body.split("\n")
-    out, fence, seen, prev = [], None, set(), ""
+    out, fence, seen, prev, in_list = [], None, set(), "", False
     i = 0
     while i < len(lines):
         line = lines[i]
@@ -130,8 +130,18 @@ def normalise(body, page_rel, pages):
             lang = fm.group(2)
             if lang == "mermaid":
                 STATS["mermaid_fences"] += 1
-            elif lang.startswith("kroki") or lang in ("plantuml", "blockdiag", "seqdiag", "graphviz", "dot", "d2", "bpmn", "c4plantuml"):
+            elif lang.startswith("kroki") or lang in KROKI_TYPES:
                 STATS["kroki_fences"] += 1
+                body_lines, j = [], i + 1
+                while j < len(lines) and not re.match(r"^\s*" + re.escape(fence) + r"\s*$", lines[j]):
+                    body_lines.append(lines[j])
+                    j += 1
+                img = kroki_svg(lang[len("kroki-"):] if lang.startswith("kroki-") else lang, "\n".join(body_lines))
+                if img:
+                    STATS["kroki_rendered"] += 1
+                    out += ["", "![diagram]({})".format(img), ""]
+                    fence, prev, i = None, "", j + 1
+                    continue
             if prev.strip() and not prev.startswith((" ", "\t")):
                 out.append("")
             out.append(line)
@@ -177,11 +187,16 @@ def normalise(body, page_rel, pages):
             out += [""] if not line.strip() else ["", ""]
             STATS["after_table"] += 1
 
-        # a list straight after a paragraph line or a table needs a blank line
+        # a list straight after a paragraph line or a table needs a blank line; so
+        # does one after an indented line that continues a paragraph, not a list
         if LIST_RE.match(line) and prev.strip() and not LIST_RE.match(prev) \
-                and not prev.startswith((" ", "\t", "#", "<", ">", ":::")):
+                and (not prev.startswith((" ", "\t", "#", "<", ">", ":::")) or (prev[:1] in " \t" and not in_list)):
             out.append("")
             STATS["list_blank"] += 1
+        if LIST_RE.match(line):
+            in_list = True
+        elif not line.strip() or not line.startswith((" ", "\t")):
+            in_list = False
 
         # a table straight after a paragraph line needs a blank line
         nxt = lines[i + 1] if i + 1 < len(lines) else ""
@@ -239,6 +254,52 @@ def normalise_inline(line, page_rel, pages):
         parts.append(BARE_URL_RE.sub(bare, seg[last:]))
         return "".join(parts)
     return outside_code(line, fix)
+
+
+# ---------------------------------------------------------------- diagrams
+
+KROKI_TYPES = ("plantuml", "blockdiag", "seqdiag", "graphviz", "dot", "d2", "bpmn", "c4plantuml")
+KROKI_URL = os.environ.get("KROKI_URL", "").rstrip("/")
+DIAGRAMS = {}
+
+
+def kroki_svg(kind, source):
+    """Render a diagram once through Kroki (CI runs its own Kroki service); the
+    SVG becomes a static asset. Without KROKI_URL the fence stays as code."""
+    if not KROKI_URL:
+        return None
+    import hashlib
+    import urllib.request
+    name = hashlib.sha256((kind + "\0" + source).encode()).hexdigest()[:16] + ".svg"
+    if name not in DIAGRAMS:
+        req = urllib.request.Request("{}/{}/svg".format(KROKI_URL, kind), data=source.encode(),
+                                     headers={"Content-Type": "text/plain", "User-Agent": "tappaas-docs-build"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                DIAGRAMS[name] = r.read()
+        except Exception as exc:
+            print("kroki: {} diagram not rendered ({})".format(kind, exc))
+            return None
+    return "/assets/tappaas/diagrams/" + name
+
+
+# ---------------------------------------------------------------- landing page
+
+def landing_page():
+    """The home page: the MkDocs landing template's hero block, as the HTML of a
+    lazysite page (its styles and script are copied as they are)."""
+    tpl = open(os.path.join(ROOT, "overrides", "home.html"), encoding="utf-8").read()
+    body = re.search(r"\{% block hero %\}(.*?)\{% endblock %\}", tpl, re.S).group(1)
+    body = re.sub(r"\{\{\s*'([^']*)'\s*\|\s*url\s*\}\}", lambda m: "/" + m.group(1), body)
+
+    def loop(m):
+        items = re.findall(r'"([^"]+)"', m.group(1))
+        return "\n".join(m.group(2).replace("{{ app }}", it) for it in items)
+    body = re.sub(r"\{%\s*for app in \[(.*?)\]\s*%\}(.*?)\{%\s*endfor\s*%\}", loop, body, flags=re.S)
+    body = re.sub(r"<!--.*?-->", "", body, flags=re.S)
+    # one line per element: Markdown leaves an HTML block alone only while it has no blank lines
+    body = "\n".join(l for l in body.split("\n") if l.strip())
+    return body.strip() + "\n"
 
 
 # ---------------------------------------------------------------- front matter
@@ -342,7 +403,13 @@ def main():
             meta, body = split_front_matter(fh.read())
         title = str(meta.get("title") or first_h1(body) or rel)
         if rel == "index.md":
-            body = open(os.path.join(ROOT, "lazysite-layout", "home.md"), encoding="utf-8").read()
+            body = landing_page()
+            dest = os.path.join(out_dir, rel)
+            with open(dest, "w", encoding="utf-8") as fh:
+                fh.write('---\ntitle: "{}"\n---\n\n{}'.format(title.replace('"', "'"), body))
+            STATS["pages"] += 1
+            search.append({"u": "/", "t": title, "x": plain_text(body)[:5000]})
+            continue
         elif not first_h1(body):
             body = "# {}\n\n{}".format(title, body)
         text = normalise(body, rel, pages)
@@ -366,6 +433,17 @@ def main():
         json.dump(nav_tree(cfg["nav"]), fh, ensure_ascii=False)
     with open(os.path.join(adir, "search.json"), "w", encoding="utf-8") as fh:
         json.dump(search, fh, ensure_ascii=False)
+
+    # the MkDocs site's own styles and landing script, used as they are
+    for src, name in (("stylesheets/landing.css", "landing.css"), ("stylesheets/extra.css", "extra.css"),
+                      ("javascripts/landing.js", "landing.js")):
+        os.makedirs(adir, exist_ok=True)
+        shutil.copy2(os.path.join(DOCS, src), os.path.join(adir, name))
+    if DIAGRAMS:
+        os.makedirs(os.path.join(adir, "diagrams"), exist_ok=True)
+        for name, svg in DIAGRAMS.items():
+            with open(os.path.join(adir, "diagrams", name), "wb") as fh:
+                fh.write(svg)
 
     # the layout and the site's static assets
     shutil.copytree(os.path.join(LAYOUT_SRC, "lazysite"), os.path.join(out_dir, "lazysite"))

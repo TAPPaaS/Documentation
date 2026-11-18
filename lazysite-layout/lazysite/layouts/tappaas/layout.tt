@@ -6,13 +6,16 @@
 <title>[% page_meta_title %] - TAPPaaS</title>
 [% IF page_meta_desc %]<meta name="description" content="[% page_meta_desc %]">[% END %]
 <link rel="icon" href="/assets/tappaas/tappaas-icon.png">
+<link rel="stylesheet" href="/assets/tappaas/extra.css">
+<link rel="stylesheet" href="/assets/tappaas/landing.css">
 <link rel="stylesheet" href="/assets/tappaas/site.css">
 <link rel="stylesheet" href="/assets/tappaas/vendor/hl-light.css" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="/assets/tappaas/vendor/hl-dark.css" media="(prefers-color-scheme: dark)">
 <script src="/assets/tappaas/vendor/highlight.min.js" defer></script>
 <script src="/assets/tappaas/site.js" defer></script>
+<script src="/assets/tappaas/landing.js" defer></script>
 </head>
-<body>
+<body[% IF request_uri == "/" || request_uri == "/index" %] class="home"[% END %]>
 <header class="top">
   <a class="brand" href="/"><img src="/assets/tappaas/tappaas-icon.png" alt=""> TAPPaaS</a>
   <nav class="tabs" id="tabs" aria-label="Sections"></nav>
