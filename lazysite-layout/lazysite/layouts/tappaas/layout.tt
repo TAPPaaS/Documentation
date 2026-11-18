@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[% page_meta_title %] - TAPPaaS</title>
+[% IF page_meta_desc %]<meta name="description" content="[% page_meta_desc %]">[% END %]
+<link rel="icon" href="/assets/tappaas/tappaas-icon.png">
+<link rel="stylesheet" href="/assets/tappaas/site.css">
+<link rel="stylesheet" href="/assets/tappaas/vendor/hl-light.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/assets/tappaas/vendor/hl-dark.css" media="(prefers-color-scheme: dark)">
+<script src="/assets/tappaas/vendor/highlight.min.js" defer></script>
+<script src="/assets/tappaas/site.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><img src="/assets/tappaas/tappaas-icon.png" alt=""> TAPPaaS</a>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <form class="search" id="search" role="search" action="#">
+    <input type="search" id="q" placeholder="Search" aria-label="Search the documentation" autocomplete="off">
+    <div id="results" hidden></div>
+  </form>
+</header>
+<div class="frame">
+  <nav class="side" id="side" aria-label="Section pages"></nav>
+  <main class="page" id="page">
+[% content %]
+  </main>
+  <aside class="toc" id="toc" aria-label="On this page"></aside>
+</div>
+<footer class="foot">Copyright &copy; 2026 TAPPaaS Contributors | Licensed under MPL 2.0 · <a href="https://codeberg.org/TAPPaaS">Codeberg</a></footer>
+</body>
+</html>
