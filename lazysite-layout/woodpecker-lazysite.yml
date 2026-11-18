@@ -1,29 +1,32 @@
-# DRAFT: the docs pipeline for a lazysite-served tappaas.org (TAPPaaS
-# docs/design/tappaas-org-website.md §6). Not active: it replaces .woodpecker.yml
-# when the site moves off Codeberg pages, and runs on the site's own Woodpecker
-# (woodpecker-tappaas) against this repository in the tappaas Forgejo.
+# The docs pipeline for the lazysite-served site (TAPPaaS
+# docs/design/tappaas-org-website.md §6), run by the site's own Woodpecker
+# (woodpecker-tappaas) on this repository in the tappaas Forgejo. Codeberg's CI
+# keeps using .woodpecker.yml; in woodpecker-tappaas this repository's
+# "Pipeline config path" is set to lazysite-layout/woodpecker-lazysite.yml.
 #
 # No MkDocs build: the sync writes Markdown, the converter normalises it for
 # lazysite's renderer and adds the navigation, the search index and the layout,
 # and the result is pushed to the branch the lazysite instance serves
-# (repoBranch). lazysite renders each page on its first visit.
+# (repoBranch), live within a minute.
 #
-# Prerequisites (one-time):
-#   - the lazysite instance with repoBranch=live and this pipeline's public key in
-#     its repoPushKeys (forgejo:repo makes it a write deploy key);
-#   - Woodpecker secrets: site_push_key (the private half), site_repo (the site
-#     repository's SSH URL, e.g. ssh://forgejo@forgejo-tappaas.tappaas.internal/websites/lazysite-tappaas.git)
-#     and site_known_hosts (Forgejo's SSH host key line).
-#   - On two sites (hosting design §5): a second publish step with the other
-#     site's repository and key.
+# Push: Woodpecker's pipelines reach Forgejo only through the proxy, so the push
+# goes over HTTPS as the instance's push user (forgejo:repo repoPushUser:
+# push-<vmname>). Prerequisites (one-time):
+#   - the lazysite instance with repoBranch=live and repoPushUser=true;
+#   - the Woodpecker secret site_push_token: the token forgejo:repo wrote to
+#     ~/secrets/forgejo-push.<module>.token on the mothership;
+#   - SITE_REPO and SITE_USER below naming that instance;
+#   - this repository public in the tappaas Forgejo (as on Codeberg): the branch
+#     check reads it without credentials.
+# On two sites (hosting design §5): a second publish step with the other site's
+# repository and token.
 #
-# Previews: none yet. Pages link site-absolute (/generated/...), so a spike cannot
-# live in a sub-directory as it does on Codeberg pages; a preview is a second
-# lazysite instance serving another branch.
+# Previews: none yet. Pages link site-absolute (/generated/...), so a preview is a
+# second lazysite instance serving another branch, not a sub-directory.
 
 when:
   - event: [push, manual]
-    branch: main
+    branch: [main, spike-lazysite]
 
 steps:
   build:
@@ -42,34 +45,33 @@ steps:
   publish:
     image: alpine:3.20
     environment:
-      SITE_PUSH_KEY:
-        from_secret: site_push_key
-      SITE_REPO:
-        from_secret: site_repo
-      SITE_KNOWN_HOSTS:
-        from_secret: site_known_hosts
+      SITE_REPO: https://forgejo.tappaas.hrossen.dk/websites/lazysite-tappaas.git
+      SITE_USER: push-lazysite-tappaas
+      SITE_BRANCH: live
+      SITE_PUSH_TOKEN:
+        from_secret: site_push_token
     commands:
-      - apk add --no-cache git rsync openssh-client
-      - install -d -m 700 ~/.ssh
-      - printf '%s\n' "$SITE_PUSH_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
-      - printf '%s\n' "$SITE_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - apk add --no-cache git rsync
       - git config --global user.email "ci@tappaas.org"
-      - git config --global user.name "TAPPaaS CI"
-      # A build of a commit that is no longer main's head never publishes (an
-      # older build finishing last would roll the site back).
+      - git config --global user.name "TAPPaaS docs"
+      # The token reaches git through a credential helper, never the command line or a URL in the log.
+      - git config --global credential.helper '!f() { echo "username=$SITE_USER"; echo "password=$SITE_PUSH_TOKEN"; }; f'
+      # A build of a commit that is no longer its branch's head never publishes
+      # (an older build finishing last would roll the site back).
       - |
-        HEAD_SHA=$(git ls-remote "$CI_REPO_CLONE_URL" refs/heads/main | cut -f1)
+        HEAD_SHA=$(git ls-remote "$CI_REPO_CLONE_URL" "refs/heads/$CI_COMMIT_BRANCH" | cut -f1)
         if [ -n "$HEAD_SHA" ] && [ "$HEAD_SHA" != "$CI_COMMIT_SHA" ]; then
-          echo "skip publish: main is now at $HEAD_SHA, this build is $CI_COMMIT_SHA"; exit 0
+          echo "skip publish: $CI_COMMIT_BRANCH is now at $HEAD_SHA, this build is $CI_COMMIT_SHA"; exit 0
         fi
       - |
         rm -rf out
-        git clone --depth 1 --branch live "$SITE_REPO" out 2>/dev/null \
-          || { git clone --depth 1 "$SITE_REPO" out && (cd out && git checkout --orphan live && git rm -rfq . || true); }
-        rsync -a --delete --exclude=.git site/ out/
+        git clone -q --depth 1 --branch "$SITE_BRANCH" "$SITE_REPO" out 2>/dev/null || git init -q -b "$SITE_BRANCH" out
+        find out -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+        cp -a site/. out/
         cd out && git add -A
-        git commit -qm "Publish $CI_COMMIT_SHA" || { echo "nothing to publish"; exit 0; }
-        git push origin HEAD:live
+        git commit -qm "Publish ${CI_COMMIT_SHA} (${CI_COMMIT_BRANCH})" || { echo "nothing to publish"; exit 0; }
+        git push -q "$SITE_REPO" "HEAD:$SITE_BRANCH"
+        echo "published $(git rev-parse --short HEAD) to $SITE_BRANCH"
 
 services:
   kroki:
