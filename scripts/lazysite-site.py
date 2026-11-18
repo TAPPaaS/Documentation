@@ -290,7 +290,14 @@ def landing_page():
     lazysite page (its styles and script are copied as they are)."""
     tpl = open(os.path.join(ROOT, "overrides", "home.html"), encoding="utf-8").read()
     body = re.search(r"\{% block hero %\}(.*?)\{% endblock %\}", tpl, re.S).group(1)
-    body = re.sub(r"\{\{\s*'([^']*)'\s*\|\s*url\s*\}\}", lambda m: "/" + m.group(1), body)
+    def url(m):
+        # MkDocs writes every page as <page>/; lazysite serves a page at /<page>
+        # and a section (an index.md) at /<section>/.
+        p = m.group(1).strip("/")
+        if p and os.path.isfile(os.path.join(DOCS, p + ".md")):
+            return "/" + p
+        return "/" + p + ("/" if p else "")
+    body = re.sub(r"\{\{\s*'([^']*)'\s*\|\s*url\s*\}\}", url, body)
 
     def loop(m):
         items = re.findall(r'"([^"]+)"', m.group(1))
