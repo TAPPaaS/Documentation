@@ -329,6 +329,10 @@
          <lastmod>2026-11-24</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/install/devops/leantime/</loc>
+         <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/install/devops/nix-cache/</loc>
          <lastmod>2026-11-24</lastmod>
     </url>
@@ -486,6 +490,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/modules/lazysite/</loc>
+         <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/modules/leantime/</loc>
          <lastmod>2026-11-24</lastmod>
     </url>
     <url>
