@@ -245,6 +245,10 @@
          <lastmod>2026-11-24</lastmod>
     </url>
     <url>
+         <loc>https://tappaas.org/generated/foundation/env-control/</loc>
+         <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
          <loc>https://tappaas.org/generated/foundation/identity/</loc>
          <lastmod>2026-11-24</lastmod>
     </url>
@@ -570,6 +574,10 @@
     </url>
     <url>
          <loc>https://tappaas.org/generated/services/cluster-vm/</loc>
+         <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+         <loc>https://tappaas.org/generated/services/env-control-stackHost/</loc>
          <lastmod>2026-11-24</lastmod>
     </url>
     <url>
