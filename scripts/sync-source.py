@@ -17,6 +17,10 @@ pages under docs/generated/:
 Run before `mkdocs build` (CI does; locally: python3 scripts/sync-source.py).
 Local checkout instead of a clone: TAPPAAS_SOURCE_DIR=<path> (for trying a source
 branch before it is pushed; the banner still names REPO@REF).
+The Roadmap page (scripts/roadmap_page.py) is built from roadmap/ROADMAP.public.md in THIS
+repository when it exists — the published copy generated from Vikunja after the self-hosting
+cut-over (BUILD.md, *The roadmap*); TAPPAAS_ROADMAP_FILE names another file. Without it, from the
+source repo's ROADMAP.md, as before the cut-over.
 Pin override: TAPPAAS_SOURCE_REF env var. Default: main — since the ADR007→main
 promotion, main is the 2.0 manager/controller line; flip to `stable` when the
 tested 2.0 is promoted to stable (migration Phase 6).
@@ -172,6 +176,9 @@ MODULE_PAGE_DIRS = {"foundation": "generated/foundation"}
 MODULE_PAGE_DIR_DEFAULT = "generated/modules"
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs")
+# The published roadmap, generated from Vikunja into this repository (BUILD.md, *The roadmap*).
+ROADMAP_PUBLIC = os.environ.get("TAPPAAS_ROADMAP_FILE") or os.path.join(
+    os.path.dirname(DOCS_DIR), "roadmap", "ROADMAP.public.md")
 
 # The provenance note is an HTML comment — visible to editors viewing the
 # source, invisible to readers of the page (per the 2026-07-11 review).
@@ -403,7 +410,14 @@ def main():
             paths += [os.path.relpath(os.path.join(root, fn), tmp) for fn in filenames]
         allow = resolve_module_paths(paths)
         stacks = read_stacks(tmp, set(paths))
-        roadmap_src = os.path.join(tmp, "ROADMAP.md")
+        roadmap_published = os.path.isfile(ROADMAP_PUBLIC)
+        if roadmap_published:
+            rel = os.path.relpath(ROADMAP_PUBLIC, os.path.dirname(DOCS_DIR))
+            roadmap_src, roadmap_from = ROADMAP_PUBLIC, (ROADMAP_PUBLIC if rel.startswith("..") else rel)
+        else:
+            if os.environ.get("TAPPAAS_ROADMAP_FILE"):
+                sys.exit("WS0 sync FAILED: TAPPAAS_ROADMAP_FILE={} does not exist".format(ROADMAP_PUBLIC))
+            roadmap_src, roadmap_from = os.path.join(tmp, "ROADMAP.md"), "ROADMAP.md of {}@{}".format(REPO, REF)
         if not os.path.isfile(roadmap_src):
             sys.exit("WS0 sync FAILED: ROADMAP.md missing in {}@{}".format(REPO, REF))
         with open(roadmap_src, encoding="utf-8") as fh:
@@ -508,16 +522,17 @@ def main():
     print("WS0 sync: {} stacks -> docs/{}/, {} with install pages -> docs/{}/".format(
         len(stacks), STACK_PAGES_DIR, sum(1 for st in stacks.values() if st["install"] is not None), INSTALL_OUTDIR))
 
-    # The Roadmap page is a view of ROADMAP.md (scripts/roadmap_page.py); a ROADMAP.md it cannot
-    # read fails the build rather than publishing a half-empty page.
+    # The Roadmap page is a view of the roadmap (scripts/roadmap_page.py): the published copy in
+    # roadmap/, else ROADMAP.md; a file it cannot read fails the build rather than publishing a
+    # half-empty page.
     try:
-        page = roadmap_page.build(roadmap_text)
+        page = roadmap_page.build(roadmap_text, published=roadmap_published)
     except ValueError as exc:
         sys.exit("WS0 sync FAILED: {}".format(exc))
     os.makedirs(os.path.join(DOCS_DIR, "roadmap"), exist_ok=True)
     with open(os.path.join(DOCS_DIR, "roadmap", "index.md"), "w") as fh:
         fh.write(page)
-    print("WS0 sync: ROADMAP.md -> docs/roadmap/index.md")
+    print("WS0 sync: {} -> docs/roadmap/index.md".format(roadmap_from))
 
     print("WS0 sync: OK ({}@{})".format(REPO, REF))
 

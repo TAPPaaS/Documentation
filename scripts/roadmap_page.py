@@ -1,42 +1,67 @@
-"""Build the website's Roadmap page from TAPPaaS's ROADMAP.md.
+"""Build the website's Roadmap page from the TAPPaaS roadmap.
 
-ROADMAP.md (TAPPaaS repository root) is the one plan: the open waves, latest first, then the
-releases, newest first. This page is a view of it, generated at every site build by
-scripts/sync-source.py — never edited by hand:
+The roadmap is the one plan: the open waves, latest first, then the releases, newest first. Until
+the self-hosting cut-over it is ROADMAP.md at the TAPPaaS repository root; from then on it lives in
+Vikunja and its published copy is generated into this repository, roadmap/ROADMAP.public.md
+(TAPPaaS release/roadmap-generate.py --public; BUILD.md, *The roadmap*). The two have the same
+layout. This page is a view of it, generated at every site build by scripts/sync-source.py —
+never edited by hand:
 
   - one timeline card per wave and per release, in ROADMAP.md's order;
   - a wave card says what the wave is for and how far along it is; a release card when it
     shipped, its tag, and what it delivered;
-  - "+" on a card opens its groups: each group's headline and intent, and its issues linked to
-    Codeberg — open, done (ticked), or done and waiting for the next release.
+  - "+" on a card opens its groups: each group's headline and intent, and its issues — open,
+    done (ticked), or done and waiting for the next release.
+
+Issue links: `Roadmap#N` (the published copy's open rows) goes to the public list on the forge,
+ROADMAP_PUBLIC_REPO (TAPPAAS_ROADMAP_PUBLIC_REPO, default forgejo.tappaas.org's TAPPaaS/Roadmap);
+`#N` (released rows, and every row of ROADMAP.md) to Codeberg's TAPPaaS/TAPPaaS issue, and
+`<Repo>#N` to Codeberg's TAPPaaS/<Repo> — ROADMAP_ARCHIVE_ORG (TAPPAAS_ROADMAP_ARCHIVE_ORG,
+default codeberg.org/TAPPaaS). Codeberg's issues are read-only history after the cut-over.
 
 The parser reads only what ROADMAP.md's own reading guide promises: `## Wave N — title`,
 `### Gx.y title — … · counts` (`####` inside a release), the group's first paragraph, and
-issue rows `| (✅ )?(FW )?#N | title | … |`. Anything it cannot read fails the build rather than
+issue rows `| (✅ )?(FW )?(<Repo>)?#N | title | … |`. Anything it cannot read fails the build rather than
 publishing a half-empty page.
 """
 
 import html
+import os
 import re
 
 FORGE_REPO = "https://codeberg.org/TAPPaaS/TAPPaaS"
+ROADMAP_PUBLIC_REPO = os.environ.get("TAPPAAS_ROADMAP_PUBLIC_REPO", "https://forgejo.tappaas.org/TAPPaaS/Roadmap").rstrip("/")
+ROADMAP_ARCHIVE_ORG = os.environ.get("TAPPAAS_ROADMAP_ARCHIVE_ORG", "https://codeberg.org/TAPPaaS").rstrip("/")
+PUBLIC_LIST = "Roadmap"            # the repo name a published row cites: Roadmap#N
 
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-ROW_RE = re.compile(r"^\| (✅ )?(?:FW )?#(\d+) \| (.*?) \|")
+ROW_RE = re.compile(r"^\| (✅ )?(?:FW )?([A-Za-z0-9_.-]+)?#(\d+) \| (.*?) \|")
 GROUP_RE = re.compile(r"^#{3,4} (✅ )?(G\d\.\d) (.*)$")
 WAVE_RE = re.compile(r"^## Wave (\d) — (.*)$")
 RELEASE_RE = re.compile(r"^## Release (\S+) — (.*)$")
 
 
+def issue_url(repo, num):
+    """Where an issue reference points: Roadmap#N the public list, #N and <Repo>#N Codeberg."""
+    if repo == PUBLIC_LIST:
+        return "{}/issues/{}".format(ROADMAP_PUBLIC_REPO, num)
+    return "{}/{}/issues/{}".format(ROADMAP_ARCHIVE_ORG, repo or "TAPPaaS", num)
+
+
+def issue_link(repo, num):
+    return '<a href="{}">{}#{}</a>'.format(html.escape(issue_url(repo, num)), html.escape(repo or ""), num)
+
+
 # ── Markdown → HTML, just enough for ROADMAP.md's prose and titles ──────────────────────
 def inline(md):
-    """`code`, **bold**, *italic*, [text](url), #N — escaped, everything else as text."""
+    """`code`, **bold**, *italic*, [text](url), #N, Roadmap#N — escaped, everything else as text."""
     out, pos = [], 0
-    token = re.compile(r"`([^`]+)`|\*\*(.+?)\*\*|\*([^*\s][^*]*?)\*|\[([^\]]+)\]\(<?([^)>]+)>?\)|(?<![\w&/#])#(\d{1,5})(?![\w-])")
+    token = re.compile(r"`([^`]+)`|\*\*(.+?)\*\*|\*([^*\s][^*]*?)\*|\[([^\]]+)\]\(<?([^)>]+)>?\)"
+                       r"|(?<![\w&/#])([A-Z][A-Za-z0-9_.-]*)?#(\d{1,5})(?![\w-])")
     for m in token.finditer(md):
         out.append(html.escape(md[pos:m.start()]))
-        code, bold, ital, ltext, lurl, issue = m.groups()
+        code, bold, ital, ltext, lurl, repo, issue = m.groups()
         if code is not None:
             out.append("<code>{}</code>".format(html.escape(code)))
         elif bold is not None:
@@ -46,7 +71,7 @@ def inline(md):
         elif ltext is not None:
             out.append('<a href="{}">{}</a>'.format(html.escape(link(lurl)), inline(ltext)))
         else:
-            out.append('<a href="{}/issues/{}">#{}</a>'.format(FORGE_REPO, issue, issue))
+            out.append(issue_link(repo, issue))
         pos = m.end()
     out.append(html.escape(md[pos:]))
     return "".join(out)
@@ -132,7 +157,8 @@ def groups(body):
             continue
         r = ROW_RE.match(l)
         if r:
-            cur["issues"].append({"done": bool(r.group(1)), "num": r.group(2), "title": r.group(3)})
+            cur["issues"].append({"done": bool(r.group(1)), "repo": r.group(2) or "", "num": r.group(3),
+                                  "title": r.group(4)})
         cur["lines"].append(l)
     for g in out:
         g["intent"] = first_paragraph(g["lines"])
@@ -168,8 +194,8 @@ def issue_li(i, next_release):
     """One issue: ticked when done; a done row still in a wave ships with the next release."""
     cls = "done" if i["done"] else "open"
     tag = ' <span class="tap-rm__next">{}</span>'.format(next_release) if i.get("pending") else ""
-    return ('<li class="tap-rm__issue tap-rm__issue--{}"><a href="{}/issues/{}">#{}</a> {}{}</li>'
-            .format(cls, FORGE_REPO, i["num"], i["num"], inline(i["title"]), tag))
+    return ('<li class="tap-rm__issue tap-rm__issue--{}">{} {}{}</li>'
+            .format(cls, issue_link(i.get("repo", ""), i["num"]), inline(i["title"]), tag))
 
 
 def group_html(g, next_release, in_wave):
@@ -202,7 +228,8 @@ def card(kind, when, title, text, tag_html, more_html, more_label):
             .format(kind, when, title, text, tag_html, more))
 
 
-def build(text):
+def build(text, published=False):
+    """The page; published=True for the copy generated from Vikunja (the plan's wording)."""
     waves, releases = parse(text)
     next_release = "next release"
     if releases:
@@ -238,7 +265,28 @@ def build(text):
         label = "What it carried, by group" if r["groups"] else "What it delivered"
         cards.append(card("release", date_label(r["when"]), "TAPPaaS {}".format(html.escape(version)),
                           inline(lead), tag, more, label))
-    return PAGE.format(cards="\n".join(cards), repo=FORGE_REPO)
+    return PAGE.format(cards="\n".join(cards), repo=FORGE_REPO,
+                       source=SOURCE_PUBLISHED if published else SOURCE_FILE.format(repo=FORGE_REPO),
+                       plan=PLAN_PUBLISHED.format(public=ROADMAP_PUBLIC_REPO) if published
+                       else PLAN_FILE.format(repo=FORGE_REPO),
+                       details=DETAILS_PUBLISHED.format(public=ROADMAP_PUBLIC_REPO, archive=ROADMAP_ARCHIVE_ORG)
+                       if published else DETAILS_FILE.format(repo=FORGE_REPO))
+
+
+SOURCE_FILE = "ROADMAP.md in TAPPaaS/TAPPaaS\n  ({repo}/src/branch/main/ROADMAP.md). Change the roadmap there."
+SOURCE_PUBLISHED = ("roadmap/ROADMAP.public.md in this repository, the published copy of the roadmap in\n"
+                    "  the project's Vikunja (TAPPaaS release/roadmap-generate.py --public). Change the roadmap there.")
+PLAN_FILE = ("- **The order comes from one plan**, [ROADMAP.md]({repo}/src/branch/main/ROADMAP.md) in the\n"
+             "  source repository: every open issue in a wave and a group, why they come in that order, and what\n"
+             "  each release carried. This page is built from it.")
+PLAN_PUBLISHED = ("- **The order comes from one plan**, kept in the project's backlog and published here: every open\n"
+                  "  item in a wave and a group, and what each release carried. Each open item is an issue in the\n"
+                  "  [public roadmap list]({public}/issues); security work is planned too, but not listed.")
+DETAILS_FILE = ("- **The details live on Codeberg**: [milestones]({repo}/milestones) and\n"
+                "  [issues]({repo}/issues). To influence the direction, see [Contributing](../community/contributing.md).")
+DETAILS_PUBLISHED = ("- **The details**: open items link to the [public roadmap list]({public}/issues); released items\n"
+                     "  to their issues on [Codeberg]({archive}/TAPPaaS/issues), kept as history. To report something\n"
+                     "  or influence the direction, see [Contributing](../community/contributing.md).")
 
 
 PAGE = """---
@@ -249,8 +297,7 @@ description: >
 
 <!--
   GENERATED FROM SOURCE - do not edit here.
-  Built at every site build by scripts/roadmap_page.py from ROADMAP.md in TAPPaaS/TAPPaaS
-  ({repo}/src/branch/main/ROADMAP.md). Change the roadmap there.
+  Built at every site build by scripts/roadmap_page.py from {source}
 -->
 
 # Roadmap
@@ -272,13 +319,10 @@ their issues.
 
 ## How we plan
 
-- **The order comes from one plan**, [ROADMAP.md]({repo}/src/branch/main/ROADMAP.md) in the
-  source repository: every open issue in a wave and a group, why they come in that order, and what
-  each release carried. This page is built from it.
+{plan}
 - **Which version reached which channel, and when**, is in
   [RELEASES.md]({repo}/src/branch/main/RELEASES.md).
 - **Decisions are written down first**, as
   [ADRs in the source repository]({repo}/src/branch/main/docs/ADR).
-- **The details live on Codeberg**: [milestones]({repo}/milestones) and
-  [issues]({repo}/issues). To influence the direction, see [Contributing](../community/contributing.md).
+{details}
 """
